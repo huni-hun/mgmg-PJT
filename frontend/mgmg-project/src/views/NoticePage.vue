@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <h1>NoticePage입니다.</h1>
+  </div>
 </template>
 
 <script>
