@@ -1,29 +1,79 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
+// 메인
+import LandingPage from "../views/LandingPage.vue";
 import MainPage from "../views/MainPage.vue";
+// 회원
+import LoginPage from "../views/LoginPage.vue";
+import SignupPage from "../views/SignupPage.vue";
+import MyPage from "../views/MyPage.vue";
+// 일기
+import DiaryWritingPage from "../views/DiaryWritingPage.vue";
+import DiaryDetailPage from "../views/DiaryDetailPage.vue";
+// 업적, 관심, 통계
+import AchievePage from "../views/AchievePage.vue";
+import InterestListPage from "../views/InterestListPage.vue";
+import StatisticsPage from "../views/StatisticsPage.vue";
+// 공지사항
+import NoticePage from "../views/NoticePage.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
-  },
-  {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    name: "landing",
+    component: LandingPage,
   },
   {
     path: "/main",
     name: "main",
     component: MainPage,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginPage,
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: SignupPage,
+  },
+  {
+    path: "/my",
+    name: "my",
+    component: MyPage,
+  },
+  {
+    path: "/diaryWriting",
+    name: "diaryWriting",
+    component: DiaryWritingPage,
+  },
+  {
+    path: "/diarydetail",
+    name: "diarydetail",
+    component: DiaryDetailPage,
+  },
+  {
+    path: "/achieve",
+    name: "achieve",
+    component: AchievePage,
+  },
+  {
+    path: "/interestlist",
+    name: "interestlist",
+    component: InterestListPage,
+  },
+  {
+    path: "/statistics",
+    name: "statistics",
+    component: StatisticsPage,
+  },
+  {
+    path: "/notice",
+    name: "notice",
+    component: NoticePage,
   },
 ];
 
