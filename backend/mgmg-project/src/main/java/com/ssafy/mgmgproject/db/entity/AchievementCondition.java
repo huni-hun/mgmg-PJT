@@ -20,7 +20,10 @@ public class AchievementCondition {
     @Column(name="achievement_condition_no")
     private Long achievementConditionNo;
 
-    @Column(name = "achievement_condition_tag")
+    @Column(name = "achievement_condition_tag", length = 2)
     private String achievementConditionTag;
+
+    @Column(name = "achievement_condition_count")
+    private int achievementConditionCount;
 
 }
