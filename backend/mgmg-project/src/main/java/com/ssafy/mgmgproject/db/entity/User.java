@@ -49,4 +49,8 @@ public class User {
     @JsonIgnore
     private List<Notification> notifications = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Builder.Default
+    @JsonIgnore
+    private List<AchievedBadge> achievedBadges = new ArrayList<>();
 }
