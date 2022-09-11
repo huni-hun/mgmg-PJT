@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,7 +22,7 @@ public class Notification {
     @Column(name="notification_no")
     private Long notificationNo;
 
-    @Column(name="notification_content")
+    @Column(name="notification_content", length = 30, nullable = false)
     private String notificationContent;
 
     @Column(name="notification_date")
