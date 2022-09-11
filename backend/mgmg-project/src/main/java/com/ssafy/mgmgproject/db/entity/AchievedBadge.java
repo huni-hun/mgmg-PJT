@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -13,6 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "achieved_badge")
+@EntityListeners(AuditingEntityListener.class)
 public class AchievedBadge {
 
     @Id
@@ -21,8 +25,8 @@ public class AchievedBadge {
     private Long achievedBadgeNo;
 
     @Column(name = "achieved_badge_date")
-    @Temporal(value = TemporalType.DATE)
-    private String achievedBadgeDate;
+    @CreatedDate
+    private LocalDate achievedBadgeDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")

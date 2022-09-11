@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "notice")
+@EntityListeners(AuditingEntityListener.class)
 public class Notice {
 
     @Id
@@ -29,8 +31,8 @@ public class Notice {
     private String noticeContent;
 
     @Column(name="notice_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private String noticeDate;
+    @CreatedDate
+    private LocalDateTime noticeDate;
 
     @Column(name="fixed_flag")
     private boolean fixedFlag;
