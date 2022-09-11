@@ -1,5 +1,7 @@
 <template>
-  <div>MainPage입니다</div>
+  <div>
+    <h1>MainPage입니다</h1>
+  </div>
 </template>
 
 <script>
