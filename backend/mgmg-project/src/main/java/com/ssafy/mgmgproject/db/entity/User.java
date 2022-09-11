@@ -1,8 +1,11 @@
 package com.ssafy.mgmgproject.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -40,5 +43,10 @@ public class User {
 
     @Column(name = "diary_continue")
     private int diaryContinue;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Builder.Default
+    @JsonIgnore
+    private List<Notification> notifications = new ArrayList<>();
 
 }
