@@ -27,12 +27,10 @@ public class Notice {
     private String noticeContent;
 
     @Column(name="notice_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private String noticeDate;
 
     @Column(name="fixed_flag")
     private boolean fixedFlag;
-
-
 
 }
