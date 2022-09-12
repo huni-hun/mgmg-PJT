@@ -3,6 +3,7 @@ package com.ssafy.mgmgproject.db.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -28,7 +29,7 @@ public class User {
 
     @Column(name = "birth")
     @Temporal(TemporalType.DATE)
-    private String birth;
+    private Date birth;
 
     @Column(name = "username", length = 16)
     private String username;

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -32,7 +33,7 @@ public class Diary {
 
     @Column(name = "write_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private String writeDate;
+    private Date writeDate;
 
     @Column(name = "weather", length = 5)
     private String weather;
