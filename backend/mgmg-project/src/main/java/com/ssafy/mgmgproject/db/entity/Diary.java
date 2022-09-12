@@ -29,7 +29,8 @@ public class Diary {
     private String diaryContent;
 
     @Column(name = "diary_date")
-    private String diaryDate;
+    @Temporal(TemporalType.DATE)
+    private Date diaryDate;
 
     @Column(name = "write_date")
     @Temporal(TemporalType.TIMESTAMP)
