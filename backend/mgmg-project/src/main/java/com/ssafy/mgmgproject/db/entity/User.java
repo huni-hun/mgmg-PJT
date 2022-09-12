@@ -27,6 +27,7 @@ public class User {
     private String email;
 
     @Column(name = "birth")
+    @Temporal(TemporalType.DATE)
     private String birth;
 
     @Column(name = "username", length = 16)
