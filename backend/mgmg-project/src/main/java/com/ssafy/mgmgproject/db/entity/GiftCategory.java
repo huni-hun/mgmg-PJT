@@ -24,6 +24,6 @@ public class GiftCategory {
     @JoinColumn(name = "user_no")
     private User user;
 
-    @Column(name = "gift_category_name")
+    @Column(name = "gift_category_name", length = 10)
     private String giftCategoryName;
 }
