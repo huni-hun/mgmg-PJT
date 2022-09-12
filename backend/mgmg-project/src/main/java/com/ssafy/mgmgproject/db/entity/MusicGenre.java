@@ -24,6 +24,6 @@ public class MusicGenre {
     @JoinColumn(name = "user_no")
     private User user;
 
-    @Column(name = "music_genre_name")
+    @Column(name = "music_genre_name", length = 10)
     private String musicGenreName;
 }
