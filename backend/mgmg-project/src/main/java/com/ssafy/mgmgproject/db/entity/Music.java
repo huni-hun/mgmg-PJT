@@ -15,8 +15,4 @@ public class Music {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "music_no")
     private Long musicNo;
-
-    @OneToOne(mappedBy = "music")
-    @JsonIgnore
-    private InterestMusic interestMusic;
 }

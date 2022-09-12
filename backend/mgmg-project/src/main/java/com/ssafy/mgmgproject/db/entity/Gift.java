@@ -27,8 +27,4 @@ public class Gift {
 
     @Column(name = "gift_url")
     private String giftUrl;
-
-    @OneToOne(mappedBy = "gift")
-    @JsonIgnore
-    private InterestGift interestGift;
 }
