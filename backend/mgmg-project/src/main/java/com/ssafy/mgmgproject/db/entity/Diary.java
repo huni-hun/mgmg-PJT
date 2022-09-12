@@ -24,7 +24,7 @@ public class Diary {
     @JoinColumn(name = "user_no")
     private User user;
 
-    @Column(name = "diary_content")
+    @Column(name = "diary_content", length = 500)
     private String diaryContent;
 
     @Column(name = "diary_date")
@@ -33,13 +33,13 @@ public class Diary {
     @Column(name = "write_date")
     private String writeDate;
 
-    @Column(name = "weather")
+    @Column(name = "weather", length = 5)
     private String weather;
 
-    @Column(name = "diary_img")
+    @Column(name = "diary_img", length = 255)
     private String diaryImg;
 
-    @Column(name = "emotion")
+    @Column(name = "emotion", length = 3)
     private String emotion;
 
     @Column(name = "diary_thema")
