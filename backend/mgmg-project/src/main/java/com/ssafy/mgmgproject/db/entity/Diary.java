@@ -31,6 +31,7 @@ public class Diary {
     private String diaryDate;
 
     @Column(name = "write_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private String writeDate;
 
     @Column(name = "weather", length = 5)
