@@ -35,11 +35,11 @@ button {
 
   transition: 0.2s;
 
-  color: #6667ab;
+  color: #000000;
 }
 button:hover {
-  background-color: #727272;
-  color: #000000;
+  background-color: #000000;
+  color: #ffffff;
 }
 </style>
 
