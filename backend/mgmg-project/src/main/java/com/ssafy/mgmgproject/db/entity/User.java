@@ -46,6 +46,16 @@ public class User {
     @Column(name = "diary_continue")
     private int diaryContinue;
 
+    @JsonIgnore
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<InterestGift> interestGifts= new ArrayList<>();
+
+    @JsonIgnore
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<InterestMusic> interestMusics = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @Builder.Default
     @JsonIgnore
