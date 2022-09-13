@@ -54,6 +54,10 @@ dependencies {
     // 구글 구아바(Google Guava) 자바용 공통 라이브러리 오픈소스
     implementation("com.google.guava:guava:29.0-jre")
     annotationProcessor("com.google.guava:guava:29.0-jre")
+
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'com.auth0:java-jwt:3.10.3'
+    implementation 'com.google.guava:guava:29.0-jre'
 }
 
 tasks.named('test') {
