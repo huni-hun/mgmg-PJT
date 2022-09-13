@@ -1,11 +1,15 @@
 <template>
   <div>
     <h1>LoginPage입니다.</h1>
+    <LogIn />
   </div>
 </template>
 
 <script>
-export default {};
+import LogIn from '@/components/login/LogIn.vue';
+
+export default { components: { LogIn } };
 </script>
 
-<style></style>
+<styl
+LogIne></style>
