@@ -1,6 +1,7 @@
 package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.request.UserRegistPostRequest;
+import com.ssafy.mgmgproject.api.request.UserUpatePutRequest;
 import com.ssafy.mgmgproject.db.entity.GiftCategory;
 import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import com.ssafy.mgmgproject.db.entity.User;
@@ -10,6 +11,9 @@ import com.ssafy.mgmgproject.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -58,6 +62,37 @@ public class UserServiceImpl implements UserService{
                             .build();
             giftCategoryRepository.save(giftCategory);
         }
+    }
+
+    @Override
+    public User getByUserIdAndUserEmail(String userId, String email) {
+        return userRepository.findByUserIdAndEmail(userId, email).orElse(null);
+    }
+
+    @Override
+    public User getByUserNameAndUserEmail(String userName, String email) {
+        return userRepository.findByUserNameAndEmail(userName, email).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public int updateUser(User user, UserUpatePutRequest userUpatePutRequest) {
+        String email = userUpatePutRequest.getEmail();
+        Date birth = userUpatePutRequest.getBirth();
+        String userName = userUpatePutRequest.getName();
+        String gender = userUpatePutRequest.getGender();
+        try {
+            user.updateUser(email, birth, userName, gender);
+        } catch (Exception e) {
+            return 0;
+        }
+        return 1;
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(User user, String newPassword) {
+        user.updatePw(passwordEncoder.encode(newPassword));
     }
 
 }

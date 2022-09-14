@@ -72,4 +72,15 @@ public class User {
     @Builder.Default
     @JsonIgnore
     private List<AchievedBadge> achievedBadges = new ArrayList<>();
+
+    public void updatePw(String newPw) {
+        this.password = newPw;
+    }
+
+    public void updateUser(String email, Date birth, String userName, String gender) {
+        this.email = email;
+        this.birth = birth;
+        this.userName = userName;
+        this.gender = gender;
+    }
 }
