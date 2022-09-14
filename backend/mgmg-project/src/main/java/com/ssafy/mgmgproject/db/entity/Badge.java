@@ -29,8 +29,8 @@ public class Badge {
     @Column(name = "badge_content", length = 100)
     private String badgeContent;
 
-    @Column(name = "badge_tag", length = 10)
-    private String badgeTag;
+    @Column(name = "badge_condition", length = 20)
+    private String badgeCodition;
 
     @OneToMany(mappedBy = "badge", cascade = CascadeType.ALL)
     @Builder.Default
