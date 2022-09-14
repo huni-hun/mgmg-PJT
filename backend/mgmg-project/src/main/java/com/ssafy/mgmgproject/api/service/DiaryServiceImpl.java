@@ -12,6 +12,7 @@ import com.ssafy.mgmgproject.db.repository.MusicRepository;
 import com.ssafy.mgmgproject.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -60,6 +61,18 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public Diary getByDiaryNo(Long diaryNo) {
         return diaryRepository.findByDiaryNo(diaryNo).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public int deleteDiary(Long diaryNo) {
+        try {
+            diaryRepository.findByDiaryNo(diaryNo).get();
+        } catch (Exception e) {
+            return 0;
+        }
+        diaryRepository.deleteByDiaryNo(diaryNo);
+        return 1;
     }
 
 }

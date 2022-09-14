@@ -14,4 +14,5 @@ public interface DiaryService {
 
     Diary getByDiaryNo(Long diaryNo);
 
+    int deleteDiary(Long diaryNo);
 }
