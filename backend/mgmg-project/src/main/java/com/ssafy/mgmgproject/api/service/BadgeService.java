@@ -10,5 +10,7 @@ import java.util.Map;
 public interface BadgeService {
 
     List<Map<String,Object>> selectBadgeList(User user);
+    AchievedBadge getByUserAndBadgeNo(User user, long badgeNo);
+    Badge getByBadgeNo(long badgeNo);
 
 }

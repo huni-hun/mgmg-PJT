@@ -45,4 +45,19 @@ public class BadgeServiceImpl implements BadgeService{
         return result;
     }
 
+    @Override
+    public AchievedBadge getByUserAndBadgeNo(User user, long badgeNo) {
+        Badge badge = badgeRepository.findById(badgeNo).orElse(null);
+        if(badge==null){
+            return null;
+        }
+        return achievedBadgeRepository.findByUserAndBadge(user,badge).orElse(null);
+    }
+
+    @Override
+    public Badge getByBadgeNo(long badgeNo) {
+        return badgeRepository.findById(badgeNo).orElse(null);
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.ssafy.mgmgproject.api.controller;
 
 import com.ssafy.mgmgproject.api.response.BadgeListResponse;
+import com.ssafy.mgmgproject.api.response.BadgeResponse;
 import com.ssafy.mgmgproject.api.service.BadgeService;
 import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
@@ -52,6 +53,30 @@ public class BadgeController {
         }else{
             return ResponseEntity.status(200).body(BadgeListResponse.of(badgeListDtos,200, "업적 목록 조회를 성공하였습니다."));
         }
+    }
+
+    @GetMapping("/{badgeNo}")
+    @ApiOperation(value = "업적 상세 조회", notes = "업적을 상세 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "업적 상세 조회 성공", response = BadgeResponse.class),
+            @ApiResponse(code = 401, message = "업적 상세 조회 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> detailBadge(
+            @ApiIgnore Authentication authentication, @PathVariable long badgeNo){
+
+        UserDetails userDetails = (UserDetails)authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getByUserId(userId);
+
+        AchievedBadge achievedBadge = badgeService.getByUserAndBadgeNo(user,badgeNo);
+        Badge badge = badgeService.getByBadgeNo(badgeNo);
+        if(badge==null){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "업적 상세 조회에 실패했습니다."));
+        }
+        return ResponseEntity.status(200).body(BadgeResponse.of(badge,achievedBadge,200, "업적 상세 조회를 성공하였습니다."));
+
+
     }
 
 }
