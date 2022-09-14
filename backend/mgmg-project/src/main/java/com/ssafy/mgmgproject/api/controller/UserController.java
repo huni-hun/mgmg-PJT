@@ -233,4 +233,24 @@ public class UserController {
         }
     }
 
+    @PutMapping("/mypage/diaryfont")
+    @ApiOperation(value = "폰트 수정", notes = "(token) 폰트를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "폰트 수정 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateFont(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "폰트수정", required = true) @Valid UserUpdateFontPutRequest userUpdateFontPutRequest) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        try {
+            userService.updateDiaryFont(user, userUpdateFontPutRequest.getDiaryFont());
+        }catch (Exception e) {
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "오류 발생."));
+        }
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "폰트가 수정되었습니다."));
+    }
+
 }

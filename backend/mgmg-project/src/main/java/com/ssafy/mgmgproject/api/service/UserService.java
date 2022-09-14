@@ -18,4 +18,6 @@ public interface UserService {
     int updateUser(User user, UserUpdatePutRequest userUpdatePutRequest);
 
     void updatePassword(User user, String newPassword);
+
+    void updateDiaryFont(User user, int diaryFont);
 }

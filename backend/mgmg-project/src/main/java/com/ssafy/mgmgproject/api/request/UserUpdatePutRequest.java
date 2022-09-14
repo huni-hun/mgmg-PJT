@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-@ApiModel("UserUpatePutRequest ")
+@ApiModel("UserUpatePutRequest")
 public class UserUpdatePutRequest {
 
     @NotEmpty

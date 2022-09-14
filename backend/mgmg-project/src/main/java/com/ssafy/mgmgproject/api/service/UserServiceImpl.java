@@ -100,4 +100,9 @@ public class UserServiceImpl implements UserService{
         user.updatePw(passwordEncoder.encode(newPassword));
     }
 
+    @Override
+    public void updateDiaryFont(User user, int diaryFont) {
+        user.updateFont(diaryFont);
+    }
+
 }
