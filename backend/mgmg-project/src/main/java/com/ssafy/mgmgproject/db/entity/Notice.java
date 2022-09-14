@@ -1,17 +1,16 @@
 package com.ssafy.mgmgproject.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,11 +29,15 @@ public class Notice {
     @Column(name="notice_content", length = 500, nullable = false)
     private String noticeContent;
 
-    @Column(name="notice_date")
+    @Column(name="notice_date", updatable = false, length = 16)
     @CreatedDate
-    private LocalDateTime noticeDate;
+    private String noticeDate;
 
     @Column(name="fixed_flag")
     private boolean fixedFlag;
 
+    @PrePersist
+    public void onPrePersist(){
+        this.noticeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+    }
 }
