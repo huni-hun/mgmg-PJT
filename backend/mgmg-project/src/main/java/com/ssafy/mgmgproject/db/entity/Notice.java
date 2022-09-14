@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,5 +38,11 @@ public class Notice {
     @PrePersist
     public void onPrePersist(){
         this.noticeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+    }
+
+    public void updateNotice(String noticeTitle, String noticeContent, boolean fixedFlag) {
+        this.noticeTitle = noticeTitle;
+        this.noticeContent = noticeContent;
+        this.fixedFlag = fixedFlag;
     }
 }

@@ -74,10 +74,7 @@ public class NoticeServiceImpl implements NoticeService{
         if(notice==null){
             return null;
         }
-        notice.setNoticeTitle(noticeRequest.getNoticeTitle());
-        notice.setNoticeContent(noticeRequest.getNoticeContent());
-        notice.setFixedFlag(noticeRequest.isFixedFlag());
-
+        notice.updateNotice(noticeRequest.getNoticeTitle(), noticeRequest.getNoticeContent(), noticeRequest.isFixedFlag());
         noticeRepository.save(notice);
         return notice;
     }

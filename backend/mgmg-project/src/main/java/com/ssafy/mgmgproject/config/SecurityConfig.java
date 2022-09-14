@@ -30,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             "/api/user/login",
             "/api/user/regist",
-            "/api/notice/**",
     };
 
     @Autowired
