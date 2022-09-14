@@ -54,7 +54,7 @@ public class DiaryController {
         return ResponseEntity.ok(DiaryResponse.of(diary, 200, "일기 작성에 성공하였습니다."));
     }
 
-    @PostMapping("/{date}")
+    @GetMapping("/{date}")
     @ApiOperation(value = "월별 일기 조회", notes = "월별 일기를 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "일기 목록 조회 성공", response = DiaryListResponse.class),
@@ -72,6 +72,24 @@ public class DiaryController {
             return ResponseEntity.ok(BaseResponseBody.of(401, "일기 목록 조회에 실패하였습니다."));
         }
         return ResponseEntity.ok(DiaryListResponse.of(diaries, 200, "일기 목록 조회에 성공하였습니다."));
+    }
+
+    @GetMapping("/{diaryNo}")
+    @ApiOperation(value = "일기 상세 조회", notes = "일기를 상제 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "일기 상세 조회 성공", response = DiaryResponse.class),
+            @ApiResponse(code = 401, message = "일기 상세 조회 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> getByDiaryNo (@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "년도-월", required = true) Long diaryNo)  throws Exception{
+        Diary diary;
+        try {
+            diary = diaryService.getByDiaryNo(diaryNo);
+        }
+        catch (Exception e){
+            return ResponseEntity.ok(BaseResponseBody.of(401, "일기 상세 조회에 실패하였습니다."));
+        }
+        return ResponseEntity.ok(DiaryResponse.of(diary, 200, "일기 상세 조회에 성공하였습니다."));
     }
 }
 

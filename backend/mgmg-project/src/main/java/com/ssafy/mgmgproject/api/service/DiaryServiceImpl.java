@@ -57,4 +57,9 @@ public class DiaryServiceImpl implements DiaryService {
         return null;
     }
 
+    @Override
+    public Diary getByDiaryNo(Long diaryNo) {
+        return diaryRepository.findByDiaryNo(diaryNo).orElse(null);
+    }
+
 }

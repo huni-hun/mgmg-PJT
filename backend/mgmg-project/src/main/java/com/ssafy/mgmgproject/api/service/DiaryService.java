@@ -11,4 +11,7 @@ public interface DiaryService {
     Diary writeDiary(String userId, DiaryRequest diaryRequest);
 
     List<DiaryListMapping> getDiaryMonthList(Long userNo, String date);
+
+    Diary getByDiaryNo(Long diaryNo);
+
 }
