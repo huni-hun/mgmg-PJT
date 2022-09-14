@@ -2,14 +2,8 @@ package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
-import com.ssafy.mgmgproject.db.entity.Diary;
-import com.ssafy.mgmgproject.db.entity.Gift;
-import com.ssafy.mgmgproject.db.entity.Music;
-import com.ssafy.mgmgproject.db.entity.User;
-import com.ssafy.mgmgproject.db.repository.DiaryRepository;
-import com.ssafy.mgmgproject.db.repository.GiftRepository;
-import com.ssafy.mgmgproject.db.repository.MusicRepository;
-import com.ssafy.mgmgproject.db.repository.UserRepository;
+import com.ssafy.mgmgproject.db.entity.*;
+import com.ssafy.mgmgproject.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +24,9 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Autowired
     GiftRepository giftRepository;
+
+    @Autowired
+    InterestMusicRepository interestMusicRepository;
 
     @Override
     public Diary writeDiary(String userId, DiaryRequest diaryRequest) {
@@ -73,6 +70,18 @@ public class DiaryServiceImpl implements DiaryService {
         }
         diaryRepository.deleteByDiaryNo(diaryNo);
         return 1;
+    }
+
+    @Override
+    public InterestMusic addInterestMusic(String userId, Long musicNo){
+        User user = userRepository.findByUserId(userId).orElse(null);
+        Music music = musicRepository.findByMusicNo(musicNo).orElse(null);
+        InterestMusic interestMusic = InterestMusic.builder()
+                .user(user)
+                .music(music)
+                .build();
+        interestMusicRepository.save(interestMusic);
+        return interestMusic;
     }
 
 }
