@@ -46,6 +46,32 @@ public class BadgeServiceImpl implements BadgeService{
     }
 
     @Override
+    public List<Map<String,Object>> selectAchievedBadgeList(User user) {
+        List<AchievedBadge> achievedBadges = achievedBadgeRepository.findByUser(user);
+        List<Badge> badges = badgeRepository.findAll();
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        int achievedBadgesIndex = 0;
+        Badge badge = achievedBadgesIndex<achievedBadges.size()? achievedBadges.get(achievedBadgesIndex++).getBadge() : null;
+
+        for(int index=0; index<badges.size(); index++){
+            if(badge == badges.get(index)){
+                Map<String,Object> map = new HashMap<>();
+                map.put("badgeNo",badges.get(index).getBadgeNo());
+                map.put("badgeName",badges.get(index).getBadgeName());
+                map.put("achievedBadgeFlag",true);
+                result.add(map);
+                if(achievedBadgesIndex<achievedBadges.size()){
+                    badge = achievedBadges.get(achievedBadgesIndex++).getBadge();
+                }else{
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
     public AchievedBadge getByUserAndBadgeNo(User user, long badgeNo) {
         Badge badge = badgeRepository.findById(badgeNo).orElse(null);
         if(badge==null){
