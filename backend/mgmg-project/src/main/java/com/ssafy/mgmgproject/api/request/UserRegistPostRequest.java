@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
-public class UserRegistPostReq {
+public class UserRegistPostRequest {
 
     @NotEmpty
     String email;
@@ -21,8 +23,8 @@ public class UserRegistPostReq {
     @NotEmpty
     String userId;
 
-    @NotEmpty
-    String birth;
+    @NotNull
+    Date birth;
 
     @NotEmpty
     String name;
@@ -31,8 +33,8 @@ public class UserRegistPostReq {
     String gender;
 
     @NotEmpty
-    List<MusicGenre> musicTaste;
+    List<String> musicTaste;
 
     @NotEmpty
-    List<GiftCategory> giftTaste;
+    List<String> giftTaste;
 }

@@ -2,6 +2,7 @@ package com.ssafy.mgmgproject.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class User {
     @Column(name = "user_id", length = 16)
     private String userId;
 
-    @Column(name = "password", length = 16)
+    @Column(name = "password", length = 60)
     private String password;
 
     @Column(name = "email", length = 50)
@@ -41,12 +42,15 @@ public class User {
     private String gender;
 
     @Column(name = "admin")
+    @ColumnDefault("false")
     private boolean admin;
 
     @Column(name = "diary_font")
+    @ColumnDefault("0")
     private int diaryFont;
 
     @Column(name = "diary_continue")
+    @ColumnDefault("0")
     private int diaryContinue;
 
     @JsonIgnore
