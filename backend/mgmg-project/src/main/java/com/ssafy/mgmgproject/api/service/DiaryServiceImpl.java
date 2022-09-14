@@ -1,6 +1,7 @@
 package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
+import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.db.entity.Diary;
 import com.ssafy.mgmgproject.db.entity.Gift;
 import com.ssafy.mgmgproject.db.entity.Music;
@@ -11,6 +12,8 @@ import com.ssafy.mgmgproject.db.repository.MusicRepository;
 import com.ssafy.mgmgproject.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -46,4 +49,12 @@ public class DiaryServiceImpl implements DiaryService {
         diaryRepository.save(diary);
         return diary;
     }
+
+    @Override
+    public List<DiaryListMapping> getDiaryMonthList(Long userNo, String date){
+        List<DiaryListMapping> diaries = diaryRepository.findByUser_UserNoAndDiaryDateContaining(userNo, date);
+        if(diaries != null) return diaries;
+        return null;
+    }
+
 }
