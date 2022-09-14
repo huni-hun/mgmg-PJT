@@ -28,6 +28,9 @@ public class DiaryServiceImpl implements DiaryService {
     @Autowired
     InterestMusicRepository interestMusicRepository;
 
+    @Autowired
+    InterestGiftRepository interestGiftRepository;
+
     @Override
     public Diary writeDiary(String userId, DiaryRequest diaryRequest) {
         User user = userRepository.findByUserId(userId).orElse(null);
@@ -82,6 +85,18 @@ public class DiaryServiceImpl implements DiaryService {
                 .build();
         interestMusicRepository.save(interestMusic);
         return interestMusic;
+    }
+
+    @Override
+    public InterestGift addInterestGift(String userId, Long giftNo){
+        User user = userRepository.findByUserId(userId).orElse(null);
+        Gift gift = giftRepository.findByGiftNo(giftNo).orElse(null);
+        InterestGift interestGift = InterestGift.builder()
+                .user(user)
+                .gift(gift)
+                .build();
+        interestGiftRepository.save(interestGift);
+        return interestGift;
     }
 
 }

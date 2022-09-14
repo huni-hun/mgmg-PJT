@@ -12,6 +12,7 @@ import com.ssafy.mgmgproject.common.auth.UserDetails;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.common.util.JwtTokenUtil;
 import com.ssafy.mgmgproject.db.entity.Diary;
+import com.ssafy.mgmgproject.db.entity.InterestGift;
 import com.ssafy.mgmgproject.db.entity.InterestMusic;
 import com.ssafy.mgmgproject.db.entity.User;
 import io.swagger.annotations.*;
@@ -127,5 +128,28 @@ public class DiaryController {
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 음악 추가에 성공하였습니다."));
     }
+
+    @PostMapping("interestgift/{giftNo}")
+    @ApiOperation(value = "관심 선물 추가", notes = "관심 선물을 추가한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "관심 선물 추가 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "관심 선물 추가 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> addInterestGift(@ApiIgnore Authentication authentication,
+                                                                       @PathVariable @ApiParam(value = "선물번호", required = true) Long giftNo) throws Exception{
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        InterestGift interestGift;
+        try {
+            interestGift = diaryService.addInterestGift(userId, giftNo);
+            if (interestGift == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "관심 선물 추가에 실패하였습니다."));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "관심 선물 추가에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 선물 추가에 성공하였습니다."));
+    }
+
 }
 
