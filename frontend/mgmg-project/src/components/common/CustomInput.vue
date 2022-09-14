@@ -1,9 +1,7 @@
 <template>
-  <v-app>
-    <v-form>
-      <v-text-field single-line outlined :label="value.labelText" :rules="value.rules" :hint="value.hint" />
-    </v-form>
-  </v-app>
+  <v-form>
+    <v-text-field single-line outlined :label="value.labelText" :rules="value.rules" :hint="value.hint" />
+  </v-form>
 </template>
 
 <script>
