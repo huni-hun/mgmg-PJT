@@ -83,4 +83,8 @@ public class User {
         this.userName = userName;
         this.gender = gender;
     }
+
+    public void updateFont(int diaryFont){
+        this.diaryFont = diaryFont;
+    }
 }

@@ -45,7 +45,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> login(@RequestBody @ApiParam(value = "로그인 정보", required = true) UserLoginRequest loginInfo) {
+    public ResponseEntity<? extends BaseResponseBody> login(@RequestBody @ApiParam(value = "로그인 정보", required = true) UserLoginPostRequest loginInfo) {
         String userId = loginInfo.getUserId();
         String password = loginInfo.getPassword();
         User user = userService.getByUserId(userId);
@@ -113,7 +113,8 @@ public class UserController {
             @ApiResponse(code = 401, message = "이메일 중복", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> authEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> authEmail(@RequestBody @ApiParam(value = "이메일 중복검사, 인증번호 발송", required = true) UserEmailPostRequest userEmailPostRequest) throws Exception {
+        String email = userEmailPostRequest.getEmail();
         User user = userService.getByEmail(email);
         if(user != null) return  ResponseEntity.status(401).body(BaseResponseBody.of(401, "이메일 중복"));
 
