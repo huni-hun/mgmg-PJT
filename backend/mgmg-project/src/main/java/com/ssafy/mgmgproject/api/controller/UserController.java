@@ -253,4 +253,23 @@ public class UserController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "폰트가 수정되었습니다."));
     }
 
+    @DeleteMapping("/mypage")
+    @ApiOperation(value = "회원 탈퇴", notes = "(token) 회원 탈퇴")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "회원 탈퇴 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "회원 탈퇴 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회원삭제 비밀번호 검증", required = true) @Valid UserDeleteRequest userDeleteRequest) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+        if (!passwordEncoder.matches(userDeleteRequest.getPassword(), user.getPassword()))
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
+        else {
+            userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
+        }
+
+    }
 }

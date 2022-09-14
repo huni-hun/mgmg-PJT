@@ -20,4 +20,6 @@ public interface UserService {
     void updatePassword(User user, String newPassword);
 
     void updateDiaryFont(User user, int diaryFont);
+
+    void deleteUser(String userId);
 }

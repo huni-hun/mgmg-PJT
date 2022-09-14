@@ -105,4 +105,9 @@ public class UserServiceImpl implements UserService{
         user.updateFont(diaryFont);
     }
 
+    @Override
+    public void deleteUser(String userId) {
+        userRepository.deleteByUserId(userId);
+    }
+
 }
