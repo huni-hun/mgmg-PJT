@@ -1,15 +1,11 @@
-package com.ssafy.common.model.response;
-
-import org.springframework.http.HttpStatus;
+package com.ssafy.mgmgproject.common.model.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * 서버 요청에대한 기본 응답값(바디) 정의.
- */
+
 @Getter
 @Setter
 @ApiModel("BaseResponseBody")
@@ -39,3 +35,4 @@ public class BaseResponseBody {
         return body;
     }
 }
+
