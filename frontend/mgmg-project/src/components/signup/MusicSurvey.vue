@@ -43,6 +43,8 @@ export default {
     addMusic(music) {
       if (this.selectedMusic.includes(music)) {
         this.selectedMusic.splice(this.selectedMusic.indexOf(music), 1);
+      } else if (this.selectedMusic.length >= 5) {
+        return;
       } else {
         this.selectedMusic.push(music);
       }

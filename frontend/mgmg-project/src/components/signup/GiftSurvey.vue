@@ -28,11 +28,13 @@ export default {
   },
   methods: {
     // 선물 선택. 선택리스트에 없으면 추가, 있으면 제거
-    addGift(선물) {
-      if (this.selectedGift.includes(선물)) {
-        this.selectedGift.splice(this.selectedGift.indexOf(선물), 1);
+    addGift(gift) {
+      if (this.selectedGift.includes(gift)) {
+        this.selectedGift.splice(this.selectedGift.indexOf(gift), 1);
+      } else if (this.selectedGift.length >= 5) {
+        return;
       } else {
-        this.selectedGift.push(선물);
+        this.selectedGift.push(gift);
       }
       this.$emit("selectGifts", this.selectedGift);
     },
