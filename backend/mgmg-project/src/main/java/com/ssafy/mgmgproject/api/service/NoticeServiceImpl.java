@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class NoticeServiceImpl implements NoticeService{
@@ -79,6 +80,19 @@ public class NoticeServiceImpl implements NoticeService{
                 .fixedFlag(noticeRequest.isFixedFlag())
                 .build();
         noticeRepository.save(notice);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteNotice(Long NoticeNo) {
+        Optional<Notice> result = noticeRepository.findById(NoticeNo);
+        if(!result.isPresent()){
+            return  false;
+        }
+        result.ifPresent(notice -> {
+            noticeRepository.delete(notice);
+        });
         return true;
     }
 

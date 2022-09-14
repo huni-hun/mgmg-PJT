@@ -12,5 +12,6 @@ public interface NoticeService {
     Map<String,Object> selectNoticeList(String keyword, Pageable pageable);
     Notice getByNoticeNo(Long NoticeNo);
     boolean updateNotice(Long NoticeNo, NoticeRequest noticeRequest);
+    boolean deleteNotice(Long NoticeNo);
 
 }
