@@ -35,3 +35,4 @@ public class BaseResponseBody {
         return body;
     }
 }
+
