@@ -1,25 +1,19 @@
 package com.ssafy.mgmgproject.api.controller;
 
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
-import com.ssafy.mgmgproject.api.request.UserLoginRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.api.response.DiaryListResponse;
 import com.ssafy.mgmgproject.api.response.DiaryResponse;
-import com.ssafy.mgmgproject.api.response.UserLoginResponse;
 import com.ssafy.mgmgproject.api.service.DiaryService;
-import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.auth.UserDetails;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
-import com.ssafy.mgmgproject.common.util.JwtTokenUtil;
 import com.ssafy.mgmgproject.db.entity.Diary;
 import com.ssafy.mgmgproject.db.entity.InterestGift;
 import com.ssafy.mgmgproject.db.entity.InterestMusic;
-import com.ssafy.mgmgproject.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
