@@ -35,7 +35,10 @@ public class User {
     private Date birth;
 
     @Column(name = "username", length = 16)
-    private String username;
+    private String userName;
+
+    @Column(name = "gender", length = 3)
+    private String gender;
 
     @Column(name = "admin")
     private boolean admin;
