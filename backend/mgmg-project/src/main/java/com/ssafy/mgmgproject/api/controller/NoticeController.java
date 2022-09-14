@@ -3,8 +3,10 @@ package com.ssafy.mgmgproject.api.controller;
 import com.ssafy.mgmgproject.api.request.NoticeRequest;
 import com.ssafy.mgmgproject.api.response.NoticeListMapping;
 import com.ssafy.mgmgproject.api.response.NoticeListResponse;
+import com.ssafy.mgmgproject.api.response.NoticeResponse;
 import com.ssafy.mgmgproject.api.service.NoticeService;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
+import com.ssafy.mgmgproject.db.entity.Notice;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -70,5 +72,19 @@ public class NoticeController {
         }
     }
 
+    @GetMapping("/{noticeNo}")
+    @ApiOperation(value = "공지사항 상세조회", notes = "공지사항 상세정보를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "공지사항 상세정보 조회 성공", response = NoticeResponse.class),
+            @ApiResponse(code = 401, message = "공지사항 상세정보 조회 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
+    public ResponseEntity<? extends BaseResponseBody> detailNotice(@ApiIgnore Authentication authentication, @PathVariable long noticeNo){
+        // JWT
+
+        Notice notice = noticeService.getByNoticeNo(noticeNo);
+        if (notice == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
+        return ResponseEntity.status(200).body(NoticeResponse.of(notice, 200, "공지사항 상세조회를 성공하였습니다."));
+
+    }
 
 }

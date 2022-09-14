@@ -61,4 +61,9 @@ public class NoticeServiceImpl implements NoticeService{
         return result;
     }
 
+    @Override
+    public Notice getByNoticeNo(Long NoticeNo) {
+        return noticeRepository.findById(NoticeNo).orElse(null);
+    }
+
 }
