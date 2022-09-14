@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -33,8 +36,7 @@ public class Diary {
     private Date diaryDate;
 
     @Column(name = "write_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date writeDate;
+    private String writeDate;
 
     @Column(name = "weather", length = 5)
     private String weather;
@@ -56,4 +58,13 @@ public class Diary {
 
     @Column(name = "open_gift")
     private boolean openGift;
+
+    @PrePersist
+    public void onPrePersist(){
+        this.writeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+    }
+    @PreUpdate
+    public void onPreUpdate(){
+        this.writeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+    }
 }
