@@ -15,7 +15,10 @@ import AchievePage from "../views/AchievePage.vue";
 import InterestListPage from "../views/InterestListPage.vue";
 import StatisticsPage from "../views/StatisticsPage.vue";
 // 공지사항
-import NoticePage from "../views/NoticePage.vue";
+import NoticePage from "../views/NoticePage.vue"; // 부모
+import NoticeDetail from "../components/board/NoticeDetail.vue";
+import NoticeList from "../components/board/NoticeList.vue";
+import NoticeWriting from "../components/board/NoticeWriting.vue";
 
 Vue.use(VueRouter);
 
@@ -74,6 +77,23 @@ const routes = [
     path: "/notice",
     name: "notice",
     component: NoticePage,
+    children: [
+      {
+        path: "detail",
+        name: "noticedetail",
+        component: NoticeDetail,
+      },
+      {
+        path: "",
+        name: "noticelist",
+        component: NoticeList,
+      },
+      {
+        path: "writing",
+        name: "noticewriting",
+        component: NoticeWriting,
+      },
+    ],
   },
 ];
 
