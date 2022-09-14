@@ -15,9 +15,8 @@
 import SignUp from "@/components/signup/SignupComponent.vue";
 import GiftSurvey from "@/components/signup/GiftSurvey.vue";
 import MusicSurvey from "@/components/signup/MusicSurvey.vue";
-import CustomButton from "@/components/common/CustomButton.vue";
 export default {
-  components: { SignUp, GiftSurvey, MusicSurvey, CustomButton },
+  components: { SignUp, GiftSurvey, MusicSurvey },
   data() {
     return {
       signupOrder: 1,

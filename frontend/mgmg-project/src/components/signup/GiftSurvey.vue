@@ -11,6 +11,13 @@
           <div>{{ gift }}</div>
         </div>
       </v-row>
+      <v-row>
+        <v-col>
+          <label for="">가격대</label>
+          <CustomInput v-model="priceUnder" />
+          <CustomInput v-model="priceUpper" />
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -24,6 +31,17 @@ export default {
       giftLst: ["패션의류", "패션잡화", "화장품/미용", "디지털/가전", "가구/인테리어", "출산/육아", "식품", "스포츠/레저", "생활/건강", "여가/생활편의"],
       selectedGift: [],
       // this.$store.state.userStore.interestGiftLstSignup,
+
+      priceUnder: {
+        labelText: "하한가",
+        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
+        hint: "영어로 시작, 영어 숫자 포함 6자 이상 16자 이하",
+      },
+      priceUpper: {
+        labelText: "상한가",
+        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
+        hint: "영어로 시작, 영어 숫자 포함 6자 이상 16자 이하",
+      },
     };
   },
   methods: {

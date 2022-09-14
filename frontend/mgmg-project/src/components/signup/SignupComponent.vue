@@ -40,7 +40,15 @@
       </v-row>
       <v-row>
         <label class="col-4" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
-        <CustomInput v-model="birthSignupInput" class="col-4" id="birthSignupInput" />
+        <v-row class="col-4">
+          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field v-model="date" class="birthday" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
+            </template>
+            <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
+          </v-menu>
+        </v-row>
+        <!-- <CustomInput v-model="birthSignupInput" class="col-4" id="birthSignupInput" /> -->
         <div class="col-4"></div>
       </v-row>
       <v-row>
@@ -51,33 +59,21 @@
       </v-row>
       <v-row>
         <label for="">약관 동의</label>
-        <label for=""
-          >Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus obcaecati dolore molestiae ad debitis perspiciatis consequuntur doloribus ex ratione consectetur eaque quo
-          maiores quas ipsa, nihil, facere saepe maxime.</label
-        >
-      </v-row>
-
-      <!-- <v-row>
-        <v-col cols="12" sm="6" md="4">
-          <v-menu ref="menu" v-model="menu" :close-on-content-click="false" v-model:return-value="date" transition="scale-transition" offset-y min-width="290px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field v-model="date" readonly v-bind="attrs" v-on="on"></v-text-field>
-            </template>
-            <v-date-picker v-model="date" no-title scrollable> </v-date-picker>
-          </v-menu>
+        <label for="">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus obcaecati dolore molestiae ad debitis perspiciatis consequuntur doloribus ex ratione consectetur eaque quo
+          maiores quas ipsa, nihil, facere saepe maxime.
+        </label>
+        <v-col>
+          <input type="checkbox" />
+          <label for=""> 약관 내용에 동의합니다.</label>
         </v-col>
-      </v-row> -->
-      <!-- </v-col> -->
+      </v-row>
     </v-container>
-    <!-- <v-date-picker v-model="datepickerSignup" class="datepicker" /> -->
   </div>
 </template>
 
 <script>
-import CustomButton from "../common/CustomButton.vue";
-import CustomInput from "../common/CustomInput.vue";
 export default {
-  components: { CustomButton, CustomInput },
   data() {
     return {
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
@@ -141,6 +137,11 @@ export default {
 .signupContainer {
   width: inherit;
   height: inherit;
+}
+.birthday {
+  /* border-color: rgb(255, 250, 250); */
+  box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
+  border-radius: 0px;
 }
 /* .datepicker {
   width: 5rem;
