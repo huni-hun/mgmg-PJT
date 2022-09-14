@@ -65,7 +65,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> findPw(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email, @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) {
-        User user = userService.getByUserIdAndUserEmail(userId, email);
+        User user = userService.getByUserIdAndEmail(userId, email);
         if(user == null) return ResponseEntity.status(401).body(UserFindPwResponse.of(401, "입력한 정보를 다시 확인해주세요.", null));
         else{
             // 랜덤 임시 비밀번호 생성
@@ -87,7 +87,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String email) throws Exception {
-        User user = userService.getByUserNameAndUserEmail(userName, email);
+        User user = userService.getByUserNameAndEmail(userName, email);
         if (user == null)
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "고객님의 정보와 일치하는 아이디가 없습니다."));
         else return ResponseEntity.status(200).body(UserFindIdGetResponse.of(200, "아이디 찾기 성공", user.getUserId()));
@@ -105,18 +105,39 @@ public class UserController {
         if (user == null) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 아이디입니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 아이디입니다."));
     }
-//
-//    @PostMapping("/email")
-//    public ResponseEntity<?> email(@RequestBody String email) {
-//
-//        return new ResponseEntity<>()
-//    }
-//
-//    @PostMapping("/emailCheck")
-//    public ResponseEntity<?> emailCheck(@RequestBody String emailNum) {
-//
-//        return new ResponseEntity<>()
-//    }
+
+    @PostMapping("/email")
+    @ApiOperation(value = "이메일 인증번호 전송", notes = "이메일 인증번호를 전송한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "이에일 인증번호 발송 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "이메일 중복", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> authEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email) throws Exception {
+        User user = userService.getByEmail(email);
+        if(user != null) return  ResponseEntity.status(401).body(BaseResponseBody.of(401, "이메일 중복"));
+
+        Mail mail = mailService.createAuthMail(email);
+        mailService.sendMail(mail);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "인증번호 발송 성공"));
+    }
+
+    @GetMapping("/emailcheck")
+    @ApiOperation(value = "인증번호 확인", notes = "인증번호를 확인한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "인증 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> checkAuthKey(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email, @RequestParam @ApiParam(value = "인증번호", required = true) String emailNum) throws Exception {
+        String checkEmail = mailService.checkAuthKey(emailNum);
+        if (checkEmail == null || !checkEmail.equals(email))
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증번호가 올바르지 않습니다."));
+        else {
+            mailService.deleteAuthKey(emailNum);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "인증 성공"));
+        }
+    }
 
     @PostMapping("/regist")
     @ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.")

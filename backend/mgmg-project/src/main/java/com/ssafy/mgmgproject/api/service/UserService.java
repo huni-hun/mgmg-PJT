@@ -9,9 +9,11 @@ public interface UserService {
 
     void createUser(UserRegistPostRequest userRegistInfo);
 
-    User getByUserIdAndUserEmail(String userId, String userEmail);
+    User getByUserIdAndEmail(String userId, String email);
 
-    User getByUserNameAndUserEmail(String userName, String email);
+    User getByUserNameAndEmail(String userName, String email);
+
+    User getByEmail(String email);
 
     int updateUser(User user, UserUpatePutRequest userUpatePutRequest);
 
