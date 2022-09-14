@@ -12,11 +12,10 @@
         </div>
       </v-row>
       <v-row>
-        <v-col>
-          <label for="">가격대</label>
-          <CustomInput v-model="priceUnder" />
-          <CustomInput v-model="priceUpper" />
-        </v-col>
+        <label for="">가격대</label>
+        <CustomInput v-model="priceUnder" />
+        <label for="">~</label>
+        <CustomInput v-model="priceUpper" />
       </v-row>
     </v-container>
   </div>
@@ -34,13 +33,11 @@ export default {
 
       priceUnder: {
         labelText: "하한가",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
-        hint: "영어로 시작, 영어 숫자 포함 6자 이상 16자 이하",
+        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "숫자를 입력하세요."],
       },
       priceUpper: {
         labelText: "상한가",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
-        hint: "영어로 시작, 영어 숫자 포함 6자 이상 16자 이하",
+        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "숫자를 입력하세요."],
       },
     };
   },

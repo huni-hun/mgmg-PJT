@@ -3,7 +3,7 @@
     <!-- <div></div> -->
     <v-container class="signupContainer" id="signupContainer">
       <!-- <v-col> -->
-      <v-row>회원가입</v-row>
+      <v-row @click="pwCheckValidation">회원가입</v-row>
       <v-row>
         <label class="col-4" for="idSignupInput" id="idSignupLabel">아이디</label>
         <CustomInput v-model="idSignupInput" class="col-4" id="idSignupInput" />
@@ -53,8 +53,8 @@
       </v-row>
       <v-row>
         <label class="col-4" for="" id="genderSignupLabel">성별</label>
-        <custom-button class="col-3" btnText="남성" />
-        <custom-button class="col-3" btnText="여성" />
+        <CustomButton class="col-3" :class="{ selectedGender: userGender == 1 }" @click="changeGender(1)" btnText="남성" />
+        <CustomButton class="col-3" :class="{ selectedGender: userGender == 2 }" @click="changeGender(2)" btnText="여성" />
         <div class="col-4"></div>
       </v-row>
       <v-row>
@@ -80,7 +80,6 @@ export default {
       menu: false,
       modal: false,
       menu2: false,
-
       userId: document.getElementById("idSignupInput"),
       userPw: document.getElementById("pwSignupInput"),
       userEmail: document.getElementById("emailSignupInput"),
@@ -88,7 +87,6 @@ export default {
       userName: document.getElementById("nameSignupInput"),
       userbirth: document.getElementById("birthSignupInput"),
       userGender: "",
-
       idSignupInput: {
         labelText: "아이디를 입력하세요.",
         rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
@@ -130,6 +128,25 @@ export default {
       // },
     };
   },
+  methods: {
+    // 성별 선택
+    changeGender(gender) {
+      //남자는 1, 여자는 2 저장해놓음
+      this.userGender = gender;
+      // if (gender == 1) {
+      //   this.userGender = 1;
+      // } else if (gender == 2) {
+      //   this.userGender = 2;
+      // }
+      console.log(this.userGender);
+    },
+    // 비밀번호 두 개 같은지 확인
+    pwCheckValidation() {
+      if (document.getElementById("pwSignupInput").value == document.getElementById("pwcheckSignupInput").value) {
+        console.log("비번 같음");
+      }
+    },
+  },
 };
 </script>
 
@@ -142,6 +159,10 @@ export default {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
+}
+.selectedGender {
+  background-color: black;
+  color: white;
 }
 /* .datepicker {
   width: 5rem;
