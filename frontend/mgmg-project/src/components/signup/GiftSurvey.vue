@@ -6,11 +6,23 @@
       <v-row>좋아하는 선물 종류를 선택하세요. 최소 1개, 최대 5개까지 선택할 수 있습니다.</v-row>
       <v-row><hr class="hrStyle" /></v-row>
       <v-row>
-        <div class="col-3" v-for="gift in giftLst" :key="gift" @click="addGift(gift)">
+        <div class="flex" v-for="gift in giftLst.slice(0, 5)" :key="gift" @click="addGift(gift)">
           <div id="circle" class="giftLstBox" :class="{ selected: selectedGift.includes(gift) }"></div>
           <div>{{ gift }}</div>
         </div>
       </v-row>
+      <v-row>
+        <div class="flex" v-for="gift in giftLst.slice(5, 10)" :key="gift" @click="addGift(gift)">
+          <div id="circle" class="giftLstBox" :class="{ selected: selectedGift.includes(gift) }"></div>
+          <div>{{ gift }}</div>
+        </div>
+      </v-row>
+      <!-- <v-row>
+        <div class="col-3" v-for="gift in giftLst" :key="gift" @click="addGift(gift)">
+          <div id="circle" class="giftLstBox" :class="{ selected: selectedGift.includes(gift) }"></div>
+          <div>{{ gift }}</div>
+        </div>
+      </v-row> -->
       <v-row>
         <label for="">가격대</label>
         <CustomInput v-model="priceUnder" />

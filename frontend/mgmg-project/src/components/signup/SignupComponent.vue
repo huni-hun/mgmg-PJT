@@ -73,13 +73,17 @@
       </v-row>
       <v-row>
         <label for="">약관 동의</label>
+      </v-row>
+      <v-row>
         <label for="">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus obcaecati dolore molestiae ad debitis perspiciatis consequuntur doloribus ex ratione consectetur eaque quo
           maiores quas ipsa, nihil, facere saepe maxime.
         </label>
+      </v-row>
+      <v-row>
         <v-col>
-          <input type="checkbox" />
-          <label for=""> 약관 내용에 동의합니다.</label>
+          <input type="checkbox" id="ruleCheck" />
+          <label for="ruleCheck"> 약관 내용에 동의합니다.</label>
         </v-col>
       </v-row>
     </v-container>
