@@ -77,14 +77,37 @@ public class NoticeController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "공지사항 상세정보 조회 성공", response = NoticeResponse.class),
             @ApiResponse(code = 401, message = "공지사항 상세정보 조회 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "해당 공지 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
     public ResponseEntity<? extends BaseResponseBody> detailNotice(@ApiIgnore Authentication authentication, @PathVariable long noticeNo){
         // JWT
 
         Notice notice = noticeService.getByNoticeNo(noticeNo);
-        if (notice == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
+        if (notice == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
         return ResponseEntity.status(200).body(NoticeResponse.of(notice, 200, "공지사항 상세조회를 성공하였습니다."));
 
     }
 
+    @PutMapping("/{noticeNo}")
+    @ApiOperation(value = "공지사항 수정", notes = "공지사항의 제목 또는 내용을 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "공지사항 수정 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "공지사항 수정 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "해당 공지 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateNotice(@ApiIgnore Authentication authentication, @PathVariable long noticeNo, @RequestBody NoticeRequest noticeRequest) throws Exception{
+        // JWT 관리자 체크
+        boolean result;
+        try {
+            result = noticeService.updateNotice(noticeNo,noticeRequest);
+            if(result) {
+                return ResponseEntity.status(200).body(BaseResponseBody.of(200, "공지사항이 수정되었습니다."));
+            }else{
+                return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "공지사항 수정에 실패하셨습니다."));
+        }
+    }
 }

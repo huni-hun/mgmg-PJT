@@ -66,4 +66,20 @@ public class NoticeServiceImpl implements NoticeService{
         return noticeRepository.findById(NoticeNo).orElse(null);
     }
 
+    @Override
+    @Transactional
+    public boolean updateNotice(Long NoticeNo, NoticeRequest noticeRequest) {
+        if(getByNoticeNo(NoticeNo)==null){
+            return false;
+        }
+        Notice notice = Notice.builder()
+                .noticeNo(NoticeNo)
+                .noticeTitle(noticeRequest.getNoticeTitle())
+                .noticeContent(noticeRequest.getNoticeContent())
+                .fixedFlag(noticeRequest.isFixedFlag())
+                .build();
+        noticeRepository.save(notice);
+        return true;
+    }
+
 }
