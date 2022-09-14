@@ -1,3 +1,4 @@
+//giftSurver.vue
 <template>
   <div>
     <v-container>
@@ -16,34 +17,25 @@
 
 <script>
 export default {
-  // props: { name: String, },
+  props: ["selectGift"],
 
   data() {
     return {
       giftLst: ["패션의류", "패션잡화", "화장품/미용", "디지털/가전", "가구/인테리어", "출산/육아", "식품", "스포츠/레저", "생활/건강", "여가/생활편의"],
       selectedGift: [],
-      giftValue: [],
       // this.$store.state.userStore.interestGiftLstSignup,
     };
   },
   methods: {
     // 선물 선택. 선택리스트에 없으면 추가, 있으면 제거
-    addGift(gift) {
-      if (this.selectedGift.includes(gift)) {
-        this.selectedGift.splice(this.selectedGift.indexOf(gift), 1);
+    addGift(선물) {
+      if (this.selectedGift.includes(선물)) {
+        this.selectedGift.splice(this.selectedGift.indexOf(선물), 1);
       } else {
-        this.selectedGift.push(gift);
+        this.selectedGift.push(선물);
       }
-      // this.$store.state.userStore.interestGiftLstSignup = this.selectedGift;
-      // this.$emit("upGift", this.selectedGift);
-      this.giftValue.push("111");
-      this.$emit("setGift", this.giftValue);
-      console.log(this.selectedGift);
-      // this.updateGift();
+      this.$emit("selectGifts", this.selectedGift);
     },
-    // updateGift() {
-    //   this.$emit("updateGift", this.selectedGifts);
-    // },
   },
 };
 </script>

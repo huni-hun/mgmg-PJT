@@ -30,10 +30,12 @@
 
 <script>
 export default {
+  props: ["selectMusic"],
   data() {
     return {
       musicLst: ["재즈", "발라드", "클래식", "힙합", "CCM", "댄스", "팝", "컨트리음악"],
-      selectedMusic: this.$store.state.userStore.interestMusicLstSignup,
+      selectedMusic: [],
+      // selectedMusic: this.$store.state.userStore.interestMusicLstSignup,
     };
   },
   methods: {
@@ -44,8 +46,9 @@ export default {
       } else {
         this.selectedMusic.push(music);
       }
-      this.$store.state.userStore.interestMusicLstSignup = this.selectedMusic;
-      console.log(this.selectedMusic);
+      // this.$store.state.userStore.interestMusicLstSignup = this.selectedMusic;
+      // console.log(this.selectedMusic);
+      this.$emit("selectMusics", this.selectedMusic);
     },
   },
 };
