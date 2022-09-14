@@ -50,11 +50,13 @@ public class Diary {
     @Column(name = "diary_thema")
     private int diaryThema;
 
-    @Column(name = "recommend_music")
-    private Long recommendMusic;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "music_no")
+    private Music music;
 
-    @Column(name = "recommend_gift")
-    private Long recommendGift;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gift_no")
+    private Gift gift;
 
     @Column(name = "open_gift")
     private boolean openGift;
