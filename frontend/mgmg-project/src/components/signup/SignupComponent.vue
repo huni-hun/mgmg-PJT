@@ -11,7 +11,21 @@
       </v-row>
       <v-row>
         <label class="col-4" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
-        <CustomInput v-model="pwSignupInput" class="col-4" id="pwSignupInput" />
+        <div class="inputStyle col-4">
+          <v-text-field
+            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show3 ? 'text' : 'password'"
+            label="비밀번호를 입력하세요."
+            name="input-10-2"
+            hint="영어, 숫자, 특수기호 포함 8자 이상, 16자 이하"
+            value=""
+            class="input-group--focused"
+            @click:append="show3 = !show3"
+            single-line
+            outlined
+          ></v-text-field>
+        </div>
         <div class="col-4"></div>
       </v-row>
       <v-row>
@@ -40,14 +54,14 @@
       </v-row>
       <v-row>
         <label class="col-4" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
-        <v-row class="col-4">
+        <div class="col-4">
           <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field v-model="date" class="birthday" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
+              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
             </template>
             <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
           </v-menu>
-        </v-row>
+        </div>
         <!-- <CustomInput v-model="birthSignupInput" class="col-4" id="birthSignupInput" /> -->
         <div class="col-4"></div>
       </v-row>
@@ -76,6 +90,18 @@
 export default {
   data() {
     return {
+      // 비밀번호인풋
+      show1: false,
+      show2: true,
+      show3: false,
+      show4: false,
+      password: "Password",
+      rules: {
+        // required: (value) => !!value || "Required.",
+        min: (v) => v.length >= 8 || "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
+        // emailMatch: () => `The email and password you entered don't match`,
+      },
+      // 달력
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
       menu: false,
       modal: false,
@@ -155,10 +181,11 @@ export default {
   width: inherit;
   height: inherit;
 }
-.birthday {
+.inputStyle >>> fieldset {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
+  padding: 0;
 }
 .selectedGender {
   background-color: black;
@@ -167,6 +194,9 @@ export default {
 /* .datepicker {
   width: 5rem;
   height: 5rem;
+} */
+/* .v-messages.theme--light {
+  height: 0;
 } */
 .col-xl,
 .col-xl-auto,

@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       giftLst: ["패션의류", "패션잡화", "화장품/미용", "디지털/가전", "가구/인테리어", "출산/육아", "식품", "스포츠/레저", "생활/건강", "여가/생활편의"],
-      selectedGift: [],
+      selectedGift: ["패션의류"],
       // this.$store.state.userStore.interestGiftLstSignup,
 
       priceUnder: {
@@ -45,6 +45,9 @@ export default {
     // 선물 선택. 선택리스트에 없으면 추가, 있으면 제거
     addGift(gift) {
       if (this.selectedGift.includes(gift)) {
+        if (this.selectedGift.length == 1) {
+          return;
+        }
         this.selectedGift.splice(this.selectedGift.indexOf(gift), 1);
       } else if (this.selectedGift.length >= 5) {
         return;

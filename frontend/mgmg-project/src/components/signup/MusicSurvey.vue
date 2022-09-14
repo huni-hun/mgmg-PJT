@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       musicLst: ["재즈", "발라드", "클래식", "힙합", "CCM", "댄스", "팝", "컨트리음악"],
-      selectedMusic: [],
+      selectedMusic: ["재즈"],
       // selectedMusic: this.$store.state.userStore.interestMusicLstSignup,
     };
   },
@@ -42,6 +42,9 @@ export default {
     // 음악 선택. 선택리스트에 없으면 추가, 있으면 제거
     addMusic(music) {
       if (this.selectedMusic.includes(music)) {
+        if (this.selectedMusic.length == 1) {
+          return;
+        }
         this.selectedMusic.splice(this.selectedMusic.indexOf(music), 1);
       } else if (this.selectedMusic.length >= 5) {
         return;
