@@ -1,7 +1,7 @@
 package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.request.UserRegistPostRequest;
-import com.ssafy.mgmgproject.api.request.UserUpatePutRequest;
+import com.ssafy.mgmgproject.api.request.UserUpdatePutRequest;
 import com.ssafy.mgmgproject.db.entity.GiftCategory;
 import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import com.ssafy.mgmgproject.db.entity.User;
@@ -81,11 +81,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public int updateUser(User user, UserUpatePutRequest userUpatePutRequest) {
-        String email = userUpatePutRequest.getEmail();
-        Date birth = userUpatePutRequest.getBirth();
-        String userName = userUpatePutRequest.getName();
-        String gender = userUpatePutRequest.getGender();
+    public int updateUser(User user, UserUpdatePutRequest userUpdatePutRequest) {
+        String email = userUpdatePutRequest.getEmail();
+        Date birth = userUpdatePutRequest.getBirth();
+        String userName = userUpdatePutRequest.getName();
+        String gender = userUpdatePutRequest.getGender();
         try {
             user.updateUser(email, birth, userName, gender);
         } catch (Exception e) {

@@ -12,7 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ApiModel("UserUpatePutRequest ")
-public class UserUpatePutRequest {
+public class UserUpdatePutRequest {
 
     @NotEmpty
     @ApiModelProperty(name = "회원 이메일", example = "ssafy@ssafy.com")

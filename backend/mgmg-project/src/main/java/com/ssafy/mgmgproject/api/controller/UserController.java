@@ -204,11 +204,11 @@ public class UserController {
             @ApiResponse(code = 401, message = "회원 정보 수정 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> updateUser(@ApiIgnore Authentication authentication, @ModelAttribute @Valid UserUpatePutRequest userUpatePutRequest) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회원정보", required = true) @Valid UserUpdatePutRequest userUpdatePutRequest) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-        int result = userService.updateUser(user, userUpatePutRequest);
+        int result = userService.updateUser(user, userUpdatePutRequest);
         if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원정보 수정에 실패하였습니다."));
         User updatedUser = userService.getByUserId(userId);
         return ResponseEntity.status(200).body(UserMyPageResponse.of(updatedUser, 200, "회원정보가 수정되었습니다."));
