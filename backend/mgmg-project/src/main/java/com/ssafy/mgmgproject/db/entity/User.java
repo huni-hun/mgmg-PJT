@@ -2,6 +2,7 @@ package com.ssafy.mgmgproject.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class User {
     @Column(name = "user_id", length = 16)
     private String userId;
 
-    @Column(name = "password", length = 16)
+    @Column(name = "password", length = 60)
     private String password;
 
     @Column(name = "email", length = 50)
@@ -35,15 +36,21 @@ public class User {
     private Date birth;
 
     @Column(name = "username", length = 16)
-    private String username;
+    private String userName;
+
+    @Column(name = "gender", length = 3)
+    private String gender;
 
     @Column(name = "admin")
+    @ColumnDefault("false")
     private boolean admin;
 
     @Column(name = "diary_font")
+    @ColumnDefault("0")
     private int diaryFont;
 
     @Column(name = "diary_continue")
+    @ColumnDefault("0")
     private int diaryContinue;
 
     @JsonIgnore
@@ -65,4 +72,19 @@ public class User {
     @Builder.Default
     @JsonIgnore
     private List<AchievedBadge> achievedBadges = new ArrayList<>();
+
+    public void updatePw(String newPw) {
+        this.password = newPw;
+    }
+
+    public void updateUser(String email, Date birth, String userName, String gender) {
+        this.email = email;
+        this.birth = birth;
+        this.userName = userName;
+        this.gender = gender;
+    }
+
+    public void updateFont(int diaryFont){
+        this.diaryFont = diaryFont;
+    }
 }
