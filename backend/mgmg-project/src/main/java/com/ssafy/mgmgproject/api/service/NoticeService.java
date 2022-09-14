@@ -8,10 +8,10 @@ import java.util.Map;
 
 public interface NoticeService {
 
-    boolean writeNotice(NoticeRequest noticeRequest);
+    Notice writeNotice(NoticeRequest noticeRequest);
     Map<String,Object> selectNoticeList(String keyword, Pageable pageable);
     Notice getByNoticeNo(Long NoticeNo);
-    boolean updateNotice(Long NoticeNo, NoticeRequest noticeRequest);
+    Notice updateNotice(Long NoticeNo, NoticeRequest noticeRequest);
     boolean deleteNotice(Long NoticeNo);
 
 }

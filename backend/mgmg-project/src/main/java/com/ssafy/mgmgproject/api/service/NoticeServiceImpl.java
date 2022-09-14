@@ -24,14 +24,14 @@ public class NoticeServiceImpl implements NoticeService{
 
     @Override
     @Transactional
-    public boolean writeNotice(NoticeRequest noticeRequest) {
+    public Notice writeNotice(NoticeRequest noticeRequest) {
         Notice notice = Notice.builder()
                 .noticeTitle(noticeRequest.getNoticeTitle())
                 .noticeContent(noticeRequest.getNoticeContent())
                 .fixedFlag(noticeRequest.isFixedFlag())
                 .build();
         noticeRepository.save(notice);
-        return true;
+        return notice;
     }
 
     @Override
@@ -69,18 +69,17 @@ public class NoticeServiceImpl implements NoticeService{
 
     @Override
     @Transactional
-    public boolean updateNotice(Long NoticeNo, NoticeRequest noticeRequest) {
-        if(getByNoticeNo(NoticeNo)==null){
-            return false;
+    public Notice updateNotice(Long NoticeNo, NoticeRequest noticeRequest) {
+        Notice notice = getByNoticeNo(NoticeNo);
+        if(notice==null){
+            return null;
         }
-        Notice notice = Notice.builder()
-                .noticeNo(NoticeNo)
-                .noticeTitle(noticeRequest.getNoticeTitle())
-                .noticeContent(noticeRequest.getNoticeContent())
-                .fixedFlag(noticeRequest.isFixedFlag())
-                .build();
+        notice.setNoticeTitle(noticeRequest.getNoticeTitle());
+        notice.setNoticeContent(noticeRequest.getNoticeContent());
+        notice.setFixedFlag(noticeRequest.isFixedFlag());
+
         noticeRepository.save(notice);
-        return true;
+        return notice;
     }
 
     @Override
