@@ -334,7 +334,7 @@ public class UserController {
         User user = userService.getByUserId(userId);
 
         userService.changeGiftCategory(user, userChangeGiftPutRequest);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "음악 취향이 변경되었습니다."));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "선물 취향이 변경되었습니다."));
     }
 
 }

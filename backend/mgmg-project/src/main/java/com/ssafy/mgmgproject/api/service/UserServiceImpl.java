@@ -136,6 +136,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void changeMusicGenre(User user, UserChangeMusicPutRequest userChangeMusicPutRequest) {
         musicGenreRepository.deleteByUser(user);
 
@@ -149,6 +150,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void changeGiftCategory(User user, UserChangeGiftPutRequest userChangeGiftPutRequest) {
         giftCategoryRepository.deleteByUser(user);
 
