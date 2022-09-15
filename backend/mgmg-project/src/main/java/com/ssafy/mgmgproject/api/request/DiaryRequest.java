@@ -22,7 +22,7 @@ public class DiaryRequest {
     String diaryDate;
 
     @NotEmpty
-    @ApiModelProperty(name = "요일", example = "WEB")
+    @ApiModelProperty(name = "요일", example = "WED")
     String day;
 
     @NotEmpty
