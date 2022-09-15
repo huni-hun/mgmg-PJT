@@ -9,10 +9,13 @@ export default new Vuex.Store({
     isLogin: false,
     userId: String,
     userPw: String,
+
+    // 회원가입 시 잠시 저장
+    interestMusicLstSignup: [],
+    interestGiftLstSignup: [],
   },
   getters: {},
   mutations: {},
   actions: {},
   modules: {},
 });
-
