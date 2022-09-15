@@ -50,7 +50,7 @@ public class DiaryController {
         return ResponseEntity.status(200).body(DiaryResponse.of(diary, 200, "일기 작성에 성공하였습니다."));
     }
 
-    @GetMapping("/{date}")
+    @GetMapping("/month/{date}")
     @ApiOperation(value = "월별 일기 조회", notes = "월별 일기를 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "일기 목록 조회 성공", response = DiaryListResponse.class),
@@ -70,7 +70,7 @@ public class DiaryController {
         return ResponseEntity.status(200).body(DiaryListResponse.of(diaries, 200, "일기 목록 조회에 성공하였습니다."));
     }
 
-    @GetMapping("/{diaryNo}")
+    @GetMapping("/detail/{diaryNo}")
     @ApiOperation(value = "일기 상세 조회", notes = "일기를 상제 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "일기 상세 조회 성공", response = DiaryResponse.class),
