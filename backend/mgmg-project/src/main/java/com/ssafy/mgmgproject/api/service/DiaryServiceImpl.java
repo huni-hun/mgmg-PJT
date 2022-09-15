@@ -61,6 +61,7 @@ public class DiaryServiceImpl implements DiaryService {
         Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryUpdateRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryUpdateRequest.getGiftNo()).orElse(null);
+        if(diary.getGift() != gift) diary.closeGift();
         if(diary != null){
             diary.updateDiary(
                     diaryUpdateRequest.getDiaryContent(),

@@ -86,4 +86,8 @@ public class Diary {
     public void openGift() {
         this.openGift = true;
     }
+
+    public void closeGift() {
+        this.openGift = false;
+    }
 }
