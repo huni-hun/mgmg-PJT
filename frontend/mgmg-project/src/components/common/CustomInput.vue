@@ -1,6 +1,6 @@
 <template>
   <v-form>
-    <v-text-field single-line outlined :label="value.labelText" :rules="value.rules" :hint="value.hint" />
+    <v-text-field single-line outlined :label="value.labelText" :rules="value.rules" :hint="value.hint" :id="value.id" />
   </v-form>
 </template>
 
@@ -14,6 +14,7 @@ export default {
         labelText: this.$refs.value,
         rules: this.$refs.value,
         hint: this.$refs.value,
+        id: this.$refs.value,
       });
     },
   },
