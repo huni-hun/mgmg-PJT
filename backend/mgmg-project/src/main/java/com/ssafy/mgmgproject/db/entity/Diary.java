@@ -31,10 +31,13 @@ public class Diary {
     @Column(name = "diary_content", length = 500)
     private String diaryContent;
 
-    @Column(name = "diary_date")
+    @Column(name = "diary_date", length = 16)
     private String diaryDate;
 
-    @Column(name = "write_date")
+    @Column(name = "day", length = 3)
+    private String day;
+
+    @Column(name = "write_date", length = 16)
     private String writeDate;
 
     @Column(name = "weather", length = 5)
