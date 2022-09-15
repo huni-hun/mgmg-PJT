@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface MusicGenreRepository extends JpaRepository<MusicGenre, Long> {
     List<MusicGenre> findByUser(User user);
+    void deleteByUser(User user);
 }

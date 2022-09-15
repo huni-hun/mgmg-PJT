@@ -1,5 +1,7 @@
 package com.ssafy.mgmgproject.api.service;
 
+import com.ssafy.mgmgproject.api.request.UserChangeGiftPutRequest;
+import com.ssafy.mgmgproject.api.request.UserChangeMusicPutRequest;
 import com.ssafy.mgmgproject.api.request.UserRegistPostRequest;
 import com.ssafy.mgmgproject.api.request.UserUpdatePutRequest;
 import com.ssafy.mgmgproject.db.entity.GiftCategory;
@@ -119,6 +121,32 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<GiftCategory> searchGiftCategory(User user) {
         return giftCategoryRepository.findByUser(user);
+    }
+
+    @Override
+    public void changeMusicGenre(User user, UserChangeMusicPutRequest userChangeMusicPutRequest) {
+        musicGenreRepository.deleteByUser(user);
+
+        for (String taste : userChangeMusicPutRequest.getMusicTaste()) {
+            MusicGenre musicTaste = MusicGenre.builder()
+                    .user(user)
+                    .musicGenreName(taste)
+                    .build();
+            musicGenreRepository.save(musicTaste);
+        }
+    }
+
+    @Override
+    public void changeGiftCategory(User user, UserChangeGiftPutRequest userChangeGiftPutRequest) {
+        giftCategoryRepository.deleteByUser(user);
+
+        for (String taste :userChangeGiftPutRequest.getGiftTaste()) {
+            GiftCategory giftCategory = GiftCategory.builder()
+                    .user(user)
+                    .giftCategoryName(taste)
+                    .build();
+            giftCategoryRepository.save(giftCategory);
+        }
     }
 
 }

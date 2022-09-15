@@ -305,4 +305,34 @@ public class UserController {
         return ResponseEntity.status(200).body(SearchGiftCategoryGetResponse.of(giftCategories, 200, "선물 취향이 조회되었습니다."));
     }
 
+    @PutMapping("/mypage/musicchange")
+    @ApiOperation(value = "음악 취향 변경", notes = "(token) 회원가입시 조사한 음악 취향을 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "취향 변경 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> ChangeMusicGenre(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경할 음악 취향", required = true) @Valid UserChangeMusicPutRequest userChangeMusicPutRequest) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        userService.changeMusicGenre(user, userChangeMusicPutRequest);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "음악 취향이 변경되었습니다."));
+    }
+
+    @PutMapping("/mypage/giftchange")
+    @ApiOperation(value = "선물 취향 변경", notes = "(token) 회원가입시 조사한 선물 취향을 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "취향 변경 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> ChangeGiftCategory(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경할 선물 취향", required = true) @Valid UserChangeGiftPutRequest userChangeGiftPutRequest) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        userService.changeGiftCategory(user, userChangeGiftPutRequest);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "음악 취향이 변경되었습니다."));
+    }
+
 }

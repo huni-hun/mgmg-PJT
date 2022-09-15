@@ -1,5 +1,7 @@
 package com.ssafy.mgmgproject.api.service;
 
+import com.ssafy.mgmgproject.api.request.UserChangeGiftPutRequest;
+import com.ssafy.mgmgproject.api.request.UserChangeMusicPutRequest;
 import com.ssafy.mgmgproject.api.request.UserRegistPostRequest;
 import com.ssafy.mgmgproject.api.request.UserUpdatePutRequest;
 import com.ssafy.mgmgproject.db.entity.GiftCategory;
@@ -30,4 +32,8 @@ public interface UserService {
     List<MusicGenre> searchMusicGenre(User user);
 
     List<GiftCategory> searchGiftCategory(User user);
+
+    void changeMusicGenre(User user, UserChangeMusicPutRequest userChangeMusicPutRequest);
+
+    void changeGiftCategory(User user, UserChangeGiftPutRequest userChangeGiftPutRequest);
 }
