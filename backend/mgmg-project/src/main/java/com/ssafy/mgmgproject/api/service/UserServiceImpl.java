@@ -1,7 +1,9 @@
 package com.ssafy.mgmgproject.api.service;
 
+import com.ssafy.mgmgproject.api.request.UserChangeGiftPutRequest;
+import com.ssafy.mgmgproject.api.request.UserChangeMusicPutRequest;
 import com.ssafy.mgmgproject.api.request.UserRegistPostRequest;
-import com.ssafy.mgmgproject.api.request.UserUpatePutRequest;
+import com.ssafy.mgmgproject.api.request.UserUpdatePutRequest;
 import com.ssafy.mgmgproject.db.entity.GiftCategory;
 import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import com.ssafy.mgmgproject.db.entity.User;
@@ -13,7 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -81,11 +85,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public int updateUser(User user, UserUpatePutRequest userUpatePutRequest) {
-        String email = userUpatePutRequest.getEmail();
-        Date birth = userUpatePutRequest.getBirth();
-        String userName = userUpatePutRequest.getName();
-        String gender = userUpatePutRequest.getGender();
+    public int updateUser(User user, UserUpdatePutRequest userUpdatePutRequest) {
+        String email = userUpdatePutRequest.getEmail();
+        Date birth = userUpdatePutRequest.getBirth();
+        String userName = userUpdatePutRequest.getName();
+        String gender = userUpdatePutRequest.getGender();
         try {
             user.updateUser(email, birth, userName, gender);
         } catch (Exception e) {
@@ -98,6 +102,75 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public void updatePassword(User user, String newPassword) {
         user.updatePw(passwordEncoder.encode(newPassword));
+    }
+
+    @Override
+    @Transactional
+    public void updateDiaryFont(User user, int diaryFont) {
+        user.updateFont(diaryFont);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(User user) {
+        User deleteUser = User.builder()
+                .userId(user.getUserId())
+                .password(null)
+                .email(null)
+                .birth(null)
+                .userName(null)
+                .gender(null)
+                .build();
+
+        userRepository.save(deleteUser);
+    }
+
+    @Override
+    public List<String> searchMusicGenre(User user) {
+        List<MusicGenre> musicGenres = musicGenreRepository.findByUser(user);
+        List<String> list = new ArrayList<>();
+        for(MusicGenre musicGenre : musicGenres){
+            list.add(musicGenre.getMusicGenreName());
+        }
+        return list;
+    }
+
+    @Override
+    public List<String> searchGiftCategory(User user) {
+        List<GiftCategory> gitCategories = giftCategoryRepository.findByUser(user);
+        List<String> list = new ArrayList<>();
+        for(GiftCategory giftCategory : gitCategories){
+            list.add(giftCategory.getGiftCategoryName());
+        }
+        return list;
+    }
+
+    @Override
+    @Transactional
+    public void changeMusicGenre(User user, UserChangeMusicPutRequest userChangeMusicPutRequest) {
+        musicGenreRepository.deleteByUser(user);
+
+        for (String taste : userChangeMusicPutRequest.getMusicTaste()) {
+            MusicGenre musicTaste = MusicGenre.builder()
+                    .user(user)
+                    .musicGenreName(taste)
+                    .build();
+            musicGenreRepository.save(musicTaste);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void changeGiftCategory(User user, UserChangeGiftPutRequest userChangeGiftPutRequest) {
+        giftCategoryRepository.deleteByUser(user);
+
+        for (String taste :userChangeGiftPutRequest.getGiftTaste()) {
+            GiftCategory giftCategory = GiftCategory.builder()
+                    .user(user)
+                    .giftCategoryName(taste)
+                    .build();
+            giftCategoryRepository.save(giftCategory);
+        }
     }
 
 }

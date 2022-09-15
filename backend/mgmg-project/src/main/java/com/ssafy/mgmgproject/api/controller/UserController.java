@@ -8,6 +8,8 @@ import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.auth.UserDetails;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.common.util.JwtTokenUtil;
+import com.ssafy.mgmgproject.db.entity.GiftCategory;
+import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import com.ssafy.mgmgproject.db.entity.User;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(value = "유저 API")
 @CrossOrigin("*")
@@ -50,7 +53,7 @@ public class UserController {
         String password = loginInfo.getPassword();
         User user = userService.getByUserId(userId);
 
-        if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(401, "Not Registered"));
+        if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
         if (passwordEncoder.matches(password, user.getPassword())) {
             return ResponseEntity.ok(UserLoginResponse.of(user, 200, "로그인에 성공하였습니다.", JwtTokenUtil.getToken(userId)));
         }
@@ -204,11 +207,11 @@ public class UserController {
             @ApiResponse(code = 401, message = "회원 정보 수정 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> updateUser(@ApiIgnore Authentication authentication, @ModelAttribute @Valid UserUpatePutRequest userUpatePutRequest) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회원정보", required = true) @Valid UserUpdatePutRequest userUpdatePutRequest) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-        int result = userService.updateUser(user, userUpatePutRequest);
+        int result = userService.updateUser(user, userUpdatePutRequest);
         if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원정보 수정에 실패하였습니다."));
         User updatedUser = userService.getByUserId(userId);
         return ResponseEntity.status(200).body(UserMyPageResponse.of(updatedUser, 200, "회원정보가 수정되었습니다."));
@@ -231,6 +234,105 @@ public class UserController {
             userService.updatePassword(user, userUpdatePwPutRequest.getNewPassword());
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호가 변경되었습니다."));
         }
+    }
+
+    @PutMapping("/mypage/diaryfont")
+    @ApiOperation(value = "폰트 수정", notes = "(token) 폰트를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "폰트 수정 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateFont(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "폰트수정", required = true) @Valid UserUpdateFontPutRequest userUpdateFontPutRequest) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        try {
+            userService.updateDiaryFont(user, userUpdateFontPutRequest.getDiaryFont());
+        }catch (Exception e) {
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "오류 발생."));
+        }
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "폰트가 수정되었습니다."));
+    }
+
+    @DeleteMapping("/mypage")
+    @ApiOperation(value = "회원 탈퇴", notes = "(token) 회원 탈퇴")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "회원 탈퇴 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "회원 탈퇴 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회원삭제 비밀번호 검증", required = true) @Valid UserDeleteRequest userDeleteRequest) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+        if (!passwordEncoder.matches(userDeleteRequest.getPassword(), user.getPassword()))
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
+        else {
+            userService.deleteUser(user);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
+        }
+    }
+
+    @GetMapping("/mypage/music")
+    @ApiOperation(value = "음악 취향 조회", notes = "(token) 회원가입시 조사한 음악 취향을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "취향 조회 성공", response = SearchMusicGenreGetResponse.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> SearchMusicGenre(@ApiIgnore Authentication authentication) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        List<String> musicGenres = userService.searchMusicGenre(user);
+        return ResponseEntity.status(200).body(SearchMusicGenreGetResponse.of(musicGenres, 200, "음악 취향이 조사되었습니다."));
+    }
+
+    @GetMapping("/mypage/gift")
+    @ApiOperation(value = "선물 취향 조회", notes = "(token) 회원가입시 조사한 음악 취향을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "취향 조회 성공", response = SearchGiftCategoryGetResponse.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> SearchGiftCategory(@ApiIgnore Authentication authentication) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        List<String> giftCategories = userService.searchGiftCategory(user);
+        return ResponseEntity.status(200).body(SearchGiftCategoryGetResponse.of(giftCategories, 200, "선물 취향이 조회되었습니다."));
+    }
+
+    @PutMapping("/mypage/musicchange")
+    @ApiOperation(value = "음악 취향 변경", notes = "(token) 회원가입시 조사한 음악 취향을 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "취향 변경 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> ChangeMusicGenre(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경할 음악 취향", required = true) @Valid UserChangeMusicPutRequest userChangeMusicPutRequest) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        userService.changeMusicGenre(user, userChangeMusicPutRequest);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "음악 취향이 변경되었습니다."));
+    }
+
+    @PutMapping("/mypage/giftchange")
+    @ApiOperation(value = "선물 취향 변경", notes = "(token) 회원가입시 조사한 선물 취향을 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "취향 변경 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> ChangeGiftCategory(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경할 선물 취향", required = true) @Valid UserChangeGiftPutRequest userChangeGiftPutRequest) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        userService.changeGiftCategory(user, userChangeGiftPutRequest);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "선물 취향이 변경되었습니다."));
     }
 
 }
