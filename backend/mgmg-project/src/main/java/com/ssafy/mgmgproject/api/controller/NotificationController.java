@@ -41,7 +41,7 @@ public class NotificationController {
             @ApiResponse(code = 401, message = "신규 알림 여부 확인 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> listBadge(
+    public ResponseEntity<? extends BaseResponseBody> checkNewNotification(
             @ApiIgnore Authentication authentication){
 
         UserDetails userDetails = (UserDetails)authentication.getDetails();
