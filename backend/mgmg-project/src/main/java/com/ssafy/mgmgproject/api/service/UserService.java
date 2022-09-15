@@ -4,8 +4,6 @@ import com.ssafy.mgmgproject.api.request.UserChangeGiftPutRequest;
 import com.ssafy.mgmgproject.api.request.UserChangeMusicPutRequest;
 import com.ssafy.mgmgproject.api.request.UserRegistPostRequest;
 import com.ssafy.mgmgproject.api.request.UserUpdatePutRequest;
-import com.ssafy.mgmgproject.db.entity.GiftCategory;
-import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import com.ssafy.mgmgproject.db.entity.User;
 
 import java.util.List;
