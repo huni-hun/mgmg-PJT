@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div><label for="">취향 음악</label></div>
 </template>
 
 <script>

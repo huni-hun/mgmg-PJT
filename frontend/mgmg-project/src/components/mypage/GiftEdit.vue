@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div><label for="">취향 선물</label></div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div><label for="">비밀번호 수정</label></div>
 </template>
 
 <script>
