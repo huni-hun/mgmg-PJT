@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -27,9 +28,9 @@ public class Notification {
     @Column(name="notification_content", length = 30, nullable = false)
     private String notificationContent;
 
-    @Column(name="notification_date")
+    @Column(name="notification_date", updatable = false, length = 16)
     @CreatedDate
-    private LocalDateTime notificationDate;
+    private String notificationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
@@ -37,6 +38,11 @@ public class Notification {
 
     public void createNotification(User user){
         this.user = user;
+    }
+
+    @PrePersist
+    public void onPrePersist(){
+        this.notificationDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
     }
 
 }
