@@ -6,24 +6,15 @@ import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
 
 @Getter
 @Service
-@ApiModel("CreateDiaryPostRequest")
-public class DiaryRequest {
+@ApiModel("UpdateDiaryPutRequest")
+public class DiaryUpdateRequest {
 
     @NotEmpty
     @ApiModelProperty(name = "일기 내용", example = "일기 내용입니다.")
     String diaryContent;
-
-    @NotEmpty
-    @ApiModelProperty(name = "해당 날짜", example = "2022-09-14")
-    String diaryDate;
-
-    @NotEmpty
-    @ApiModelProperty(name = "요일", example = "WED")
-    String day;
 
     @NotEmpty
     @ApiModelProperty(name = "날씨", example = "맑음")

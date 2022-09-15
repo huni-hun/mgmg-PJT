@@ -1,5 +1,6 @@
 package com.ssafy.mgmgproject.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,11 +32,13 @@ public class Diary {
     @Column(name = "diary_content", length = 500)
     private String diaryContent;
 
-    @Column(name = "diary_date")
-    @Temporal(TemporalType.DATE)
-    private Date diaryDate;
+    @Column(name = "diary_date", length = 16)
+    private String diaryDate;
 
-    @Column(name = "write_date")
+    @Column(name = "day", length = 3)
+    private String day;
+
+    @Column(name = "write_date", length = 16)
     private String writeDate;
 
     @Column(name = "weather", length = 5)
@@ -50,11 +53,11 @@ public class Diary {
     @Column(name = "diary_thema")
     private int diaryThema;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "music_no")
     private Music music;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gift_no")
     private Gift gift;
 
@@ -68,5 +71,23 @@ public class Diary {
     @PreUpdate
     public void onPreUpdate(){
         this.writeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+    }
+
+    public void updateDiary(String diaryContent, String weather, String diaryImg, int diaryThema, String emotion, Music music, Gift gift) {
+        this.diaryContent = diaryContent;
+        this.weather = weather;
+        this.diaryImg = diaryImg;
+        this.diaryThema = diaryThema;
+        this.emotion = emotion;
+        this.music = music;
+        this.gift = gift;
+    }
+
+    public void openGift() {
+        this.openGift = true;
+    }
+
+    public void closeGift() {
+        this.openGift = false;
     }
 }
