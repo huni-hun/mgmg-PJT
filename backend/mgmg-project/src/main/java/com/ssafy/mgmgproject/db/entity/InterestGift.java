@@ -3,6 +3,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -28,7 +30,11 @@ public class InterestGift {
     @JoinColumn(name = "gift_no")
     private Gift gift;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "regist_date")
-    private Date registDate;
+    @Column(name = "regist_date", updatable = false, length = 16)
+    private String registDate;
+
+    @PrePersist
+    public void onPrePersist(){
+        this.registDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+    }
 }
