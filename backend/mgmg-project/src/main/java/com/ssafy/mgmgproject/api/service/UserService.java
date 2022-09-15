@@ -27,7 +27,7 @@ public interface UserService {
 
     void updateDiaryFont(User user, int diaryFont);
 
-    void deleteUser(String userId);
+    void deleteUser(User user);
 
     List<String> searchMusicGenre(User user);
 

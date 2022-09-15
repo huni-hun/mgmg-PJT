@@ -272,7 +272,7 @@ public class UserController {
         if (!passwordEncoder.matches(userDeleteRequest.getPassword(), user.getPassword()))
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
         else {
-            userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
+            userService.deleteUser(user);
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
         }
     }
