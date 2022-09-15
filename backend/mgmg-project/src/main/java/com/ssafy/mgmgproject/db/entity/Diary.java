@@ -1,5 +1,6 @@
 package com.ssafy.mgmgproject.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,11 +53,11 @@ public class Diary {
     @Column(name = "diary_thema")
     private int diaryThema;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "music_no")
     private Music music;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gift_no")
     private Gift gift;
 
