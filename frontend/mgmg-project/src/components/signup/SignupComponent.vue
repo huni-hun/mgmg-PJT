@@ -3,76 +3,91 @@
     <!-- <div></div> -->
     <v-container class="signupContainer" id="signupContainer">
       <!-- <v-col> -->
-      <v-row @click="pwCheckValidation">회원가입</v-row>
+      <v-row class="signupNoDrag" @click="test()">회원가입</v-row>
       <v-row>
-        <label class="col-4" for="idSignupInput" id="idSignupLabel">아이디</label>
-        <CustomInput v-model="idSignupInput" class="col-4" id="idSignupInput" />
+        <label class="col-4 signupNoDrag" for="idSignupInput" id="idSignupLabel">아이디</label>
+        <CustomInput v-model="idSignupInput" class="col-4" />
         <div class="col-4"><custom-button btnText="중복확인" /></div>
       </v-row>
       <v-row>
-        <label class="col-4" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
+        <label class="col-4 signupNoDrag" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
         <div class="inputStyle col-4">
           <v-text-field
-            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="show3 ? 'text' : 'password'"
+            :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.pwRequired]"
+            :type="showPw ? 'text' : 'password'"
             label="비밀번호를 입력하세요."
             name="input-10-2"
-            hint="영어, 숫자, 특수기호 포함 8자 이상, 16자 이하"
+            hint="비밀번호를 입력하세요."
             value=""
             class="input-group--focused"
-            @click:append="show3 = !show3"
+            @click:append="showPw = !showPw"
             single-line
             outlined
+            id="pwSignupInput"
           ></v-text-field>
         </div>
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4" for="pwcheckSignupInput" id="pwcheckSignupLabel">비밀번호 확인</label>
-        <CustomInput v-model="pwcheckSignupInput" class="col-4" id="pwcheckSignupInput" />
+        <label class="col-4 signupNoDrag" for="pwCheckSignupInput" id="pwCheckSignupLabel">비밀번호 확인</label>
+        <div class="inputStyle col-4">
+          <v-text-field
+            :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.pwCheckRequired]"
+            :type="showPwCheck ? 'text' : 'password'"
+            label="비밀번호를 다시 입력하세요."
+            name="input-10-2"
+            hint="비밀번호를 다시 입력하세요."
+            value=""
+            class="input-group--focused"
+            @click:append="showPwCheck = !showPwCheck"
+            single-line
+            outlined
+            id="pwCheckSignupInput"
+          ></v-text-field>
+        </div>
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4" for="emailSignupInput" id="emailSignupLabel">이메일</label>
-        <CustomInput v-model="emailSignupInput" class="col-4" id="emailSignupInput" />
+        <label class="col-4 signupNoDrag" for="emailSignupInput" id="emailSignupLabel">이메일</label>
+        <CustomInput v-model="emailSignupInput" class="col-4" />
         <div class="col-4">
           <custom-button btnText="인증하기" />
         </div>
       </v-row>
       <v-row>
-        <label class="col-4" for="emailcheckSignupInput" id="emailcheckSignupLabel">인증번호</label>
-        <CustomInput v-model="emailcheckSignupInput" class="col-4" id="emailcheckSignupInput" />
+        <label class="col-4 signupNoDrag" for="emailcheckSignupInput" id="emailcheckSignupLabel">인증번호</label>
+        <CustomInput v-model="emailcheckSignupInput" class="col-4" />
         <div class="col-4">
           <custom-button btnText="확인" />
         </div>
       </v-row>
       <v-row>
-        <label class="col-4" for="nameSignupInput" id="nameSignupLabel">이름</label>
-        <CustomInput v-model="nameSignupInput" class="col-4" id="nameSignupInput" />
+        <label class="col-4 signupNoDrag" for="nameSignupInput" id="nameSignupLabel">이름</label>
+        <CustomInput v-model="nameSignupInput" class="col-4" />
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
+        <label class="col-4 signupNoDrag" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
         <div class="col-4">
           <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
+              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
             </template>
-            <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
+            <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
           </v-menu>
         </div>
-        <!-- <CustomInput v-model="birthSignupInput" class="col-4" id="birthSignupInput" /> -->
         <div class="col-4"></div>
       </v-row>
       <v-row>
         <label class="col-4" for="" id="genderSignupLabel">성별</label>
-        <CustomButton class="col-3" :class="{ selectedGender: userGender == 1 }" @click="changeGender(1)" btnText="남성" />
-        <CustomButton class="col-3" :class="{ selectedGender: userGender == 2 }" @click="changeGender(2)" btnText="여성" />
+        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남성" />
+        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여성" />
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label for="">약관 동의</label>
+        <label for="" class="signupNoDrag">약관 동의</label>
       </v-row>
       <v-row>
         <label for="">
@@ -82,8 +97,9 @@
       </v-row>
       <v-row>
         <v-col>
-          <input type="checkbox" id="ruleCheck" />
-          <label for="ruleCheck"> 약관 내용에 동의합니다.</label>
+          <v-checkbox v-model="ruleCheck" :label="`약관 내용에 동의합니다.`"></v-checkbox>
+          <!-- <input type="checkbox" id="ruleCheck" />
+          <label for="ruleCheck" class="signupNoDrag"> 약관 내용에 동의합니다.</label> -->
         </v-col>
       </v-row>
     </v-container>
@@ -92,89 +108,143 @@
 
 <script>
 export default {
+  computed: {
+    testComputed() {
+      return this.userId;
+    },
+  },
   data() {
     return {
       // 비밀번호인풋
-      show1: false,
-      show2: true,
-      show3: false,
-      show4: false,
+      showPw: false,
+      showPwCheck: false,
       password: "Password",
       rules: {
-        // required: (value) => !!value || "Required.",
-        min: (v) => v.length >= 8 || "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
-        // emailMatch: () => `The email and password you entered don't match`,
+        pwRequired: (v) => this.pwValidationCheck(v) || "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
+        pwCheckRequired: (v) => this.pwCheckValidationCheck(v) || "비밀번호가 일치하지 않습니다.",
       },
       // 달력
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
       menu: false,
       modal: false,
       menu2: false,
-      userId: document.getElementById("idSignupInput"),
-      userPw: document.getElementById("pwSignupInput"),
-      userEmail: document.getElementById("emailSignupInput"),
-      userEmailCheck: document.getElementById("emailcheckSignupInput"),
-      userName: document.getElementById("nameSignupInput"),
-      userbirth: document.getElementById("birthSignupInput"),
-      userGender: "",
+      // 커스텀 인풋
       idSignupInput: {
         labelText: "아이디를 입력하세요.",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
-        hint: "영어로 시작, 영어 숫자 포함 6자 이상 16자 이하",
-      },
-      pwSignupInput: {
-        labelText: "비밀번호를 입력하세요.",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
-        hint: "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
-      },
-      pwcheckSignupInput: {
-        labelText: "비밀번호를 다시 한 번 입력하세요.",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
-        hint: "비밀번호가 일치하지 않습니다.",
+        rules: [(v) => !!v || "아이디는 필수값입니다.", (v) => /^[A-Za-z]/.test(v) || "아이디는 영어로 시작해야 합니다.", (v) => this.idValidationCheck(v) || "영어, 숫자 포함 6자 이상 16자 이하"],
+        hint: "아이디를 입력하세요.",
+        id: "idSignupInput",
       },
       emailSignupInput: {
         labelText: "이메일을 입력하세요.",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
-        hint: "이메일 형식을 확인해주세요.",
+        rules: [(v) => !!v || "이메일은 필수값입니다.", (v) => this.emailValidationCheck(v) || "이메일 형식을 확인해주세요."],
+        hint: "이메일을 입력하세요.",
+        id: "emailSignupInput",
       },
       emailcheckSignupInput: {
         labelText: "인증번호를 입력하세요.",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
+        rules: [(v) => !!v || "인증번호는 필수값입니다."],
         hint: "이메일로 전송된 인증번호를 입력하세요.",
+        id: "emailcheckSignupInput",
       },
       nameSignupInput: {
         labelText: "이름을 입력하세요.",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
-        hint: "이름은 한 글자 이상입니다.",
+        rules: [
+          (v) => !!v || "이름은 필수값입니다.",
+          (v) => /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/.test(v) || "이름은 한글과 영어만 입력 받습니다.",
+          (v) => this.nameValidationCheck(v) || "이름은 한 글자 이상입니다.",
+        ],
+        hint: "이름을 입력하세요.",
+        id: "nameSignupInput",
       },
-      birthSignupInput: {
-        labelText: "생일 입력하세요.",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
-        hint: "생일 입력해주세요",
-      },
-      // datepickerSignup: {
-      //   value: "2022-09-14",
-      //   // color: "#123122",
-      // },
+      //인풋 값 가져오기
+      userId: "",
+      userPw: "",
+      userEmail: "",
+      userEmailCheck: "",
+      userName: "",
+      userbirth: "",
+      userGenderNum: 0,
+      userGender: "",
+      //각 항목 정규식 유효성 검사 (boolean 값으로)
+      idValidation: false, //
+      pwValidation: false,
+      emailValidation: false,
+      nameValidation: false,
+      GenderValidation: false,
+      // 약관 동의 여부
+      ruleCheck: false,
+      // 한 항목이라도 false면 다음 버튼 비활성화하기
     };
   },
   methods: {
+    //테스트용 메소드
+    test() {
+      console.log("결과");
+    },
+    // 아이디 정규식 검사
+    idValidationCheck(user_id) {
+      const regId = /^[A-Za-z](?=.*?[A-Za-z])(?=.*?[0-9])[a-zA-Z0-9]{5,15}$/;
+      if (regId.test(user_id)) {
+        this.userId = user_id;
+        return true;
+      } else {
+        this.idValidation = false;
+      }
+    },
+    // 비밀번호 정규식 검사
+    pwValidationCheck(user_pw) {
+      const regPw = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[a-zA-Z0-9#?!@$ %^&*-]{8,16}$/;
+      if (regPw.test(user_pw)) {
+        this.userPw = user_pw;
+        return true;
+      } else {
+        this.pwValidation = false;
+      }
+    },
+    // 비밀번호체크 - 비밀번호 일치여부 검사
+    pwCheckValidationCheck(user_pwcheck) {
+      if (this.userPw == user_pwcheck) {
+        this.pwValidation = true;
+        return true;
+      } else {
+        this.pwCheckValidation = false;
+      }
+    },
+    // 이메일 정규식 검사
+    emailValidationCheck(user_email) {
+      const regEmail = /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+      if (regEmail.test(user_email)) {
+        return true;
+      } else {
+        this.emailValidation = false;
+      }
+    },
+    // 이름 정규식 검사
+    nameValidationCheck(user_name) {
+      const regName = /^\D{1,}$/;
+      if (regName.test(user_name)) {
+        this.userName = user_name;
+        this.nameValidation = true;
+        return true;
+      } else {
+        this.nameValidation = false;
+      }
+    },
+    // 아이디 api 중복검사 (userId 있을 경우에만 중복검사 클릭 가능, idValidation true로 변경)
+    // 이메일 api 전송 (인증하기 버튼 누를때 userEmail 값 저장)
+    // 인증번호 일치여부 확인- api 가져오기 (확인 되면 emailValidation true로 변경) 일치하지 않으면 정규식 사용해서 인증번호가 일치하지 않습니다(가능하면)
+    //
+
     // 성별 선택
     changeGender(gender) {
-      //남자는 1, 여자는 2 저장해놓음
-      this.userGender = gender;
-      // if (gender == 1) {
-      //   this.userGender = 1;
-      // } else if (gender == 2) {
-      //   this.userGender = 2;
-      // }
-      console.log(this.userGender);
-    },
-    // 비밀번호 두 개 같은지 확인
-    pwCheckValidation() {
-      if (document.getElementById("pwSignupInput").value == document.getElementById("pwcheckSignupInput").value) {
-        console.log("비번 같음");
+      this.userGenderNum = gender;
+      if (this.userGenderNum == 1) {
+        this.userGender = "남성";
+      } else if (this.userGenderNum == 2) {
+        this.userGender = "여성";
       }
+      this.GenderValidation = true;
     },
   },
 };
@@ -195,13 +265,18 @@ export default {
   background-color: black;
   color: white;
 }
-/* .datepicker {
-  width: 5rem;
-  height: 5rem;
-} */
-/* .v-messages.theme--light {
-  height: 0;
-} */
+.v-date-picker-header {
+  display: none;
+}
+.v-picker__title {
+  display: none;
+}
+.signupNoDrag {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .col-xl,
 .col-xl-auto,
 .col-xl-12,
