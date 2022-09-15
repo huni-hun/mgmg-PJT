@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,9 +54,9 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public List<DiaryListMapping> getDiaryMonthList(Long userNo, String date){
-        List<DiaryListMapping> diaries = diaryRepository.findByUser_UserNoAndDiaryDateContaining(userNo, date);
+        List<DiaryListMapping> diaries = diaryRepository.findByUser_UserNoAndDiaryDateStartsWith(userNo, date);
         if(diaries != null) return diaries;
-        return null;
+        else return null;
     }
 
     @Override

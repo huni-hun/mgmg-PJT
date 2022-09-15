@@ -20,7 +20,7 @@ public class DiaryResponse extends BaseResponseBody {
     String diaryContent;
 
     @ApiModelProperty(name = "해당 날짜")
-    Date diaryDate;
+    String diaryDate;
 
     @ApiModelProperty(name = "작성 날짜")
     String writeDate;

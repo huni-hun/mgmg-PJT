@@ -6,6 +6,7 @@ import com.ssafy.mgmgproject.db.entity.Diary;
 import com.ssafy.mgmgproject.db.entity.InterestGift;
 import com.ssafy.mgmgproject.db.entity.InterestMusic;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DiaryService {
