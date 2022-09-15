@@ -95,7 +95,7 @@ public class DiaryController {
             @ApiResponse(code = 401, message = "일기 삭제 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> deleteDiary (@PathVariable @ApiParam(value = "년도-월", required = true) Long diaryNo)  throws Exception{
+    public ResponseEntity<? extends BaseResponseBody> deleteDiary (@PathVariable @ApiParam(value = "일기번호", required = true) Long diaryNo)  throws Exception{
         int result = diaryService.deleteDiary(diaryNo);
         if(result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "일기 삭제 성공하였습니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 삭제에 실패하였습니다."));
