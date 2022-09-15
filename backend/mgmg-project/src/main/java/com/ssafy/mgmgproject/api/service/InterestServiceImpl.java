@@ -7,6 +7,7 @@ import com.ssafy.mgmgproject.db.repository.InterestGiftRepository;
 import com.ssafy.mgmgproject.db.repository.InterestMusicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,5 +28,17 @@ public class InterestServiceImpl implements InterestService{
     @Override
     public List<InterestGift> searchInterestGift(User user) {
         return interestGiftRepository.findByUser(user);
+    }
+
+    @Override
+    @Transactional
+    public void deleteInterestMusic(User user, long musicNo) {
+        interestMusicRepository.deleteByUserAndInterestMusicNo(user, musicNo);
+    }
+
+    @Override
+    @Transactional
+    public void deleteInterestGift(User user, long giftNo) {
+        interestGiftRepository.deleteByUserAndInterestGiftNo(user, giftNo);
     }
 }

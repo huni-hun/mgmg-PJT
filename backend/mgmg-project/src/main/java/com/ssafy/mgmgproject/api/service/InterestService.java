@@ -11,4 +11,8 @@ public interface InterestService {
     List<InterestMusic> searchInterestMusic(User user);
 
     List<InterestGift> searchInterestGift(User user);
+
+    void deleteInterestMusic(User user, long musicNo);
+
+    void deleteInterestGift(User user, long giftNo);
 }

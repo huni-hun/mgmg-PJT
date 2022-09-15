@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface InterestMusicRepository extends JpaRepository<InterestMusic, Long> {
     List<InterestMusic> findByUser(User user);
+    void deleteByUserAndInterestMusicNo(User user, long musicNo);
 }
 

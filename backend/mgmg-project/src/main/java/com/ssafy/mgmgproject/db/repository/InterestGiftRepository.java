@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface InterestGiftRepository extends JpaRepository<InterestGift, Long> {
     List<InterestGift> findByUser(User user);
+    void deleteByUserAndInterestGiftNo(User user, long giftNo);
 }
 
