@@ -41,6 +41,7 @@ public class DiaryServiceImpl implements DiaryService {
                 .user(user)
                 .diaryContent(diaryRequest.getDiaryContent())
                 .diaryDate(diaryRequest.getDiaryDate())
+                .day(diaryRequest.getDay())
                 .weather(diaryRequest.getWeather())
                 .diaryThema(diaryRequest.getDiaryThema())
                 .emotion(diaryRequest.getEmotion())

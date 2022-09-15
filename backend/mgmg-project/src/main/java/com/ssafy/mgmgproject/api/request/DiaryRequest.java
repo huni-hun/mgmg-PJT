@@ -22,6 +22,10 @@ public class DiaryRequest {
     String diaryDate;
 
     @NotEmpty
+    @ApiModelProperty(name = "요일", example = "WEB")
+    String day;
+
+    @NotEmpty
     @ApiModelProperty(name = "날씨", example = "맑음")
     String weather;
 

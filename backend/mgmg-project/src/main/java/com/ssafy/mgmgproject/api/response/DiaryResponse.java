@@ -22,6 +22,9 @@ public class DiaryResponse extends BaseResponseBody {
     @ApiModelProperty(name = "해당 날짜")
     String diaryDate;
 
+    @ApiModelProperty(name = "요일")
+    String day;
+
     @ApiModelProperty(name = "작성 날짜")
     String writeDate;
 
@@ -50,6 +53,7 @@ public class DiaryResponse extends BaseResponseBody {
         DiaryResponse res = new DiaryResponse();
         res.setDiaryContent(diary.getDiaryContent());
         res.setDiaryDate(diary.getDiaryDate());
+        res.setDay(diary.getDay());
         res.setWriteDate(diary.getWriteDate());
         res.setWeather(diary.getWeather());
         res.setDiaryImg(diary.getDiaryImg());
