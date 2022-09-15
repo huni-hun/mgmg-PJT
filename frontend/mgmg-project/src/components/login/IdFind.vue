@@ -53,7 +53,7 @@ export default {
     findId() {
       const userName = document.getElementById("nameIdFindInput").value;
       const userEmail = document.getElementById("emailIdFindInput").value;
-      swal.fire("Title", "Sub Title", "success");
+      const userId = "iddesu";
       axios
         .get(this.$store.state.baseurl + "api/user/findid", {
           userName: userName,
@@ -62,6 +62,27 @@ export default {
         .then((response) => {
           if (response.data.statusCode == 200) {
             this.getUserId = response.data.userId;
+            swal.fire({
+              // toast: true,
+              // title: "ID 누락",
+              text: "가입하신 아이디는\n" + userId,
+              icon: "success",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
+          } else {
+            swal.fire({
+              // toast: true,
+              // title: "ID 누락",
+              text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+              icon: "warning",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
           }
         });
     },

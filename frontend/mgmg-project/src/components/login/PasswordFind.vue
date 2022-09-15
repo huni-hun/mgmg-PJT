@@ -51,7 +51,6 @@ export default {
       const userId = document.getElementById("idPasswordFindInput").value;
       const userEmail = document.getElementById("emailPasswordFindInput").value;
 
-      swal.fire("Title", "Sub Title", "success");
       axios
         .get(this.$store.state.baseurl + "api/user/findid", {
           userId: userId,
@@ -60,6 +59,16 @@ export default {
         .then((response) => {
           if (response.data.statusCode == 200) {
             console.log(response.data.message);
+            swal.fire({
+              // toast: true,
+              // title: "ID 누락",
+              text: "이메일로 임시 비밀번호를 보냈습니다.",
+              icon: "success",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
           }
         });
     },
