@@ -247,8 +247,6 @@ public class UserController {
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
 
-        System.out.println(user);
-        System.out.println(userUpdateFontPutRequest.getDiaryFont());
         try {
             userService.updateDiaryFont(user, userUpdateFontPutRequest.getDiaryFont());
         }catch (Exception e) {
