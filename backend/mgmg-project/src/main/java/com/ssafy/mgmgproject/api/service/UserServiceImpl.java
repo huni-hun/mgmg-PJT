@@ -113,13 +113,16 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public void deleteUser(User user) {
-        user.setPassword(null);
-        user.setEmail(null);
-        user.setBirth(null);
-        user.setUserName(null);
-        user.setGender(null);
+        User deleteUser = User.builder()
+                .userId(user.getUserId())
+                .password(null)
+                .email(null)
+                .birth(null)
+                .userName(null)
+                .gender(null)
+                .build();
 
-        userRepository.save(user);
+        userRepository.save(deleteUser);
     }
 
     @Override

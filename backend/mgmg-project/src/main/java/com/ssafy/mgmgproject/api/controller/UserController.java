@@ -53,7 +53,7 @@ public class UserController {
         String password = loginInfo.getPassword();
         User user = userService.getByUserId(userId);
 
-        if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(401, "Not Registered"));
+        if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
         if (passwordEncoder.matches(password, user.getPassword())) {
             return ResponseEntity.ok(UserLoginResponse.of(user, 200, "로그인에 성공하였습니다.", JwtTokenUtil.getToken(userId)));
         }
