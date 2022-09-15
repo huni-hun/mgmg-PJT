@@ -101,7 +101,7 @@ public class DiaryController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 삭제에 실패하였습니다."));
     }
 
-    @PostMapping("interestmusic/{musicNo}")
+    @PostMapping("/interestmusic/{musicNo}")
     @ApiOperation(value = "관심 음악 추가", notes = "관심 음악을 추가한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 음악 추가 성공", response = BaseResponseBody.class),
@@ -123,7 +123,7 @@ public class DiaryController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 음악 추가에 성공하였습니다."));
     }
 
-    @PostMapping("interestgift/{giftNo}")
+    @PostMapping("/interestgift/{giftNo}")
     @ApiOperation(value = "관심 선물 추가", notes = "관심 선물을 추가한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 선물 추가 성공", response = BaseResponseBody.class),
