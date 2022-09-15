@@ -14,7 +14,7 @@ import java.util.Date;
 public class DiaryRequest {
 
     @NotEmpty
-    @ApiModelProperty(name = "일기 내용", example = "일기 내입니다.")
+    @ApiModelProperty(name = "일기 내용", example = "일기 내용입니다.")
     String diaryContent;
 
     @NotEmpty
