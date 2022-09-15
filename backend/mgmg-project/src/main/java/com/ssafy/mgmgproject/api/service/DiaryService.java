@@ -25,4 +25,5 @@ public interface DiaryService {
 
     InterestGift addInterestGift(String userId, Long giftNo);
 
+    int openGift(Long diaryNo);
 }

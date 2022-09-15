@@ -58,7 +58,7 @@ public class DiaryController {
             @ApiResponse(code = 401, message = "일기 수정 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> writeDiary(@PathVariable @ApiParam(value = "년도-월", required = true) Long diaryNo,
+    public ResponseEntity<? extends BaseResponseBody> writeDiary(@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo,
                                                                  @RequestBody @ApiParam(value = "일기 정보", required = true) DiaryUpdateRequest diaryUpdateRequest) throws Exception{
         Diary diary;
         try {
@@ -98,7 +98,7 @@ public class DiaryController {
             @ApiResponse(code = 401, message = "일기 상세 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> getByDiaryNo (@PathVariable @ApiParam(value = "년도-월", required = true) Long diaryNo) throws Exception{
+    public ResponseEntity<? extends BaseResponseBody> getByDiaryNo (@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
         Diary diary;
         try {
             diary = diaryService.getByDiaryNo(diaryNo);
@@ -164,6 +164,19 @@ public class DiaryController {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "관심 선물 추가에 실패하였습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 선물 추가에 성공하였습니다."));
+    }
+
+    @PostMapping("/opengift/{diaryNo}")
+    @ApiOperation(value = "선물 오픈", notes = "선물을 오픈한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "선물 오픈 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "선물 오픈 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> addInterestGift(@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
+        int result = diaryService.openGift(diaryNo);
+        if(result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "선물 오픈에 성공하였습니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "선물 오픈에 실패하였습니다."));
     }
 
 }

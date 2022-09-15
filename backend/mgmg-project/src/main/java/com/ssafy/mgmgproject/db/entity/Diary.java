@@ -81,6 +81,9 @@ public class Diary {
         this.emotion = emotion;
         this.music = music;
         this.gift = gift;
+    }
 
+    public void openGift() {
+        this.openGift = true;
     }
 }

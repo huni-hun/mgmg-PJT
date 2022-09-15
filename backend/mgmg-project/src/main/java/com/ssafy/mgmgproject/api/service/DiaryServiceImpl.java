@@ -124,4 +124,16 @@ public class DiaryServiceImpl implements DiaryService {
         return interestGift;
     }
 
+    @Override
+    @Transactional
+    public int openGift(Long diaryNo){
+        Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
+        if(diary == null) return 0;
+        else {
+            diary.openGift();
+            diaryRepository.save(diary);
+            return 1;
+        }
+    }
+
 }
