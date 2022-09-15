@@ -14,9 +14,9 @@ import java.util.List;
 @ApiModel("SearchMusicGenreGetResponse")
 public class SearchMusicGenreGetResponse extends BaseResponseBody {
     @ApiModelProperty(name = "musicGenre")
-    List<MusicGenre> musicGenres;
+    List<String> musicGenres;
 
-    public static SearchMusicGenreGetResponse of(List<MusicGenre> musicGenres, Integer statusCode, String message) {
+    public static SearchMusicGenreGetResponse of(List<String> musicGenres, Integer statusCode, String message) {
         SearchMusicGenreGetResponse res = new SearchMusicGenreGetResponse();
         res.setStatusCode(statusCode);
         res.setMessage(message);

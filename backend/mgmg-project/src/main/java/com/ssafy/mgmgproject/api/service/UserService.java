@@ -29,9 +29,9 @@ public interface UserService {
 
     void deleteUser(String userId);
 
-    List<MusicGenre> searchMusicGenre(User user);
+    List<String> searchMusicGenre(User user);
 
-    List<GiftCategory> searchGiftCategory(User user);
+    List<String> searchGiftCategory(User user);
 
     void changeMusicGenre(User user, UserChangeMusicPutRequest userChangeMusicPutRequest);
 

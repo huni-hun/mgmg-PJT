@@ -247,6 +247,8 @@ public class UserController {
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
 
+        System.out.println(user);
+        System.out.println(userUpdateFontPutRequest.getDiaryFont());
         try {
             userService.updateDiaryFont(user, userUpdateFontPutRequest.getDiaryFont());
         }catch (Exception e) {
@@ -286,7 +288,7 @@ public class UserController {
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
 
-        List<MusicGenre> musicGenres = userService.searchMusicGenre(user);
+        List<String> musicGenres = userService.searchMusicGenre(user);
         return ResponseEntity.status(200).body(SearchMusicGenreGetResponse.of(musicGenres, 200, "음악 취향이 조사되었습니다."));
     }
 
@@ -301,7 +303,7 @@ public class UserController {
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
 
-        List<GiftCategory> giftCategories = userService.searchGiftCategory(user);
+        List<String> giftCategories = userService.searchGiftCategory(user);
         return ResponseEntity.status(200).body(SearchGiftCategoryGetResponse.of(giftCategories, 200, "선물 취향이 조회되었습니다."));
     }
 

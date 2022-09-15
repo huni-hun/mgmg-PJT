@@ -15,9 +15,9 @@ import java.util.List;
 @ApiModel("SearchGiftCategoryGetResponse")
 public class SearchGiftCategoryGetResponse extends BaseResponseBody {
     @ApiModelProperty(name = "giftCategory")
-    List<GiftCategory> giftCategories;
+    List<String> giftCategories;
 
-    public static SearchGiftCategoryGetResponse of(List<GiftCategory> giftCategories, Integer statusCode, String message) {
+    public static SearchGiftCategoryGetResponse of(List<String> giftCategories, Integer statusCode, String message) {
         SearchGiftCategoryGetResponse res = new SearchGiftCategoryGetResponse();
         res.setStatusCode(statusCode);
         res.setMessage(message);
