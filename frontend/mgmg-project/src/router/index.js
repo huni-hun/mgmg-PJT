@@ -75,7 +75,7 @@ const routes = [
   },
   {
     path: "/notice",
-    name: "notice",
+    // name: "notice",
     component: NoticePage,
     children: [
       {
