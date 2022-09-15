@@ -8,6 +8,8 @@ import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.auth.UserDetails;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.common.util.JwtTokenUtil;
+import com.ssafy.mgmgproject.db.entity.GiftCategory;
+import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import com.ssafy.mgmgproject.db.entity.User;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(value = "유저 API")
 @CrossOrigin("*")
@@ -270,6 +273,36 @@ public class UserController {
             userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
         }
-
     }
+
+    @GetMapping("/mypage/music")
+    @ApiOperation(value = "음악 취향 조회", notes = "(token) 회원가입시 조사한 음악 취향을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "취향 조회 성공", response = SearchMusicGenreGetResponse.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> SearchMusicGenre(@ApiIgnore Authentication authentication) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        List<MusicGenre> musicGenres = userService.searchMusicGenre(user);
+        return ResponseEntity.status(200).body(SearchMusicGenreGetResponse.of(musicGenres, 200, "음악 취향이 조사되었습니다."));
+    }
+
+    @GetMapping("/mypage/gift")
+    @ApiOperation(value = "선물 취향 조회", notes = "(token) 회원가입시 조사한 음악 취향을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "취향 조회 성공", response = SearchGiftCategoryGetResponse.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> SearchGiftCategory(@ApiIgnore Authentication authentication) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUser().getUserId();
+        User user = userService.getByUserId(userId);
+
+        List<GiftCategory> giftCategories = userService.searchGiftCategory(user);
+        return ResponseEntity.status(200).body(SearchGiftCategoryGetResponse.of(giftCategories, 200, "선물 취향이 조회되었습니다."));
+    }
+
 }

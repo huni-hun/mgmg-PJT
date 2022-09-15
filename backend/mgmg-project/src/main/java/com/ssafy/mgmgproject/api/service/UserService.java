@@ -2,7 +2,11 @@ package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.request.UserRegistPostRequest;
 import com.ssafy.mgmgproject.api.request.UserUpdatePutRequest;
+import com.ssafy.mgmgproject.db.entity.GiftCategory;
+import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import com.ssafy.mgmgproject.db.entity.User;
+
+import java.util.List;
 
 public interface UserService {
     User getByUserId(String userId);
@@ -22,4 +26,8 @@ public interface UserService {
     void updateDiaryFont(User user, int diaryFont);
 
     void deleteUser(String userId);
+
+    List<MusicGenre> searchMusicGenre(User user);
+
+    List<GiftCategory> searchGiftCategory(User user);
 }

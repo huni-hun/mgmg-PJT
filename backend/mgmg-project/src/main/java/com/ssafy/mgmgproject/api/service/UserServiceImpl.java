@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -108,6 +109,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteUser(String userId) {
         userRepository.deleteByUserId(userId);
+    }
+
+    @Override
+    public List<MusicGenre> searchMusicGenre(User user) {
+        return musicGenreRepository.findByUser(user);
+    }
+
+    @Override
+    public List<GiftCategory> searchGiftCategory(User user) {
+        return giftCategoryRepository.findByUser(user);
     }
 
 }
