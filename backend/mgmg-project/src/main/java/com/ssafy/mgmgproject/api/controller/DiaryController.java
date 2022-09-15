@@ -1,6 +1,7 @@
 package com.ssafy.mgmgproject.api.controller;
 
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
+import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.api.response.DiaryListResponse;
 import com.ssafy.mgmgproject.api.response.DiaryResponse;
@@ -48,6 +49,26 @@ public class DiaryController {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 작성에 실패하였습니다."));
         }
         return ResponseEntity.status(200).body(DiaryResponse.of(diary, 200, "일기 작성에 성공하였습니다."));
+    }
+
+    @PutMapping("/{diaryNo}")
+    @ApiOperation(value = "일기 수정", notes = "일기를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "일기 수정 성공", response = DiaryResponse.class),
+            @ApiResponse(code = 401, message = "일기 수정 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> writeDiary(@PathVariable @ApiParam(value = "년도-월", required = true) Long diaryNo,
+                                                                 @RequestBody @ApiParam(value = "일기 정보", required = true) DiaryUpdateRequest diaryUpdateRequest) throws Exception{
+        Diary diary;
+        try {
+            diary = diaryService.updateDiary(diaryNo, diaryUpdateRequest);
+            if (diary == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 수정에 실패하였습니다."));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 수정에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(DiaryResponse.of(diary, 200, "일기 수정에 성공하였습니다."));
     }
 
     @GetMapping("/month/{date}")

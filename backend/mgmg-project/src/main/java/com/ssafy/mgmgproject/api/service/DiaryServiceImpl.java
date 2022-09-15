@@ -1,6 +1,7 @@
 package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
+import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.db.entity.*;
 import com.ssafy.mgmgproject.db.repository.*;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -49,6 +51,27 @@ public class DiaryServiceImpl implements DiaryService {
                 .gift(gift)
                 .openGift(false)
                 .build();
+        diaryRepository.save(diary);
+        return diary;
+    }
+
+    @Override
+    @Transactional
+    public Diary updateDiary(Long diaryNo, DiaryUpdateRequest diaryUpdateRequest){
+        Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
+        Music music = musicRepository.findByMusicNo(diaryUpdateRequest.getMusicNo()).orElse(null);
+        Gift gift = giftRepository.findByGiftNo(diaryUpdateRequest.getGiftNo()).orElse(null);
+        if(diary != null){
+            diary.updateDiary(
+                    diaryUpdateRequest.getDiaryContent(),
+                    diaryUpdateRequest.getWeather(),
+                    diaryUpdateRequest.getDiaryImg(),
+                    diaryUpdateRequest.getDiaryThema(),
+                    diaryUpdateRequest.getEmotion(),
+                    music,
+                    gift
+            );
+        }
         diaryRepository.save(diary);
         return diary;
     }

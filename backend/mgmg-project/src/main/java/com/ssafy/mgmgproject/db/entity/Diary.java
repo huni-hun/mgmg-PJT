@@ -72,4 +72,15 @@ public class Diary {
     public void onPreUpdate(){
         this.writeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
     }
+
+    public void updateDiary(String diaryContent, String weather, String diaryImg, int diaryThema, String emotion, Music music, Gift gift) {
+        this.diaryContent = diaryContent;
+        this.weather = weather;
+        this.diaryImg = diaryImg;
+        this.diaryThema = diaryThema;
+        this.emotion = emotion;
+        this.music = music;
+        this.gift = gift;
+
+    }
 }
