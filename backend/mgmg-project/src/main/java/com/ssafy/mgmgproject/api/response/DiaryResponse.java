@@ -52,7 +52,7 @@ public class DiaryResponse extends BaseResponseBody {
     public static DiaryResponse of(Diary diary, Integer statusCode, String message) {
         DiaryResponse res = new DiaryResponse();
         res.setDiaryContent(diary.getDiaryContent());
-        res.setDiaryDate(diary.getDiaryDate());
+        res.setDiaryDate(diary.getDiaryDate().toString());
         res.setDay(diary.getDay());
         res.setWriteDate(diary.getWriteDate());
         res.setWeather(diary.getWeather());
