@@ -1,6 +1,7 @@
 package com.ssafy.mgmgproject.api.controller;
 
 import com.ssafy.mgmgproject.api.dto.StatisticsDto;
+import com.ssafy.mgmgproject.api.response.StatisticsDayListResponse;
 import com.ssafy.mgmgproject.api.response.StatisticsPercentListResponse;
 import com.ssafy.mgmgproject.api.service.EmotionService;
 import com.ssafy.mgmgproject.api.service.StatisticsService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -52,6 +54,29 @@ public class StatisticsController {
             return ResponseEntity.status(200).body(StatisticsPercentListResponse.of(statisticsDtos,emotion,200, "기간별 통계 조회를 성공하였습니다."));
         }catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "기간별 통계 조회에 실패했습니다."));
+        }
+    }
+
+    @GetMapping("/day")
+    @ApiOperation(value = "요일별 통계 조회", notes = "요일별 통계를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "요일별 통계 조회 성공", response = StatisticsDayListResponse.class),
+            @ApiResponse(code = 401, message = "요일별 통계 조회 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> listDay(
+            @ApiIgnore Authentication authentication) throws Exception{
+
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUser().getUserNo();
+        try {
+            Map<String,List<StatisticsDto>> statisticsDtos =  statisticsService.selectStatisticsDayList(userNo);
+            if(statisticsDtos==null || statisticsDtos.size()==0 ){
+                return ResponseEntity.status(401).body(BaseResponseBody.of(401, "요일별 통계 조회에 실패했습니다."));
+            }
+            return ResponseEntity.status(200).body(StatisticsDayListResponse.of(statisticsDtos,200, "요일별 통계 조회를 성공하였습니다."));
+        }catch (Exception e){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "요일별 통계 조회에 실패했습니다."));
         }
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ApiModel("NotificationListResponse")
+@ApiModel("StatisticsPercentListResponse")
 public class StatisticsPercentListResponse extends BaseResponseBody{
 
     @ApiModelProperty(name = "통계 리스트")

@@ -31,7 +31,20 @@ public class DiaryRepositorySurport {
                 .groupBy(qDiary.emotion)
                 .orderBy(aliasQuantity.desc())
                 .fetch();
-         return statisticsDtos;
+        return statisticsDtos;
+    }
+
+    public List<StatisticsDto> findByUser_UserNoAndDayGroupByEmotionName(Long userNo, String day) {
+
+        NumberPath<Long> aliasQuantity = Expressions.numberPath(Long.class, "percent");
+        final List<StatisticsDto> statisticsDtos = jpaQueryFactory
+                .select(Projections.constructor(StatisticsDto.class, qDiary.emotion, qDiary.count().as(aliasQuantity)))
+                .from(qDiary)
+                .where(qDiary.user.userNo.eq(userNo).and(qDiary.day.eq(day)))
+                .groupBy(qDiary.emotion)
+                .orderBy(aliasQuantity.desc())
+                .fetch();
+        return statisticsDtos;
     }
 
 }
