@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.*;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -42,11 +42,15 @@ public class DiaryServiceImpl implements DiaryService {
         User user = userRepository.findByUserId(userId).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryRequest.getGiftNo()).orElse(null);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        DayOfWeek dayOfWeek = LocalDate.parse(formatter.format(diaryRequest.getDiaryDate())).getDayOfWeek();
+
         Diary diary = Diary.builder()
                 .user(user)
                 .diaryContent(diaryRequest.getDiaryContent())
                 .diaryDate(diaryRequest.getDiaryDate())
-                .day(diaryRequest.getDay())
+                .day(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US))
                 .weather(diaryRequest.getWeather())
                 .diaryThema(diaryRequest.getDiaryThema())
                 .emotion(diaryRequest.getEmotion())
