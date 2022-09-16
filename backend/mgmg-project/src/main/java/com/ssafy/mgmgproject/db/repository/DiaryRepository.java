@@ -18,8 +18,11 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     @Transactional
     Optional<Diary> deleteByDiaryNo(Long diaryNo);
 
+
     List<DiaryListMapping> findByUser_UserNoAndDiaryDateContaining(Long userNo, String date);
 
     long countByUser_UserNoAndDiaryDateBetween(Long userNo,Date startDate, Date endDate);
+
+    List<DiaryListMapping> findByUser_UserNoAndDiaryDateStartsWith(Long userNo, String date);
 }
 

@@ -169,16 +169,16 @@ public class UserController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원가입에 성공하였습니다.")); // 응답 코드와 함께 응답 메시지 return
     }
 
-    @GetMapping("/pwcheck")
+    @PostMapping("/pwcheck")
     @ApiOperation(value = "비밀번호 확인", notes = "(token) 비밀번호 인증을 위해 로그인한 회원의 비밀번호와 일치하는 비밀번호를 입력한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> myPage(@ApiIgnore Authentication authentication, @RequestParam String password) {
+    public ResponseEntity<? extends BaseResponseBody> myPage(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회원가입 정보", required = true) @Valid UserPwCheckPostRequest userPwCheckPostRequest) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
-        if (passwordEncoder.matches(password, userDetails.getPassword()))
+        if (passwordEncoder.matches(userPwCheckPostRequest.getPassword(), userDetails.getPassword()))
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호 인증 성공"));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
     }
