@@ -20,7 +20,7 @@ public class Emotion {
     @Column(name="emotion_no")
     private Long emotionNo;
 
-    @Column(name="emotion_title", length = 3, nullable = false)
+    @Column(name="emotion_name", length = 3, nullable = false)
     private String emotionName;
 
     @Column(name="emotion_explanation", length = 100, nullable = false)
