@@ -2,6 +2,7 @@ package com.ssafy.mgmgproject.api.controller;
 
 import com.ssafy.mgmgproject.api.dto.StatisticsDto;
 import com.ssafy.mgmgproject.api.response.StatisticsDayListResponse;
+import com.ssafy.mgmgproject.api.response.StatisticsDayResponse;
 import com.ssafy.mgmgproject.api.response.StatisticsPercentListResponse;
 import com.ssafy.mgmgproject.api.service.EmotionService;
 import com.ssafy.mgmgproject.api.service.StatisticsService;
@@ -77,6 +78,29 @@ public class StatisticsController {
             return ResponseEntity.status(200).body(StatisticsDayListResponse.of(statisticsDtos,200, "요일별 통계 조회를 성공하였습니다."));
         }catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "요일별 통계 조회에 실패했습니다."));
+        }
+    }
+
+    @GetMapping("/day/{day}")
+    @ApiOperation(value = "요일별 통계에서 요일 선택 조회", notes = "요일 중 가장 많이 느낀 감정을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "요일 선택 조회 성공", response = StatisticsDayResponse.class),
+            @ApiResponse(code = 401, message = "요일 선택 조회 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> selectDay(
+            @ApiIgnore Authentication authentication, @PathVariable String day) throws Exception{
+
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUser().getUserNo();
+        try {
+            StatisticsDto statisticsDto = statisticsService.selectStatisticsDay(userNo,day);
+            if(statisticsDto==null ){
+                return ResponseEntity.status(401).body(BaseResponseBody.of(401, "요일 선택 조회에 실패했습니다."));
+            }
+            return ResponseEntity.status(200).body(StatisticsDayResponse.of(day,statisticsDto,200, "요일 선택 조회를 성공하였습니다."));
+        }catch (Exception e){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "요일 선택 조회에 실패했습니다."));
         }
     }
 

@@ -10,5 +10,6 @@ import java.util.Map;
 public interface StatisticsService {
     List<StatisticsDto> selectStatisticsPercentList(long userNo, String startDateStr, String endDateStr) throws ParseException;
     Map<String, List<StatisticsDto>> selectStatisticsDayList(long userNo);
+    StatisticsDto selectStatisticsDay(long userNo, String day);
 
 }

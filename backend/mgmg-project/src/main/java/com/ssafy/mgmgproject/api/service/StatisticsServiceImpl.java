@@ -46,7 +46,6 @@ public class StatisticsServiceImpl implements StatisticsService{
         Map<String, List<StatisticsDto>> map = new HashMap<>();
         for(String day:dayList){
             long total = diaryRepository.countByUser_UserNoAndDay(userNo,day);
-            System.out.println(total);
         if(total==0){
             map.put(day,new ArrayList<StatisticsDto>());
         }else{
@@ -62,4 +61,19 @@ public class StatisticsServiceImpl implements StatisticsService{
         return map;
     }
 
+    @Override
+    public StatisticsDto selectStatisticsDay(long userNo, String day){
+        long total = diaryRepository.countByUser_UserNoAndDay(userNo,day);
+        if(total==0){
+            return null;
+        }else{
+            List<StatisticsDto> statisticsDtos = diaryRepositorySurport.findByUser_UserNoAndDayGroupByEmotionName(userNo,day);
+            for(int index=0; index<statisticsDtos.size(); index++){
+                StatisticsDto statisticsDto = statisticsDtos.get(index);
+                statisticsDto.setPercent((int)(((double)statisticsDto.getPercent()/(double)total)*100));
+                statisticsDtos.set(index,statisticsDto);
+            }
+            return statisticsDtos.get(0);
+        }
+    }
 }
