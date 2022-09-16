@@ -27,21 +27,15 @@ public class StatisticsServiceImpl implements StatisticsService{
         Date startDate = formatter.parse(startDateStr);
         Date endDate = formatter.parse(endDateStr);
 
-        long total = diaryRepository.countByUser_UserNo(userNo);
+        long total = diaryRepository.countByUser_UserNoAndDiaryDateBetween(userNo,startDate,endDate);
         if(total==0){
             return null;
         }
-        List<StatisticsDto> statisticsDtos = diaryRepositorySurport.findByUser_UserNoAndDiaryDateBetweenGroupByEmotionName(userNo,startDate,endDate);
 
-//        System.out.println("====================");
-//        for(StatisticsDto statisticsDto : statisticsDtos){
-//            System.out.println(statisticsDto.getEmotion()+"          "+statisticsDto.getPercent());
-//        }
-//        System.out.println("====================");
+        List<StatisticsDto> statisticsDtos = diaryRepositorySurport.findByUser_UserNoAndDiaryDateBetweenGroupByEmotionName(userNo,startDate,endDate);
         for(int index=0; index<statisticsDtos.size(); index++){
             StatisticsDto statisticsDto = statisticsDtos.get(index);
-//            System.out.println(statisticsDto.getEmotion());
-            statisticsDto.setPercent((statisticsDto.getPercent()/total)*100);
+            statisticsDto.setPercent((int)(((double)statisticsDto.getPercent()/(double)total)*100));
             statisticsDtos.set(index,statisticsDto);
         }
         return statisticsDtos;

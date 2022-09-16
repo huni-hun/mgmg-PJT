@@ -2,7 +2,6 @@ package com.ssafy.mgmgproject.db.repository;
 
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.db.entity.Diary;
-import com.ssafy.mgmgproject.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +20,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     List<DiaryListMapping> findByUser_UserNoAndDiaryDateContaining(Long userNo, String date);
 
-    long countByUser_UserNo(Long userNo);
+    long countByUser_UserNoAndDiaryDateBetween(Long userNo,Date startDate, Date endDate);
 }
 
