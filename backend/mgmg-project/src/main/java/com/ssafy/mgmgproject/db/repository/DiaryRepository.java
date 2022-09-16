@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     @Transactional
     Optional<Diary> deleteByDiaryNo(Long diaryNo);
 
-    List<DiaryListMapping> findByUser_UserNoAndDiaryDateContaining(Long userNo, String date);
+    List<DiaryListMapping> findByUser_UserNoAndDiaryDateStartsWith(Long userNo, String date);
 }
 

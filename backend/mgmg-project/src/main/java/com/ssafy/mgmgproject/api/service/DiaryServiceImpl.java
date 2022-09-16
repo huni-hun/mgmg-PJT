@@ -1,6 +1,7 @@
 package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
+import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.db.entity.*;
 import com.ssafy.mgmgproject.db.repository.*;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -40,6 +43,7 @@ public class DiaryServiceImpl implements DiaryService {
                 .user(user)
                 .diaryContent(diaryRequest.getDiaryContent())
                 .diaryDate(diaryRequest.getDiaryDate())
+                .day(diaryRequest.getDay())
                 .weather(diaryRequest.getWeather())
                 .diaryThema(diaryRequest.getDiaryThema())
                 .emotion(diaryRequest.getEmotion())
@@ -52,10 +56,32 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
+    @Transactional
+    public Diary updateDiary(Long diaryNo, DiaryUpdateRequest diaryUpdateRequest){
+        Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
+        Music music = musicRepository.findByMusicNo(diaryUpdateRequest.getMusicNo()).orElse(null);
+        Gift gift = giftRepository.findByGiftNo(diaryUpdateRequest.getGiftNo()).orElse(null);
+        if(diary.getGift() != gift) diary.closeGift();
+        if(diary != null){
+            diary.updateDiary(
+                    diaryUpdateRequest.getDiaryContent(),
+                    diaryUpdateRequest.getWeather(),
+                    diaryUpdateRequest.getDiaryImg(),
+                    diaryUpdateRequest.getDiaryThema(),
+                    diaryUpdateRequest.getEmotion(),
+                    music,
+                    gift
+            );
+        }
+        diaryRepository.save(diary);
+        return diary;
+    }
+
+    @Override
     public List<DiaryListMapping> getDiaryMonthList(Long userNo, String date){
-        List<DiaryListMapping> diaries = diaryRepository.findByUser_UserNoAndDiaryDateContaining(userNo, date);
+        List<DiaryListMapping> diaries = diaryRepository.findByUser_UserNoAndDiaryDateStartsWith(userNo, date);
         if(diaries != null) return diaries;
-        return null;
+        else return null;
     }
 
     @Override
@@ -97,6 +123,18 @@ public class DiaryServiceImpl implements DiaryService {
                 .build();
         interestGiftRepository.save(interestGift);
         return interestGift;
+    }
+
+    @Override
+    @Transactional
+    public int openGift(Long diaryNo){
+        Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
+        if(diary == null) return 0;
+        else {
+            diary.openGift();
+            diaryRepository.save(diary);
+            return 1;
+        }
     }
 
 }
