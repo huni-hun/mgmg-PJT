@@ -27,7 +27,7 @@ public class DiaryRepositorySurport {
         final List<StatisticsDto> statisticsDtos = jpaQueryFactory
                 .select(Projections.constructor(StatisticsDto.class, qDiary.emotion, qDiary.count().as(aliasQuantity)))
                 .from(qDiary)
-                .where(qDiary.user.userNo.eq(userNo).and(qDiary.diaryDate.between(startDate,endDate)))
+//                .where(qDiary.user.userNo.eq(userNo).and(qDiary.diaryDate.between(startDate,endDate)))
                 .groupBy(qDiary.emotion)
                 .orderBy(aliasQuantity.desc())
                 .fetch();

@@ -42,7 +42,7 @@ public class DiaryServiceImpl implements DiaryService {
         Diary diary = Diary.builder()
                 .user(user)
                 .diaryContent(diaryRequest.getDiaryContent())
-                .diaryDate(diaryRequest.getDiaryDate())
+//                .diaryDate(diaryRequest.getDiaryDate())
                 .day(diaryRequest.getDay())
                 .weather(diaryRequest.getWeather())
                 .diaryThema(diaryRequest.getDiaryThema())
