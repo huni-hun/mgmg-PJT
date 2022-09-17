@@ -14,13 +14,13 @@
           <div>
             날씨
             <img
-              style="width:30px"
+              style="width: 30px"
               alt="날씨티콘"
               :src="require(`@/assets/diary/weather/${findWeatherImg}.png`)"
             />
           </div>
 
-          <p>감정 {{emotion}}</p>
+          <p>감정 {{ emotion }}</p>
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@ export default {
     weather: "맑음", // 날씨 받을 변수
     findWeatherImg: "overcast", // 날씨 찾은 변수
 
-    diary: "일기 상세 내용이 들어갈 예정"
+    diary: "일기 상세 내용이 들어갈 예정",
   }),
   methods: {
     findEmotion() {
@@ -103,7 +103,7 @@ export default {
   /* min-height: 10vh; */
 }
 .topOutDiv {
-  width: 75vw;
+  width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -132,5 +132,4 @@ export default {
 .v-text-field >>> fieldset {
   border: none;
 }
-
 </style>
