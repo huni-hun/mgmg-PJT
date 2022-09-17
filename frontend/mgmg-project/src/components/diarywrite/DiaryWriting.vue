@@ -104,7 +104,7 @@ export default {
   /* min-height: 10vh; */
 }
 .flexTop {
-  width: 63vw;
+  width: 81%;
   height: 100%;
   margin: 0 auto;
   display: grid;
@@ -119,7 +119,7 @@ export default {
   padding: 0px;
 }
 .selectImg {
-  width: 2vw;
+  width: 2%;
   max-width: 50px;
 }
 
@@ -130,7 +130,7 @@ export default {
   flex-basis: 45vh;
 }
 .v-text-field {
-  width: 63vw;
+  width: 81%;
   height: 100%;
   margin: 0 auto;
 }

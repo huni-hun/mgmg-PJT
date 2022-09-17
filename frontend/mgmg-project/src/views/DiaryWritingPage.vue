@@ -17,15 +17,15 @@ export default {
 
 <style>
 .back {
-  /* background: url("E:/SSAFY/특화프로젝트/배경이미지.png") no-repeat center; */
+  /* background: url("배경이미지.png") no-repeat center; */
   background-size: cover;
   height: 93.2vh;
 }
 .inner {
-  width: 80%;
+  width: 70%;
   display: inline-block;
   position: absolute;
   left: 50%;
-  margin-left: -40vw;
+  margin-left: -35vw;
 }
 </style>
