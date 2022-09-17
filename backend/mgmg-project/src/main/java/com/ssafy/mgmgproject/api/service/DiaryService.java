@@ -7,6 +7,7 @@ import com.ssafy.mgmgproject.db.entity.Diary;
 import com.ssafy.mgmgproject.db.entity.InterestGift;
 import com.ssafy.mgmgproject.db.entity.InterestMusic;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface DiaryService {
@@ -15,7 +16,7 @@ public interface DiaryService {
 
     Diary updateDiary(Long diaryNo, DiaryUpdateRequest diaryUpdateRequest);
 
-    List<DiaryListMapping> getDiaryMonthList(Long userNo, String date);
+    List<DiaryListMapping> getDiaryMonthList(Long userNo, String date) throws ParseException;
 
     Diary getByDiaryNo(Long diaryNo);
 
