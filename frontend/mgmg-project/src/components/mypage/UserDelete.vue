@@ -10,6 +10,9 @@
       <v-row>
         <label for="">※ 탈퇴 처리 후에는 아이디 및 데이터를 복구할 수 없습니다.</label>
       </v-row>
+      <v-row>
+        <CustomButton btnText="탈퇴하기" />
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -18,4 +21,4 @@
 export default {};
 </script>
 
-<style></style>
+<style scoped></style>
