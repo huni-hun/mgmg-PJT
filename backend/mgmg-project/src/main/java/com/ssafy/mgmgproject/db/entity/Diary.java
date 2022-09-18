@@ -90,4 +90,8 @@ public class Diary {
     public void closeGift() {
         this.openGift = false;
     }
+
+    public void updateImg(String fileUrl){
+        this.diaryImg = fileUrl;
+    }
 }
