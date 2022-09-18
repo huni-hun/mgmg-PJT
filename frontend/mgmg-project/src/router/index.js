@@ -12,6 +12,7 @@ import DiaryWritingPage from "../views/DiaryWritingPage.vue";
 import DiaryDetailPage from "../views/DiaryDetailPage.vue";
 // 업적, 관심, 통계
 import AchievePage from "../views/AchievePage.vue";
+import AchieveList from "../components/achieve/AchieveList.vue";
 import InterestListPage from "../views/InterestListPage.vue";
 import StatisticsPage from "../views/StatisticsPage.vue";
 // 공지사항
@@ -60,8 +61,15 @@ const routes = [
   },
   {
     path: "/achieve",
-    name: "achieve",
+    // name: "achieve",
     component: AchievePage,
+    children: [
+      {
+        path: "",
+        name: "achievelist",
+        component: AchieveList,
+      },
+    ],
   },
   {
     path: "/interestlist",
