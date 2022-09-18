@@ -1,89 +1,130 @@
 <template>
   <div class="outDiv">
-    <div class="diaryTop">
+    <div
+      class="diaryTop"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/writingtop/${backImg}.png`) + ')',
+      }"
+    >
       <div class="flexTop">
         <v-row>
           <v-col cols="3">
-            <span>날짜 : 2022년 9월13일</span>
+            <span>날짜 : {{ date }}</span>
           </v-col>
           <v-col cols="1">
             <span>날씨 :</span>
           </v-col>
           <v-col cols="2">
-            <v-select :items="items" :value="weather" :menu-props="{maxHeight: '80%', overflowX: true}">
-              <template v-slot:selection="{ item }"> <v-img class="selectImg" :src="item.image" /></template>
-              <template v-slot:item="{ item }"> <v-img class="selectImg" :src="item.image" /></template>
+            <v-select
+              :items="weatherImg"
+              :value="weather"
+              :menu-props="{ maxHeight: '80%', overflowX: true }"
+            >
+              <template v-slot:selection="{ item }">
+                <v-img
+                  class="selectImg"
+                  :src="require(`@/assets/diary/weather/${item}.png`)"
+              /></template>
+              <template v-slot:item="{ item }">
+                <v-img
+                  class="selectImg"
+                  :src="require(`@/assets/diary/weather/${item}.png`)"
+                  @click="weather = item"
+              /></template>
             </v-select>
           </v-col>
           <v-col>
             <v-btn icon small>
-              <v-icon color="blue lighten-3"> mdi-image-outline </v-icon>
+              <v-icon color="blue lighten-3" @click="uploadImg">
+                mdi-image-outline
+              </v-icon>
             </v-btn>
           </v-col>
         </v-row>
       </div>
     </div>
-    <div class="diarymiddle">
+    <div
+      class="diarymiddle"
+      v-show="isImg"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/uploadimg/${backImg}.png`) + ')',
+      }"
+    >
+      <!-- <v-img :src="require(`@/assets/diary/weather/${item}.png`)" /> -->
+    </div>
+    <div
+      class="diarymiddle"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/middle/${backImg}.png`) + ')',
+      }"
+    >
       <div>
-        <v-textarea auto-grow outlined single-line :value="diary" label="일기를 써보자" />
+        <v-textarea
+          v-model="diary"
+          auto-grow
+          outlined
+          single-line
+          :value="diary"
+          label="일기를 써보자"
+        />
       </div>
     </div>
-    <div class="diarybottom">
-      <custom-button class="customButton" btnText="작성완료" @click="writingCompletion"/>
+    <div
+      class="diarybottom"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/bottom/${backImg}.png`) + ')',
+      }"
+    >
+      <custom-button
+        class="customButton"
+        btnText="작성완료"
+        @click="writingCompletion"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import CustomButton from "../common/CustomButton.vue";
+import eventBus from "./eventBus.js";
 export default {
-  components: { CustomButton },
   data: () => ({
-    items: [
-      {
-        name: "맑음",
-        image: "http://drive.google.com/uc?export=view&id=1dQZmzod0_QpIFxf2ZBaNAF4GC-dSoD6o",
-      },
-      {
-        name: "구름많음",
-        image: "http://drive.google.com/uc?export=view&id=1vR6dPKvfz4YY85nuejk_3dzz2JrQZkQH",
-      },
-      {
-        name: "흐림",
-        image: "http://drive.google.com/uc?export=view&id=1w74NgrYIZzCI_HvHXhrhSGF5LZmmO1k8",
-      },
-      {
-        name: "바람",
-        image: "http://drive.google.com/uc?export=view&id=1OJHgysCuI407D4l9SipYaija2jvAzW8T",
-      },
-      {
-        name: "비",
-        image: "http://drive.google.com/uc?export=view&id=1FCWSejY7KNK1sCeiFXN-WfAKxwF5kKqV",
-      },
-      {
-        name: "눈",
-        image: "http://drive.google.com/uc?export=view&id=12Ru0mvrGVjgPQ3hAgCoAjT50szNX_f1V",
-      },
-      {
-        name: "번개",
-        image: "http://drive.google.com/uc?export=view&id=1MCLxgNMM-UQhhQ_bRso7MsUs4Jw_irwj",
-      },
-      {
-        name: "무지개",
-        image: "http://drive.google.com/uc?export=view&id=1ec1iziusU4LWHvmuLLQLOO1DrsdzyvcA",
-      },
+    weatherImg: [
+      "sunny",
+      "overcast",
+      "cloudy",
+      "windy",
+      "rain",
+      "snow",
+      "lightning",
+      "mild",
     ],
+    isImg: false,
+    uploadImageFile: "",
+
+    date: "2022-09-17",
+    weather: "sunny",
     diary: "",
-    weather:  {
-        name: "맑음",
-        image: "http://drive.google.com/uc?export=view&id=1dQZmzod0_QpIFxf2ZBaNAF4GC-dSoD6o",
-      },
+    backImg: "blackLine",
   }),
   methods: {
     writingCompletion() {
-      this.$router.push({ path: 'diarydetail' })
+      this.$router.push({ path: "diarydetail" });
     },
-  }
+    uploadImg() {
+      // 파일첨부 기능 추가
+      this.isImg = !this.isImg;
+    },
+  },
+  created() {
+    eventBus.$on("backImgChoice", (props) => {
+      // console.log("전달 받은 배경 이름", data);
+      this.backImg = props;
+    });
+  },
 };
 </script>
 
@@ -97,7 +138,7 @@ export default {
   justify-content: center;
 }
 .diaryTop {
-  background: url("@/assets/diary/writingtop/blackLineTop.png") no-repeat center;
+  /* background: url("@/assets/diary/writingtop/blackLine.png") no-repeat center; */
   background-size: cover;
   object-fit: none;
   flex-basis: 10vh;
@@ -124,21 +165,24 @@ export default {
 }
 
 .diarymiddle {
-  background: url("@/assets/diary/middle/blacklineMiddle.png") repeat-y center;
+  background: url("@/assets/diary/middle/blackLine.png") repeat-y center;
   background-size: 100% 100%;
   height: 100%;
   flex-basis: 45vh;
 }
+@import url("@/assets/font/font.css");
 .v-text-field {
   width: 81%;
   height: 100%;
   margin: 0 auto;
+  font-family: "KyoboHandwriting2019";
+  font-size: xx-large;
 }
 .v-text-field >>> fieldset {
   border: none;
 }
 .diarybottom {
-  background: url("@/assets/diary/bottom/blackLineBottom.png") no-repeat center;
+  background: url("@/assets/diary/bottom/blackLine.png") no-repeat center;
   background-size: cover;
   object-fit: none;
   flex-basis: 10vh;
