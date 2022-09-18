@@ -96,7 +96,7 @@ export default {
   justify-content: center;
 }
 .diaryTop {
-  background: url("@/assets/diary/detailtop/blackLineTop.png") no-repeat center;
+  background: url("@/assets/diary/detailtop/blackLine.png") no-repeat center;
   background-size: cover;
   object-fit: none;
   flex-basis: 10vh;
@@ -119,7 +119,7 @@ export default {
   max-width: 200px;
 }
 .diarymiddle {
-  background: url("@/assets/diary/middle/blacklineMiddle.png") repeat-y center;
+  background: url("@/assets/diary/middle/blackLine.png") repeat-y center;
   background-size: 100% 100%;
   height: 100%;
   flex-basis: 45vh;
