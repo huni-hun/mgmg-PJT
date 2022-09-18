@@ -27,5 +27,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     long countByUser_UserNo(Long userNo);
 
     long countByUser_UserNoAndEmotion(Long userNo, String emotion);
+
+    Optional<Diary> findByUser_UserNoAndDiaryDate(Long userNo,Date diaryDate);
 }
 

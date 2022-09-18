@@ -1,24 +1,19 @@
 package com.ssafy.mgmgproject.api.service;
 
-import com.ssafy.mgmgproject.db.entity.AchievedBadge;
-import com.ssafy.mgmgproject.db.entity.Badge;
-import com.ssafy.mgmgproject.db.entity.Notification;
-import com.ssafy.mgmgproject.db.entity.User;
-import com.ssafy.mgmgproject.db.repository.AchievedBadgeRepository;
-import com.ssafy.mgmgproject.db.repository.BadgeRepository;
-import com.ssafy.mgmgproject.db.repository.DiaryRepository;
-import com.ssafy.mgmgproject.db.repository.NotificationRepository;
+import com.ssafy.mgmgproject.db.entity.*;
+import com.ssafy.mgmgproject.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class BadgeServiceImpl implements BadgeService{
 
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     BadgeRepository badgeRepository;
     @Autowired
@@ -120,10 +115,64 @@ public class BadgeServiceImpl implements BadgeService{
     }
 
     @Override
+    public void checkToGetContinuousBadge(String userId, Date date) throws ParseException {
+        User user = userRepository.findByUserId(userId).orElse(null);
+        Diary diary = diaryRepository.findByUser_UserNoAndDiaryDate(user.getUserNo(), date).orElse(null);
+
+        SimpleDateFormat diaryDateTransFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat writeDateTransFormat = new SimpleDateFormat("yyyy.MM.dd");
+        Date diaryDate = diary.getDiaryDate();
+        String writeDate = diary.getWriteDate();
+        String diaryDateStr = writeDateTransFormat.format(diaryDate);
+
+        if(diaryDateStr.equals(writeDate.split(" ")[0])){ //오늘인지 확인 , 아니면 끝
+
+            Calendar cal = new GregorianCalendar(Locale.KOREA);
+            cal.setTime(diaryDate);
+            cal.add(Calendar.DATE, -1);
+
+            String yDateStr = diaryDateTransFormat.format(cal.getTime());
+            Date yDate = diaryDateTransFormat.parse(yDateStr);
+            Diary yDiary = diaryRepository.findByUser_UserNoAndDiaryDate(user.getUserNo(), yDate).orElse(null);
+
+            if(yDiary!=null) {
+
+                Date yDiaryDate = yDiary.getDiaryDate();
+                String yWriteDate = yDiary.getWriteDate();
+                String yDiaryDateStr = writeDateTransFormat.format(yDiaryDate);
+                if(yDiaryDateStr.equals(yWriteDate.split(" ")[0])){
+                    int diaryContinue = user.getDiaryContinue()+1;
+                    user.updateDiaryContinue(diaryContinue);
+                    Badge badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining(diaryContinue+"","연속").orElse(null);
+                    if(badge!=null){
+                        AchievedBadge achievedBadge = achievedBadgeRepository.findByUserAndBadge(user,badge).orElse(null);
+                        if(achievedBadge==null){
+                            achievedBadge = AchievedBadge.builder()
+                                    .user(user)
+                                    .badge(badge)
+                                    .build();
+                            Notification notification = Notification.builder()
+                                    .notificationContent(badge.getBadgeName())
+                                    .build();
+                            achievedBadgeRepository.save(achievedBadge);
+                            notificationRepository.save(notification);
+                        }
+                    }
+                    return;
+                }
+            }
+            user.updateDiaryContinue(0);
+                //전날 일기가 있는지 확인 , 없으면 카운트 초기화
+                //전날쓴 일기가 그날 쓴 일기인지 확인 , 아니면 카운트 초기화 , 맞으면 카운트 +1 후 업적 조건 체크
+
+        }
+    }
+
+    @Override
     public void checkToGetEmotionBadge(User user, String emotion) {
         long total = diaryRepository.countByUser_UserNoAndEmotion(user.getUserNo(),emotion);
         Badge badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining(emotion,total+"").orElse(null);
-        
+
         if(badge!=null){
             AchievedBadge achievedBadge = achievedBadgeRepository.findByUserAndBadge(user,badge).orElse(null);
             if(achievedBadge==null){

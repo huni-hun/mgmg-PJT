@@ -5,6 +5,7 @@ import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.api.response.DiaryListResponse;
 import com.ssafy.mgmgproject.api.response.DiaryResponse;
+import com.ssafy.mgmgproject.api.service.BadgeService;
 import com.ssafy.mgmgproject.api.service.DiaryService;
 import com.ssafy.mgmgproject.common.auth.UserDetails;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
@@ -12,6 +13,7 @@ import com.ssafy.mgmgproject.db.entity.Diary;
 import com.ssafy.mgmgproject.db.entity.InterestGift;
 import com.ssafy.mgmgproject.db.entity.InterestMusic;
 import io.swagger.annotations.*;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,6 +30,8 @@ public class DiaryController {
 
     @Autowired
     DiaryService diaryService;
+    @Autowired
+    BadgeService badgeService;
 
     @PostMapping()
     @ApiOperation(value = "일기 작성", notes = "일기를 작성한다.")
@@ -44,6 +48,7 @@ public class DiaryController {
         try {
             diary = diaryService.writeDiary(userId, diaryRequest);
             if (diary == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 작성에 실패하였습니다."));
+            badgeService.checkToGetContinuousBadge(userId,diary.getDiaryDate());
         }
         catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 작성에 실패하였습니다."));
