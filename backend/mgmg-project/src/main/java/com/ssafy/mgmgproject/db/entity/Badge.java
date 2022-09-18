@@ -30,7 +30,7 @@ public class Badge {
     private String badgeContent;
 
     @Column(name = "badge_condition", length = 20)
-    private String badgeCodition;
+    private String badgeCondition;
 
     @OneToMany(mappedBy = "badge", cascade = CascadeType.ALL)
     @Builder.Default

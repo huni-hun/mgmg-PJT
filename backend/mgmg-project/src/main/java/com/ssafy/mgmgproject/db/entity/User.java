@@ -84,6 +84,12 @@ public class User {
         this.gender = gender;
     }
 
+    public void updateDiaryContinue(int diaryContinue) {
+        if(diaryContinue<Integer.MAX_VALUE){
+            this.diaryContinue=diaryContinue;
+        }
+    }
+
     public void updateFont(int diaryFont){
         this.diaryFont = diaryFont;
     }
