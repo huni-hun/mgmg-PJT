@@ -34,7 +34,7 @@ public class BadgeResponse extends BaseResponseBody{
         BadgeResponse res = new BadgeResponse();
         res.setBadgeName(badge.getBadgeName());
         res.setBadgeContent(badge.getBadgeContent());
-        res.setBadgeCodition(badge.getBadgeCodition());
+        res.setBadgeCodition(badge.getBadgeCondition());
         res.setAchievedBadgeDate(achievedBadge==null? null : achievedBadge.getAchievedBadgeDate().toString());
         res.setAchievedBadgeFlag(achievedBadge!=null);
         res.setStatusCode(statusCode);
