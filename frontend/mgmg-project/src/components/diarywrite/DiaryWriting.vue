@@ -23,20 +23,27 @@
             >
               <template v-slot:selection="{ item }">
                 <v-img
-                  class="selectImg"
+                  class="selectWeather"
                   :src="require(`@/assets/diary/weather/${item}.png`)"
               /></template>
               <template v-slot:item="{ item }">
                 <v-img
-                  class="selectImg"
+                  class="selectWeather"
                   :src="require(`@/assets/diary/weather/${item}.png`)"
                   @click="weather = item"
               /></template>
             </v-select>
           </v-col>
           <v-col>
+            <input
+              ref="file"
+              type="file"
+              accept="image/gif,image/jpeg,image/jpg,image/png"
+              hidden
+              @change="readFile($event)"
+            />
             <v-btn icon small>
-              <v-icon color="blue lighten-3" @click="uploadImg">
+              <v-icon color="blue lighten-3" @click="selectFile">
                 mdi-image-outline
               </v-icon>
             </v-btn>
@@ -46,13 +53,15 @@
     </div>
     <div
       class="diarymiddle"
-      v-show="isImg"
+      v-show="uploadImageFile"
       :style="{
         backgroundImage:
           'url(' + require(`@/assets/diary/uploadimg/${backImg}.png`) + ')',
       }"
     >
-      <!-- <v-img :src="require(`@/assets/diary/weather/${item}.png`)" /> -->
+      <div class="selectImg">
+        <img v-if="uploadImageFile" :src="uploadImageFile" />
+      </div>
     </div>
     <div
       class="diarymiddle"
@@ -102,11 +111,10 @@ export default {
       "lightning",
       "mild",
     ],
-    isImg: false,
-    uploadImageFile: "",
 
     date: "2022-09-17",
     weather: "sunny",
+    uploadImageFile: null,
     diary: "",
     backImg: "blackLine",
   }),
@@ -114,9 +122,13 @@ export default {
     writingCompletion() {
       this.$router.push({ path: "diarydetail" });
     },
-    uploadImg() {
-      // 파일첨부 기능 추가
-      this.isImg = !this.isImg;
+    selectFile() {
+      let fileInputElement = this.$refs.file;
+      fileInputElement.click();
+    },
+    readFile(e) {
+      const file = e.target.files[0];
+      this.uploadImageFile = URL.createObjectURL(file);
     },
   },
   created() {
@@ -159,7 +171,7 @@ export default {
 .v-select {
   padding: 0px;
 }
-.selectImg {
+.selectWeather {
   width: 2%;
   max-width: 50px;
 }
@@ -169,6 +181,18 @@ export default {
   background-size: 100% 100%;
   height: 100%;
   flex-basis: 45vh;
+}
+.diarymiddle > .selectImg {
+  position: relative;
+  height: 100%;
+}
+.selectImg > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 70%;
+  max-height: 80%;
 }
 @import url("@/assets/font/font.css");
 .v-text-field {
