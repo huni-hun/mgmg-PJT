@@ -2,6 +2,7 @@ package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.db.entity.AchievedBadge;
 import com.ssafy.mgmgproject.db.entity.Badge;
+import com.ssafy.mgmgproject.db.entity.Diary;
 import com.ssafy.mgmgproject.db.entity.User;
 
 import java.text.ParseException;
@@ -15,8 +16,8 @@ public interface BadgeService {
     List<Map<String,Object>> selectAchievedBadgeList(User user);
     AchievedBadge getByUserAndBadgeNo(User user, long badgeNo);
     Badge getByBadgeNo(long badgeNo);
-
+    void checkToGetBadge(String userId, Diary diary) throws ParseException ;
     void checkToGetAccumulationBadge(User user);
-    void checkToGetContinuousBadge(String userId, Date date) throws ParseException;
+    void checkToGetContinuousBadge(User user, Date date) throws ParseException;
     void checkToGetEmotionBadge(User user, String emotion);
 }

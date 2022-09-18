@@ -5,6 +5,7 @@ import com.ssafy.mgmgproject.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -88,6 +89,16 @@ public class BadgeServiceImpl implements BadgeService{
     }
 
     @Override
+    @Transactional
+    public void checkToGetBadge(String userId, Diary diary) throws ParseException {
+        User user = userRepository.findByUserId(userId).orElse(null);
+        checkToGetAccumulationBadge(user);
+        checkToGetContinuousBadge(user, diary.getDiaryDate());
+        checkToGetEmotionBadge(user, diary.getEmotion());
+    }
+
+    @Override
+    @Transactional
     public void checkToGetAccumulationBadge(User user) {
         long total = diaryRepository.countByUser_UserNo(user.getUserNo());
         Badge badge;
@@ -115,8 +126,9 @@ public class BadgeServiceImpl implements BadgeService{
     }
 
     @Override
-    public void checkToGetContinuousBadge(String userId, Date date) throws ParseException {
-        User user = userRepository.findByUserId(userId).orElse(null);
+    @Transactional
+    public void checkToGetContinuousBadge(User user, Date date) throws ParseException {
+
         Diary diary = diaryRepository.findByUser_UserNoAndDiaryDate(user.getUserNo(), date).orElse(null);
 
         SimpleDateFormat diaryDateTransFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -125,7 +137,7 @@ public class BadgeServiceImpl implements BadgeService{
         String writeDate = diary.getWriteDate();
         String diaryDateStr = writeDateTransFormat.format(diaryDate);
 
-        if(diaryDateStr.equals(writeDate.split(" ")[0])){ //오늘인지 확인 , 아니면 끝
+        if(diaryDateStr.equals(writeDate.split(" ")[0])){
 
             Calendar cal = new GregorianCalendar(Locale.KOREA);
             cal.setTime(diaryDate);
@@ -162,13 +174,11 @@ public class BadgeServiceImpl implements BadgeService{
                 }
             }
             user.updateDiaryContinue(0);
-                //전날 일기가 있는지 확인 , 없으면 카운트 초기화
-                //전날쓴 일기가 그날 쓴 일기인지 확인 , 아니면 카운트 초기화 , 맞으면 카운트 +1 후 업적 조건 체크
-
         }
     }
 
     @Override
+    @Transactional
     public void checkToGetEmotionBadge(User user, String emotion) {
         long total = diaryRepository.countByUser_UserNoAndEmotion(user.getUserNo(),emotion);
         Badge badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining(emotion,total+"").orElse(null);

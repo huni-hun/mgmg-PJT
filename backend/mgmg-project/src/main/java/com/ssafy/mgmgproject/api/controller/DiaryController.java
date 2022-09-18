@@ -48,7 +48,7 @@ public class DiaryController {
         try {
             diary = diaryService.writeDiary(userId, diaryRequest);
             if (diary == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 작성에 실패하였습니다."));
-            badgeService.checkToGetContinuousBadge(userId,diary.getDiaryDate());
+            badgeService.checkToGetBadge(userId,diary);
         }
         catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 작성에 실패하였습니다."));
