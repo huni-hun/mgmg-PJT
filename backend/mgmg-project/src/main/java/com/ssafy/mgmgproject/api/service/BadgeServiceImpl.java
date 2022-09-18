@@ -108,27 +108,14 @@ public class BadgeServiceImpl implements BadgeService{
         }else{
             badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining(total+"","누적").orElse(null);
         }
-
         if(badge!=null){
-            AchievedBadge achievedBadge = achievedBadgeRepository.findByUserAndBadge(user,badge).orElse(null);
-            if(achievedBadge==null){
-                achievedBadge = AchievedBadge.builder()
-                        .user(user)
-                        .badge(badge)
-                        .build();
-                Notification notification = Notification.builder()
-                        .notificationContent(badge.getBadgeName())
-                        .build();
-                achievedBadgeRepository.save(achievedBadge);
-                notificationRepository.save(notification);
-            }
+            achieveBadge(user, badge);
         }
     }
 
     @Override
     @Transactional
     public void checkToGetContinuousBadge(User user, Date date) throws ParseException {
-
         Diary diary = diaryRepository.findByUser_UserNoAndDiaryDate(user.getUserNo(), date).orElse(null);
 
         SimpleDateFormat diaryDateTransFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -152,28 +139,18 @@ public class BadgeServiceImpl implements BadgeService{
                 Date yDiaryDate = yDiary.getDiaryDate();
                 String yWriteDate = yDiary.getWriteDate();
                 String yDiaryDateStr = writeDateTransFormat.format(yDiaryDate);
+
                 if(yDiaryDateStr.equals(yWriteDate.split(" ")[0])){
                     int diaryContinue = user.getDiaryContinue()+1;
                     user.updateDiaryContinue(diaryContinue);
                     Badge badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining(diaryContinue+"","연속").orElse(null);
                     if(badge!=null){
-                        AchievedBadge achievedBadge = achievedBadgeRepository.findByUserAndBadge(user,badge).orElse(null);
-                        if(achievedBadge==null){
-                            achievedBadge = AchievedBadge.builder()
-                                    .user(user)
-                                    .badge(badge)
-                                    .build();
-                            Notification notification = Notification.builder()
-                                    .notificationContent(badge.getBadgeName())
-                                    .build();
-                            achievedBadgeRepository.save(achievedBadge);
-                            notificationRepository.save(notification);
-                        }
+                        achieveBadge(user, badge);
                     }
                     return;
                 }
             }
-            user.updateDiaryContinue(0);
+            user.updateDiaryContinue(1);
         }
     }
 
@@ -181,9 +158,15 @@ public class BadgeServiceImpl implements BadgeService{
     @Transactional
     public void checkToGetEmotionBadge(User user, String emotion) {
         long total = diaryRepository.countByUser_UserNoAndEmotion(user.getUserNo(),emotion);
-        Badge badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining(emotion,total+"").orElse(null);
-
+        Badge badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining(emotion,total+"회").orElse(null);
         if(badge!=null){
+            achieveBadge(user, badge);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void achieveBadge(User user, Badge badge) {
             AchievedBadge achievedBadge = achievedBadgeRepository.findByUserAndBadge(user,badge).orElse(null);
             if(achievedBadge==null){
                 achievedBadge = AchievedBadge.builder()
@@ -191,11 +174,11 @@ public class BadgeServiceImpl implements BadgeService{
                         .badge(badge)
                         .build();
                 Notification notification = Notification.builder()
+                        .user(user)
                         .notificationContent(badge.getBadgeName())
                         .build();
                 achievedBadgeRepository.save(achievedBadge);
                 notificationRepository.save(notification);
             }
         }
-    }
 }

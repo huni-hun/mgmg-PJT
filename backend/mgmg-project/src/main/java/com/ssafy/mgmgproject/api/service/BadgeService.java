@@ -20,4 +20,5 @@ public interface BadgeService {
     void checkToGetAccumulationBadge(User user);
     void checkToGetContinuousBadge(User user, Date date) throws ParseException;
     void checkToGetEmotionBadge(User user, String emotion);
+    void achieveBadge(User user, Badge badge);
 }
