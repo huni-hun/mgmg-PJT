@@ -118,4 +118,25 @@ public class BadgeServiceImpl implements BadgeService{
             }
         }
     }
+
+    @Override
+    public void checkToGetEmotionBadge(User user, String emotion) {
+        long total = diaryRepository.countByUser_UserNoAndEmotion(user.getUserNo(),emotion);
+        Badge badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining(emotion,total+"").orElse(null);
+        
+        if(badge!=null){
+            AchievedBadge achievedBadge = achievedBadgeRepository.findByUserAndBadge(user,badge).orElse(null);
+            if(achievedBadge==null){
+                achievedBadge = AchievedBadge.builder()
+                        .user(user)
+                        .badge(badge)
+                        .build();
+                Notification notification = Notification.builder()
+                        .notificationContent(badge.getBadgeName())
+                        .build();
+                achievedBadgeRepository.save(achievedBadge);
+                notificationRepository.save(notification);
+            }
+        }
+    }
 }

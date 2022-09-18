@@ -15,4 +15,5 @@ public interface BadgeService {
     Badge getByBadgeNo(long badgeNo);
 
     void checkToGetAccumulationBadge(User user);
+    void checkToGetEmotionBadge(User user, String emotion);
 }
