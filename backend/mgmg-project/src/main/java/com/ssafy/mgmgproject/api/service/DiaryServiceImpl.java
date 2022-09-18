@@ -1,17 +1,24 @@
 package com.ssafy.mgmgproject.api.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
 import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.db.entity.*;
 import com.ssafy.mgmgproject.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import software.amazon.ion.IonException;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -34,6 +41,12 @@ public class DiaryServiceImpl implements DiaryService {
     @Autowired
     InterestGiftRepository interestGiftRepository;
 
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
+    @Autowired
+    AmazonS3 amazonS3;
+
     @Override
     public Diary writeDiary(String userId, DiaryRequest diaryRequest) {
         User user = userRepository.findByUserId(userId).orElse(null);
@@ -51,18 +64,19 @@ public class DiaryServiceImpl implements DiaryService {
                 .gift(gift)
                 .openGift(false)
                 .build();
+        uploadImg(diary, diaryRequest.getMultipartFile());
         diaryRepository.save(diary);
         return diary;
     }
 
     @Override
     @Transactional
-    public Diary updateDiary(Long diaryNo, DiaryUpdateRequest diaryUpdateRequest){
+    public Diary updateDiary(Long diaryNo, DiaryUpdateRequest diaryUpdateRequest) {
         Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryUpdateRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryUpdateRequest.getGiftNo()).orElse(null);
-        if(diary.getGift() != gift) diary.closeGift();
-        if(diary != null){
+        if (diary.getGift() != gift) diary.closeGift();
+        if (diary != null) {
             diary.updateDiary(
                     diaryUpdateRequest.getDiaryContent(),
                     diaryUpdateRequest.getWeather(),
@@ -78,9 +92,10 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<DiaryListMapping> getDiaryMonthList(Long userNo, String date){
+    public List<DiaryListMapping> getDiaryMonthList(Long userNo, String date) {
+
         List<DiaryListMapping> diaries = diaryRepository.findByUser_UserNoAndDiaryDateStartsWith(userNo, date);
-        if(diaries != null) return diaries;
+        if (diaries != null) return diaries;
         else return null;
     }
 
@@ -102,7 +117,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public InterestMusic addInterestMusic(String userId, Long musicNo){
+    public InterestMusic addInterestMusic(String userId, Long musicNo) {
         User user = userRepository.findByUserId(userId).orElse(null);
         Music music = musicRepository.findByMusicNo(musicNo).orElse(null);
         InterestMusic interestMusic = InterestMusic.builder()
@@ -114,7 +129,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public InterestGift addInterestGift(String userId, Long giftNo){
+    public InterestGift addInterestGift(String userId, Long giftNo) {
         User user = userRepository.findByUserId(userId).orElse(null);
         Gift gift = giftRepository.findByGiftNo(giftNo).orElse(null);
         InterestGift interestGift = InterestGift.builder()
@@ -127,14 +142,31 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     @Transactional
-    public int openGift(Long diaryNo){
+    public int openGift(Long diaryNo) {
         Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
-        if(diary == null) return 0;
+        if (diary == null) return 0;
         else {
             diary.openGift();
             diaryRepository.save(diary);
             return 1;
         }
+    }
+
+    @Override
+    public int uploadImg(Diary diary, MultipartFile multipartFile) {
+        try {
+            String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(multipartFile.getInputStream().available());
+            amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objectMetadata);
+
+            String fileUrl = amazonS3.getUrl(bucket, s3FileName).toString();
+            diary.updateImg(fileUrl);
+        } catch (Exception e) {
+            return 0;
+        }
+        return 1;
     }
 
 }

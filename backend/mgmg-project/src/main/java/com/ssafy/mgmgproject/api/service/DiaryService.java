@@ -6,7 +6,9 @@ import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.db.entity.Diary;
 import com.ssafy.mgmgproject.db.entity.InterestGift;
 import com.ssafy.mgmgproject.db.entity.InterestMusic;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface DiaryService {
@@ -26,4 +28,6 @@ public interface DiaryService {
     InterestGift addInterestGift(String userId, Long giftNo);
 
     int openGift(Long diaryNo);
+
+    int uploadImg(Diary diary, MultipartFile multipartFile) throws IOException;
 }

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
@@ -29,9 +30,6 @@ public class DiaryRequest {
     @ApiModelProperty(name = "날씨", example = "맑음")
     String weather;
 
-    @ApiModelProperty(name = "사진", example = "사진")
-    String diaryImg;
-
     @NotEmpty
     @ApiModelProperty(name = "편지지", example = "1")
     int diaryThema;
@@ -47,4 +45,7 @@ public class DiaryRequest {
     @NotEmpty
     @ApiModelProperty(name = "선물 번호", example = "선물 번호")
     Long giftNo;
+
+    @ApiModelProperty(name = "multipartFile")
+    MultipartFile multipartFile;
 }
