@@ -14,4 +14,5 @@ public interface BadgeService {
     AchievedBadge getByUserAndBadgeNo(User user, long badgeNo);
     Badge getByBadgeNo(long badgeNo);
 
+    void checkToGetAccumulationBadge(User user);
 }

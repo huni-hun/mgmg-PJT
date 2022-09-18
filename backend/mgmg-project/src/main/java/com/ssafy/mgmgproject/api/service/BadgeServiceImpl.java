@@ -2,9 +2,12 @@ package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.db.entity.AchievedBadge;
 import com.ssafy.mgmgproject.db.entity.Badge;
+import com.ssafy.mgmgproject.db.entity.Notification;
 import com.ssafy.mgmgproject.db.entity.User;
 import com.ssafy.mgmgproject.db.repository.AchievedBadgeRepository;
 import com.ssafy.mgmgproject.db.repository.BadgeRepository;
+import com.ssafy.mgmgproject.db.repository.DiaryRepository;
+import com.ssafy.mgmgproject.db.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,10 @@ public class BadgeServiceImpl implements BadgeService{
     BadgeRepository badgeRepository;
     @Autowired
     AchievedBadgeRepository achievedBadgeRepository;
+    @Autowired
+    DiaryRepository diaryRepository;
+    @Autowired
+    NotificationRepository notificationRepository;
 
     @Override
     public List<Map<String,Object>> selectBadgeList(User user) {
@@ -85,5 +92,30 @@ public class BadgeServiceImpl implements BadgeService{
         return badgeRepository.findById(badgeNo).orElse(null);
     }
 
+    @Override
+    public void checkToGetAccumulationBadge(User user) {
+        long total = diaryRepository.countByUser_UserNo(user.getUserNo());
+        Badge badge;
 
+        if(total==1){
+            badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining("첫","일기").orElse(null);
+        }else{
+            badge = badgeRepository.findByBadgeConditionStartingWithAndBadgeConditionContaining(total+"","누적").orElse(null);
+        }
+
+        if(badge!=null){
+            AchievedBadge achievedBadge = achievedBadgeRepository.findByUserAndBadge(user,badge).orElse(null);
+            if(achievedBadge==null){
+                achievedBadge = AchievedBadge.builder()
+                        .user(user)
+                        .badge(badge)
+                        .build();
+                Notification notification = Notification.builder()
+                        .notificationContent(badge.getBadgeName())
+                        .build();
+                achievedBadgeRepository.save(achievedBadge);
+                notificationRepository.save(notification);
+            }
+        }
+    }
 }
