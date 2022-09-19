@@ -36,6 +36,7 @@
           </v-col>
           <v-col>
             <input
+              v-if="uploadReady"
               ref="file"
               type="file"
               accept="image/gif,image/jpeg,image/jpg,image/png"
@@ -61,6 +62,9 @@
     >
       <div class="selectImg">
         <img v-if="uploadImageFile" :src="uploadImageFile" />
+        <v-icon large color="gray darken-2" @click="cancelImage">
+          mdi-close
+        </v-icon>
       </div>
     </div>
     <div
@@ -111,6 +115,7 @@ export default {
       "lightning",
       "mild",
     ],
+    uploadReady: false,
 
     date: "2022-09-17",
     weather: "sunny",
@@ -123,12 +128,23 @@ export default {
       this.$router.push({ path: "diarydetail" });
     },
     selectFile() {
+      this.uploadReady = true;
       let fileInputElement = this.$refs.file;
       fileInputElement.click();
+      console.log("이미지불러오기", this.uploadImageFile);
     },
     readFile(e) {
       const file = e.target.files[0];
       this.uploadImageFile = URL.createObjectURL(file);
+      console.log("이미지 선택하기", this.uploadImageFile);
+    },
+    cancelImage() {
+      this.uploadImageFile = null;
+      this.uploadReady = false;
+      this.$nextTick(() => {
+        this.uploadReady = true;
+      });
+      console.log("취소", this.uploadImageFile);
     },
   },
   created() {
@@ -190,6 +206,14 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 70%;
+  max-height: 80%;
+}
+.selectImg > .v-icon {
+  position: absolute;
+  top: 8%;
+  right: 11%;
   transform: translate(-50%, -50%);
   max-width: 70%;
   max-height: 80%;
