@@ -50,8 +50,8 @@ public class Diary {
     @Column(name = "emotion", length = 3)
     private String emotion;
 
-    @Column(name = "diary_thema")
-    private int diaryThema;
+    @Column(name = "diary_thema", length = 30)
+    private String diaryThema;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "music_no")
@@ -73,7 +73,7 @@ public class Diary {
         this.writeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
     }
 
-    public void updateDiary(String diaryContent, String weather, int diaryThema, String emotion, Music music, Gift gift) {
+    public void updateDiary(String diaryContent, String weather, String diaryThema, String emotion, Music music, Gift gift) {
         this.diaryContent = diaryContent;
         this.weather = weather;
         this.diaryThema = diaryThema;

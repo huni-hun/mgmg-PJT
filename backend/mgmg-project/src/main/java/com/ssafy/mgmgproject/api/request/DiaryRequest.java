@@ -31,8 +31,8 @@ public class DiaryRequest {
     String weather;
 
     @NotEmpty
-    @ApiModelProperty(name = "편지지", example = "1")
-    int diaryThema;
+    @ApiModelProperty(name = "편지지", example = "편지지1")
+    String diaryThema;
 
     @NotEmpty
     @ApiModelProperty(name = "감정", example = "슬픔")

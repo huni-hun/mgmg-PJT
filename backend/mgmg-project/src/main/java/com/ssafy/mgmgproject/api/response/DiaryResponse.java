@@ -35,7 +35,7 @@ public class DiaryResponse extends BaseResponseBody {
     String diaryImg;
 
     @ApiModelProperty(name = "편지지")
-    int diaryThema;
+    String diaryThema;
 
     @ApiModelProperty(name = "감정")
     String emotion;
