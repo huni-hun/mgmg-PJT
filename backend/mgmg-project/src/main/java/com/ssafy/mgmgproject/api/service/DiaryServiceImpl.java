@@ -64,7 +64,7 @@ public class DiaryServiceImpl implements DiaryService {
                 .gift(gift)
                 .openGift(false)
                 .build();
-        if(multipartFile != null) uploadImg(diary, multipartFile);
+        if (multipartFile != null) uploadImg(diary, multipartFile);
         diaryRepository.save(diary);
         return diary;
     }
@@ -86,7 +86,7 @@ public class DiaryServiceImpl implements DiaryService {
                     gift
             );
         }
-        if(multipartFile != null) uploadImg(diary, multipartFile);
+        if (multipartFile != null) uploadImg(diary, multipartFile);
         diaryRepository.save(diary);
         return diary;
     }
@@ -107,10 +107,14 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     @Transactional
     public int deleteDiary(Long diaryNo) {
+        Diary diary;
         try {
-            diaryRepository.findByDiaryNo(diaryNo).get();
+            diary = diaryRepository.findByDiaryNo(diaryNo).get();
         } catch (Exception e) {
             return 0;
+        }
+        if (diary.getDiaryImg() != null) {
+            deleteS3Img(diary);
         }
         diaryRepository.deleteByDiaryNo(diaryNo);
         return 1;
@@ -156,10 +160,8 @@ public class DiaryServiceImpl implements DiaryService {
     public int uploadImg(Diary diary, MultipartFile multipartFile) {
 
         try {
-            if(diary.getDiaryImg() != null) {
-                String filename = diary.getDiaryImg().substring(diary.getDiaryImg().lastIndexOf("/")+1);
-                System.out.println(filename);
-                amazonS3.deleteObject(bucket, filename);
+            if (diary.getDiaryImg() != null) {
+                deleteS3Img(diary);
             }
             String filename = fileNameFilter(multipartFile.getOriginalFilename());
             String s3FileName = UUID.randomUUID() + "-" + filename;
@@ -176,8 +178,18 @@ public class DiaryServiceImpl implements DiaryService {
         return 1;
     }
 
-    public String fileNameFilter(String filename){
-        return filename.replaceAll("[^a-zA-Z0-9가-힣_.]", "").replaceAll(" ","");
+    public int deleteS3Img(Diary diary) {
+        try {
+            String filename = diary.getDiaryImg().substring(diary.getDiaryImg().lastIndexOf("/") + 1);
+            amazonS3.deleteObject(bucket, filename);
+        } catch (Exception e) {
+            return 0;
+        }
+        return 1;
+    }
+
+    public String fileNameFilter(String filename) {
+        return filename.replaceAll("[^a-zA-Z0-9가-힣_.]", "").replaceAll(" ", "");
     }
 
 }
