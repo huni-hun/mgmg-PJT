@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import software.amazon.ion.IonException;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -181,6 +182,8 @@ public class DiaryServiceImpl implements DiaryService {
     public int deleteS3Img(Diary diary) {
         try {
             String filename = diary.getDiaryImg().substring(diary.getDiaryImg().lastIndexOf("/") + 1);
+            filename = URLDecoder.decode(filename, "UTF-8");
+            System.out.println(filename);
             amazonS3.deleteObject(bucket, filename);
         } catch (Exception e) {
             return 0;
