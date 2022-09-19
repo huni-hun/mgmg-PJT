@@ -1,4 +1,4 @@
-package com.ssafy.mgmgproject.api.service;
+package com.ssafy.mgmgproject.common.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;

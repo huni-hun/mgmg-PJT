@@ -1,6 +1,7 @@
 package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.dto.Mail;
+import com.ssafy.mgmgproject.common.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
