@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface DiaryService {
 
-    Diary writeDiary(String userId, DiaryRequest diaryRequest);
+    Diary writeDiary(String userId, MultipartFile multipartFile, DiaryRequest diaryRequest);
 
     Diary updateDiary(Long diaryNo, DiaryUpdateRequest diaryUpdateRequest);
 

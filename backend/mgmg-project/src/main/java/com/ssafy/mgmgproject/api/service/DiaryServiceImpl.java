@@ -48,7 +48,7 @@ public class DiaryServiceImpl implements DiaryService {
     AmazonS3 amazonS3;
 
     @Override
-    public Diary writeDiary(String userId, DiaryRequest diaryRequest) {
+    public Diary writeDiary(String userId, MultipartFile multipartFile, DiaryRequest diaryRequest) {
         User user = userRepository.findByUserId(userId).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryRequest.getGiftNo()).orElse(null);
@@ -64,7 +64,7 @@ public class DiaryServiceImpl implements DiaryService {
                 .gift(gift)
                 .openGift(false)
                 .build();
-        uploadImg(diary, diaryRequest.getMultipartFile());
+        if(multipartFile != null) uploadImg(diary, multipartFile);
         diaryRepository.save(diary);
         return diary;
     }

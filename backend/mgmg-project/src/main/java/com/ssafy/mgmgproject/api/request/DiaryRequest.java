@@ -45,7 +45,4 @@ public class DiaryRequest {
     @NotEmpty
     @ApiModelProperty(name = "선물 번호", example = "선물 번호")
     Long giftNo;
-
-    @ApiModelProperty(name = "multipartFile")
-    MultipartFile multipartFile;
 }
