@@ -71,7 +71,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     @Transactional
-    public Diary updateDiary(Long diaryNo, DiaryUpdateRequest diaryUpdateRequest) {
+    public Diary updateDiary(Long diaryNo, MultipartFile multipartFile, DiaryUpdateRequest diaryUpdateRequest) {
         Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryUpdateRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryUpdateRequest.getGiftNo()).orElse(null);
@@ -80,13 +80,13 @@ public class DiaryServiceImpl implements DiaryService {
             diary.updateDiary(
                     diaryUpdateRequest.getDiaryContent(),
                     diaryUpdateRequest.getWeather(),
-                    diaryUpdateRequest.getDiaryImg(),
                     diaryUpdateRequest.getDiaryThema(),
                     diaryUpdateRequest.getEmotion(),
                     music,
                     gift
             );
         }
+        if(multipartFile != null) uploadImg(diary, multipartFile);
         diaryRepository.save(diary);
         return diary;
     }
@@ -154,8 +154,15 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public int uploadImg(Diary diary, MultipartFile multipartFile) {
+
         try {
-            String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+            if(diary.getDiaryImg() != null) {
+                String filename = diary.getDiaryImg().substring(diary.getDiaryImg().lastIndexOf("/")+1);
+                System.out.println(filename);
+                amazonS3.deleteObject(bucket, filename);
+            }
+            String filename = fileNameFilter(multipartFile.getOriginalFilename());
+            String s3FileName = UUID.randomUUID() + "-" + filename;
 
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(multipartFile.getInputStream().available());
@@ -167,6 +174,10 @@ public class DiaryServiceImpl implements DiaryService {
             return 0;
         }
         return 1;
+    }
+
+    public String fileNameFilter(String filename){
+        return filename.replaceAll("[^a-zA-Z0-9가-힣_.]", "").replaceAll(" ","");
     }
 
 }
