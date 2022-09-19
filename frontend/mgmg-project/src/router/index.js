@@ -20,8 +20,10 @@ import DiaryWritingPage from "../views/DiaryWritingPage.vue";
 import DiaryDetailPage from "../views/DiaryDetailPage.vue";
 // 업적, 관심, 통계
 import AchievePage from "../views/AchievePage.vue";
+import InterestListPage from "../views/InterestListPage.vue"; // 부모
+import InterestMusic from "../components/interestlist/InterestMusicShow.vue";
+import InterestGift from "../components/interestlist/InterestGiftShow.vue";
 import AchieveList from "../components/achieve/AchieveList.vue";
-import InterestListPage from "../views/InterestListPage.vue";
 import StatisticsPage from "../views/StatisticsPage.vue";
 // 공지사항
 import NoticePage from "../views/NoticePage.vue"; // 부모
@@ -91,8 +93,12 @@ const routes = [
   },
   {
     path: "/interestlist",
-    name: "interestlist",
+    // name: "interestlist",
     component: InterestListPage,
+    children: [
+      { path: "music", name: "interestmusic", component: InterestMusic },
+      { path: "gift", name: "interestgift", component: InterestGift },
+    ],
   },
   {
     path: "/statistics",
