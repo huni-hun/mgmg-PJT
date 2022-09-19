@@ -24,5 +24,10 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     List<DiaryListMapping> findByUser_UserNoAndDiaryDateBetween(Long userNo,Date startDate, Date endDate);
 
+    long countByUser_UserNo(Long userNo);
+
+    long countByUser_UserNoAndEmotion(Long userNo, String emotion);
+
+    Optional<Diary> findByUser_UserNoAndDiaryDate(Long userNo,Date diaryDate);
 }
 
