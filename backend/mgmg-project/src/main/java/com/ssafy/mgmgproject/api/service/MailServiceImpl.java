@@ -1,7 +1,6 @@
 package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.dto.Mail;
-import com.ssafy.mgmgproject.common.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,7 +14,7 @@ public class MailServiceImpl implements MailService{
 
     private final JavaMailSender mailSender;
 
-    private final RedisUtil redisUtil;
+    private final RedisService redisService;
 
     private static  final String  fromAddress = "mgmg@gmail.com";
 
@@ -44,18 +43,18 @@ public class MailServiceImpl implements MailService{
                 .fromAddress(fromAddress)
                 .build();
         // 유효시간 5분 동안 저장
-        redisUtil.setDataExpire(authKey, userEmail, 60 * 5L);
+        redisService.setDataExpire(authKey, userEmail, 60 * 5L);
         return mail;
     }
 
     @Override
     public String checkAuthKey(String authKey) {
-        return redisUtil.getData(authKey);
+        return redisService.getData(authKey);
     }
 
     @Override
     public void deleteAuthKey(String authKey) {
-        redisUtil.deleteData(authKey);
+        redisService.deleteData(authKey);
     }
 
     @Override
