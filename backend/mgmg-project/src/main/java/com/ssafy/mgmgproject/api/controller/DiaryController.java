@@ -38,7 +38,7 @@ public class DiaryController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> writeDiary(@ApiIgnore Authentication authentication,
-                                                                 @RequestPart @ApiParam(value = "일기 이미지", required = false)MultipartFile multipartFile,
+                                                                 @RequestPart(required = false)@ApiParam(value = "일기 이미지") MultipartFile multipartFile,
                                                                  @RequestPart @ApiParam(value = "일기 정보", required = true) DiaryRequest diaryRequest) throws Exception{
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
@@ -61,7 +61,7 @@ public class DiaryController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> writeDiary(@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo,
-                                                                 @RequestPart @ApiParam(value = "일기 이미지", required = false) MultipartFile multipartFile,
+                                                                 @RequestPart(required = false) @ApiParam(value = "일기 이미지") MultipartFile multipartFile,
                                                                  @RequestPart @ApiParam(value = "일기 정보", required = true) DiaryUpdateRequest diaryUpdateRequest) throws Exception{
         Diary diary;
         try {
