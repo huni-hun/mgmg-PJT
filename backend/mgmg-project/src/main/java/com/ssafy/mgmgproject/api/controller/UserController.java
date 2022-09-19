@@ -57,7 +57,7 @@ public class UserController {
 
         if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
         if (passwordEncoder.matches(password, user.getPassword())) {
-            return ResponseEntity.ok(UserLoginResponse.of(user, 200, "로그인에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId),loginInfo.isAutoFlag()?jwtTokenUtil.createRefreshToken(userId):null));
+            return ResponseEntity.status(200).body(UserLoginResponse.of(user, 200, "로그인에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId),loginInfo.isAutoFlag()?jwtTokenUtil.createRefreshToken(userId):null));
         }
         return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
     }
@@ -77,7 +77,7 @@ public class UserController {
         if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
 
         if (jwtTokenUtil.checkRefreshToken(userId, loginInfo.getRefreshToken())) {
-            return ResponseEntity.ok(UserLoginResponse.of(user, 200, "로그인 상태 유지에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId),jwtTokenUtil.createRefreshToken(userId)));
+            return ResponseEntity.status(200).body(UserLoginResponse.of(user, 200, "로그인 상태 유지에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId),jwtTokenUtil.createRefreshToken(userId)));
         }
         return ResponseEntity.status(401).body(BaseResponseBody.of(401, "로그인 상태 유지에 실패했습니다. 로그인을 진행해주세요."));
     }
