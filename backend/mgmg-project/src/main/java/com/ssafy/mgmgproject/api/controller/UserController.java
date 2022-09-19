@@ -40,6 +40,8 @@ public class UserController {
     @Autowired
     MailService mailService;
 
+    private final JwtTokenUtil jwtTokenUtil;
+
     @PostMapping("/login")
     @ApiOperation(value = "로그인", notes = "<strong>아이디와 패스워드</strong>를 통해 로그인 한다.")
     @ApiResponses({
@@ -55,9 +57,29 @@ public class UserController {
 
         if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
         if (passwordEncoder.matches(password, user.getPassword())) {
-            return ResponseEntity.ok(UserLoginResponse.of(user, 200, "로그인에 성공하였습니다.", JwtTokenUtil.getToken(userId)));
+            return ResponseEntity.ok(UserLoginResponse.of(user, 200, "로그인에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId),loginInfo.isAutoFlag()?jwtTokenUtil.createRefreshToken(userId):null));
         }
         return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
+    }
+
+    @PostMapping("/autologin")
+    @ApiOperation(value = "로그인 상태 유지", notes = "<strong>토큰</strong>을 통해 로그인 한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
+            @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> autologin(@RequestBody @ApiParam(value = "로그인 상태 유지 정보", required = true) UserAutoLoginPostRequest loginInfo) {
+        String userId = loginInfo.getUserId();
+        User user = userService.getByUserId(userId);
+
+        if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
+
+        if (jwtTokenUtil.checkRefreshToken(userId, loginInfo.getRefreshToken())) {
+            return ResponseEntity.ok(UserLoginResponse.of(user, 200, "로그인 상태 유지에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId),jwtTokenUtil.createRefreshToken(userId)));
+        }
+        return ResponseEntity.status(401).body(BaseResponseBody.of(401, "로그인 상태 유지에 실패했습니다. 로그인을 진행해주세요."));
     }
 
     @GetMapping("/findpw")
