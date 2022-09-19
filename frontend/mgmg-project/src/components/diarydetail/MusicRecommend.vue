@@ -2,18 +2,29 @@
   <div class="outDiv">
     <span> 이 날의 추천 음악 </span>
     <div class="gridDiv">
-      <div>youtube 음악</div>
+      <iframe
+        class="player"
+        :src="`https://www.youtube.com/embed/${playCode}`"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      ></iframe>
       <div>
         <div>음악 소개할거임</div>
-          <CustomButton class="custombutton"  btnText="관심 음악 추가"/>
-          <CustomButton class="custombutton"  btnText="이 음악 비추천"/>
+        <CustomButton class="custombutton" btnText="관심 음악 추가" />
+        <CustomButton class="custombutton" btnText="이 음악 비추천" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+export default {
+  data: () => ({
+    playCode: "D6hqryFvcl8",
+  }),
+  methods: {},
+};
 </script>
 
 <style scoped>
@@ -29,13 +40,18 @@
   place-items: center;
   align-items: center;
 }
+.player {
+  width: 80%;
+  height: 100%;
+  max-height: 600px;
+}
 .custombutton {
   width: 50%-5px;
   background-color: #ffffff;
   margin: 0px 5px;
 }
 .custombutton:hover,
-.custombutton:focus{
+.custombutton:focus {
   background-color: #ebb8cd;
   color: white;
   border: none;
