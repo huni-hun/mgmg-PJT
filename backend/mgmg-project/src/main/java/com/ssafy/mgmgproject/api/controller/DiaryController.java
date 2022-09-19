@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -41,12 +42,13 @@ public class DiaryController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> writeDiary(@ApiIgnore Authentication authentication,
-                                                                 @RequestBody @ApiParam(value = "일기 정보", required = true) DiaryRequest diaryRequest) throws Exception{
+                                                                 @RequestPart(required = false)@ApiParam(value = "일기 이미지") MultipartFile multipartFile,
+                                                                 @RequestPart @ApiParam(value = "일기 정보", required = true) DiaryRequest diaryRequest) throws Exception{
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         Diary diary;
         try {
-            diary = diaryService.writeDiary(userId, diaryRequest);
+            diary = diaryService.writeDiary(userId, multipartFile, diaryRequest);
             if (diary == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 작성에 실패하였습니다."));
             badgeService.checkToGetBadge(userId,diary);
         }
@@ -64,10 +66,11 @@ public class DiaryController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> writeDiary(@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo,
-                                                                 @RequestBody @ApiParam(value = "일기 정보", required = true) DiaryUpdateRequest diaryUpdateRequest) throws Exception{
+                                                                 @RequestPart(required = false) @ApiParam(value = "일기 이미지") MultipartFile multipartFile,
+                                                                 @RequestPart @ApiParam(value = "일기 정보", required = true) DiaryUpdateRequest diaryUpdateRequest) throws Exception{
         Diary diary;
         try {
-            diary = diaryService.updateDiary(diaryNo, diaryUpdateRequest);
+            diary = diaryService.updateDiary(diaryNo, multipartFile, diaryUpdateRequest);
             if (diary == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 수정에 실패하였습니다."));
         }
         catch (Exception e){

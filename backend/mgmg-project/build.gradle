@@ -63,6 +63,10 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'com.auth0:java-jwt:3.10.3'
     implementation 'com.google.guava:guava:29.0-jre'
+
+    //aws s3
+    implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
+
 }
 
 tasks.named('test') {
