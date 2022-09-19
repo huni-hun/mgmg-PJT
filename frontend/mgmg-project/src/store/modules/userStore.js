@@ -1,4 +1,4 @@
-// import api_url from "@/api/index.js";
+import api_url from "@/api/index.js";
 import Vue from "vue";
 import Vuex from "vuex";
 import { API } from "@/store";
@@ -28,7 +28,8 @@ const userStore = {
     // 로그인
     set_user({ commit }, params) {
       API({
-        url: "http://localhost:8080/api/user/login",
+        // url: "http://localhost:8080/api/user/login",
+        url: api_url.accounts.login(),
         // url: `/user/login`,
         method: "POST",
         data: params,
