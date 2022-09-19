@@ -6,13 +6,24 @@ import MainPage from "../views/MainPage.vue";
 // 회원
 import LoginPage from "../views/LoginPage.vue";
 import SignupPage from "../views/SignupPage.vue";
-import MyPage from "../views/MyPage.vue";
+import MyPage from "../views/MyPage.vue"; // 부모
+import MyCheck from "../components/mypage/MyCheck.vue";
+import MyInfo from "../components/mypage/MyInfo.vue";
+import InfoEdit from "../components/mypage/InfoEdit.vue";
+import PasswordEdit from "../components/mypage/PasswordEdit.vue";
+import MusicEdit from "../components/mypage/MusicEdit.vue";
+import GiftEdit from "../components/mypage/GiftEdit.vue";
+import FontEdit from "../components/mypage/FontEdit.vue";
+import UserDelete from "../components/mypage/UserDelete.vue";
 // 일기
 import DiaryWritingPage from "../views/DiaryWritingPage.vue";
 import DiaryDetailPage from "../views/DiaryDetailPage.vue";
 // 업적, 관심, 통계
 import AchievePage from "../views/AchievePage.vue";
-import InterestListPage from "../views/InterestListPage.vue";
+import InterestListPage from "../views/InterestListPage.vue"; // 부모
+import InterestMusic from "../components/interestlist/InterestMusicShow.vue";
+import InterestGift from "../components/interestlist/InterestGiftShow.vue";
+import AchieveList from "../components/achieve/AchieveList.vue";
 import StatisticsPage from "../views/StatisticsPage.vue";
 // 공지사항
 import NoticePage from "../views/NoticePage.vue"; // 부모
@@ -45,8 +56,18 @@ const routes = [
   },
   {
     path: "/my",
-    name: "my",
+    // name: "my",
     component: MyPage,
+    children: [
+      { path: "myCheck", name: "myCheck", component: MyCheck },
+      { path: "myinfo", name: "myinfo", component: MyInfo },
+      { path: "infoedit", name: "infoedit", component: InfoEdit },
+      { path: "passwordedit", name: "passwordedit", component: PasswordEdit },
+      { path: "musicedit", name: "musicedit", component: MusicEdit },
+      { path: "giftedit", name: "giftedit", component: GiftEdit },
+      { path: "fontedit", name: "fontedit", component: FontEdit },
+      { path: "userdelete", name: "userdelete", component: UserDelete },
+    ],
   },
   {
     path: "/diaryWriting",
@@ -60,13 +81,24 @@ const routes = [
   },
   {
     path: "/achieve",
-    name: "achieve",
+    // name: "achieve",
     component: AchievePage,
+    children: [
+      {
+        path: "",
+        name: "achievelist",
+        component: AchieveList,
+      },
+    ],
   },
   {
     path: "/interestlist",
-    name: "interestlist",
+    // name: "interestlist",
     component: InterestListPage,
+    children: [
+      { path: "music", name: "interestmusic", component: InterestMusic },
+      { path: "gift", name: "interestgift", component: InterestGift },
+    ],
   },
   {
     path: "/statistics",

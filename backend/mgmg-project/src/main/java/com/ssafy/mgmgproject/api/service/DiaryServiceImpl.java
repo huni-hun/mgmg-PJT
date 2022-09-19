@@ -20,6 +20,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.*;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -53,11 +59,15 @@ public class DiaryServiceImpl implements DiaryService {
         User user = userRepository.findByUserId(userId).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryRequest.getGiftNo()).orElse(null);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        DayOfWeek dayOfWeek = LocalDate.parse(formatter.format(diaryRequest.getDiaryDate())).getDayOfWeek();
+
         Diary diary = Diary.builder()
                 .user(user)
                 .diaryContent(diaryRequest.getDiaryContent())
                 .diaryDate(diaryRequest.getDiaryDate())
-                .day(diaryRequest.getDay())
+                .day(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US))
                 .weather(diaryRequest.getWeather())
                 .diaryThema(diaryRequest.getDiaryThema())
                 .emotion(diaryRequest.getEmotion())
@@ -93,10 +103,21 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<DiaryListMapping> getDiaryMonthList(Long userNo, String date) {
+    public List<DiaryListMapping> getDiaryMonthList(Long userNo, String date) throws ParseException {
+        Calendar cal = Calendar.getInstance();
+        String year = date.split("-")[0];
+        String month = date.split("-")[1];
+        cal.set(Integer.parseInt(year),Integer.parseInt(month)-1,1);
 
-        List<DiaryListMapping> diaries = diaryRepository.findByUser_UserNoAndDiaryDateStartsWith(userNo, date);
-        if (diaries != null) return diaries;
+        String startDateStr = year+"-"+month+"-01";
+        String endDateStr = year+"-"+month+"-"+Integer.toString(cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = formatter.parse(startDateStr);
+        Date endDate = formatter.parse(endDateStr);
+
+        List<DiaryListMapping> diaries = diaryRepository.findByUser_UserNoAndDiaryDateBetween(userNo, startDate, endDate);
+        if(diaries != null) return diaries;
         else return null;
     }
 

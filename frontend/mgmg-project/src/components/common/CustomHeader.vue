@@ -1,10 +1,23 @@
 <template>
   <div>
     <v-app-bar>
-      <v-toolbar-title>몽글몽글</v-toolbar-title>
+      <router-link class="logo" to="/main">
+        <img class="logo" :src="img" alt="" />
+      </router-link>
+      <router-link to="/main">
+        <v-toolbar-title>몽글몽글</v-toolbar-title>
+      </router-link>
 
       <v-spacer></v-spacer>
-      개발용 header
+      <p>
+        <router-link to="/achieve">나의업적</router-link>
+      </p>
+      <p>
+        <router-link to="/statistics">감정통계</router-link>
+      </p>
+      <p>
+        <router-link to="/notice">공지사항</router-link>
+      </p>
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -29,21 +42,37 @@ export default {
 
   data: () => ({
     items: [
-      { title: "/landing", link: "/" },
-      { title: "/main", link: "/main" },
-      { title: "/login", link: "/login" },
-      { title: "/signup", link: "/signup" },
-      { title: "/my", link: "/my" },
-      { title: "/diaryWriting", link: "/diaryWriting" },
-      { title: "/diarydetail", link: "/diarydetail" },
-      { title: "/achieve", link: "/achieve" },
-      { title: "/interestlist", link: "/interestlist" },
-      { title: "/statistics", link: "/statistics" },
-      { title: "/notice", link: "/notice" },
+      { title: "랜딩페이지", link: "/" },
+      { title: "메인페이지", link: "/main" },
+      { title: "로그인", link: "/login" },
+      { title: "회원가입", link: "/signup" },
+      { title: "마이페이지", link: "/my" },
+      { title: "일기작성", link: "/diaryWriting" },
+      { title: "일기상세", link: "/diarydetail" },
+      { title: "업적", link: "/achieve" },
+      { title: "관심목록", link: "/interestlist" },
+      { title: "통계", link: "/statistics" },
+      { title: "공지사항", link: "/notice" },
     ],
+    img: require("@/assets/emoticon/calm.png"),
   }),
   comments: {},
 };
 </script>
 
-<style></style>
+<style scoped>
+p {
+  margin-left: 4vw;
+  margin-right: 4vw;
+  padding-top: 1vh;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.logo {
+  height: 100%;
+}
+</style>

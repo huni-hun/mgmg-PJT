@@ -20,11 +20,7 @@ public class DiaryRequest {
 
     @NotEmpty
     @ApiModelProperty(name = "해당 날짜", example = "2022-09-14")
-    String diaryDate;
-
-    @NotEmpty
-    @ApiModelProperty(name = "요일", example = "WED")
-    String day;
+    Date diaryDate;
 
     @NotEmpty
     @ApiModelProperty(name = "날씨", example = "맑음")

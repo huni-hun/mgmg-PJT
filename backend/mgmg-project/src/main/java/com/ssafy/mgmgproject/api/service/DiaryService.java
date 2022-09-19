@@ -9,6 +9,7 @@ import com.ssafy.mgmgproject.db.entity.InterestMusic;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 public interface DiaryService {
@@ -17,7 +18,7 @@ public interface DiaryService {
 
     Diary updateDiary(Long diaryNo, MultipartFile multipartFile, DiaryUpdateRequest diaryUpdateRequest);
 
-    List<DiaryListMapping> getDiaryMonthList(Long userNo, String date);
+    List<DiaryListMapping> getDiaryMonthList(Long userNo, String date) throws ParseException;
 
     Diary getByDiaryNo(Long diaryNo);
 

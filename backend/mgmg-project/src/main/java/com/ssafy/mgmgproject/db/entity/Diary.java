@@ -32,8 +32,9 @@ public class Diary {
     @Column(name = "diary_content", length = 500)
     private String diaryContent;
 
-    @Column(name = "diary_date", length = 16)
-    private String diaryDate;
+    @Column(name = "diary_date")
+    @Temporal(TemporalType.DATE)
+    private Date diaryDate;
 
     @Column(name = "day", length = 3)
     private String day;

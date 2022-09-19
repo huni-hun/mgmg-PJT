@@ -1,26 +1,31 @@
 <template>
-  <div>
-    <h1>DiaryWritingPage입니다.</h1>
-    <div style="width: 500px;">
-      <CustomInput v-model="date" />
+  <div class="back">
+    <div class="inner">
+      <BackgroundChoice />
+      <DiaryWriting />
     </div>
   </div>
 </template>
 
 <script>
-import CustomInput from "../components/common/CustomInput.vue";
+import BackgroundChoice from "@/components/diarywrite/BackgroundChoice.vue";
+import DiaryWriting from "@/components/diarywrite/DiaryWriting.vue";
 export default {
-  components: { CustomInput },
-  data() {
-    return {
-      date: {
-        labelText: "일기쓰기 input입니다",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "특수문자 사용불가"],
-        hint: "특수문자 없이 입력해주세요",
-      },
-    };
-  },
+  components: { BackgroundChoice, DiaryWriting },
 };
 </script>
 
-<style></style>
+<style>
+.back {
+  /* background: url("배경이미지.png") no-repeat center; */
+  background-size: cover;
+  height: 93.2vh;
+}
+.inner {
+  width: 70%;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  margin-left: -35vw;
+}
+</style>
