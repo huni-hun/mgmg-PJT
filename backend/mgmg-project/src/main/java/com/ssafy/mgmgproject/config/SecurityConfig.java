@@ -30,6 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             "/api/user/login",
             "/api/user/regist",
+            "/api/user/autologin",
+            "/api/user/findpw",
+            "/api/user/findid",
+            "/api/user/idcheck",
+            "/api/user/email",
+            "/api/user/emailcheck",
+
     };
 
     @Autowired
