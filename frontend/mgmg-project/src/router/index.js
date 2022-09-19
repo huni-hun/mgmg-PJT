@@ -6,7 +6,15 @@ import MainPage from "../views/MainPage.vue";
 // 회원
 import LoginPage from "../views/LoginPage.vue";
 import SignupPage from "../views/SignupPage.vue";
-import MyPage from "../views/MyPage.vue";
+import MyPage from "../views/MyPage.vue"; // 부모
+import MyCheck from "../components/mypage/MyCheck.vue";
+import MyInfo from "../components/mypage/MyInfo.vue";
+import InfoEdit from "../components/mypage/InfoEdit.vue";
+import PasswordEdit from "../components/mypage/PasswordEdit.vue";
+import MusicEdit from "../components/mypage/MusicEdit.vue";
+import GiftEdit from "../components/mypage/GiftEdit.vue";
+import FontEdit from "../components/mypage/FontEdit.vue";
+import UserDelete from "../components/mypage/UserDelete.vue";
 // 일기
 import DiaryWritingPage from "../views/DiaryWritingPage.vue";
 import DiaryDetailPage from "../views/DiaryDetailPage.vue";
@@ -46,8 +54,18 @@ const routes = [
   },
   {
     path: "/my",
-    name: "my",
+    // name: "my",
     component: MyPage,
+    children: [
+      { path: "myCheck", name: "myCheck", component: MyCheck },
+      { path: "myinfo", name: "myinfo", component: MyInfo },
+      { path: "infoedit", name: "infoedit", component: InfoEdit },
+      { path: "passwordedit", name: "passwordedit", component: PasswordEdit },
+      { path: "musicedit", name: "musicedit", component: MusicEdit },
+      { path: "giftedit", name: "giftedit", component: GiftEdit },
+      { path: "fontedit", name: "fontedit", component: FontEdit },
+      { path: "userdelete", name: "userdelete", component: UserDelete },
+    ],
   },
   {
     path: "/diaryWriting",
