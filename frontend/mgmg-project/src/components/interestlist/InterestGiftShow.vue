@@ -7,6 +7,7 @@
           <div>{{ gift.name }}</div>
           <div>가격: {{ gift.price }}</div>
           <div>링크: {{ gift.link }}</div>
+          <div>삭제아이콘</div>
         </div>
       </div>
     </v-row>
