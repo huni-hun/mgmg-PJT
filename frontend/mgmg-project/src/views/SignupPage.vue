@@ -2,7 +2,15 @@
 <template>
   <div>
     <h1 @click="check">SignupPage입니다.</h1>
-    <SignUp v-if="signupOrder == 1" />
+    <SignUp
+      v-if="signupOrder == 1"
+      @useridSignup="setUserid"
+      @userpasswordSignup="setUserpassword"
+      @useremailSignup="setUseremail"
+      @usernameSignup="setUserName"
+      @userbirthSignup="setUserBirth"
+      @usergenderSignup="setUserGender"
+    />
     <MusicSurvey v-if="signupOrder == 2" @selectMusics="setMusic" />
     <GiftSurvey v-if="signupOrder == 3" @selectGifts="setGift" />
     <customButton btnText="이전" id="signupBeforeButton" v-if="signupOrder > 1" @click="signupBefore"></customButton>
@@ -22,6 +30,12 @@ export default {
       signupOrder: 1,
       selectMusic: [],
       selectGift: [],
+      userId: "",
+      userPassword: "",
+      userEmail: "",
+      userName: "",
+      userBirth: "",
+      userGender: "",
     };
   },
   methods: {
@@ -39,7 +53,32 @@ export default {
       this.selectMusic = value;
       console.log(this.selectMusic);
     },
+    setUserid(value) {
+      this.userId = value;
+      console.log(this.userId);
+    },
+    setUserpassword(value) {
+      this.userPassword = value;
+      console.log(this.userPassword);
+    },
+    setUseremail(value) {
+      this.userEmail = value;
+      console.log(this.userEmail);
+    },
+    setUserName(value) {
+      this.userName = value;
+      console.log(this.userName);
+    },
+    setUserBirth(value) {
+      this.userBirth = value;
+      console.log(this.userBirth);
+    },
+    setUserGender(value) {
+      this.userGender = value;
+      console.log(this.userGender);
+    },
     check() {
+      console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender);
       console.log(this.selectGift, this.selectMusic);
     },
   },
