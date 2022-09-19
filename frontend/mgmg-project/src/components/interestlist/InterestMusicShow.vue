@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <v-container>
+    <v-row>
+      <label for="">음악리스트</label>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
