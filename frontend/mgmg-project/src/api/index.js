@@ -12,7 +12,7 @@ const NOTIFICATION = "/notification";
 
 function createApi() {
   return axios.create({
-    // baseURL: HOST,
+    baseURL: HOST,
     // headers: {
     //   "Content-Type": "application/json; charset=UTF-8",
     // },
@@ -24,7 +24,7 @@ export { createApi };
 export default {
   accounts: {
     auto_login: () => HOST + ACCOUNT + "/autologin", //post
-    login: () => HOST + ACCOUNT + "/login", //post
+    login: () => ACCOUNT + "/login", //post
     find_pw: () => HOST + ACCOUNT + "/findpw", //get
     find_id: () => HOST + ACCOUNT + "/findid", //get
     id_check: () => HOST + ACCOUNT + "/idcheck", //get

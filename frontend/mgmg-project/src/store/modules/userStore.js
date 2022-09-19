@@ -9,9 +9,9 @@ const userStore = {
   state: {
     // 로그인 시 변경되는 항목
     isLogin: false,
-    userId: String,
-    userPw: String,
-    userName: String,
+    userId: "",
+    userPw: "",
+    userName: "",
 
     // 회원가입 시 잠시 저장
     interestMusicLstSignup: [],
@@ -21,7 +21,8 @@ const userStore = {
   mutations: {
     SET_USER_INFO(state, data) {
       // state.userId.push(data);
-      state.userName.push(data.userName);
+      // state.userName.push(data.userName);
+      state.userName = data.userName;
     },
   },
   actions: {
@@ -29,8 +30,8 @@ const userStore = {
     set_user({ commit }, params) {
       API({
         // url: "http://localhost:8080/api/user/login",
-        url: api_url.accounts.login(),
         // url: `/user/login`,
+        url: api_url.accounts.login(),
         method: "POST",
         data: params,
       })
