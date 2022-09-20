@@ -53,11 +53,11 @@ public class User {
     @ColumnDefault("0")
     private int diaryContinue;
 
-    @Column(name = "l_price")
-    private Long lPrice;
+    @Column(name = "low_price")
+    private Long lowPrice;
 
-    @Column(name = "h_price")
-    private Long hPrice;
+    @Column(name = "high_price")
+    private Long highPrice;
 
     @JsonIgnore
     @Builder.Default
@@ -97,8 +97,8 @@ public class User {
     }
 
     public void updateUserPrice(Long lPrice, Long hPrice){
-        this.lPrice = lPrice;
-        this.hPrice = hPrice;
+        this.lowPrice = lPrice;
+        this.highPrice = hPrice;
     }
 
     public void updateFont(int diaryFont){
