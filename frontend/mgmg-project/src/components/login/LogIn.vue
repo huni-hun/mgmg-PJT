@@ -41,7 +41,8 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+// import api from "@/api/index.js";
 
 export default {
   data() {
@@ -66,19 +67,31 @@ export default {
     login() {
       const userId = document.getElementById("idLoginInput").value;
       const userPw = document.getElementById("pwLoginInput").value;
+      var autoflag = this.loginNext;
+      let loginLst = {
+        userId: userId,
+        password: userPw,
+        autoFlag: autoflag,
+      };
 
-      axios
-        .post(this.$store.state.baseurl + "auth/login/normal", {
-          userId: userId,
-          password: userPw,
-          autoflag: this.loginNext,
-        })
-        .then((response) => {
-          if (response.data.statusCode == 200) {
-            this.$Store.state.userStore.isLogin = true;
-            // 사용자 정보 받아서 저장해두고, 메인페이지로 이동
-          }
-        });
+      console.log(loginLst);
+      this.$store.dispatch("set_user", loginLst);
+
+      // axios
+      //   .post(api.accounts.login, {
+      //     userId: userId,
+      //     password: userPw,
+      //     autoflag: this.loginNext,
+      //   })
+      //   .then((response) => {
+      //     if (response.data.statusCode == 200) {
+      //       // this.$Store.state.userStore.isLogin = true;
+      //       console.log(userId);
+      //       // 사용자 정보 받아서 저장해두고, 메인페이지로 이동
+      //     } else {
+      //       console.log("error");
+      //     }
+      //   });
     },
   },
 };

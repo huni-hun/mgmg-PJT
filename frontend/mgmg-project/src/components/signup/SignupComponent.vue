@@ -73,7 +73,18 @@
         <div class="col-4">
           <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
+              <v-text-field
+                single-line
+                outlined
+                v-model="date"
+                class="inputStyle"
+                append-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                id="birthSignupInput"
+                :change="birthCheck()"
+              ></v-text-field>
             </template>
             <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
           </v-menu>
@@ -108,6 +119,7 @@
 
 <script>
 export default {
+  props: ["userid", "userpassword", "useremail", "username", "userbirth", "usergender"],
   computed: {
     testComputed() {
       return this.userId;
@@ -163,7 +175,7 @@ export default {
       userEmail: "",
       userEmailCheck: "",
       userName: "",
-      userbirth: "",
+      userBirth: "",
       userGenderNum: 0,
       userGender: "",
       //각 항목 정규식 유효성 검사 (boolean 값으로)
@@ -187,6 +199,8 @@ export default {
       const regId = /^[A-Za-z](?=.*?[A-Za-z])(?=.*?[0-9])[a-zA-Z0-9]{5,15}$/;
       if (regId.test(user_id)) {
         this.userId = user_id;
+        console.log(user_id);
+        this.$emit("useridSignup", user_id);
         return true;
       } else {
         this.idValidation = false;
@@ -197,6 +211,7 @@ export default {
       const regPw = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[a-zA-Z0-9#?!@$ %^&*-]{8,16}$/;
       if (regPw.test(user_pw)) {
         this.userPw = user_pw;
+        this.$emit("userpasswordSignup", user_pw);
         return true;
       } else {
         this.pwValidation = false;
@@ -215,6 +230,7 @@ export default {
     emailValidationCheck(user_email) {
       const regEmail = /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
       if (regEmail.test(user_email)) {
+        this.$emit("useremailSignup", user_email);
         return true;
       } else {
         this.emailValidation = false;
@@ -226,6 +242,7 @@ export default {
       if (regName.test(user_name)) {
         this.userName = user_name;
         this.nameValidation = true;
+        this.$emit("usernameSignup", user_name);
         return true;
       } else {
         this.nameValidation = false;
@@ -235,7 +252,11 @@ export default {
     // 이메일 api 전송 (인증하기 버튼 누를때 userEmail 값 저장)
     // 인증번호 일치여부 확인- api 가져오기 (확인 되면 emailValidation true로 변경) 일치하지 않으면 정규식 사용해서 인증번호가 일치하지 않습니다(가능하면)
     //
-
+    //생일 날짜 emit
+    birthCheck() {
+      this.$emit("userbirthSignup", this.date);
+      // console.log(this.date);
+    },
     // 성별 선택
     changeGender(gender) {
       this.userGenderNum = gender;
@@ -244,6 +265,7 @@ export default {
       } else if (this.userGenderNum == 2) {
         this.userGender = "여성";
       }
+      this.$emit("usergenderSignup", this.userGender);
       this.GenderValidation = true;
     },
   },
@@ -255,7 +277,7 @@ export default {
   width: inherit;
   height: inherit;
 }
-.inputStyle >>> fieldset {
+.inputStyle:deep(fieldset) {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
