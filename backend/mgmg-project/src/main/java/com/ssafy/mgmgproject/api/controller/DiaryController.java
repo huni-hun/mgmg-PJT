@@ -79,7 +79,7 @@ public class DiaryController {
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
 
-        String userInfo = diaryService.getUserInfo(user.getBirth(), user.getGender(), userService.searchGiftCategory(user));
+        String userInfo = diaryService.getUserInfo(user.getBirth(), user.getGender(), userService.searchGiftCategory(user), user.getLowPrice(), user.getHighPrice());
         Gift gift;
 
         try {

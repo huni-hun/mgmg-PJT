@@ -47,7 +47,16 @@ public class NaverShopSearch {
 
         Random random = new Random();
 
-        JSONObject itemJson = (JSONObject) items.get(random.nextInt(items.length()));
+        JSONObject itemJson;
+        while (true){
+            itemJson = (JSONObject) items.get(random.nextInt(items.length()));
+            if(itemJson.getString("title").length()>100){
+                continue;
+            }else{
+                break;
+            }
+        }
+
         SearchItemRequest item = new SearchItemRequest(itemJson);
 
         return item;
