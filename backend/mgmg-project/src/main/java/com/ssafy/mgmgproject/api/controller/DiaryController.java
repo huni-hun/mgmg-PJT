@@ -1,17 +1,19 @@
 package com.ssafy.mgmgproject.api.controller;
 
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
+import com.ssafy.mgmgproject.api.request.SearchItemRequest;
+import com.ssafy.mgmgproject.api.response.recommendGiftGetResponse;
 import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.api.response.DiaryListResponse;
 import com.ssafy.mgmgproject.api.response.DiaryResponse;
 import com.ssafy.mgmgproject.api.service.BadgeService;
 import com.ssafy.mgmgproject.api.service.DiaryService;
+import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.auth.UserDetails;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
-import com.ssafy.mgmgproject.db.entity.Diary;
-import com.ssafy.mgmgproject.db.entity.InterestGift;
-import com.ssafy.mgmgproject.db.entity.InterestMusic;
+import com.ssafy.mgmgproject.common.util.NaverShopSearch;
+import com.ssafy.mgmgproject.db.entity.*;
 import io.swagger.annotations.*;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,12 @@ public class DiaryController {
     DiaryService diaryService;
     @Autowired
     BadgeService badgeService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    NaverShopSearch naverShopSearch;
 
     @PostMapping()
     @ApiOperation(value = "일기 작성", notes = "일기를 작성한다.")
@@ -56,7 +64,32 @@ public class DiaryController {
         catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 작성에 실패하였습니다."));
         }
+
         return ResponseEntity.status(200).body(DiaryResponse.of(diary, 200, "일기 작성에 성공하였습니다."));
+    }
+
+    @GetMapping("/gift")
+    @ApiOperation(value = "추천 선물 추가", notes = "네이버 api를 호출해서 사용자에게 선물을 추천한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "선물 추천 성공", response = recommendGiftGetResponse.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> recommendGift(@ApiIgnore Authentication authentication) throws Exception{
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getByUserId(userId);
+
+        String userInfo = diaryService.getUserInfo(user.getBirth(), user.getGender(), userService.searchGiftCategory(user));
+        Gift gift;
+
+        try {
+            SearchItemRequest result = naverShopSearch.fromJSONtoItems(naverShopSearch.search(userInfo));
+            gift = diaryService.writeRecommendGift(result);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "선물추천에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(recommendGiftGetResponse.of(gift,200, "선물 추천에 성공하였습니다."));
     }
 
     @PutMapping("/{diaryNo}")
