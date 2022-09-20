@@ -48,6 +48,8 @@ public class UserServiceImpl implements UserService{
                 .birth(userRegistInfo.getBirth())
                 .userName(userRegistInfo.getName())
                 .gender(userRegistInfo.getGender())
+                .lPrice(userRegistInfo.getLprice())
+                .hPrice(userRegistInfo.getHprice())
                 .build();
         userRepository.save(user);
 
@@ -171,6 +173,8 @@ public class UserServiceImpl implements UserService{
                     .build();
             giftCategoryRepository.save(giftCategory);
         }
+
+        user.updateUserPrice(userChangeGiftPutRequest.getLprice(), userChangeGiftPutRequest.getHprice());
     }
 
 }

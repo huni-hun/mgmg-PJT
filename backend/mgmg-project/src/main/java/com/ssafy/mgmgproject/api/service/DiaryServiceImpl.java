@@ -210,9 +210,9 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public Gift writeRecommendGift(SearchItemRequest searchItemRequest) {
-        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("<b>",""));
-        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("</b>",""));
-        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("&quot",""));
+        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("<b>", ""));
+        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("</b>", ""));
+        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("&quot", ""));
         Gift gift = Gift.builder()
                 .giftName(searchItemRequest.getTitle())
                 .giftPrice(searchItemRequest.getLprice())
@@ -221,6 +221,7 @@ public class DiaryServiceImpl implements DiaryService {
                 .build();
         giftRepository.save(gift);
         return gift;
+    }
 
     @Transactional
     public int openGift(Long diaryNo) {
