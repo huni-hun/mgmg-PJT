@@ -49,15 +49,17 @@ export default {
     };
   },
   methods: {
-    test() {},
+    test() {
+      console.log(process.env.VUE_APP_API_URL);
+    },
     findId() {
       const userName = document.getElementById("nameIdFindInput").value;
       const userEmail = document.getElementById("emailIdFindInput").value;
       // const userId = "iddesu";
 
       var findidLst = { userName: userName, email: userEmail };
-
-      this.$store.dispatch("find_id", findidLst);
+      console.log(findidLst);
+      this.$store.dispatch("find_id", userName, userEmail);
       // axios
       //   .get(this.$store.state.baseurl + "api/user/findid", {
       //     userName: userName,

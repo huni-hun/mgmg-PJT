@@ -59,10 +59,12 @@ const userStore = {
     },
     // 아이디 찾기
     find_id(params) {
+      console.log(params);
       API({
         url: api_url.accounts.find_id(),
         method: "GET",
-        data: params,
+        userName: params.userName,
+        email: params.email,
       })
         .then(({ data }) => {
           console.log(data);

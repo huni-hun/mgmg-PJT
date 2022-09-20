@@ -24,7 +24,7 @@ export { createApi };
 export default {
   accounts: {
     auto_login: () => HOST + ACCOUNT + "/autologin", //post
-    login: () => ACCOUNT + "/login", //post
+    login: () => HOST + ACCOUNT + "/login", //post
     find_pw: () => HOST + ACCOUNT + "/findpw", //get
     find_id: () => HOST + ACCOUNT + "/findid", //get
     id_check: () => HOST + ACCOUNT + "/idcheck", //get
