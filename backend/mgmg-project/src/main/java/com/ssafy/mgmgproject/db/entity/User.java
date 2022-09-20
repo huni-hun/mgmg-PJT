@@ -96,9 +96,9 @@ public class User {
         }
     }
 
-    public void updateUserPrice(Long lPrice, Long hPrice){
-        this.lowPrice = lPrice;
-        this.highPrice = hPrice;
+    public void updateUserPrice(Long lowPrice, Long highPrice){
+        this.lowPrice = lowPrice;
+        this.highPrice = highPrice;
     }
 
     public void updateFont(int diaryFont){
