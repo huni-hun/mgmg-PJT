@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface DiaryService {
 
-    Diary writeDiary(String userId, MultipartFile multipartFile, DiaryRequest diaryRequest);
+    Diary writeDiary(Long userNo, MultipartFile multipartFile, DiaryRequest diaryRequest);
 
     Diary updateDiary(Long diaryNo, MultipartFile multipartFile, DiaryUpdateRequest diaryUpdateRequest);
 

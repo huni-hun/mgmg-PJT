@@ -46,9 +46,10 @@ public class DiaryController {
                                                                  @RequestPart @ApiParam(value = "일기 정보", required = true) DiaryRequest diaryRequest) throws Exception{
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
+        Long userNo = userDetails.getUser().getUserNo();
         Diary diary;
         try {
-            diary = diaryService.writeDiary(userId, multipartFile, diaryRequest);
+            diary = diaryService.writeDiary(userNo, multipartFile, diaryRequest);
             if (diary == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 작성에 실패하였습니다."));
             badgeService.checkToGetBadge(userId,diary);
         }

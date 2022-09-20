@@ -55,10 +55,13 @@ public class DiaryServiceImpl implements DiaryService {
     AmazonS3 amazonS3;
 
     @Override
-    public Diary writeDiary(String userId, MultipartFile multipartFile, DiaryRequest diaryRequest) {
-        User user = userRepository.findByUserId(userId).orElse(null);
+    public Diary writeDiary(Long userNo, MultipartFile multipartFile, DiaryRequest diaryRequest) {
+        User user = userRepository.findByUserNo(userNo).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryRequest.getGiftNo()).orElse(null);
+
+        Diary alreadyDiary = diaryRepository.findByUser_UserNoAndDiaryDate(userNo, diaryRequest.getDiaryDate()).orElse(null);
+        if(alreadyDiary != null) return null;
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         DayOfWeek dayOfWeek = LocalDate.parse(formatter.format(diaryRequest.getDiaryDate())).getDayOfWeek();

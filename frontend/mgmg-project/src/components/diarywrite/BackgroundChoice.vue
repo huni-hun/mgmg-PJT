@@ -2,24 +2,29 @@
   <div class="outDiv">
     <span>배경지 선택</span>
     <div class="scroll-image">
-      <v-img class="choiceImg" alt="1" src="@/assets/diary/choice/blackline.png" />
-      <v-img class="choiceImg" alt="2" src="@/assets/diary/choice/blueline.png" />
-      <v-img class="choiceImg" alt="3" src="@/assets/diary/choice/bluecheck.png" />
-      <v-img class="choiceImg" alt="4" src="@/assets/diary/choice/pinkcheck.png" />
-      <v-img class="choiceImg" alt="5" src="@/assets/diary/choice/temp.png" />
-      <v-img class="choiceImg" alt="5" src="@/assets/diary/choice/temp.png" />
-      <v-img class="choiceImg" alt="5" src="@/assets/diary/choice/temp.png" />
-      <v-img class="choiceImg" alt="5" src="@/assets/diary/choice/temp.png" />
-      <v-img class="choiceImg" alt="5" src="@/assets/diary/choice/temp.png" />
-      <v-img class="choiceImg" alt="5" src="@/assets/diary/choice/temp.png" />
-      <v-img class="choiceImg" alt="5" src="@/assets/diary/choice/temp.png" />
-      <v-img class="choiceImg" alt="5" src="@/assets/diary/choice/temp.png" />
+      <div v-for="item in backImgs" :key="item" class="choiceImg">
+        <v-img
+          :src="require(`@/assets/diary/choice/${item}.png`)"
+          @click="imgClick(item)"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import eventBus from "./eventBus.js";
+export default {
+  data: () => ({
+    backImgs: ["blackLine", "blueLine", "blueCheck", "pinkCheck"],
+  }),
+  methods: {
+    imgClick(props) {
+      // console.log(props);
+      eventBus.$emit("backImgChoice", props);
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -38,7 +43,7 @@ export default {};
   white-space: nowrap;
 }
 .scroll-image > .choiceImg {
-  width: calc(6%);
+  width: calc(10%);
   margin: 0 15px 15px 0;
 }
 .scroll-image > .choiceImg:nth-of-type(20n),
