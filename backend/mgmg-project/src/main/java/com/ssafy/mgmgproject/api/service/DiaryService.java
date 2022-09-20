@@ -31,7 +31,7 @@ public interface DiaryService {
 
     InterestGift addInterestGift(String userId, Long giftNo);
 
-    String getUserInfo(Date birth, String gender, List<String> giftCategories);
+    String getUserInfo(Date birth, String gender, List<String> giftCategories, Long lowPrice, Long highPrice);
 
     Gift writeRecommendGift(SearchItemRequest searchItemRequest);
 
