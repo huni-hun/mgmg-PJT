@@ -1,14 +1,27 @@
 package com.ssafy.mgmgproject.api.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
+import com.ssafy.mgmgproject.api.request.SearchItemRequest;
 import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.db.entity.*;
 import com.ssafy.mgmgproject.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import software.amazon.ion.IonException;
 
+import java.text.DateFormat;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -37,11 +50,20 @@ public class DiaryServiceImpl implements DiaryService {
     @Autowired
     InterestGiftRepository interestGiftRepository;
 
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
+    @Autowired
+    AmazonS3 amazonS3;
+
     @Override
-    public Diary writeDiary(String userId, DiaryRequest diaryRequest) {
-        User user = userRepository.findByUserId(userId).orElse(null);
+    public Diary writeDiary(Long userNo, MultipartFile multipartFile, DiaryRequest diaryRequest) {
+        User user = userRepository.findByUserNo(userNo).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryRequest.getGiftNo()).orElse(null);
+
+        Diary alreadyDiary = diaryRepository.findByUser_UserNoAndDiaryDate(userNo, diaryRequest.getDiaryDate()).orElse(null);
+        if(alreadyDiary != null) return null;
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         DayOfWeek dayOfWeek = LocalDate.parse(formatter.format(diaryRequest.getDiaryDate())).getDayOfWeek();
@@ -58,28 +80,29 @@ public class DiaryServiceImpl implements DiaryService {
                 .gift(gift)
                 .openGift(false)
                 .build();
+        if (multipartFile != null) uploadImg(diary, multipartFile);
         diaryRepository.save(diary);
         return diary;
     }
 
     @Override
     @Transactional
-    public Diary updateDiary(Long diaryNo, DiaryUpdateRequest diaryUpdateRequest){
+    public Diary updateDiary(Long diaryNo, MultipartFile multipartFile, DiaryUpdateRequest diaryUpdateRequest) {
         Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryUpdateRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryUpdateRequest.getGiftNo()).orElse(null);
-        if(diary.getGift() != gift) diary.closeGift();
-        if(diary != null){
+        if (diary.getGift() != gift) diary.closeGift();
+        if (diary != null) {
             diary.updateDiary(
                     diaryUpdateRequest.getDiaryContent(),
                     diaryUpdateRequest.getWeather(),
-                    diaryUpdateRequest.getDiaryImg(),
                     diaryUpdateRequest.getDiaryThema(),
                     diaryUpdateRequest.getEmotion(),
                     music,
                     gift
             );
         }
+        if (multipartFile != null) uploadImg(diary, multipartFile);
         diaryRepository.save(diary);
         return diary;
     }
@@ -111,17 +134,21 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     @Transactional
     public int deleteDiary(Long diaryNo) {
+        Diary diary;
         try {
-            diaryRepository.findByDiaryNo(diaryNo).get();
+            diary = diaryRepository.findByDiaryNo(diaryNo).get();
         } catch (Exception e) {
             return 0;
+        }
+        if (diary.getDiaryImg() != null) {
+            deleteS3Img(diary);
         }
         diaryRepository.deleteByDiaryNo(diaryNo);
         return 1;
     }
 
     @Override
-    public InterestMusic addInterestMusic(String userId, Long musicNo){
+    public InterestMusic addInterestMusic(String userId, Long musicNo) {
         User user = userRepository.findByUserId(userId).orElse(null);
         Music music = musicRepository.findByMusicNo(musicNo).orElse(null);
         InterestMusic interestMusic = InterestMusic.builder()
@@ -133,7 +160,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public InterestGift addInterestGift(String userId, Long giftNo){
+    public InterestGift addInterestGift(String userId, Long giftNo) {
         User user = userRepository.findByUserId(userId).orElse(null);
         Gift gift = giftRepository.findByGiftNo(giftNo).orElse(null);
         InterestGift interestGift = InterestGift.builder()
@@ -145,15 +172,104 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
+    public String getUserInfo(Date birth, String gender, List<String> giftCategories) {
+        DateFormat dataFormat = new SimpleDateFormat("yyyy-mm-dd");
+        String year = dataFormat.format(birth);
+
+        Calendar now = Calendar.getInstance();
+        Integer currentYear = now.get(Calendar.YEAR);
+
+        Integer birthYear = Integer.parseInt(year.substring(0, 4));
+
+
+        String age = (currentYear - birthYear + 1) + "";
+
+        Character c = age.charAt(0);
+
+        String generation = "";
+        if(c.equals('1')){
+            generation = "10대";
+        }else if(c.equals('2')){
+            generation = "20대";
+        }else if(c.equals('3')){
+            generation = "30대";
+        }else if(c.equals('4')){
+            generation = "40대";
+        }else if(c.equals('5')){
+            generation = "50대";
+        }else if(c.equals('6')){
+            generation = "60대";
+        }
+
+        Random random = new Random();
+        String randomCategory = giftCategories.get(random.nextInt(giftCategories.size()));
+
+        String userInfo = generation + " " + gender + " " + randomCategory;
+        return userInfo;
+    }
+
+    @Override
+    public Gift writeRecommendGift(SearchItemRequest searchItemRequest) {
+        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("<b>", ""));
+        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("</b>", ""));
+        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("&quot", ""));
+        Gift gift = Gift.builder()
+                .giftName(searchItemRequest.getTitle())
+                .giftPrice(searchItemRequest.getLprice())
+                .giftImg(searchItemRequest.getImage())
+                .giftUrl(searchItemRequest.getLink())
+                .build();
+        giftRepository.save(gift);
+        return gift;
+    }
+
     @Transactional
-    public int openGift(Long diaryNo){
+    public int openGift(Long diaryNo) {
         Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
-        if(diary == null) return 0;
+        if (diary == null) return 0;
         else {
             diary.openGift();
             diaryRepository.save(diary);
             return 1;
         }
+    }
+
+    @Override
+    public int uploadImg(Diary diary, MultipartFile multipartFile) {
+
+        try {
+            if (diary.getDiaryImg() != null) {
+                deleteS3Img(diary);
+            }
+            String filename = fileNameFilter(multipartFile.getOriginalFilename());
+            String s3FileName = UUID.randomUUID() + "-" + filename;
+
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(multipartFile.getInputStream().available());
+            amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objectMetadata);
+
+            String fileUrl = amazonS3.getUrl(bucket, s3FileName).toString();
+            diary.updateImg(fileUrl);
+        } catch (Exception e) {
+            return 0;
+        }
+        return 1;
+    }
+
+    public int deleteS3Img(Diary diary) {
+        try {
+            String filename = diary.getDiaryImg().substring(diary.getDiaryImg().lastIndexOf("/") + 1);
+            filename = URLDecoder.decode(filename, "UTF-8");
+            System.out.println(filename);
+            amazonS3.deleteObject(bucket, filename);
+        } catch (Exception e) {
+            return 0;
+        }
+        return 1;
+    }
+
+    public String fileNameFilter(String filename) {
+        return filename.replaceAll("[^a-zA-Z0-9가-힣_.]", "").replaceAll(" ", "");
     }
 
 }

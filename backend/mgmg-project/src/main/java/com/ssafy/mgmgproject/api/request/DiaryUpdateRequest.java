@@ -20,12 +20,9 @@ public class DiaryUpdateRequest {
     @ApiModelProperty(name = "날씨", example = "맑음")
     String weather;
 
-    @ApiModelProperty(name = "사진", example = "사진")
-    String diaryImg;
-
     @NotEmpty
     @ApiModelProperty(name = "편지지", example = "1")
-    int diaryThema;
+    String diaryThema;
 
     @NotEmpty
     @ApiModelProperty(name = "감정", example = "슬픔")

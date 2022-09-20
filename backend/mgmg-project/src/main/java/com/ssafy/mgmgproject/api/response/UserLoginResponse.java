@@ -13,8 +13,11 @@ import lombok.Setter;
 @ApiModel("UserLoginResponse")
 public class UserLoginResponse extends BaseResponseBody {
 
-    @ApiModelProperty(name = "JWT 인증 토큰", example = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
+    @ApiModelProperty(name = "JWT 인증 access 토큰", example = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
     String accessToken;
+
+    @ApiModelProperty(name = "JWT 인증 refresh 토큰", example = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
+    String refreshToken;
 
     @ApiModelProperty(name = "회원 이름")
     String userName;
@@ -25,7 +28,7 @@ public class UserLoginResponse extends BaseResponseBody {
     @ApiModelProperty(name = "관리자 여부")
     boolean admin;
 
-    public static UserLoginResponse of(User user, Integer statusCode, String message, String accessToken) {
+    public static UserLoginResponse of(User user, Integer statusCode, String message, String accessToken, String refreshToken) {
         UserLoginResponse res = new UserLoginResponse();
         res.setStatusCode(statusCode);
         res.setUserName(user.getUserName());
@@ -33,6 +36,7 @@ public class UserLoginResponse extends BaseResponseBody {
         res.setAdmin(user.isAdmin());
         res.setMessage(message);
         res.setAccessToken(accessToken);
+        res.setRefreshToken(refreshToken);
         return res;
     }
 

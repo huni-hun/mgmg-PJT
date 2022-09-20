@@ -51,8 +51,8 @@ public class Diary {
     @Column(name = "emotion", length = 3)
     private String emotion;
 
-    @Column(name = "diary_thema")
-    private int diaryThema;
+    @Column(name = "diary_thema", length = 30)
+    private String diaryThema;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "music_no")
@@ -74,10 +74,9 @@ public class Diary {
         this.writeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
     }
 
-    public void updateDiary(String diaryContent, String weather, String diaryImg, int diaryThema, String emotion, Music music, Gift gift) {
+    public void updateDiary(String diaryContent, String weather, String diaryThema, String emotion, Music music, Gift gift) {
         this.diaryContent = diaryContent;
         this.weather = weather;
-        this.diaryImg = diaryImg;
         this.diaryThema = diaryThema;
         this.emotion = emotion;
         this.music = music;
@@ -90,5 +89,9 @@ public class Diary {
 
     public void closeGift() {
         this.openGift = false;
+    }
+
+    public void updateImg(String fileUrl){
+        this.diaryImg = fileUrl;
     }
 }
