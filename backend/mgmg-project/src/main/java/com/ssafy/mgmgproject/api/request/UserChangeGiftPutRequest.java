@@ -15,8 +15,8 @@ public class UserChangeGiftPutRequest {
     List<String> giftTaste;
 
     @ApiModelProperty(name = "최저가", example = "10000")
-    Long lprice;
+    Long lowPrice;
 
     @ApiModelProperty(name = "최고가", example = "50000")
-    Long hprice;
+    Long highPrice;
 }

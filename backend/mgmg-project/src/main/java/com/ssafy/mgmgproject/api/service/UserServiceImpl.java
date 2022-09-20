@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService{
                 .birth(userRegistInfo.getBirth())
                 .userName(userRegistInfo.getName())
                 .gender(userRegistInfo.getGender())
-                .lPrice(userRegistInfo.getLprice())
-                .hPrice(userRegistInfo.getHprice())
+                .lowPrice(userRegistInfo.getLowPrice())
+                .highPrice(userRegistInfo.getHighPrice())
                 .build();
         userRepository.save(user);
 
@@ -122,6 +122,8 @@ public class UserServiceImpl implements UserService{
                 .birth(null)
                 .userName(null)
                 .gender(null)
+                .lowPrice(null)
+                .highPrice(null)
                 .build();
 
         userRepository.save(deleteUser);
@@ -174,7 +176,7 @@ public class UserServiceImpl implements UserService{
             giftCategoryRepository.save(giftCategory);
         }
 
-        user.updateUserPrice(userChangeGiftPutRequest.getLprice(), userChangeGiftPutRequest.getHprice());
+        user.updateUserPrice(userChangeGiftPutRequest.getLowPrice(), userChangeGiftPutRequest.getHighPrice());
     }
 
 }
