@@ -1,5 +1,6 @@
 package com.ssafy.mgmgproject.db.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "interest_gift")
 public class InterestGift {
 
@@ -25,7 +27,6 @@ public class InterestGift {
     @JoinColumn(name = "user_no")
     private User user;
 
-    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gift_no")
     private Gift gift;

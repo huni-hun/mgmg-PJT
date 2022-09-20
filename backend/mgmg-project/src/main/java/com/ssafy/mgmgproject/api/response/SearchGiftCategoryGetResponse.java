@@ -1,8 +1,6 @@
 package com.ssafy.mgmgproject.api.response;
 
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
-import com.ssafy.mgmgproject.db.entity.GiftCategory;
-import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

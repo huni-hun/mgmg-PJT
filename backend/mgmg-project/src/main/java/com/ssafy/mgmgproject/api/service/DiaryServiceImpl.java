@@ -3,6 +3,7 @@ package com.ssafy.mgmgproject.api.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
+import com.ssafy.mgmgproject.api.request.SearchItemRequest;
 import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.db.entity.*;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.ion.IonException;
 
+import java.text.DateFormat;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Date;
@@ -170,6 +172,56 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
+    public String getUserInfo(Date birth, String gender, List<String> giftCategories) {
+        DateFormat dataFormat = new SimpleDateFormat("yyyy-mm-dd");
+        String year = dataFormat.format(birth);
+
+        Calendar now = Calendar.getInstance();
+        Integer currentYear = now.get(Calendar.YEAR);
+
+        Integer birthYear = Integer.parseInt(year.substring(0, 4));
+
+
+        String age = (currentYear - birthYear + 1) + "";
+
+        Character c = age.charAt(0);
+
+        String generation = "";
+        if(c.equals('1')){
+            generation = "10대";
+        }else if(c.equals('2')){
+            generation = "20대";
+        }else if(c.equals('3')){
+            generation = "30대";
+        }else if(c.equals('4')){
+            generation = "40대";
+        }else if(c.equals('5')){
+            generation = "50대";
+        }else if(c.equals('6')){
+            generation = "60대";
+        }
+
+        Random random = new Random();
+        String randomCategory = giftCategories.get(random.nextInt(giftCategories.size()));
+
+        String userInfo = generation + " " + gender + " " + randomCategory;
+        return userInfo;
+    }
+
+    @Override
+    public Gift writeRecommendGift(SearchItemRequest searchItemRequest) {
+        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("<b>",""));
+        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("</b>",""));
+        searchItemRequest.setTitle(searchItemRequest.getTitle().replace("&quot",""));
+        Gift gift = Gift.builder()
+                .giftName(searchItemRequest.getTitle())
+                .giftPrice(searchItemRequest.getLprice())
+                .giftImg(searchItemRequest.getImage())
+                .giftUrl(searchItemRequest.getLink())
+                .build();
+        giftRepository.save(gift);
+        return gift;
+
     @Transactional
     public int openGift(Long diaryNo) {
         Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
