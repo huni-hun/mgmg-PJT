@@ -1,12 +1,15 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: ["vuetify"],
+  devServer: {
+    allowedHosts: "all",
+  },
   pwa: {
     manifestOptions: {
       name: "몽글몽글",
       short_name: "몽글몽글",
       start_url: "./",
-      display: "standalone", 
+      display: "standalone",
       theme_color: "#4DBA87",
       background_color: "#000000",
       icons: [
