@@ -103,6 +103,8 @@
 
 <script>
 import eventBus from "./eventBus.js";
+import { diaryWrite } from "@/api/diary.js";
+
 export default {
   data: () => ({
     weatherImg: [
@@ -124,8 +126,23 @@ export default {
     backImg: "blackLine",
   }),
   methods: {
-    writingCompletion() {
-      this.$router.push({ path: "diarydetail" });
+    async writingCompletion() {
+      const form = new FormData();
+      form.append("multipartFile", this.uploadImageFile);
+      const userData = {
+        diaryContent: this.diary,
+        diaryDate: this.date,
+        weather: this.weather,
+        diaryThema: this.backImg,
+        emotion: "슬픔",
+        musicNo: 0,
+        giftNo: 0,
+      };
+      form.append("diaryRequest", userData);
+
+      const response = await diaryWrite(form);
+      console.log("응답 데이터", response);
+      //this.$router.push({ path: "diarydetail" });
     },
     selectFile() {
       this.uploadReady = true;
