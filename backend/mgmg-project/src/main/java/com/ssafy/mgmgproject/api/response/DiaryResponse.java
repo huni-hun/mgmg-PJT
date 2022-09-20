@@ -58,6 +58,7 @@ public class DiaryResponse extends BaseResponseBody {
         res.setWeather(diary.getWeather());
         res.setDiaryImg(diary.getDiaryImg());
         res.setEmotion(diary.getEmotion());
+        res.setDiaryThema(diary.getDiaryThema());
         res.setMusic(diary.getMusic());
         res.setGift(diary.getGift());
         res.setOpenGift(diary.isOpenGift());
