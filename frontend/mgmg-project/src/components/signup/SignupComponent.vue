@@ -277,7 +277,7 @@ export default {
   width: inherit;
   height: inherit;
 }
-.inputStyle >>> fieldset {
+.inputStyle:deep(fieldset) {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
