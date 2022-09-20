@@ -22,7 +22,7 @@ public class User {
     @Column(name = "user_no")
     private Long userNo;
 
-    @Column(name = "user_id", length = 16)
+    @Column(name = "user_id", length = 16, unique = true)
     private String userId;
 
     @Column(name = "password", length = 60)
@@ -52,6 +52,12 @@ public class User {
     @Column(name = "diary_continue")
     @ColumnDefault("0")
     private int diaryContinue;
+
+    @Column(name = "low_price")
+    private Long lowPrice;
+
+    @Column(name = "high_price")
+    private Long highPrice;
 
     @JsonIgnore
     @Builder.Default
@@ -88,6 +94,11 @@ public class User {
         if(diaryContinue<Integer.MAX_VALUE){
             this.diaryContinue=diaryContinue;
         }
+    }
+
+    public void updateUserPrice(Long lowPrice, Long highPrice){
+        this.lowPrice = lowPrice;
+        this.highPrice = highPrice;
     }
 
     public void updateFont(int diaryFont){
