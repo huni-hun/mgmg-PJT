@@ -44,7 +44,7 @@ export default {
       }
     },
     turnRight() {
-      if (this.badgeEnd < 36) {
+      if (this.badgeEnd < this.badgeList.length) {
         this.badgeStart += 15;
         this.badgeEnd += 15;
         this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
@@ -52,7 +52,7 @@ export default {
     },
   },
   async created() {
-    this.badges = await etcStore.achieve_list();
+    this.badges = await etcStore.achieve_get_list();
     this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
   },
   computed: {
