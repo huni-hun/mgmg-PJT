@@ -172,7 +172,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public String getUserInfo(Date birth, String gender, List<String> giftCategories) {
+    public String getUserInfo(Date birth, String gender, List<String> giftCategories, Long lowPrice, Long highPrice) {
         DateFormat dataFormat = new SimpleDateFormat("yyyy-mm-dd");
         String year = dataFormat.format(birth);
 
@@ -180,7 +180,6 @@ public class DiaryServiceImpl implements DiaryService {
         Integer currentYear = now.get(Calendar.YEAR);
 
         Integer birthYear = Integer.parseInt(year.substring(0, 4));
-
 
         String age = (currentYear - birthYear + 1) + "";
 
@@ -201,10 +200,13 @@ public class DiaryServiceImpl implements DiaryService {
             generation = "60대";
         }
 
+        String low = lowPrice + "원";
+        String high = highPrice + "원";
+
         Random random = new Random();
         String randomCategory = giftCategories.get(random.nextInt(giftCategories.size()));
 
-        String userInfo = generation + " " + gender + " " + randomCategory;
+        String userInfo = generation + " " + gender + " " + low + "~" + high + " " + randomCategory;
         return userInfo;
     }
 
