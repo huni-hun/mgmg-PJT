@@ -42,6 +42,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import api_url from "@/api/index.js";
+import Swal from "sweetalert2";
 // import axios from "axios";
 // import api from "@/api/index.js";
 // import
@@ -66,19 +69,75 @@ export default {
     test() {
       console.log(this.loginNext);
     },
+    loginAuto(data) {
+      this.$store.commit("SET_USER_INFO_AUTO", data);
+    },
+    loginNotAuto(data) {
+      this.$store.commit("SET_USER_INFO_NOT_AUTO", data);
+    },
     login() {
       const userId = document.getElementById("idLoginInput").value;
       const userPw = document.getElementById("pwLoginInput").value;
       var autoflag = this.loginNext;
+
       let loginLst = {
         userId: userId,
         password: userPw,
-        autoFlag: autoflag,
+        autoFlag: this.loginNext,
       };
-
       console.log(loginLst);
-      this.$store.dispatch("set_user", loginLst);
+      // 여기서 자동로그인 분기하기
+      // 자동로그인 하는 경우
+      if (this.loginNext) {
+        axios
+          .post(api_url.accounts.login(), {
+            userId: userId,
+            password: userPw,
+            autoFlag: this.loginNext,
+          })
+          .then((response) => {
+            if (response.data.statusCode == 200) {
+              console.log(response.data);
+              this.loginAuto(response.data);
+              this.$router.push("/main");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+              icon: "warning",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+          });
+      } else {
+        // 자동로그인 하지 않는 경우
+        axios
+          .post(api_url.accounts.login(), {
+            userId: userId,
+            password: userPw,
+            autoFlag: autoflag,
+          })
+          .then((response) => {
+            if (response.data.statusCode == 200) {
+              console.log(response.data);
+              this.loginNotAuto(loginLst);
+              this.$router.push("/main");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+              icon: "warning",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+          });
+      }
 
+      // console.log(this.$store.dispatch("set_user", loginLst));
       // axios
       //   .post(api.accounts.login, {
       //     userId: userId,

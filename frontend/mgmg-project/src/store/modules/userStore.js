@@ -1,8 +1,8 @@
-import api_url from "@/api/index.js";
+// import api_url from "@/api/index.js";
 import Vue from "vue";
 import Vuex from "vuex";
-import { API } from "@/store";
-import Swal from "sweetalert2";
+// import { API } from "@/store";
+// import Swal from "sweetalert2";
 
 Vue.use(Vuex);
 
@@ -27,36 +27,41 @@ const userStore = {
       state.userName = data.userName;
       state.accessToken = data.accessToken;
       state.refreshToken = data.refreshToken;
+      console.log(state.refreshToken);
     },
     // 로그인 상태 유지X 로그인
     SET_USER_INFO_NOT_AUTO(state, data) {
       state.userName = data.userName;
       state.accessToken = data.accessToken;
       state.refreshToken = ""; // persistent cookies에 저장하기 @@@@@@@@@@@@@@
+      console.log(state.refreshToken);
     },
   },
   actions: {
     // 로그인
-    set_user({ commit }, params) {
-      API({
-        // url: "http://localhost:8080/api/user/login",
-        // url: `/user/login`,
-        url: api_url.accounts.login(),
-        method: "POST",
-        data: params,
-      })
-        .then(({ data }) => {
-          // console.log(data);
-          if (data.autoFlag) {
-            commit("SET_USER_INFO_AUTO", data);
-          } else {
-            commit("SET_USER_INFO_NOT_AUTO", data);
-          }
-        })
-        .catch((err) => {
-          console.log("에러내용" + err);
-        });
-    },
+    // login_auto(data) {
+    //     commit("SET_USER_INFO_AUTO", data);
+    // }
+    // set_user({ commit }, params) {
+    //   API({
+    //     // url: "http://localhost:8080/api/user/login",
+    //     // url: `/user/login`,
+    //     url: api_url.accounts.login(),
+    //     method: "POST",
+    //     data: params,
+    //   })
+    //     .then(({ data }) => {
+    //       // console.log(data);
+    //       if (data.autoFlag) {
+    //         commit("SET_USER_INFO_AUTO", data);
+    //       } else {
+    //         commit("SET_USER_INFO_NOT_AUTO", data);
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log("에러내용" + err);
+    //     });
+    // },
   },
   modules: {},
 };
