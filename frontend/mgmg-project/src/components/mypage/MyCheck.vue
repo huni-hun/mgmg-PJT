@@ -46,6 +46,9 @@ export default {
       pwMyCheckRequired: (v) => !!v || "인증번호는 필수값입니다.",
     };
   },
+  methods: {
+    
+  }
 };
 </script>
 
