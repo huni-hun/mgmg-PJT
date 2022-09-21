@@ -24,6 +24,7 @@
               single-line
               outlined
               id="pwLoginInput"
+              @keyup.enter="login"
             ></v-text-field>
           </div>
         </v-col>
