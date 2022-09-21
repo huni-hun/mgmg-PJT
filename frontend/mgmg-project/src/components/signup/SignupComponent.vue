@@ -118,12 +118,9 @@
 </template>
 
 <script>
-import userApi from "@/api/userApi";
-import Vue from "vue";
 import api_url from "@/api/index.js";
 import axios from "axios";
 import Swal from "sweetalert2";
-Vue.use(userApi);
 
 export default {
   props: ["userid", "userpassword", "useremail", "username", "userbirth", "usergender", "userrulecheck"],
@@ -260,7 +257,7 @@ export default {
         this.nameValidation = false;
       }
     },
-    // 아이디 api 중복검사 (userId 있을 경우에만 중복검사 클릭 가능, idValidation true로 변경)
+    // 아이디 api 중복검사
     idDoubleCheck(user_id) {
       console.log(api_url.accounts.id_check());
       axios
@@ -292,6 +289,18 @@ export default {
             });
             this.idDuplicated = false;
           }
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "사용 불가능한 아이디입니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+            // },
+          });
+          this.idDuplicated = false;
         });
     },
     // 이메일 api 전송
@@ -322,6 +331,17 @@ export default {
               // },
             });
           }
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "인증번호를 보내지 못했습니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+            // },
+          });
         });
     },
 

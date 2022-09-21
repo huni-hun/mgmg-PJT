@@ -57,46 +57,6 @@ const userStore = {
           console.log("에러내용" + err);
         });
     },
-    // 아이디 찾기
-    // find_id(params) {
-    //   console.log(params);
-    //   API({
-    //     url: api_url.accounts.find_id(),
-    //     method: "GET",
-    //     userName: params.userName,
-    //     email: params.email,
-    //   })
-    //     .then(({ data }) => {
-    //       console.log(data);
-    //       if (data.statusCode == 200) {
-    //         // this.foundId = data.userId;
-    //         Swal.fire({
-    //           text: "가입하신 아이디는\n" + data.userId,
-    //           icon: "success",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //         });
-    //       } else {
-    //         Swal.fire({
-    //           text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-    //           icon: "warning",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //         });
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log("에러내용" + err);
-    //     });
-    // },
-
-    // 이메일 인증
-    // send_email_code(params) {
-    //   API({
-    //     url: api_url.accounts.accounts.email,
-    //     metho
-    //   })
-    // }
   },
   modules: {},
 };
