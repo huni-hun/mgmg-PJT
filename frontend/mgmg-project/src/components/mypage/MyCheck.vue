@@ -43,7 +43,7 @@
 export default {
   data() {
     return {
-      pwMyCheckRequired: (v) => !!v || "인증번호는 필수값입니다.",
+      pwMyCheckRequired: (v) => !!v || "인증번호는 필수값입니다. ",
     };
   },
   methods: {
