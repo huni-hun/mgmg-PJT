@@ -1,56 +1,108 @@
 //import axios from "axios";
-import { createApi } from "./index.js";
+import { API } from "@/store";
+import store from "@/store/modules/userStore";
 
 const DIARY = "/diary";
-// axios.post(  process.env.VUE_APP_API_URL + "api/diary",
-export async function diaryWrite(userData) {
-  return await createApi.post(`${DIARY}`, userData, {
+
+async function diaryWrite(userData) {
+  let response = await API.post(`${DIARY}`, userData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + store.state.accessToken,
     },
   });
+
+  return response.data;
 }
 
-// function monthlyDiaryList(pid) {
-//   return createApi.get(`${DIARY}/month/${pid}`);
-// }
+async function monthlyDiaryList(pid) {
+  let response = await API.get(`${DIARY}/month/${pid}`, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
 
-// function diaryDetailView(pid) {
-//   return createApi.get(`${DIARY}/detail/${pid}`);
-// }
+  return response.data;
+}
 
-// function diaryEdit(pid, userData) {
-//   return createApi.put(`${DIARY}/${pid}`, userData);
-// }
+async function diaryDetailView(pid) {
+  let response = await API.get(`${DIARY}/detail/${pid}`, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
 
-// function diaryDelete(pid) {
-//   return createApi.delete(`${DIARY}/${pid}`);
-// }
+  return response.data;
+}
 
-// function musicInterest(pid, userData) {
-//   return createApi.post(`${DIARY}/interestmusic/${pid}`, userData);
-// }
+async function diaryEdit(pid, userData) {
+  let response = await API.put(`${DIARY}/${pid}`, userData, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
 
-// function musicBad(pid) {
-//   return createApi.post(`${DIARY}/badmusic/${pid}`);
-// }
+  return response.data;
+}
 
-// function giftInterest(pid) {
-//   return createApi.post(`${DIARY}/interestgift/${pid}`);
-// }
+async function diaryDelete(pid) {
+  let response = await API.delete(`${DIARY}/${pid}`, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
 
-// function giftOpen(pid) {
-//   return createApi.post(`${DIARY}/opengift/${pid}`);
-// }
+  return response.data;
+}
 
-// export {
-//   diaryWrite,
-//   monthlyDiaryList,
-//   diaryDetailView,
-//   diaryEdit,
-//   diaryDelete,
-//   musicInterest,
-//   musicBad,
-//   giftInterest,
-//   giftOpen,
-// };
+async function musicInterest(pid, userData) {
+  let response = await API.post(`${DIARY}/interestmusic/${pid}`, userData, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+
+  return response.data;
+}
+
+async function musicBad(pid) {
+  let response = await API.post(`${DIARY}/badmusic/${pid}`, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+
+  return response.data;
+}
+
+async function giftInterest(pid) {
+  let response = await API.post(`${DIARY}/interestgift/${pid}`, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+
+  return response.data;
+}
+
+async function giftOpen(pid) {
+  let response = await API.post(`${DIARY}/opengift/${pid}`, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+
+  return response.data;
+}
+
+export {
+  diaryWrite,
+  monthlyDiaryList,
+  diaryDetailView,
+  diaryEdit,
+  diaryDelete,
+  musicInterest,
+  musicBad,
+  giftInterest,
+  giftOpen,
+};
