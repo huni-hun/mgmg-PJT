@@ -46,7 +46,7 @@ const userStore = {
         data: params,
       })
         .then(({ data }) => {
-          console.log(data);
+          // console.log(data);
           if (data.autoFlag) {
             commit("SET_USER_INFO_AUTO", data);
           } else {

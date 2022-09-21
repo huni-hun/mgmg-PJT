@@ -7,7 +7,7 @@
       <v-row>
         <label class="col-4 signupNoDrag" for="idSignupInput" id="idSignupLabel">아이디</label>
         <CustomInput v-model="idSignupInput" class="col-4" />
-        <div class="col-4"><custom-button btnText="중복확인" /></div>
+        <div class="col-4"><custom-button btnText="중복확인" @click="idDoubleCheck" /></div>
       </v-row>
       <v-row>
         <label class="col-4 signupNoDrag" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
@@ -118,6 +118,10 @@
 </template>
 
 <script>
+import userApi from "@/api/userApi";
+import Vue from "vue";
+Vue.use(userApi);
+
 export default {
   props: ["userid", "userpassword", "useremail", "username", "userbirth", "usergender"],
   computed: {
@@ -184,6 +188,8 @@ export default {
       emailValidation: false,
       nameValidation: false,
       GenderValidation: false,
+      // 중복 검사
+      idDuplicated: false,
       // 약관 동의 여부
       ruleCheck: false,
       // 한 항목이라도 false면 다음 버튼 비활성화하기
@@ -201,6 +207,7 @@ export default {
         this.userId = user_id;
         console.log(user_id);
         this.$emit("useridSignup", user_id);
+        this.idValidation = true;
         return true;
       } else {
         this.idValidation = false;
@@ -249,6 +256,20 @@ export default {
       }
     },
     // 아이디 api 중복검사 (userId 있을 경우에만 중복검사 클릭 가능, idValidation true로 변경)
+    idDoubleCheck() {
+      // console.log("valid", this.idValidation);
+      // if (this.idValidation) {
+      //   //정규식 통과한 경우에만 중복검사함.
+      //   var a = userApi.idDoubleCheck(this.userId);
+      //   console.log("result", a);
+      //   this.idDuplicated = userApi.idDoubleCheck(this.userId);
+      // }
+      // console.log("dub", this.idDuplicated);
+      console.log(userApi.id_double_check(this.userId));
+    },
+    // idDoubleCheck(user_id) {
+    //   return userApi.idDoubleCheck(user_id);
+    // },
     // 이메일 api 전송 (인증하기 버튼 누를때 userEmail 값 저장)
     // 인증번호 일치여부 확인- api 가져오기 (확인 되면 emailValidation true로 변경) 일치하지 않으면 정규식 사용해서 인증번호가 일치하지 않습니다(가능하면)
     //
