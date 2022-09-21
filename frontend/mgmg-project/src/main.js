@@ -6,7 +6,6 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import CustomButton from "@/components/common/CustomButton.vue";
 import CustomInput from "@/components/common/CustomInput.vue";
-
 Vue.config.productionTip = false;
 
 Vue.component("CustomButton", CustomButton);

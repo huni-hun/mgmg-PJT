@@ -15,7 +15,7 @@
           <div class="inputStyle">
             <v-text-field
               :rules="[pwRequired]"
-              :type="showPw ? 'text' : 'password'"
+              :type="password"
               label="비밀번호를 입력하세요."
               name="input-10-2"
               hint="비밀번호를 입력하세요."

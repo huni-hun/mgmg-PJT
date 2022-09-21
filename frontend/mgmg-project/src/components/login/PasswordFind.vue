@@ -28,6 +28,7 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert2";
+import api_url from "@/api/index.js";
 export default {
   data() {
     return {
@@ -52,7 +53,7 @@ export default {
       const userEmail = document.getElementById("emailPasswordFindInput").value;
 
       axios
-        .get(this.$store.state.baseurl + "api/user/findid", {
+        .get(api_url.accounts.find_pw(), {
           userId: userId,
           email: userEmail,
         })
