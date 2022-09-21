@@ -54,8 +54,10 @@ export default {
 
       axios
         .get(api_url.accounts.find_pw(), {
-          userId: userId,
-          email: userEmail,
+          params: {
+            userId: userId,
+            email: userEmail,
+          },
         })
         .then((response) => {
           if (response.data.statusCode == 200) {
@@ -71,6 +73,19 @@ export default {
               // },
             });
           }
+        })
+        .catch((err) => {
+          console.log(err);
+          swal.fire({
+            // toast: true,
+            // title: "ID 누락",
+            text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+            // },
+          });
         });
     },
   },
