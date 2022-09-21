@@ -10,6 +10,7 @@
       @usernameSignup="setUserName"
       @userbirthSignup="setUserBirth"
       @usergenderSignup="setUserGender"
+      @ruleCheckSignup="setRuleCheck"
     />
     <MusicSurvey v-if="signupOrder == 2" @selectMusics="setMusic" />
     <GiftSurvey v-if="signupOrder == 3" @selectGifts="setGift" />
@@ -36,6 +37,7 @@ export default {
       userName: "",
       userBirth: "",
       userGender: "",
+      userRuleCheck: "",
     };
   },
   methods: {
@@ -77,8 +79,12 @@ export default {
       this.userGender = value;
       console.log(this.userGender);
     },
+    setRuleCheck(value) {
+      this.userRuleCheck = value;
+      console.log(this.userRuleCheck);
+    },
     check() {
-      console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender);
+      console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender, this.userRuleCheck);
       console.log(this.selectGift, this.selectMusic);
     },
   },

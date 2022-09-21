@@ -7,7 +7,7 @@
       <v-row>
         <label class="col-4 signupNoDrag" for="idSignupInput" id="idSignupLabel">아이디</label>
         <CustomInput v-model="idSignupInput" class="col-4" />
-        <div class="col-4"><custom-button btnText="중복확인" /></div>
+        <div class="col-4"><custom-button btnText="중복확인" @click="idDoubleCheck" /></div>
       </v-row>
       <v-row>
         <label class="col-4 signupNoDrag" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
@@ -53,14 +53,14 @@
         <label class="col-4 signupNoDrag" for="emailSignupInput" id="emailSignupLabel">이메일</label>
         <CustomInput v-model="emailSignupInput" class="col-4" />
         <div class="col-4">
-          <custom-button btnText="인증하기" />
+          <custom-button btnText="인증하기" @click="emailDubleCheck" />
         </div>
       </v-row>
       <v-row>
         <label class="col-4 signupNoDrag" for="emailcheckSignupInput" id="emailcheckSignupLabel">인증번호</label>
         <CustomInput v-model="emailcheckSignupInput" class="col-4" />
         <div class="col-4">
-          <custom-button btnText="확인" />
+          <custom-button btnText="확인" @click="emailNumCheck" />
         </div>
       </v-row>
       <v-row>
@@ -108,7 +108,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-checkbox v-model="ruleCheck" :label="`약관 내용에 동의합니다.`"></v-checkbox>
+          <v-checkbox v-model="ruleCheck" :label="`약관 내용에 동의합니다.`" @click="ruleApproveCheck"></v-checkbox>
           <!-- <input type="checkbox" id="ruleCheck" />
           <label for="ruleCheck" class="signupNoDrag"> 약관 내용에 동의합니다.</label> -->
         </v-col>
@@ -118,8 +118,12 @@
 </template>
 
 <script>
+import api_url from "@/api/index.js";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 export default {
-  props: ["userid", "userpassword", "useremail", "username", "userbirth", "usergender"],
+  props: ["userid", "userpassword", "useremail", "username", "userbirth", "usergender", "userrulecheck"],
   computed: {
     testComputed() {
       return this.userId;
@@ -184,6 +188,9 @@ export default {
       emailValidation: false,
       nameValidation: false,
       GenderValidation: false,
+      // 중복 검사
+      idDuplicated: false,
+      emailDuplicated: false,
       // 약관 동의 여부
       ruleCheck: false,
       // 한 항목이라도 false면 다음 버튼 비활성화하기
@@ -201,6 +208,7 @@ export default {
         this.userId = user_id;
         console.log(user_id);
         this.$emit("useridSignup", user_id);
+        this.idValidation = true;
         return true;
       } else {
         this.idValidation = false;
@@ -231,6 +239,7 @@ export default {
       const regEmail = /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
       if (regEmail.test(user_email)) {
         this.$emit("useremailSignup", user_email);
+        this.userEmail = user_email;
         return true;
       } else {
         this.emailValidation = false;
@@ -248,10 +257,128 @@ export default {
         this.nameValidation = false;
       }
     },
-    // 아이디 api 중복검사 (userId 있을 경우에만 중복검사 클릭 가능, idValidation true로 변경)
-    // 이메일 api 전송 (인증하기 버튼 누를때 userEmail 값 저장)
+    // 아이디 api 중복검사
+    idDoubleCheck(user_id) {
+      console.log(api_url.accounts.id_check());
+      axios
+        .get(api_url.accounts.id_check(), {
+          params: {
+            userId: user_id,
+          },
+        })
+        .then((response) => {
+          if (response.data.statusCode == "200") {
+            console.log(response.data);
+            Swal.fire({
+              text: "사용 가능한 아이디입니다.",
+              icon: "success",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
+            this.idDuplicated = true;
+          } else {
+            Swal.fire({
+              text: "사용 불가능한 아이디입니다.",
+              icon: "warning",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
+            this.idDuplicated = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "사용 불가능한 아이디입니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+            // },
+          });
+          this.idDuplicated = false;
+        });
+    },
+    // 이메일 api 전송
+    emailDubleCheck() {
+      console.log(this.userEmail);
+      axios
+        .post(api_url.accounts.email(), {
+          email: this.userEmail,
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.data.statusCode == "200") {
+            Swal.fire({
+              text: "이메일로 인증 번호를 보냈습니다.",
+              icon: "success",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
+          } else {
+            Swal.fire({
+              text: "인증번호를 보내지 못했습니다.",
+              icon: "warning",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "인증번호를 보내지 못했습니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+            // },
+          });
+        });
+    },
+
     // 인증번호 일치여부 확인- api 가져오기 (확인 되면 emailValidation true로 변경) 일치하지 않으면 정규식 사용해서 인증번호가 일치하지 않습니다(가능하면)
-    //
+    emailNumCheck() {
+      axios
+        .get(api_url.accounts.email_check(), {
+          params: {
+            email: this.userEmail,
+            emailNum: document.getElementById("emailcheckSignupInput").value,
+          },
+        })
+        .then((response) => {
+          if (response.data.statusCode == "200") {
+            this.emailDuplicated = true;
+            Swal.fire({
+              text: "인증번호가 확인되었습니다.",
+              icon: "success",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
+          } else {
+            this.emailDuplicated = false;
+            Swal.fire({
+              text: "인증번호가 다릅니다.",
+              icon: "warning",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
+          }
+          console.log(response.data);
+        });
+    },
     //생일 날짜 emit
     birthCheck() {
       this.$emit("userbirthSignup", this.date);
@@ -267,6 +394,10 @@ export default {
       }
       this.$emit("usergenderSignup", this.userGender);
       this.GenderValidation = true;
+    },
+    // 약관 동의 체크 확인
+    ruleApproveCheck() {
+      this.$emit("ruleCheckSignup", this.ruleCheck);
     },
   },
 };

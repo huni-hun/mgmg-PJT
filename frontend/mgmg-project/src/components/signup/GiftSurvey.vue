@@ -2,7 +2,7 @@
 <template>
   <div>
     <v-container>
-      <v-row>관심 선물</v-row>
+      <v-row @click="test">관심 선물</v-row>
       <v-row>좋아하는 선물 종류를 선택하세요. 최소 1개, 최대 5개까지 선택할 수 있습니다.</v-row>
       <v-row><hr class="hrStyle" /></v-row>
       <v-row>
@@ -25,7 +25,7 @@
       </v-row> -->
       <v-row>
         <label for="">가격대</label>
-        <CustomInput v-model="priceUnder" />
+        <CustomInput v-model="priceUnder" :@change="test()" />
         <label for="">~</label>
         <CustomInput v-model="priceUpper" />
       </v-row>
@@ -36,6 +36,9 @@
 <script>
 export default {
   props: ["selectGift"],
+  mounted() {
+    this.giftSurveyMounted();
+  },
 
   data() {
     return {
@@ -45,16 +48,26 @@ export default {
 
       priceUnder: {
         labelText: "하한가",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "숫자를 입력하세요."],
+        rules: [(v) => /^[0-9]*/.test(v) || "숫자를 입력하세요."],
+        id: "priceUnder",
       },
       priceUpper: {
         labelText: "상한가",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "숫자를 입력하세요."],
+        rules: [(v) => /^[0-9]*/.test(v) || "숫자를 입력하세요."],
+        id: "priceUpper",
       },
     };
   },
   methods: {
+    test() {
+      console.log("test");
+      // console.log(document.getElementById("priceUnder").value);
+      // console.log(document.getElementById("priceUpper").value);
+    },
     // 선물 선택. 선택리스트에 없으면 추가, 있으면 제거
+    giftSurveyMounted() {
+      this.$emit("selectGifts", this.selectedGift);
+    },
     addGift(gift) {
       if (this.selectedGift.includes(gift)) {
         if (this.selectedGift.length == 1) {

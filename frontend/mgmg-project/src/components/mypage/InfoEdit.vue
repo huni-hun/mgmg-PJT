@@ -36,12 +36,15 @@
       <div class="col-4"></div>
     </v-row>
     <v-row>
-      <CustomButton btnText="수정하기" />
+      <CustomButton btnText="수정하기" @click="userInfoEdit" />
     </v-row>
   </v-container>
 </template>
 
 <script>
+import Swal from "sweetalert2";
+import axios from "axios";
+import api_url from "@/api/index.js";
 export default {
   data() {
     return {
@@ -109,6 +112,52 @@ export default {
         this.userGender = "여성";
       }
       this.GenderValidation = true;
+    },
+    // 버튼 누르면, 이름 이메일 값 확인해서 axios 실행
+    userInfoEdit() {
+      if (this.nameValidation && this.emailValidation) {
+        console.log("valid");
+        console.log(this.userName, this.userEmail, this.date, this.userGender);
+        axios
+          .put(api_url.accounts.mypage_show_edit_delete(), {
+            headers: {
+              //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+              Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+            },
+            email: this.userEmail,
+            birth: this.date,
+            name: this.userName,
+            gender: this.userGender,
+          })
+          .then((response) => {
+            console.log(response);
+            Swal.fire({
+              text: "회원 정보가 정상적으로 변경되었습니다.",
+              icon: "success",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              text: "회원 정보 변경에 실패했습니다.",
+              icon: "warning",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+          });
+      } else {
+        Swal.fire({
+          text: "입력한 정보를 다시 확인해주세요.",
+          icon: "warning",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+        });
+      }
     },
   },
 };
