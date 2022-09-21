@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <label for="">본인 인증</label>
+      <label for="" @click="test">본인 인증</label>
     </v-row>
     <v-row>
       <hr class="hrStyle" />
@@ -34,12 +34,14 @@
       </v-col>
     </v-row>
     <v-row>
-      <CustomButton btnText="확인" />
+      <CustomButton btnText="확인" @click="myCheck" />
     </v-row>
   </v-container>
 </template>
 
 <script>
+import axios from "axios";
+import api_url from "@/api/index.js";
 export default {
   data() {
     return {
@@ -47,8 +49,31 @@ export default {
     };
   },
   methods: {
-    
-  }
+    test() {
+      // console.log(this.$store.state.userStore.userId);
+      console.log(this.$store.state.userStore.accessToken);
+    },
+    myCheck() {
+      console.log(this.$store.state.accessToken);
+      var check_pw = document.getElementById("pwMyCheckInput").value;
+      axios
+        .post(api_url.accounts.my_check(), {
+          headers: {
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+          },
+          password: check_pw,
+        })
+        .then((response) => {
+          if (response.data.statusCode == 200) {
+            console.log("본인확인 완료");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
 

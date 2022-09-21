@@ -8,23 +8,33 @@
     </v-row>
     <v-row>
       <v-col><label for="">이름</label></v-col>
-      <v-col><label for="">김민영</label></v-col>
+      <v-col
+        ><label for="">{{ userName }}</label></v-col
+      >
     </v-row>
     <v-row>
       <v-col><label for="">아이디</label></v-col>
-      <v-col><label for="">min4849</label></v-col>
+      <v-col
+        ><label for="">{{ userId }}</label></v-col
+      >
     </v-row>
     <v-row>
       <v-col><label for="">이메일</label></v-col>
-      <v-col><label for="">min4849@naver.com</label></v-col>
+      <v-col
+        ><label for="">{{ userEmail }}</label></v-col
+      >
     </v-row>
     <v-row>
       <v-col><label for="">생년월일</label></v-col>
-      <v-col><label for="">1998-08-26</label></v-col>
+      <v-col
+        ><label for="">{{ userBirth }}</label></v-col
+      >
     </v-row>
     <v-row>
       <v-col><label for="">성별</label></v-col>
-      <v-col><label for="">여성</label></v-col>
+      <v-col
+        ><label for="">{{ userGender }}</label></v-col
+      >
     </v-row>
     <v-row>
       <CustomButton btnText="수정하기" />
@@ -33,7 +43,39 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+import api_url from "@/api/index.js";
+export default {
+  data() {
+    return {
+      userBirth: "",
+      userEmail: "",
+      userGender: "",
+      userId: "",
+      userName: "",
+    };
+  },
+  mounted: {
+    getUserInfo() {
+      axios
+        .get(api_url.accounts.mypage_show_edit_delete(), {
+          headers: {
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+          },
+        })
+        .get((response) => {
+          console.log(response.data);
+          this.userBirth = response.data.birth;
+          this.userEmail = response.data.email;
+          this.userGender = response.data.gender;
+          this.userId = response.data.userId;
+          this.userName = response.data.name;
+        });
+    },
+  },
+  methods: {},
+};
 </script>
 
 <style scoped>

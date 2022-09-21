@@ -122,7 +122,7 @@ export default {
           .then((response) => {
             if (response.data.statusCode == 200) {
               console.log(response.data);
-              this.loginNotAuto(loginLst);
+              this.loginAuto(response.data);
               this.$router.push("/main");
             }
           })

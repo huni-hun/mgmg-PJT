@@ -27,6 +27,7 @@ const userStore = {
       state.userName = data.userName;
       state.accessToken = data.accessToken;
       state.refreshToken = data.refreshToken;
+      console.log(state.accessToken);
       console.log(state.refreshToken);
     },
     // 로그인 상태 유지X 로그인
@@ -34,6 +35,7 @@ const userStore = {
       state.userName = data.userName;
       state.accessToken = data.accessToken;
       state.refreshToken = ""; // persistent cookies에 저장하기 @@@@@@@@@@@@@@
+      console.log(state.accessToken);
       console.log(state.refreshToken);
     },
   },
