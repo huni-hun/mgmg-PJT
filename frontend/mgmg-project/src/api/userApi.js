@@ -93,8 +93,18 @@ async function deleteUser(request) {
   });
   return response.data;
 }
+//일반로그인
+async function logIn(request) {
+  let response = await API.post(`${ACCOUNT}` + "/login", request);
+  return response.data;
+}
+//자동 로그인
+async function autoLogin(request) {
+  let response = await API.post(`${ACCOUNT}` + "/autologin", request);
+  return response.data;
+}
 
-export { idDoubleCheck, emailDoubleCheck, emailNumCheck, signUp, myCheck, showUserInfo, editUserInfo, editPasswordInfo, deleteUser };
+export { idDoubleCheck, emailDoubleCheck, emailNumCheck, signUp, myCheck, showUserInfo, editUserInfo, editPasswordInfo, deleteUser, logIn, autoLogin };
 
 //----------------------------------------------------------------
 // import axios from "axios";

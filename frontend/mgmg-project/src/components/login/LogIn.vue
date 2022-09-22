@@ -45,6 +45,8 @@
 import axios from "axios";
 import api_url from "@/api/index.js";
 import Swal from "sweetalert2";
+import { autoLogin } from "@/api/userApi.js";
+import { logIn } from "@/api/userApi.js";
 // import axios from "axios";
 // import api from "@/api/index.js";
 // import
@@ -69,93 +71,122 @@ export default {
     test() {
       console.log(this.loginNext);
     },
+    // async autoLogin() {
+    //   const request =
+    // },
     loginAuto(data) {
       this.$store.commit("SET_USER_INFO_AUTO", data);
     },
     loginNotAuto(data) {
       this.$store.commit("SET_USER_INFO_NOT_AUTO", data);
     },
-    login() {
+
+    //로그인
+    async login() {
       const userId = document.getElementById("idLoginInput").value;
       const userPw = document.getElementById("pwLoginInput").value;
       var autoflag = this.loginNext;
 
-      let loginLst = {
+      var request = {
         userId: userId,
         password: userPw,
-        autoFlag: this.loginNext,
+        autoFlag: autoflag,
       };
-      console.log(loginLst);
-      console.log(api_url.accounts.login());
-      // 여기서 자동로그인 분기하기
-      // 자동로그인 하는 경우
-      if (this.loginNext) {
-        axios
-          .post(api_url.accounts.login(), {
-            userId: userId,
-            password: userPw,
-            autoFlag: this.loginNext,
-          })
-          .then((response) => {
-            if (response.data.statusCode == 200) {
-              console.log(response.data);
-              this.loginAuto(response.data);
-              this.$router.push("/main");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            Swal.fire({
-              text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-              icon: "warning",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-            });
-          });
-      } else {
-        // 자동로그인 하지 않는 경우
-        axios
-          .post(api_url.accounts.login(), {
-            userId: userId,
-            password: userPw,
-            autoFlag: autoflag,
-          })
-          .then((response) => {
-            if (response.data.statusCode == 200) {
-              console.log(response.data);
-              this.loginAuto(response.data);
-              this.$router.push("/main");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            Swal.fire({
-              text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-              icon: "warning",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-            });
-          });
-      }
 
-      // console.log(this.$store.dispatch("set_user", loginLst));
-      // axios
-      //   .post(api.accounts.login, {
-      //     userId: userId,
-      //     password: userPw,
-      //     autoflag: this.loginNext,
-      //   })
-      //   .then((response) => {
-      //     if (response.data.statusCode == 200) {
-      //       // this.$Store.state.userStore.isLogin = true;
-      //       console.log(userId);
-      //       // 사용자 정보 받아서 저장해두고, 메인페이지로 이동
-      //     } else {
-      //       console.log("error");
-      //     }
-      //   });
+      let response = await logIn(request);
+      console.log("응답 데이터", response);
+      if (response.statusCode == 200) {
+        //자동 로그인 선택한 경우
+        if (autoflag) {
+          this.loginAuto(response);
+        } else {
+          //자동 로그인 선택 안한 경우
+          this.loginNotAuto(response);
+        }
+        this.$router.push("/main");
+      }
     },
   },
+  // login() {
+  //   const userId = document.getElementById("idLoginInput").value;
+  //   const userPw = document.getElementById("pwLoginInput").value;
+  //   var autoflag = this.loginNext;
+
+  //   let loginLst = {
+  //     userId: userId,
+  //     password: userPw,
+  //     autoFlag: this.loginNext,
+  //   };
+  //   console.log(loginLst);
+  //   console.log(api_url.accounts.login());
+  //   // 여기서 자동로그인 분기하기
+  //   // 자동로그인 하는 경우
+  //   if (this.loginNext) {
+  //     axios
+  //       .post(api_url.accounts.login(), {
+  //         userId: userId,
+  //         password: userPw,
+  //         autoFlag: this.loginNext,
+  //       })
+  //       .then((response) => {
+  //         if (response.data.statusCode == 200) {
+  //           console.log(response.data);
+  //           this.loginAuto(response.data);
+  //           this.$router.push("/main");
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         Swal.fire({
+  //           text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+  //           icon: "warning",
+  //           confirmButtonColor: "#666666",
+  //           confirmButtonText: "확인",
+  //         });
+  //       });
+  //   } else {
+  //     // 자동로그인 하지 않는 경우
+  //     axios
+  //       .post(api_url.accounts.login(), {
+  //         userId: userId,
+  //         password: userPw,
+  //         autoFlag: autoflag,
+  //       })
+  //       .then((response) => {
+  //         if (response.data.statusCode == 200) {
+  //           console.log(response.data);
+  //           this.loginAuto(response.data);
+  //           this.$router.push("/main");
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         Swal.fire({
+  //           text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+  //           icon: "warning",
+  //           confirmButtonColor: "#666666",
+  //           confirmButtonText: "확인",
+  //         });
+  //       });
+  //   }
+
+  //   // console.log(this.$store.dispatch("set_user", loginLst));
+  //   // axios
+  //   //   .post(api.accounts.login, {
+  //   //     userId: userId,
+  //   //     password: userPw,
+  //   //     autoflag: this.loginNext,
+  //   //   })
+  //   //   .then((response) => {
+  //   //     if (response.data.statusCode == 200) {
+  //   //       // this.$Store.state.userStore.isLogin = true;
+  //   //       console.log(userId);
+  //   //       // 사용자 정보 받아서 저장해두고, 메인페이지로 이동
+  //   //     } else {
+  //   //       console.log("error");
+  //   //     }
+  //   //   });
+  // },
 };
 // 회원정보 스토어에 저장
 </script>
