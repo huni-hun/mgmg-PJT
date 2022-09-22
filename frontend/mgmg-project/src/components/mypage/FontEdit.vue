@@ -4,8 +4,8 @@
     <v-row><label for="">선택하신 글꼴은 모든 일기에 적용됩니다.</label></v-row>
     <v-row><hr class="hrStyle" /></v-row>
     <v-row>
-      <div class="col-4" v-for="font in fontLst" :key="font" name="fontSelect" @click="changeFont(font)">
-        <div class="fontLstBox" :class="{ selected: font == selectedFont }">{{ font }}</div>
+      <div class="col-4" v-for="font in fontLst" :key="font.Num" name="fontSelect" @click="changeFont(font)">
+        <div class="fontLstBox" :class="{ selected: font.name == selectedFont }">{{ font.name }}</div>
       </div>
     </v-row>
     <v-row>
@@ -15,17 +15,68 @@
 </template>
 
 <script>
+import axios from "axios";
 import CustomButton from "../common/CustomButton.vue";
+import api_url from "@/api/index.js";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
-      fontLst: ["폰트1", "폰트2", "폰트3", "폰트4", "폰트5", "폰트6", "폰트7", "폰트8", "폰트9", "폰트10", "폰트11", "폰트12"],
+      fontLst: [
+        { fontNum: 1, name: "폰트1" },
+        { fontNum: 2, name: "폰트2" },
+        { fontNum: 3, name: "폰트3" },
+        { fontNum: 4, name: "폰트4" },
+        { fontNum: 5, name: "폰트5" },
+        { fontNum: 6, name: "폰트6" },
+        { fontNum: 7, name: "폰트7" },
+        { fontNum: 8, name: "폰트8" },
+        { fontNum: 9, name: "폰트9" },
+        { fontNum: 10, name: "폰트10" },
+        { fontNum: 11, name: "폰트11" },
+        { fontNum: 12, name: "폰트12" },
+      ],
       selectedFont: "",
+      selectedFontNum: 0,
     };
   },
   methods: {
+    // 폰트 선택할 때
     changeFont(new_font) {
-      this.selectedFont = new_font;
+      this.selectedFont = new_font.name;
+      this.selectedFontNum = new_font.fontNum;
+      console.log(this.selectedFont);
+    },
+    // 폰트 변경 버튼 선택시
+    userChangeFont() {
+      axios
+        .put(api_url.accounts.font_edit(), {
+          headers: {
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+          },
+          diaryFont: this.selectedFontNum,
+        })
+        .then((response) => {
+          console.log(response);
+          Swal.fire({
+            text: "폰트가 정상적으로 변경되었습니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "폰트 변경에 실패했습니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+        });
     },
   },
   components: { CustomButton },

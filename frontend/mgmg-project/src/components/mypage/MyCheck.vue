@@ -40,8 +40,11 @@
 </template>
 
 <script>
-import axios from "axios";
-import api_url from "@/api/index.js";
+// import axios from "axios";
+// import api_url from "@/api/index.js";
+// import store from "@/store/modules/userStore";
+import { myCheck } from "@/api/userApi.js";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -53,25 +56,28 @@ export default {
       // console.log(this.$store.state.userStore.userId);
       console.log(this.$store.state.userStore.accessToken);
     },
-    myCheck() {
-      console.log(this.$store.state.accessToken);
+    async myCheck() {
       var check_pw = document.getElementById("pwMyCheckInput").value;
-      axios
-        .post(api_url.accounts.my_check(), {
-          headers: {
-            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-          },
-          password: check_pw,
-        })
-        .then((response) => {
-          if (response.data.statusCode == 200) {
-            console.log("본인확인 완료");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
+
+      const request = {
+        password: check_pw,
+      };
+      let response = await myCheck(request);
+      console.log("응답 데이터", response);
+      if (response.statusCode == 200) {
+        this.$router.push("/my/myinfo");
+      } else {
+        Swal.fire({
+          // toast: true,
+          // title: "ID 누락",
+          text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+          icon: "warning",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+          // },
         });
+      }
     },
   },
 };
