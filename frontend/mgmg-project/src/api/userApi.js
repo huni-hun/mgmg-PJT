@@ -3,6 +3,7 @@ import store from "@/store/modules/userStore";
 
 const ACCOUNT = "/user";
 
+//마이페이지 본인인증
 async function myCheck(request) {
   let response = await API.post(`${ACCOUNT}` + "/pwcheck", request, {
     headers: {
@@ -12,6 +13,7 @@ async function myCheck(request) {
   });
   return response.data;
 }
+//마이페이지 내 정보 확인
 async function showUserInfo() {
   let response = await API.get(`${ACCOUNT}` + "/mypage", {
     headers: {
@@ -20,6 +22,7 @@ async function showUserInfo() {
   });
   return response.data;
 }
+//마이페이지 회원 정보 수정
 async function editUserInfo(request) {
   let response = await API.put(`${ACCOUNT}` + "/mypage", request, {
     headers: {
@@ -28,6 +31,7 @@ async function editUserInfo(request) {
   });
   return response.data;
 }
+//마이페이지 비밀번호 수정
 async function editPasswordInfo(request) {
   let response = await API.put(`${ACCOUNT}` + "/mypage/password", request, {
     headers: {
@@ -36,8 +40,17 @@ async function editPasswordInfo(request) {
   });
   return response.data;
 }
+//마이페이지 회원 탈퇴
+async function deleteUser(request) {
+  let response = await API.delete(`${ACCOUNT}` + "/mypage", request, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
 
-export { myCheck, showUserInfo, editUserInfo, editPasswordInfo };
+export { myCheck, showUserInfo, editUserInfo, editPasswordInfo, deleteUser };
 
 //----------------------------------------------------------------
 // import axios from "axios";

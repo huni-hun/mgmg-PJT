@@ -11,12 +11,15 @@
       @userbirthSignup="setUserBirth"
       @usergenderSignup="setUserGender"
       @ruleCheckSignup="setRuleCheck"
+      @finalValidSignup="finalValidCheck"
     />
     <MusicSurvey v-if="signupOrder == 2" @selectMusics="setMusic" />
     <GiftSurvey v-if="signupOrder == 3" @selectGifts="setGift" @upperPriceSignup="setUpperPrice" @underPriceSignup="setUnderPrice" />
-    <customButton btnText="이전" id="signupBeforeButton" v-if="signupOrder > 1" @click="signupBefore"></customButton>
-    <customButton btnText="다음" id="signupNextButton" v-if="signupOrder < 3" @click="signupNext"></customButton>
-    <customButton btnText="완료" id="signupFinish" v-if="signupOrder == 3"></customButton>
+    <customButton btnText="다음" id="page1Next" v-if="signupOrder == 1" @click="signupNext"></customButton>
+    <customButton btnText="이전" id="page2Before" v-if="signupOrder == 2" @click="signupBefore"></customButton>
+    <customButton btnText="다음" id="page2Next" v-if="signupOrder == 2" @click="signupNext"></customButton>
+    <customButton btnText="이전" id="page3Before" v-if="signupOrder == 3" @click="signupBefore"></customButton>
+    <customButton btnText="완료" id="page3FNext" v-if="signupOrder == 3"></customButton>
   </div>
 </template>
 
@@ -24,6 +27,7 @@
 import SignUp from "@/components/signup/SignupComponent.vue";
 import GiftSurvey from "@/components/signup/GiftSurvey.vue";
 import MusicSurvey from "@/components/signup/MusicSurvey.vue";
+import Swal from "sweetalert2";
 export default {
   components: { SignUp, GiftSurvey, MusicSurvey },
   data() {
@@ -40,14 +44,31 @@ export default {
       userRuleCheck: "",
       userUnderPrice: 0,
       userUpperPrice: 0,
+      finalValid: false,
+      parentValid: false,
     };
   },
   methods: {
+    finalValidCheck() {
+      this.parentValid = this.finalValid;
+      console.log(this.parentValid);
+    },
     signupBefore() {
       this.signupOrder--;
     },
     signupNext() {
-      this.signupOrder++;
+      console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender, this.userRuleCheck, this.userUnderPrice, this.userUpperPrice);
+      if (this.userId && this.userPassword && this.userEmail && this.userName && this.userBirth && this.userGender && this.userRuleCheck) {
+        this.signupOrder++;
+      } else {
+        Swal.fire({
+          text: "입력한 정보를 다시 확인하세요.",
+          icon: "warning",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+        });
+      }
     },
     setGift(value) {
       this.selectGift = value;

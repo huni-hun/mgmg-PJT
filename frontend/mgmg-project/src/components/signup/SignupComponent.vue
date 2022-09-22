@@ -197,6 +197,10 @@ export default {
     };
   },
   methods: {
+    finalValidSignup() {
+      var finalValidation = this.idValidation & this.pwValidation & this.emailValidation & this.nameValidation & this.GenderValidation & this.idDuplicated & this.emailDuplicated & this.ruleCheck;
+      this.$emit("finalValidSignup", finalValidation);
+    },
     //테스트용 메소드
     test() {
       console.log("결과");
@@ -209,6 +213,7 @@ export default {
         console.log(user_id);
         this.$emit("useridSignup", user_id);
         this.idValidation = true;
+        this.finalValidSignup();
         return true;
       } else {
         this.idValidation = false;
@@ -220,6 +225,7 @@ export default {
       if (regPw.test(user_pw)) {
         this.userPw = user_pw;
         this.$emit("userpasswordSignup", user_pw);
+        this.finalValidSignup();
         return true;
       } else {
         this.pwValidation = false;
@@ -229,6 +235,7 @@ export default {
     pwCheckValidationCheck(user_pwcheck) {
       if (this.userPw == user_pwcheck) {
         this.pwValidation = true;
+        this.finalValidSignup();
         return true;
       } else {
         this.pwCheckValidation = false;
@@ -251,6 +258,7 @@ export default {
       if (regName.test(user_name)) {
         this.userName = user_name;
         this.nameValidation = true;
+        this.finalValidSignup();
         this.$emit("usernameSignup", user_name);
         return true;
       } else {
@@ -278,6 +286,7 @@ export default {
               // },
             });
             this.idDuplicated = true;
+            this.finalValidSignup();
           } else {
             Swal.fire({
               text: "사용 불가능한 아이디입니다.",
@@ -357,6 +366,7 @@ export default {
         .then((response) => {
           if (response.data.statusCode == "200") {
             this.emailDuplicated = true;
+            this.finalValidSignup();
             Swal.fire({
               text: "인증번호가 확인되었습니다.",
               icon: "success",
@@ -394,10 +404,12 @@ export default {
       }
       this.$emit("usergenderSignup", this.userGender);
       this.GenderValidation = true;
+      this.finalValidSignup();
     },
     // 약관 동의 체크 확인
     ruleApproveCheck() {
       this.$emit("ruleCheckSignup", this.ruleCheck);
+      this.finalValidSignup();
     },
   },
 };
