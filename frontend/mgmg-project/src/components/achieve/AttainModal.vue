@@ -2,13 +2,13 @@
   <div>
     <v-img :src="require('@/assets/achieve/attaionmodal.png')">
       <v-card class="badge-card">
-        <img class="badge" :src="require(`@/assets/badge/${badge.badgeName}.png`)" alt="" />
+        <img class="badge" :src="require(`@/assets/badge/a${badge.badgeNo}.png`)" alt="" />
         <v-card-text class="badge-text">
-          <p class="text-h5 text--primary">몽글이 뱃지 이름</p>
-          <p class="text-h6 text--primary">몽글이 뱃지 내용입니다.</p>
+          <p class="text-h5 text--primary">{{ badge.badgeName }}</p>
+          <p class="text-h6 text--primary">{{ badgeDetail.badgeContent }}</p>
           <div class="card-date">
             획득날짜<br />
-            2022.xx.xx"
+            {{ badgeDetail.achievedBadgeDate }}
           </div>
         </v-card-text>
         <v-btn class="badge-btn" @click="setDialog"> 확인 </v-btn>
@@ -18,15 +18,19 @@
 </template>
 
 <script>
+import etcStore from "@/store/modules/etcStore";
 export default {
   name: "AchieveBadge",
   props: { badge: Object },
 
-  data: () => ({ dialog: false }),
+  data: () => ({ dialog: false, badgeDetail: Object }),
   methods: {
     setDialog() {
       this.$emit("set-dialog");
     },
+  },
+  async created() {
+    this.badgeDetail = await etcStore.achieve_detail(this.badge.badgeNo);
   },
 };
 </script>

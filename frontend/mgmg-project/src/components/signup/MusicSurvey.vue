@@ -31,6 +31,9 @@
 <script>
 export default {
   props: ["selectMusic"],
+  mounted() {
+    this.musicSurveyMounted();
+  },
   data() {
     return {
       musicLst: ["재즈", "발라드", "클래식", "힙합", "CCM", "댄스", "팝", "컨트리음악"],
@@ -40,6 +43,9 @@ export default {
   },
   methods: {
     // 음악 선택. 선택리스트에 없으면 추가, 있으면 제거
+    musicSurveyMounted() {
+      this.$emit("selectMusics", this.selectedMusic);
+    },
     addMusic(music) {
       if (this.selectedMusic.includes(music)) {
         if (this.selectedMusic.length == 1) {

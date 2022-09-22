@@ -17,7 +17,10 @@
 </template>
 
 <script>
+import axios from "axios";
 import CustomButton from "../common/CustomButton.vue";
+import api_url from "@/api/index.js";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -38,6 +41,37 @@ export default {
       } else {
         this.selectedMusic.push(music);
       }
+    },
+    // 음악 리스트 변경
+    mypageMusicEdit() {
+      axios
+        .put(api_url.accounts.interest_music_edit(), {
+          headers: {
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+          },
+          musicTaste: this.selectedMusic,
+        })
+        .then((response) => {
+          console.log(response);
+          Swal.fire({
+            text: "음악 장르가 정상적으로 변경되었습니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "음악 장르 변경에 실패했습니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+        });
     },
   },
   components: { CustomButton },

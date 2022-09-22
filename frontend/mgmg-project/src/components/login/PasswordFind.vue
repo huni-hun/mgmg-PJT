@@ -28,6 +28,7 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert2";
+import api_url from "@/api/index.js";
 export default {
   data() {
     return {
@@ -52,9 +53,11 @@ export default {
       const userEmail = document.getElementById("emailPasswordFindInput").value;
 
       axios
-        .get(this.$store.state.baseurl + "api/user/findid", {
-          userId: userId,
-          email: userEmail,
+        .get(api_url.accounts.find_pw(), {
+          params: {
+            userId: userId,
+            email: userEmail,
+          },
         })
         .then((response) => {
           if (response.data.statusCode == 200) {
@@ -70,6 +73,19 @@ export default {
               // },
             });
           }
+        })
+        .catch((err) => {
+          console.log(err);
+          swal.fire({
+            // toast: true,
+            // title: "ID 누락",
+            text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+            // },
+          });
         });
     },
   },

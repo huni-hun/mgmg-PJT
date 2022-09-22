@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 @ApiModel("UserUpdatePwPutRequest")
 public class UserUpdatePwPutRequest {
-    @ApiModelProperty(name = "유저 기존 Password", example = "your_password")
-    String password;
 
     @ApiModelProperty(name = "유저 변경 Password", example = "new_password")
     String newPassword;
