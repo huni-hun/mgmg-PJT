@@ -5,10 +5,10 @@
       <v-col class="col-3">
         <v-container>
           <label for="">마이페이지</label>
-          <hr class="hrStyle" />
+          <!-- <hr class="hrStyle" />
           <router-link to="/my/mycheck">
             <div><label for="">본인 인증</label></div>
-          </router-link>
+          </router-link> -->
           <hr class="hrStyle" />
           <router-link to="/my/myinfo">
             <div><label for="">내 정보 확인</label></div>
