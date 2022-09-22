@@ -103,8 +103,28 @@ async function autoLogin(request) {
   let response = await API.post(`${ACCOUNT}` + "/autologin", request);
   return response.data;
 }
+//아이디 찾기
+async function findId(params) {
+  let response = await API.get(`${ACCOUNT}` + "/findid", {
+    params: {
+      userName: params.userName,
+      email: params.userEmail,
+    },
+  });
+  return response.data;
+}
+//비밀번호 찾기
+async function findpw(params) {
+  let response = await API.get(`${ACCOUNT}` + "/findpw", {
+    params: {
+      userId: params.userId,
+      email: params.userEmail,
+    },
+  });
+  return response.data;
+}
 
-export { idDoubleCheck, emailDoubleCheck, emailNumCheck, signUp, myCheck, showUserInfo, editUserInfo, editPasswordInfo, deleteUser, logIn, autoLogin };
+export { idDoubleCheck, emailDoubleCheck, emailNumCheck, signUp, myCheck, showUserInfo, editUserInfo, editPasswordInfo, deleteUser, logIn, autoLogin, findId, findpw };
 
 //----------------------------------------------------------------
 // import axios from "axios";
