@@ -12,8 +12,16 @@ async function myCheck(request) {
   });
   return response.data;
 }
+async function showUserInfo() {
+  let response = await API.get(`${ACCOUNT}` + "/mypage", {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
 
-export { myCheck };
+export { myCheck, showUserInfo };
 
 //----------------------------------------------------------------
 // import axios from "axios";

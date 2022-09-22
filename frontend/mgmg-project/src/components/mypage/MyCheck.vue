@@ -61,32 +61,9 @@ export default {
       const request = {
         password: check_pw,
       };
-      // let form = new FormData();
-      // form.append()
       let response = await myCheck(request);
       console.log("응답 데이터", response);
     },
-    // myCheck() {
-    //   console.log(this.$store.state.userStore.accessToken);
-    //   var check_pw = document.getElementById("pwMyCheckInput").value;
-    //   axios
-    //     .post(api_url.accounts.my_check(), {
-    //       headers: {
-    //         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-    //         // Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-    //         Authorization: "Bearer " + store.state.accessToken,
-    //       },
-    //       password: check_pw,
-    //     })
-    //     .then((response) => {
-    //       if (response.data.statusCode == 200) {
-    //         console.log("본인확인 완료");
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   },
 };
 </script>
