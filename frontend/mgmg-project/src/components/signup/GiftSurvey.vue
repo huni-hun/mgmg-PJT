@@ -41,9 +41,11 @@
 
 <script>
 export default {
-  props: ["selectGift"],
+  props: ["selectGift", "userUpperPrice", "userUnderPrice"],
   mounted() {
     this.giftSurveyMounted();
+    this.changeUnderMounted();
+    this.changeUpperMounted();
   },
 
   data() {
@@ -55,16 +57,16 @@ export default {
       selectedGift: ["패션의류"],
       // this.$store.state.userStore.interestGiftLstSignup,
 
-      priceUnder: {
-        labelText: "하한가",
-        rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
-        id: "priceUnder",
-      },
-      priceUpper: {
-        labelText: "상한가",
-        rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
-        id: "priceUpper",
-      },
+      // priceUnder: {
+      //   labelText: "하한가",
+      //   rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
+      //   id: "priceUnder",
+      // },
+      // priceUpper: {
+      //   labelText: "상한가",
+      //   rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
+      //   id: "priceUpper",
+      // },
     };
   },
   methods: {
@@ -74,6 +76,12 @@ export default {
       // console.log(document.getElementById("priceUpper").value);
     },
     // 가격대 입력받기
+    changeUnderMounted() {
+      this.$emit("underPriceSignup", this.underPrice);
+    },
+    changeUpperMounted() {
+      this.$emit("upperPriceSignup", this.upperPrice);
+    },
     changeUnder() {
       this.underPrice = document.getElementById("underPrice").value;
       this.upperPrice = document.getElementById("upperPrice").value;
@@ -81,8 +89,9 @@ export default {
         this.underPrice = this.upperPrice;
       }
       if (this.underPrice > 1000000) {
-        this.underPrice = 1000000;
-      } else if (this.underPrice < 10000) [(this.underPrice = this.upperPrice)];
+        this.underPrice = this.upperPrice;
+      } else if (this.underPrice < 10000) [(this.underPrice = 10000)];
+      this.$emit("underPriceSignup", this.underPrice);
     },
     changeUpper() {
       this.underPrice = document.getElementById("underPrice").value;
@@ -93,6 +102,7 @@ export default {
       if (this.upperPrice > 1000000) {
         this.upperPrice = 1000000;
       } else if (this.upperPrice < 10000) [(this.upperPrice = this.underPrice)];
+      this.$emit("upperPriceSignup", this.upperPrice);
     },
     // 선물 선택. 선택리스트에 없으면 추가, 있으면 제거
     giftSurveyMounted() {

@@ -13,7 +13,7 @@
       @ruleCheckSignup="setRuleCheck"
     />
     <MusicSurvey v-if="signupOrder == 2" @selectMusics="setMusic" />
-    <GiftSurvey v-if="signupOrder == 3" @selectGifts="setGift" />
+    <GiftSurvey v-if="signupOrder == 3" @selectGifts="setGift" @upperPriceSignup="setUpperPrice" @underPriceSignup="setUnderPrice" />
     <customButton btnText="이전" id="signupBeforeButton" v-if="signupOrder > 1" @click="signupBefore"></customButton>
     <customButton btnText="다음" id="signupNextButton" v-if="signupOrder < 3" @click="signupNext"></customButton>
     <customButton btnText="완료" id="signupFinish" v-if="signupOrder == 3"></customButton>
@@ -38,6 +38,8 @@ export default {
       userBirth: "",
       userGender: "",
       userRuleCheck: "",
+      userUnderPrice: 0,
+      userUpperPrice: 0,
     };
   },
   methods: {
@@ -83,8 +85,16 @@ export default {
       this.userRuleCheck = value;
       console.log(this.userRuleCheck);
     },
+    setUpperPrice(value) {
+      this.userUpperPrice = value;
+      console.log(this.userUpperPrice);
+    },
+    setUnderPrice(value) {
+      this.userUnderPrice = value;
+      console.log(this.userUnderPrice);
+    },
     check() {
-      console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender, this.userRuleCheck);
+      console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender, this.userRuleCheck, this.userUnderPrice, this.userUpperPrice);
       console.log(this.selectGift, this.selectMusic);
     },
   },
