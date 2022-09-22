@@ -86,6 +86,7 @@ export default {
         autoFlag: this.loginNext,
       };
       console.log(loginLst);
+      console.log(api_url.accounts.login());
       // 여기서 자동로그인 분기하기
       // 자동로그인 하는 경우
       if (this.loginNext) {
