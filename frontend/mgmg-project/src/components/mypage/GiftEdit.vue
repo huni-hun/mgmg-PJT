@@ -28,12 +28,15 @@
       <CustomInput v-model="priceUpper" />
     </v-row>
     <v-row>
-      <CustomButton btnText="확인" />
+      <CustomButton btnText="확인" @click="mypageGiftEdit" />
     </v-row>
   </v-container>
 </template>
 
 <script>
+import axios from "axios";
+import api_url from "@/api/index.js";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -43,11 +46,13 @@ export default {
 
       priceUnder: {
         labelText: "하한가",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "숫자를 입력하세요."],
+        rules: [(v) => /^[0-9]*/.test(v) || "숫자를 입력하세요."],
+        id: "priceUnder",
       },
       priceUpper: {
         labelText: "상한가",
-        rules: [(v) => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || "숫자를 입력하세요."],
+        rules: [(v) => /^[0-9]*/.test(v) || "숫자를 입력하세요."],
+        id: "priceUpper",
       },
     };
   },
@@ -64,6 +69,39 @@ export default {
       } else {
         this.selectedGift.push(gift);
       }
+    },
+    // 선물 리스트 변경
+    mypageGiftEdit() {
+      axios
+        .put(api_url.accounts.interest_gift_edit(), {
+          headers: {
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+          },
+          lowPrice: document.getElementById("priceUnder").value,
+          highPrice: document.getElementById("priceUpper").value,
+          giftTaste: this.selectedGift,
+        })
+        .then((response) => {
+          console.log(response);
+          Swal.fire({
+            text: "관심 선물이 정상적으로 변경되었습니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "관심 선물 변경에 실패했습니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+        });
     },
   },
 };

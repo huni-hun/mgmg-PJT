@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const HOST = process.env.VUE_APP_API_URL + "/api";
+const HOST = process.env.VUE_APP_API_URL + "api";
 
 const ACCOUNT = "/user";
 const INTEREST = "/interest";

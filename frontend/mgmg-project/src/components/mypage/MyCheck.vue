@@ -42,6 +42,7 @@
 <script>
 import axios from "axios";
 import api_url from "@/api/index.js";
+import store from "@/store/modules/userStore";
 export default {
   data() {
     return {
@@ -60,7 +61,8 @@ export default {
         .post(api_url.accounts.my_check(), {
           headers: {
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+            // Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+            Authorization: "Bearer " + store.state.accessToken,
           },
           password: check_pw,
         })
