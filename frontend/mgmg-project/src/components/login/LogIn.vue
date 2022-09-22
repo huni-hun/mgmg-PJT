@@ -42,9 +42,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import api_url from "@/api/index.js";
-import Swal from "sweetalert2";
 import { autoLogin } from "@/api/userApi.js";
 import { logIn } from "@/api/userApi.js";
 // import axios from "axios";
