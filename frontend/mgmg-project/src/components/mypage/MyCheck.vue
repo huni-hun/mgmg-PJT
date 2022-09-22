@@ -54,7 +54,7 @@ export default {
       console.log(this.$store.state.userStore.accessToken);
     },
     myCheck() {
-      console.log(this.$store.state.accessToken);
+      console.log(this.$store.state.userStore.accessToken);
       var check_pw = document.getElementById("pwMyCheckInput").value;
       axios
         .post(api_url.accounts.my_check(), {
