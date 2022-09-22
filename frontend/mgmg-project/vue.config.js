@@ -3,6 +3,12 @@ module.exports = defineConfig({
   transpileDependencies: ["vuetify"],
   devServer: {
     allowedHosts: "all",
+    client: {
+      webSocketURL: "wss://j7b306.p.ssafy.io:443/ws",
+    },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
   pwa: {
     manifestOptions: {
