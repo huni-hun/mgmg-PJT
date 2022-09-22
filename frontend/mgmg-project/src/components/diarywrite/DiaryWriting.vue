@@ -103,7 +103,7 @@
 
 <script>
 import eventBus from "./eventBus.js";
-import { diaryWrite } from "@/api/diary.js";
+import { mapActions } from "vuex";
 
 export default {
   data: () => ({
@@ -117,22 +117,23 @@ export default {
       "lightning",
       "mild",
     ],
-    uploadReady: false,
+    uploadReady: true,
 
-    date: "2022-09-17",
+    date: "2022-08-05",
     weather: "sunny",
     uploadImageFile: "",
     diary: "",
     backImg: "blackLine",
   }),
   methods: {
+    ...mapActions("diaryStore", ["fetchDiary"]),
     async writingCompletion() {
       const userData = {
         diaryContent: this.diary,
         diaryDate: this.date,
         weather: this.weather,
         diaryThema: this.backImg,
-        emotion: "슬픔",
+        emotion: "기쁨",
         musicNo: 0,
         giftNo: 0,
       };
@@ -142,23 +143,19 @@ export default {
       form.append(
         "diaryRequest",
         new Blob([JSON.stringify(userData)], { type: "application/json" })
-      ); //{ type: "application/json" }
+      );
 
-      let response = await diaryWrite(form);
-
-      console.log("응답 데이터", response);
-      this.$router.push({ path: "diarydetail" });
+      this.fetchDiary(form);
+      this.$router.push({ name: "diarydetail" });
     },
     selectFile() {
       this.uploadReady = true;
       let fileInputElement = this.$refs.file;
       fileInputElement.click();
-      console.log("이미지불러오기", this.uploadImageFile);
     },
     readFile(e) {
       const file = e.target.files[0];
       this.uploadImageFile = URL.createObjectURL(file);
-      console.log("이미지 선택하기", this.uploadImageFile);
     },
     cancelImage() {
       this.uploadImageFile = null;
@@ -166,12 +163,10 @@ export default {
       this.$nextTick(() => {
         this.uploadReady = true;
       });
-      console.log("취소", this.uploadImageFile);
     },
   },
   created() {
     eventBus.$on("backImgChoice", (props) => {
-      // console.log("전달 받은 배경 이름", data);
       this.backImg = props;
     });
   },
@@ -188,11 +183,9 @@ export default {
   justify-content: center;
 }
 .diaryTop {
-  /* background: url("@/assets/diary/writingtop/blackLine.png") no-repeat center; */
-  background-size: cover;
-  object-fit: none;
+  background-size: 100% 100%;
+  height: 100%;
   flex-basis: 10vh;
-  /* min-height: 10vh; */
 }
 .flexTop {
   width: 81%;
@@ -215,7 +208,6 @@ export default {
 }
 
 .diarymiddle {
-  background: url("@/assets/diary/middle/blackLine.png") repeat-y center;
   background-size: 100% 100%;
   height: 100%;
   flex-basis: 45vh;
@@ -252,9 +244,8 @@ export default {
   border: none;
 }
 .diarybottom {
-  background: url("@/assets/diary/bottom/blackLine.png") no-repeat center;
-  background-size: cover;
-  object-fit: none;
+  background-size: 100% 100%;
+  height: 100%;
   flex-basis: 10vh;
   display: flex;
   justify-content: center;
