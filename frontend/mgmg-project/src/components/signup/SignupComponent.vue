@@ -93,8 +93,8 @@
       </v-row>
       <v-row>
         <label class="col-4" for="" id="genderSignupLabel">성별</label>
-        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남성" />
-        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여성" />
+        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
+        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
         <div class="col-4"></div>
       </v-row>
       <v-row>
@@ -388,9 +388,9 @@ export default {
     changeGender(gender) {
       this.userGenderNum = gender;
       if (this.userGenderNum == 1) {
-        this.userGender = "남성";
+        this.userGender = "남자";
       } else if (this.userGenderNum == 2) {
-        this.userGender = "여성";
+        this.userGender = "여자";
       }
       this.$emit("usergenderSignup", this.userGender);
       this.GenderValidation = true;

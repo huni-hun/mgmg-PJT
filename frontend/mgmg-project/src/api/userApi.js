@@ -20,8 +20,16 @@ async function showUserInfo() {
   });
   return response.data;
 }
+async function editUserInfo(request) {
+  let response = await API.put(`${ACCOUNT}` + "/mypage", request, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
 
-export { myCheck, showUserInfo };
+export { myCheck, showUserInfo, editUserInfo };
 
 //----------------------------------------------------------------
 // import axios from "axios";
