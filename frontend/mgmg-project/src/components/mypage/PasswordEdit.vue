@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import Swal from "sweetalert2";
-import api_url from "@/api/index.js";
+import { editPasswordInfo } from "@/api/userApi.js";
+
 export default {
   data() {
     return {
@@ -93,37 +93,59 @@ export default {
     };
   },
   methods: {
-    userPasswordEdit() {
-      console.log(this.pwValidation, this.pwCheckValidation, this.userPw);
+    async userPasswordEdit() {
       if (this.pwValidation && this.pwCheckValidation) {
-        axios
-          .put(api_url.accounts.password_edit(), {
-            headers: {
-              //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-              Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-            }, //@@@@@@@@@@@@@@@@@@ 기존 pw는 왜 받지?
-            newPassword: this.userPw,
-          })
-          .then((response) => {
-            console.log(response);
-            Swal.fire({
-              text: "비밀번호가 정상적으로 변경되었습니다.",
-              icon: "success",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-            });
+        var new_password = this.userPw;
+
+        const request = {
+          newPassword: new_password,
+        };
+
+        let response = await editPasswordInfo(request);
+        console.log("응답 데이터", response);
+        if (response.statusCode == 200) {
+          Swal.fire({
+            text: "비밀번호가 정상적으로 변경되었습니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
           });
-      } else {
-        Swal.fire({
-          text: "입력한 정보를 다시 확인해주세요.",
-          icon: "warning",
-          // iconColor: "#000000",
-          confirmButtonColor: "#666666",
-          confirmButtonText: "확인",
-        });
+          this.$router.push("/my/myinfo");
+        }
       }
     },
+    // userPasswordEdit() {
+    //   console.log(this.pwValidation, this.pwCheckValidation, this.userPw);
+    //   if (this.pwValidation && this.pwCheckValidation) {
+    //     axios
+    //       .put(api_url.accounts.password_edit(), {
+    //         headers: {
+    //           //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+    //           Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+    //         }, //@@@@@@@@@@@@@@@@@@ 기존 pw는 왜 받지?
+    //         newPassword: this.userPw,
+    //       })
+    //       .then((response) => {
+    //         console.log(response);
+    //         Swal.fire({
+    //           text: "비밀번호가 정상적으로 변경되었습니다.",
+    //           icon: "success",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //         });
+    //       });
+    //   } else {
+    //     Swal.fire({
+    //       text: "입력한 정보를 다시 확인해주세요.",
+    //       icon: "warning",
+    //       // iconColor: "#000000",
+    //       confirmButtonColor: "#666666",
+    //       confirmButtonText: "확인",
+    //     });
+    //   }
+    // },
   },
 };
 </script>
