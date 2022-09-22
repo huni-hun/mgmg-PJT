@@ -44,6 +44,7 @@
 // import api_url from "@/api/index.js";
 // import store from "@/store/modules/userStore";
 import { myCheck } from "@/api/userApi.js";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -63,6 +64,20 @@ export default {
       };
       let response = await myCheck(request);
       console.log("응답 데이터", response);
+      if (response.statusCode == 200) {
+        this.$router.push("/my/myinfo");
+      } else {
+        Swal.fire({
+          // toast: true,
+          // title: "ID 누락",
+          text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+          icon: "warning",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+          // },
+        });
+      }
     },
   },
 };

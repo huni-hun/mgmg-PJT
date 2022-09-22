@@ -47,6 +47,7 @@
 // import api_url from "@/api/index.js";
 import { showUserInfo } from "@/api/userApi.js";
 import { editUserInfo } from "@/api/userApi.js";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -189,6 +190,16 @@ export default {
 
         let response = await editUserInfo(request);
         console.log("응답 데이터", response);
+        if (response.statusCode == 200) {
+          Swal.fire({
+            text: "회원 정보가 정상적으로 변경되었습니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+          this.$router.push("/my/myinfo");
+        }
       }
     },
     // // 버튼 누르면, 이름 이메일 값 확인해서 axios 실행

@@ -37,7 +37,7 @@
       >
     </v-row>
     <v-row>
-      <CustomButton btnText="수정하기" />
+      <CustomButton btnText="수정하기" @click="gotoInfoEdit" />
     </v-row>
   </v-container>
 </template>
@@ -82,6 +82,11 @@ export default {
   //       this.userName = response.data.name;
   //     });
   // },
+  methods: {
+    gotoInfoEdit() {
+      this.$router.push("/my/infoedit");
+    },
+  },
 };
 </script>
 
