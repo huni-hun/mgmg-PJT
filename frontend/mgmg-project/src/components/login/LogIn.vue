@@ -67,18 +67,50 @@ export default {
       pwRequired: (v) => !!v || "비밀번호는 필수값입니다.",
     };
   },
+  mounted() {
+    this.autoLogin();
+  },
   methods: {
     test() {
       console.log(this.loginNext);
     },
-    // async autoLogin() {
-    //   const request =
-    // },
-    loginAuto(data) {
-      this.$store.commit("SET_USER_INFO_AUTO", data);
+    // 쿠키 사용 참고링크 https://kyounghwan01.github.io/Vue/vue/vue-cookies/
+    async autoLogin() {
+      // const request =
+      //쿠키 있는지 확인
+      if (this.$cookies.isKey("autoLoginCookie")) {
+        //자동로그인 액시오스 실행
+        var refreshToken = this.$cookies.get("autoLoginCookie");
+        var userId = this.$cookies.get("userIdCookie");
+
+        const request = {
+          refreshToken: refreshToken,
+          userId: userId,
+        };
+        console.log("자동로그인 실행");
+        console.log(request);
+
+        let response = await autoLogin(request);
+        console.log(response);
+        console.log("응답 데이터", response);
+        if (response.statusCode == 200) {
+          this.loginAuto(response, request);
+          this.$router.push("/main");
+        }
+      }
+      //그 외는 아무것도 안함.
     },
-    loginNotAuto(data) {
-      this.$store.commit("SET_USER_INFO_NOT_AUTO", data);
+    //자동로그인 선택 하고, 안하고 상태관리
+    loginAuto(response, request) {
+      this.$store.commit("SET_USER_INFO_AUTO", response);
+      this.$cookies.set("autoLoginCookie", response.refreshToken);
+      this.$cookies.set("userIdCookie", request.userId);
+    },
+    loginNotAuto(response) {
+      this.$store.commit("SET_USER_INFO_NOT_AUTO", response);
+      this.$cookies.remove("autoLoginCookie");
+      this.$cookies.remove("userIdCookie");
+      // this.$cookies.set("autoLoginCookie", "");
     },
 
     //로그인
@@ -98,7 +130,7 @@ export default {
       if (response.statusCode == 200) {
         //자동 로그인 선택한 경우
         if (autoflag) {
-          this.loginAuto(response);
+          this.loginAuto(response, request);
         } else {
           //자동 로그인 선택 안한 경우
           this.loginNotAuto(response);
