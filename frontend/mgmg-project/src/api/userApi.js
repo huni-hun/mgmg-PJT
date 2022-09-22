@@ -3,6 +3,50 @@ import store from "@/store/modules/userStore";
 
 const ACCOUNT = "/user";
 
+//아이디 중복 검사
+async function idDoubleCheck(params) {
+  let response = await API.get(`${ACCOUNT}` + "/idcheck", {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+    params: {
+      userId: params.userId,
+    },
+  });
+  return response.data;
+}
+//이메일 중복 검사
+async function emailDoubleCheck(request) {
+  let response = await API.post(`${ACCOUNT}` + "/email", request, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+//이메일 인증번호 검사
+async function emailNumCheck(params) {
+  let response = await API.get(`${ACCOUNT}` + "/emailcheck", {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+    params: {
+      email: params.user_email,
+      emailNum: params.user_emailNum,
+    },
+  });
+  return response.data;
+}
+//회원가입
+async function signUp(request) {
+  let response = await API.post(`${ACCOUNT}` + "/regist", request, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+
 //마이페이지 본인인증
 async function myCheck(request) {
   let response = await API.post(`${ACCOUNT}` + "/pwcheck", request, {
@@ -50,7 +94,7 @@ async function deleteUser(request) {
   return response.data;
 }
 
-export { myCheck, showUserInfo, editUserInfo, editPasswordInfo, deleteUser };
+export { idDoubleCheck, emailDoubleCheck, emailNumCheck, signUp, myCheck, showUserInfo, editUserInfo, editPasswordInfo, deleteUser };
 
 //----------------------------------------------------------------
 // import axios from "axios";

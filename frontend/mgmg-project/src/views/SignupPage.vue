@@ -19,7 +19,7 @@
     <customButton btnText="이전" id="page2Before" v-if="signupOrder == 2" @click="signupBefore"></customButton>
     <customButton btnText="다음" id="page2Next" v-if="signupOrder == 2" @click="signupNext"></customButton>
     <customButton btnText="이전" id="page3Before" v-if="signupOrder == 3" @click="signupBefore"></customButton>
-    <customButton btnText="완료" id="page3FNext" v-if="signupOrder == 3"></customButton>
+    <customButton btnText="완료" id="page3FNext" v-if="signupOrder == 3" @click="signUp"></customButton>
   </div>
 </template>
 
@@ -28,6 +28,8 @@ import SignUp from "@/components/signup/SignupComponent.vue";
 import GiftSurvey from "@/components/signup/GiftSurvey.vue";
 import MusicSurvey from "@/components/signup/MusicSurvey.vue";
 import Swal from "sweetalert2";
+import { signUp } from "@/api/userApi.js";
+
 export default {
   components: { SignUp, GiftSurvey, MusicSurvey },
   data() {
@@ -45,20 +47,20 @@ export default {
       userUnderPrice: 0,
       userUpperPrice: 0,
       finalValid: false,
-      parentValid: false,
     };
   },
   methods: {
-    finalValidCheck() {
-      this.parentValid = this.finalValid;
-      console.log(this.parentValid);
+    finalValidCheck(value) {
+      // this.parentValid = this.finalValid;
+      this.finalValid = value;
+      console.log("최종 유효성 평가", this.finalValid);
     },
     signupBefore() {
       this.signupOrder--;
     },
     signupNext() {
       console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender, this.userRuleCheck, this.userUnderPrice, this.userUpperPrice);
-      if (this.userId && this.userPassword && this.userEmail && this.userName && this.userBirth && this.userGender && this.userRuleCheck) {
+      if (this.finalValid) {
         this.signupOrder++;
       } else {
         Swal.fire({
@@ -117,6 +119,46 @@ export default {
     check() {
       console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender, this.userRuleCheck, this.userUnderPrice, this.userUpperPrice);
       console.log(this.selectGift, this.selectMusic);
+    },
+    async signUp() {
+      var email = this.userEmail;
+      var password = this.userPassword;
+      var userId = this.userId;
+      var birth = this.userBirth;
+      var name = this.userName;
+      var gender = this.userGender;
+      var giftTaste = this.selectGift;
+      var musicTaste = this.selectMusic;
+      var lowPrice = this.userUnderPrice;
+      var highPrice = this.userUpperPrice;
+
+      const request = {
+        email: email,
+        password: password,
+        userId: userId,
+        birth: birth,
+        name: name,
+        gender: gender,
+        giftTaste: giftTaste,
+        musicTaste: musicTaste,
+        lowPrice: lowPrice,
+        highPrice: highPrice,
+      };
+      console.log(request);
+
+      let response = await signUp(request);
+      console.log("응답 데이터", response);
+      if (response.statusCode == 200) {
+        Swal.fire({
+          text: "회원가입에 성공했습니다. 로그인 해주세요.",
+          icon: "success",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+        });
+        this.$router.push("/login");
+      }
+      // signUp;
     },
   },
 };

@@ -118,9 +118,10 @@
 </template>
 
 <script>
-import api_url from "@/api/index.js";
-import axios from "axios";
 import Swal from "sweetalert2";
+import { idDoubleCheck } from "@/api/userApi.js";
+import { emailDoubleCheck } from "@/api/userApi.js";
+import { emailNumCheck } from "@/api/userApi.js";
 
 export default {
   props: ["userid", "userpassword", "useremail", "username", "userbirth", "usergender", "userrulecheck"],
@@ -198,8 +199,19 @@ export default {
   },
   methods: {
     finalValidSignup() {
-      var finalValidation = this.idValidation & this.pwValidation & this.emailValidation & this.nameValidation & this.GenderValidation & this.idDuplicated & this.emailDuplicated & this.ruleCheck;
+      var finalValidation =
+        this.idValidation && this.pwValidation && this.emailValidation && this.nameValidation && this.GenderValidation && this.idDuplicated && this.emailDuplicated && this.ruleCheck;
       this.$emit("finalValidSignup", finalValidation);
+      
+      console.log("자식 최종 유효성 평가", finalValidation);
+      console.log("아이디유효성", this.idValidation);
+      console.log("비밀번호유효성", this.pwValidation);
+      console.log("이메일유효성", this.emailValidation);
+      console.log("이름유효성", this.nameValidation);
+      console.log("성별유효성", this.GenderValidation);
+      console.log("아이디중복", this.idDuplicated);
+      console.log("이메일중복", this.emailDuplicated);
+      console.log("약관동의", this.ruleCheck);
     },
     //테스트용 메소드
     test() {
@@ -217,6 +229,7 @@ export default {
         return true;
       } else {
         this.idValidation = false;
+        this.finalValidSignup();
       }
     },
     // 비밀번호 정규식 검사
@@ -229,6 +242,7 @@ export default {
         return true;
       } else {
         this.pwValidation = false;
+        this.finalValidSignup();
       }
     },
     // 비밀번호체크 - 비밀번호 일치여부 검사
@@ -239,6 +253,7 @@ export default {
         return true;
       } else {
         this.pwCheckValidation = false;
+        this.finalValidSignup();
       }
     },
     // 이메일 정규식 검사
@@ -250,6 +265,7 @@ export default {
         return true;
       } else {
         this.emailValidation = false;
+        this.finalValidSignup();
       }
     },
     // 이름 정규식 검사
@@ -263,44 +279,31 @@ export default {
         return true;
       } else {
         this.nameValidation = false;
+        this.finalValidSignup();
       }
     },
     // 아이디 api 중복검사
-    idDoubleCheck(user_id) {
-      console.log(api_url.accounts.id_check());
-      axios
-        .get(api_url.accounts.id_check(), {
-          params: {
-            userId: user_id,
-          },
-        })
-        .then((response) => {
-          if (response.data.statusCode == "200") {
-            console.log(response.data);
-            Swal.fire({
-              text: "사용 가능한 아이디입니다.",
-              icon: "success",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-              // },
-            });
-            this.idDuplicated = true;
-            this.finalValidSignup();
-          } else {
-            Swal.fire({
-              text: "사용 불가능한 아이디입니다.",
-              icon: "warning",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-              // },
-            });
-            this.idDuplicated = false;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
+    async idDoubleCheck() {
+      if (this.idValidation) {
+        var user_id = this.userId;
+
+        const params = {
+          userId: user_id,
+        };
+
+        let response = await idDoubleCheck(params);
+        console.log("응답 데이터", response);
+        if (response.statusCode == 200) {
+          Swal.fire({
+            text: "사용 가능한 아이디 입니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+          this.idDuplicated = true;
+          this.finalValidSignup();
+        } else {
           Swal.fire({
             text: "사용 불가능한 아이디입니다.",
             icon: "warning",
@@ -310,85 +313,182 @@ export default {
             // },
           });
           this.idDuplicated = false;
-        });
+          this.finalValidSignup();
+        }
+        console.log("아이디 중복검사결과", this.idDuplicated);
+      }
     },
+    // idDoubleCheck(user_id) {
+    //   console.log(api_url.accounts.id_check());
+    //   axios
+    //     .get(api_url.accounts.id_check(), {
+    //       params: {
+    //         userId: user_id,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       if (response.data.statusCode == "200") {
+    //         console.log(response.data);
+    //         Swal.fire({
+    //           text: "사용 가능한 아이디입니다.",
+    //           icon: "success",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //           // },
+    //         });
+    //         this.idDuplicated = true;
+    //         this.finalValidSignup();
+    //       } else {
+    //         Swal.fire({
+    //           text: "사용 불가능한 아이디입니다.",
+    //           icon: "warning",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //           // },
+    //         });
+    //         this.idDuplicated = false;
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       Swal.fire({
+    //         text: "사용 불가능한 아이디입니다.",
+    //         icon: "warning",
+    //         // iconColor: "#000000",
+    //         confirmButtonColor: "#666666",
+    //         confirmButtonText: "확인",
+    //         // },
+    //       });
+    //       this.idDuplicated = false;
+    //     });
+    // },
     // 이메일 api 전송
-    emailDubleCheck() {
+    async emailDubleCheck() {
+      console.log(this.emailValidation);
       console.log(this.userEmail);
-      axios
-        .post(api_url.accounts.email(), {
-          email: this.userEmail,
-        })
-        .then((response) => {
-          console.log(response);
-          if (response.data.statusCode == "200") {
-            Swal.fire({
-              text: "이메일로 인증 번호를 보냈습니다.",
-              icon: "success",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-              // },
-            });
-          } else {
-            Swal.fire({
-              text: "인증번호를 보내지 못했습니다.",
-              icon: "warning",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-              // },
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          Swal.fire({
-            text: "인증번호를 보내지 못했습니다.",
-            icon: "warning",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
-            // },
-          });
+      var user_email = this.userEmail;
+
+      const request = {
+        email: user_email,
+      };
+      let response = await emailDoubleCheck(request);
+      console.log("응답 데이터", response);
+
+      if (response.statusCode == 200) {
+        this.emailValidation = true;
+        this.finalValidSignup();
+        Swal.fire({
+          text: "이메일로 인증 번호를 보냈습니다.",
+          icon: "success",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+          // },
         });
+      }
     },
+    // emailDubleCheck() {
+    //   console.log(this.userEmail);
+    //   axios
+    //     .post(api_url.accounts.email(), {
+    //       email: this.userEmail,
+    //     })
+    //     .then((response) => {
+    //       console.log(response);
+    //       if (response.data.statusCode == "200") {
+    //         Swal.fire({
+    //           text: "이메일로 인증 번호를 보냈습니다.",
+    //           icon: "success",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //           // },
+    //         });
+    //       } else {
+    //         Swal.fire({
+    //           text: "인증번호를 보내지 못했습니다.",
+    //           icon: "warning",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //           // },
+    //         });
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       Swal.fire({
+    //         text: "인증번호를 보내지 못했습니다.",
+    //         icon: "warning",
+    //         // iconColor: "#000000",
+    //         confirmButtonColor: "#666666",
+    //         confirmButtonText: "확인",
+    //         // },
+    //       });
+    //     });
+    // },
 
     // 인증번호 일치여부 확인- api 가져오기 (확인 되면 emailValidation true로 변경) 일치하지 않으면 정규식 사용해서 인증번호가 일치하지 않습니다(가능하면)
-    emailNumCheck() {
-      axios
-        .get(api_url.accounts.email_check(), {
-          params: {
-            email: this.userEmail,
-            emailNum: document.getElementById("emailcheckSignupInput").value,
-          },
-        })
-        .then((response) => {
-          if (response.data.statusCode == "200") {
-            this.emailDuplicated = true;
-            this.finalValidSignup();
-            Swal.fire({
-              text: "인증번호가 확인되었습니다.",
-              icon: "success",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-              // },
-            });
-          } else {
-            this.emailDuplicated = false;
-            Swal.fire({
-              text: "인증번호가 다릅니다.",
-              icon: "warning",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-              // },
-            });
-          }
-          console.log(response.data);
+    async emailNumCheck() {
+      var user_email = this.userEmail;
+      var user_emailNum = document.getElementById("emailcheckSignupInput").value;
+
+      const params = {
+        user_email: user_email,
+        user_emailNum: user_emailNum,
+      };
+
+      let response = await emailNumCheck(params);
+      console.log("응답 데이터", response);
+      if (response.statusCode == 200) {
+        this.emailDuplicated = true;
+        this.finalValidSignup();
+        Swal.fire({
+          text: "인증번호가 확인되었습니다.",
+          icon: "success",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
         });
+      }
     },
+
+    // emailNumCheck() {
+    //   axios
+    //     .get(api_url.accounts.email_check(), {
+    //       params: {
+    //         email: this.userEmail,
+    //         emailNum: document.getElementById("emailcheckSignupInput").value,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       if (response.data.statusCode == "200") {
+    //         this.emailDuplicated = true;
+    //         this.finalValidSignup();
+    //         Swal.fire({
+    //           text: "인증번호가 확인되었습니다.",
+    //           icon: "success",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //           // },
+    //         });
+    //       } else {
+    //         this.emailDuplicated = false;
+    //         Swal.fire({
+    //           text: "인증번호가 다릅니다.",
+    //           icon: "warning",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //           // },
+    //         });
+    //       }
+    //       console.log(response.data);
+    //     });
+    // },
     //생일 날짜 emit
     birthCheck() {
       this.$emit("userbirthSignup", this.date);
