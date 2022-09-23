@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import userStore from "./modules/userStore.js";
+import { diaryStore } from "./modules/diaryStore.js";
 import { createApi } from "@/api";
 // import axios from "axios";
 
@@ -13,5 +14,5 @@ export default new Vuex.Store({
   getters: {},
   mutations: {},
   actions: {},
-  modules: { userStore },
+  modules: { userStore, diaryStore },
 });
