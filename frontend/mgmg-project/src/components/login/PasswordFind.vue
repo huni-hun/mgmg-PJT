@@ -26,9 +26,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import swal from "sweetalert2";
-import api_url from "@/api/index.js";
+import { findpw } from "@/api/userApi.js";
 export default {
   data() {
     return {
@@ -48,46 +47,72 @@ export default {
     };
   },
   methods: {
-    findPw() {
+    async findPw() {
       const userId = document.getElementById("idPasswordFindInput").value;
       const userEmail = document.getElementById("emailPasswordFindInput").value;
 
-      axios
-        .get(api_url.accounts.find_pw(), {
-          params: {
-            userId: userId,
-            email: userEmail,
-          },
-        })
-        .then((response) => {
-          if (response.data.statusCode == 200) {
-            console.log(response.data.message);
-            swal.fire({
-              // toast: true,
-              // title: "ID 누락",
-              text: "이메일로 임시 비밀번호를 보냈습니다.",
-              icon: "success",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-              // },
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          swal.fire({
-            // toast: true,
-            // title: "ID 누락",
-            text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-            icon: "warning",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
-            // },
-          });
+      const params = {
+        userId: userId,
+        userEmail: userEmail,
+      };
+
+      let response = await findpw(params);
+      console.log("응답 데이터", response);
+      if (response.statusCode == 200) {
+        console.log(response.message);
+        swal.fire({
+          // toast: true,
+          // title: "ID 누락",
+          text: "이메일로 임시 비밀번호를 보냈습니다.",
+          icon: "success",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+          // },
         });
+      }
     },
+
+    // findPw() {
+    //   const userId = document.getElementById("idPasswordFindInput").value;
+    //   const userEmail = document.getElementById("emailPasswordFindInput").value;
+
+    //   axios
+    //     .get(api_url.accounts.find_pw(), {
+    //       params: {
+    //         userId: userId,
+    //         email: userEmail,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       if (response.data.statusCode == 200) {
+    //         console.log(response.data.message);
+    //         swal.fire({
+    //           // toast: true,
+    //           // title: "ID 누락",
+    //           text: "이메일로 임시 비밀번호를 보냈습니다.",
+    //           icon: "success",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //           // },
+    //         });
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       swal.fire({
+    //         // toast: true,
+    //         // title: "ID 누락",
+    //         text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+    //         icon: "warning",
+    //         // iconColor: "#000000",
+    //         confirmButtonColor: "#666666",
+    //         confirmButtonText: "확인",
+    //         // },
+    //       });
+    //     });
+    // },
   },
 };
 </script>

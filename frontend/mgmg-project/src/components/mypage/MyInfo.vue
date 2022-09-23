@@ -37,14 +37,15 @@
       >
     </v-row>
     <v-row>
-      <CustomButton btnText="수정하기" />
+      <CustomButton btnText="수정하기" @click="gotoInfoEdit" />
     </v-row>
   </v-container>
 </template>
 
 <script>
-import axios from "axios";
-import api_url from "@/api/index.js";
+// import axios from "axios";
+// import api_url from "@/api/index.js";
+import { showUserInfo } from "@/api/userApi.js";
 export default {
   data() {
     return {
@@ -55,26 +56,37 @@ export default {
       userName: "",
     };
   },
-  mounted: {
-    getUserInfo() {
-      axios
-        .get(api_url.accounts.mypage_show_edit_delete(), {
-          headers: {
-            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-          },
-        })
-        .get((response) => {
-          console.log(response.data);
-          this.userBirth = response.data.birth;
-          this.userEmail = response.data.email;
-          this.userGender = response.data.gender;
-          this.userId = response.data.userId;
-          this.userName = response.data.name;
-        });
+  async created() {
+    let response = await showUserInfo();
+    console.log(response);
+    this.userBirth = response.birth;
+    this.userEmail = response.email;
+    this.userGender = response.gender;
+    this.userId = response.userId;
+    this.userName = response.userName;
+  },
+  // getUserInfo() {
+  //   axios
+  //     .get(api_url.accounts.mypage_show_edit_delete(), {
+  //       headers: {
+  //         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+  //         Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+  //       },
+  //     })
+  //     .get((response) => {
+  //       console.log(response.data);
+  //       this.userBirth = response.data.birth;
+  //       this.userEmail = response.data.email;
+  //       this.userGender = response.data.gender;
+  //       this.userId = response.data.userId;
+  //       this.userName = response.data.name;
+  //     });
+  // },
+  methods: {
+    gotoInfoEdit() {
+      this.$router.push("/my/infoedit");
     },
   },
-  methods: {},
 };
 </script>
 

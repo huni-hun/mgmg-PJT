@@ -24,10 +24,16 @@
         </div>
       </v-row> -->
       <v-row>
-        <label for="">가격대</label>
-        <CustomInput v-model="priceUnder" :@change="test()" />
-        <label for="">~</label>
-        <CustomInput v-model="priceUpper" />
+        <v-col>
+          <label for="">가격대</label>
+        </v-col>
+        <v-col>
+          <div>
+            <input type="number" id="underPrice" name="underPrice" :value="underPrice" step="1000" min="10000" :max="upperPrice" @change="changeUnder()" />
+            <label for="">~</label>
+            <input type="number" id="upperPrice" name="upperPrice" :value="upperPrice" step="1000" :min="underPrice" max="1000000" @change="changeUpper()" />
+          </div>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -35,27 +41,32 @@
 
 <script>
 export default {
-  props: ["selectGift"],
+  props: ["selectGift", "userUpperPrice", "userUnderPrice"],
   mounted() {
     this.giftSurveyMounted();
+    this.changeUnderMounted();
+    this.changeUpperMounted();
   },
 
   data() {
     return {
+      underPrice: 10000,
+      upperPrice: 20000,
+
       giftLst: ["패션의류", "패션잡화", "화장품/미용", "디지털/가전", "가구/인테리어", "출산/육아", "식품", "스포츠/레저", "생활/건강", "여가/생활편의"],
       selectedGift: ["패션의류"],
       // this.$store.state.userStore.interestGiftLstSignup,
 
-      priceUnder: {
-        labelText: "하한가",
-        rules: [(v) => /^[0-9]*/.test(v) || "숫자를 입력하세요."],
-        id: "priceUnder",
-      },
-      priceUpper: {
-        labelText: "상한가",
-        rules: [(v) => /^[0-9]*/.test(v) || "숫자를 입력하세요."],
-        id: "priceUpper",
-      },
+      // priceUnder: {
+      //   labelText: "하한가",
+      //   rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
+      //   id: "priceUnder",
+      // },
+      // priceUpper: {
+      //   labelText: "상한가",
+      //   rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
+      //   id: "priceUpper",
+      // },
     };
   },
   methods: {
@@ -63,6 +74,35 @@ export default {
       console.log("test");
       // console.log(document.getElementById("priceUnder").value);
       // console.log(document.getElementById("priceUpper").value);
+    },
+    // 가격대 입력받기
+    changeUnderMounted() {
+      this.$emit("underPriceSignup", this.underPrice);
+    },
+    changeUpperMounted() {
+      this.$emit("upperPriceSignup", this.upperPrice);
+    },
+    changeUnder() {
+      this.underPrice = document.getElementById("underPrice").value;
+      this.upperPrice = document.getElementById("upperPrice").value;
+      if (this.underPrice > this.upperPrice) {
+        this.underPrice = this.upperPrice;
+      }
+      if (this.underPrice > 1000000) {
+        this.underPrice = this.upperPrice;
+      } else if (this.underPrice < 10000) [(this.underPrice = 10000)];
+      this.$emit("underPriceSignup", this.underPrice);
+    },
+    changeUpper() {
+      this.underPrice = document.getElementById("underPrice").value;
+      this.upperPrice = document.getElementById("upperPrice").value;
+      if (this.underPrice > this.upperPrice) {
+        this.upperPrice = this.underPrice;
+      }
+      if (this.upperPrice > 1000000) {
+        this.upperPrice = 1000000;
+      } else if (this.upperPrice < 10000) [(this.upperPrice = this.underPrice)];
+      this.$emit("upperPriceSignup", this.upperPrice);
     },
     // 선물 선택. 선택리스트에 없으면 추가, 있으면 제거
     giftSurveyMounted() {

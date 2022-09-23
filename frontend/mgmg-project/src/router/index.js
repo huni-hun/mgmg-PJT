@@ -4,7 +4,10 @@ import VueRouter from "vue-router";
 import LandingPage from "../views/LandingPage.vue";
 import MainPage from "../views/MainPage.vue";
 // 회원
-import LoginPage from "../views/LoginPage.vue";
+import LoginPage from "../views/LoginPage.vue"; // 부모
+import Login from "../components/login/LogIn.vue";
+import FindId from "../components/login/IdFind.vue";
+import FindPw from "../components/login/PasswordFind.vue";
 import SignupPage from "../views/SignupPage.vue";
 import MyPage from "../views/MyPage.vue"; // 부모
 import MyCheck from "../components/mypage/MyCheck.vue";
@@ -50,8 +53,13 @@ const routes = [
   },
   {
     path: "/login",
-    name: "login",
+    // name: "login",
     component: LoginPage,
+    children: [
+      { path: "", name: "login", component: Login },
+      { path: "findid", name: "findid", component: FindId },
+      { path: "findpw", name: "findpw", component: FindPw },
+    ],
   },
   {
     path: "/signup",
@@ -63,7 +71,7 @@ const routes = [
     // name: "my",
     component: MyPage,
     children: [
-      { path: "myCheck", name: "myCheck", component: MyCheck },
+      { path: "", name: "myCheck", component: MyCheck },
       { path: "myinfo", name: "myinfo", component: MyInfo },
       { path: "infoedit", name: "infoedit", component: InfoEdit },
       { path: "passwordedit", name: "passwordedit", component: PasswordEdit },

@@ -250,12 +250,10 @@ public class UserController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-        if (!passwordEncoder.matches(userUpdatePwPutRequest.getPassword(), user.getPassword()))
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
-        else {
-            userService.updatePassword(user, userUpdatePwPutRequest.getNewPassword());
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호가 변경되었습니다."));
-        }
+
+        userService.updatePassword(user, userUpdatePwPutRequest.getNewPassword());
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호가 변경되었습니다."));
+
     }
 
     @PutMapping("/mypage/diaryfont")
@@ -285,16 +283,13 @@ public class UserController {
             @ApiResponse(code = 401, message = "회원 탈퇴 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> deleteUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회원삭제 비밀번호 검증", required = true) @Valid UserDeleteRequest userDeleteRequest) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-        if (!passwordEncoder.matches(userDeleteRequest.getPassword(), user.getPassword()))
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
-        else {
-            userService.deleteUser(user);
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
-        }
+
+        userService.deleteUser(user);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
     }
 
     @GetMapping("/mypage/music")
