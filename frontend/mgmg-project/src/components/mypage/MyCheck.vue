@@ -40,9 +40,6 @@
 </template>
 
 <script>
-// import axios from "axios";
-// import api_url from "@/api/index.js";
-// import store from "@/store/modules/userStore";
 import { myCheck } from "@/api/userApi.js";
 import Swal from "sweetalert2";
 export default {

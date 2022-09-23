@@ -38,6 +38,9 @@ import NoticeDetail from "../components/board/NoticeDetail.vue";
 import NoticeList from "../components/board/NoticeList.vue";
 import NoticeWriting from "../components/board/NoticeWriting.vue";
 
+//컴포넌트 보는 용도 (추후 삭제예정)
+import Calendar from "../components/common/CustomCalendar.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -155,6 +158,11 @@ const routes = [
         component: NoticeWriting,
       },
     ],
+  },
+  {
+    path: "/calendar",
+    name: "calendar",
+    component: Calendar,
   },
 ];
 

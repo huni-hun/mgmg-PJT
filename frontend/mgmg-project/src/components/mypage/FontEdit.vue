@@ -15,9 +15,7 @@
 </template>
 
 <script>
-import axios from "axios";
 import CustomButton from "../common/CustomButton.vue";
-import api_url from "@/api/index.js";
 import Swal from "sweetalert2";
 import { changeFont } from "@/api/userApi.js";
 export default {
@@ -54,6 +52,7 @@ export default {
         diaryFont: this.selectedFontNum,
       };
       let response = await changeFont(request);
+      console.log(request);
       console.log("응답 데이터", response);
 
       Swal.fire({

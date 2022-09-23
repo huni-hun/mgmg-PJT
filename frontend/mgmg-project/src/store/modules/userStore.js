@@ -27,6 +27,7 @@ const userStore = {
       state.userName = data.userName;
       state.accessToken = data.accessToken;
       state.refreshToken = data.refreshToken;
+      state.diaryFont = data.diaryFont;
       console.log(state.accessToken);
       console.log(state.refreshToken);
     },
@@ -34,6 +35,7 @@ const userStore = {
     SET_USER_INFO_NOT_AUTO(state, data) {
       state.userName = data.userName;
       state.accessToken = data.accessToken;
+      state.diaryFont = data.diaryFont;
       state.refreshToken = ""; // persistent cookies에 저장하기 @@@@@@@@@@@@@@
       console.log(state.accessToken);
       console.log(state.refreshToken);

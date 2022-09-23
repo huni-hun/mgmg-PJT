@@ -44,9 +44,6 @@
 <script>
 import { autoLogin } from "@/api/userApi.js";
 import { logIn } from "@/api/userApi.js";
-// import axios from "axios";
-// import api from "@/api/index.js";
-// import
 
 export default {
   data() {
