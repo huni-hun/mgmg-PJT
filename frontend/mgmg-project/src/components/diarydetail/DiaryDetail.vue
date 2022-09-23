@@ -4,7 +4,7 @@
       class="diaryTop"
       :style="{
         backgroundImage:
-          'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
+          'url(' + require(`@/assets/diary/detailtop/${thema}.png`) + ')',
       }"
     >
       <div class="topOutDiv">
@@ -43,7 +43,7 @@
       }"
     >
       <div class="selectImg">
-        <img v-if="uploadImageFile" :src="img" />
+        <img v-if="img" :src="img" />
       </div>
     </div>
     <div
@@ -61,9 +61,18 @@
       class="diarybottom"
       :style="{
         backgroundImage:
-          'url(' + require(`@/assets/diary/bottom/${backImg}.png`) + ')',
+          'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
       }"
-    ></div>
+    >
+      <div>
+        <button type="button">
+          <img class="btn_image" src="@/assets/diary/editIcon.png" />
+        </button>
+        <button type="button">
+          <img class="btn_image" src="@/assets/diary/deleteIcon.png" />
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -120,7 +129,11 @@ export default {
       "weather",
     ]),
   },
-  mounted: {},
+  methods: {
+    editClick() {
+      // 클릭시 수정하면 새로 감정분석 될거다. 알림 모달
+    },
+  },
 };
 </script>
 
@@ -136,7 +149,7 @@ export default {
 .diaryTop {
   background-size: 100% 100%;
   height: 100%;
-  flex-basis: 10vh;
+  flex-basis: 2vh;
 }
 .topOutDiv {
   width: 100%;
@@ -157,7 +170,7 @@ export default {
 .diarymiddle {
   background-size: 100% 100%;
   height: 100%;
-  flex-basis: 45vh;
+  flex-basis: 70vh;
 }
 .diarymiddle > .selectImg {
   position: relative;
@@ -170,6 +183,9 @@ export default {
   transform: translate(-50%, -50%);
   max-width: 70%;
   max-height: 80%;
+}
+.btn_image {
+  width: 40%;
 }
 @import url("@/assets/font/font.css");
 .v-text-field {
