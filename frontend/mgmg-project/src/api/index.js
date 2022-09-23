@@ -1,4 +1,5 @@
 import axios from "axios";
+// import store from "@/store/modules/userStore";
 
 const HOST = process.env.VUE_APP_API_URL + "/api";
 
@@ -13,9 +14,10 @@ const NOTIFICATION = "/notification";
 function createApi() {
   return axios.create({
     baseURL: HOST,
-    // headers: {
-    //   "Content-Type": "application/json; charset=UTF-8",
-    // },
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+      // Authorization: "Bearer " + store.state.accessToken,
+    },
   });
 }
 
