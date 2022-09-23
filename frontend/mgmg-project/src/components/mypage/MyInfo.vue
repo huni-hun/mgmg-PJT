@@ -43,8 +43,6 @@
 </template>
 
 <script>
-// import axios from "axios";
-// import api_url from "@/api/index.js";
 import { showUserInfo } from "@/api/userApi.js";
 export default {
   data() {

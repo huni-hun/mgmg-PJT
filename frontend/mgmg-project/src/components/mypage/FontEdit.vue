@@ -15,9 +15,7 @@
 </template>
 
 <script>
-import axios from "axios";
 import CustomButton from "../common/CustomButton.vue";
-import api_url from "@/api/index.js";
 import Swal from "sweetalert2";
 import { changeFont } from "@/api/userApi.js";
 export default {

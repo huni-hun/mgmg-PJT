@@ -40,8 +40,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import api_url from "@/api/index.js";
 import Swal from "sweetalert2";
 import { showInterestGift } from "@/api/userApi.js";
 import { changeInterestGift } from "@/api/userApi.js";

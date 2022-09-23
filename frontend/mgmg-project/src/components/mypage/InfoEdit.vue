@@ -42,9 +42,6 @@
 </template>
 
 <script>
-// import Swal from "sweetalert2";
-// import axios from "axios";
-// import api_url from "@/api/index.js";
 import { showUserInfo } from "@/api/userApi.js";
 import { editUserInfo } from "@/api/userApi.js";
 import Swal from "sweetalert2";
