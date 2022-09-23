@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "@/router/index.js";
-import { diaryWrite, diaryDetailView } from "@/api/diary.js";
+import { diaryWrite } from "@/api/diary.js";
 
 Vue.use(Vuex);
 
@@ -31,21 +31,15 @@ export const diaryStore = {
     },
   },
   actions: {
-    async fetchDiary({ commit }, diaryData) {
+    async fetchDiary({ commit }, diaryData, no) {
       await diaryWrite(diaryData)
         .then((res) => {
           console.log("vuex success", res.data);
           commit("setDiary", res.data);
-          router.push({ name: "diarydetail" });
-        })
-        .catch((error) => console.log("vuex error", error));
-    },
-    async detailDiary({ commit }, id) {
-      await diaryDetailView(id)
-        .then((res) => {
-          console.log("vuex success", res.data);
-          commit("setDiary", res.data);
-          router.push({ name: "diarydetail" });
+          router.push({
+            name: "diarydetail",
+            params: no,
+          });
         })
         .catch((error) => console.log("vuex error", error));
     },
