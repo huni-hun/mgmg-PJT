@@ -12,7 +12,7 @@ async function diaryWrite(userData) {
     },
   });
 
-  return response.data;
+  return response;
 }
 
 async function monthlyDiaryList(pid) {

@@ -1,11 +1,21 @@
 <template>
   <div class="outDiv">
-    <div class="diaryTop">
+    <div
+      class="diaryTop"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/detailtop/${thema}.png`) + ')',
+      }"
+    >
       <div class="topOutDiv">
         <div class="box">
           <img
             alt="감정티콘"
-            :src="require(`@/assets/emoticon/${findEmotionImg}.png`)"
+            :src="
+              require(`@/assets/emoticon/${
+                this.emoImgs[this.emotions.indexOf(this.emotion, 0)]
+              }.png`)
+            "
           />
         </div>
 
@@ -16,7 +26,7 @@
             <img
               style="width: 30px"
               alt="날씨티콘"
-              :src="require(`@/assets/diary/weather/${findWeatherImg}.png`)"
+              :src="require(`@/assets/diary/weather/${weather}.png`)"
             />
           </div>
 
@@ -24,34 +34,78 @@
         </div>
       </div>
     </div>
-    <div class="diarymiddle">
+    <div
+      class="diarymiddle"
+      v-show="img"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
+      }"
+    >
+      <div class="selectImg">
+        <img v-if="img" :src="img" />
+      </div>
+    </div>
+    <div
+      class="diarymiddle"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+      }"
+    >
       <div>
-        <v-textarea readonly auto-grow outlined single-line :value="diary" />
+        <v-textarea readonly auto-grow outlined single-line :value="content" />
+      </div>
+    </div>
+    <div
+      class="diarybottom"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
+      }"
+    >
+      <div>
+        <button type="button">
+          <img class="btn_image" src="@/assets/diary/editIcon.png" />
+        </button>
+        <button type="button">
+          <img class="btn_image" src="@/assets/diary/deleteIcon.png" />
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data: () => ({
-    date: "2022년 09월 15일", // 일자 받는 변수
+    emotions: [
+      "화",
+      "피곤",
+      "평온",
+      "기대",
+      "피곤",
+      "공포",
+      "기쁨",
+      "사랑",
+      "슬픔",
+      "창피",
+    ], // DB저장된 string 감정
+    emoImgs: [
+      "angry",
+      "annoyed",
+      "calm",
+      "expect",
+      "fatigue",
+      "fear",
+      "happy",
+      "love",
+      "sad",
+      "shame",
+    ], // 이미지 경로
 
-    emotions: ["기쁨", "슬픔"], // DB저장된 string 감정
-    emoImgs: ["happy", "sad"], // 이미지 경로
-    emotion: "기쁨", // 감정 받을 변수
-    findEmotionImg: "sad", // 감정 찾은 변수
-
-    weathers: [
-      "맑음",
-      "구름많음",
-      "흐림",
-      "바람",
-      "비",
-      "눈",
-      "번개",
-      "무지개",
-    ],
     weatherImg: [
       "sunny",
       "overcast",
@@ -62,27 +116,24 @@ export default {
       "lightning",
       "mild",
     ],
-    weather: "맑음", // 날씨 받을 변수
-    findWeatherImg: "overcast", // 날씨 찾은 변수
-
-    diary: "일기 상세 내용이 들어갈 예정",
   }),
+  computed: {
+    ...mapState("diaryStore", [
+      "content",
+      "date",
+      "img",
+      "thema",
+      "emotion",
+      // "gift",
+      // "music",
+      "weather",
+    ]),
+  },
   methods: {
-    findEmotion() {
-      const index = this.emotions.indexOf(this.emotion, 0);
-      this.findEmotionImg = this.emoImgs[index];
-      //console.log(this.findEmotionImg);
-    },
-    findWeather() {
-      const index = this.weathers.indexOf(this.weather, 0);
-      this.findWeatherImg = this.weatherImg[index];
-      //console.log(this.findWeatherImg);
+    editClick() {
+      // 클릭시 수정하면 새로 감정분석 될거다. 알림 모달
     },
   },
-  // created() {
-  //   this.findEmotion();
-  //   this.findWeather();
-  // },
 };
 </script>
 
@@ -96,11 +147,9 @@ export default {
   justify-content: center;
 }
 .diaryTop {
-  background: url("@/assets/diary/detailtop/blackLine.png") no-repeat center;
-  background-size: cover;
-  object-fit: none;
-  flex-basis: 10vh;
-  /* min-height: 10vh; */
+  background-size: 100% 100%;
+  height: 100%;
+  flex-basis: 2vh;
 }
 .topOutDiv {
   width: 100%;
@@ -119,17 +168,42 @@ export default {
   max-width: 200px;
 }
 .diarymiddle {
-  background: url("@/assets/diary/middle/blackLine.png") repeat-y center;
   background-size: 100% 100%;
   height: 100%;
-  flex-basis: 45vh;
+  flex-basis: 70vh;
 }
+.diarymiddle > .selectImg {
+  position: relative;
+  height: 100%;
+}
+.selectImg > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 70%;
+  max-height: 80%;
+}
+.btn_image {
+  width: 40%;
+}
+@import url("@/assets/font/font.css");
 .v-text-field {
-  width: 80%;
+  width: 81%;
   height: 100%;
   margin: 0 auto;
+  font-family: "KyoboHandwriting2019";
+  font-size: xx-large;
 }
 .v-text-field >>> fieldset {
   border: none;
+}
+.diarybottom {
+  background-size: 100% 100%;
+  height: 100%;
+  flex-basis: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
