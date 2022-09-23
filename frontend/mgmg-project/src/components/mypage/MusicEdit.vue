@@ -24,8 +24,8 @@ import Swal from "sweetalert2";
 export default {
   data() {
     return {
-      musicLst: ["재즈", "발라드", "클래식", "힙합", "CCM", "댄스", "팝", "컨트리음악"],
-      selectedMusic: ["재즈"],
+      musicLst: ["댄스", "랩/힙합", "록/메탈", "발라드", "인디음악", "트로트", "포크/블루스", "R&B/Soul"],
+      selectedMusic: ["댄스"],
     };
   },
   methods: {
