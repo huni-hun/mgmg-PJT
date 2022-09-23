@@ -20,7 +20,7 @@
 
 <script>
 import AchieveBadge from "./AchieveBadge.vue";
-import etcStore from "@/store/modules/etcStore";
+import { achieve_list } from "@/store/modules/etcStore";
 
 export default {
   name: "NoticePage",
@@ -52,7 +52,7 @@ export default {
     },
   },
   async created() {
-    this.badges = await etcStore.achieve_list();
+    this.badges = await achieve_list();
     this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
   },
   computed: {

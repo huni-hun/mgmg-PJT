@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import etcStore from "@/store/modules/etcStore";
+import { achieve_detail } from "@/store/modules/etcStore";
 export default {
   name: "AchieveBadge",
   props: { badge: Object },
@@ -30,7 +30,7 @@ export default {
     },
   },
   async created() {
-    this.badgeDetail = await etcStore.achieve_detail(this.badge.badgeNo);
+    this.badgeDetail = await achieve_detail(this.badge.badgeNo);
   },
 };
 </script>

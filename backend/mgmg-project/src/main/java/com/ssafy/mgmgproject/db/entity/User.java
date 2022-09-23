@@ -104,4 +104,14 @@ public class User {
     public void updateFont(int diaryFont){
         this.diaryFont = diaryFont;
     }
+
+    public void deleteUser() {
+        this.password = null;
+        this.email = null;
+        this.birth = null;
+        this.userName = null;
+        this.gender = null;
+        this.lowPrice = null;
+        this.highPrice = null;
+    }
 }

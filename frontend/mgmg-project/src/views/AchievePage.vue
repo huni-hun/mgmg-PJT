@@ -24,6 +24,7 @@ export default {
   data: () => ({
     isAchieve: false,
   }),
+  created() {},
   methods: {
     changeIsAchieve() {
       this.isAchieve = !this.isAchieve;

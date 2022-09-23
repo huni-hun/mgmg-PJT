@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <h1>도넛 그래프</h1>
+  </div>
 </template>
 
 <script>
