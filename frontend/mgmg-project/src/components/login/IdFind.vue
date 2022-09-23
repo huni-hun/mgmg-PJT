@@ -26,9 +26,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import Swal from "sweetalert2";
-import api_url from "@/api/index.js";
+import { findId } from "@/api/userApi.js";
 
 export default {
   data() {
@@ -54,62 +53,94 @@ export default {
     test() {
       console.log(process.env.VUE_APP_API_URL);
     },
-    findId() {
+    async findId() {
       const userName = document.getElementById("nameIdFindInput").value;
       const userEmail = document.getElementById("emailIdFindInput").value;
-      // const userId = "iddesu";
 
-      // var findidLst = { userName: userName, email: userEmail };
-      // console.log(findidLst);
-      // this.$store.dispatch("find_id", userName, userEmail);
-      console.log(userName, userEmail);
-      axios
-        .get(api_url.accounts.find_id(), {
-          params: {
-            userName: userName,
-            email: userEmail,
-          },
-        })
-        .then((response) => {
-          if (response.data.statusCode == 200) {
-            this.getUserId = response.data.userId;
-            Swal.fire({
-              // toast: true,
-              // title: "ID 누락",
-              text: "가입하신 아이디는\n" + response.data.userId + "입니다.",
-              icon: "success",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-              // },
-            });
-          } else if (response.data.statusCode == 401) {
-            Swal.fire({
-              // toast: true,
-              // title: "ID 누락",
-              text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-              icon: "warning",
-              // iconColor: "#000000",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-              // },
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          Swal.fire({
-            // toast: true,
-            // title: "ID 누락",
-            text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-            icon: "warning",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
-            // },
-          });
+      const params = {
+        userName: userName,
+        userEmail: userEmail,
+      };
+
+      let response = await findId(params);
+      console.log("응답 데이터", response);
+      if (response.statusCode == 200) {
+        this.getUserId = response.userId;
+        Swal.fire({
+          text: "가입하신 아이디는\n" + response.userId + "입니다.",
+          icon: "success",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+          // },
         });
+      } else if (response.statusCode == 401) {
+        Swal.fire({
+          text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+          icon: "warning",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+          // },
+        });
+      }
     },
+    // findId() {
+    //   const userName = document.getElementById("nameIdFindInput").value;
+    //   const userEmail = document.getElementById("emailIdFindInput").value;
+    //   // const userId = "iddesu";
+
+    //   // var findidLst = { userName: userName, email: userEmail };
+    //   // console.log(findidLst);
+    //   // this.$store.dispatch("find_id", userName, userEmail);
+    //   console.log(userName, userEmail);
+    //   axios
+    //     .get(api_url.accounts.find_id(), {
+    //       params: {
+    //         userName: userName,
+    //         email: userEmail,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       if (response.data.statusCode == 200) {
+    //         this.getUserId = response.data.userId;
+    //         Swal.fire({
+    //           // toast: true,
+    //           // title: "ID 누락",
+    //           text: "가입하신 아이디는\n" + response.data.userId + "입니다.",
+    //           icon: "success",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //           // },
+    //         });
+    //       } else if (response.data.statusCode == 401) {
+    //         Swal.fire({
+    //           // toast: true,
+    //           // title: "ID 누락",
+    //           text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+    //           icon: "warning",
+    //           // iconColor: "#000000",
+    //           confirmButtonColor: "#666666",
+    //           confirmButtonText: "확인",
+    //           // },
+    //         });
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       Swal.fire({
+    //         // toast: true,
+    //         // title: "ID 누락",
+    //         text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+    //         icon: "warning",
+    //         // iconColor: "#000000",
+    //         confirmButtonColor: "#666666",
+    //         confirmButtonText: "확인",
+    //         // },
+    //       });
+    //     });
+    // },
   },
 };
 </script>

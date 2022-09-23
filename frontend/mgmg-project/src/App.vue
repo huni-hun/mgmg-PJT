@@ -18,3 +18,15 @@ export default {
   components: { CustomHeader },
 };
 </script>
+
+<style>
+/* @font-face {
+  font-family: "Cafe24Oneprettynight";
+  src: url("@/assets/font/Cafe24Oneprettynight.ttf");
+}
+#app {
+  font-family: "Cafe24Oneprettynight";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} */
+</style>

@@ -43,6 +43,8 @@
 import axios from "axios";
 import api_url from "@/api/index.js";
 import Swal from "sweetalert2";
+import { showInterestGift } from "@/api/userApi.js";
+import { changeInterestGift } from "@/api/userApi.js";
 export default {
   data() {
     return {
@@ -64,6 +66,9 @@ export default {
       //   id: "priceUpper",
       // },
     };
+  },
+  mounted() {
+    this.showaInterestGift();
   },
   methods: {
     test() {
@@ -92,6 +97,7 @@ export default {
     },
     // 선물 선택. 선택리스트에 없으면 추가, 있으면 제거
     addGift(gift) {
+      console.log(this.selectedGift);
       if (this.selectedGift.includes(gift)) {
         if (this.selectedGift.length == 1) {
           return;
@@ -102,40 +108,71 @@ export default {
       } else {
         this.selectedGift.push(gift);
       }
+      console.log(this.selectedGift);
+    },
+    // 선물 리스트 조회
+    async showaInterestGift() {
+      let response = await showInterestGift();
+      console.log("응답 데이터", response);
+      if (response.statusCode == 200) {
+        this.selectedGift = response.giftCategories;
+        // this.underPrice = response.lowPrice;
+        // this.lupperPrice = response.highPrice;
+      }
     },
     // 선물 리스트 변경
-    mypageGiftEdit() {
-      axios
-        .put(api_url.accounts.interest_gift_edit(), {
-          headers: {
-            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-          },
-          lowPrice: document.getElementById("priceUnder").value,
-          highPrice: document.getElementById("priceUpper").value,
-          giftTaste: this.selectedGift,
-        })
-        .then((response) => {
-          console.log(response);
-          Swal.fire({
-            text: "관심 선물이 정상적으로 변경되었습니다.",
-            icon: "success",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          Swal.fire({
-            text: "관심 선물 변경에 실패했습니다.",
-            icon: "warning",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
-          });
+    async mypageGiftEdit() {
+      var request = {
+        giftTaste: this.selectedGift,
+        lowPrice: this.underPrice,
+        highPrice: this.upperPrice,
+      };
+
+      let response = await changeInterestGift(request);
+      console.log("응답 데이터", response);
+      if (response.statusCode == 200) {
+        Swal.fire({
+          text: "선물 종류가 정상적으로 변경되었습니다.",
+          icon: "success",
+          // iconColor: "#000000",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
         });
+      }
     },
+
+    // mypageGiftEdit() {
+    //   axios
+    //     .put(api_url.accounts.interest_gift_edit(), {
+    //       headers: {
+    //         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+    //         Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+    //       },
+    //       lowPrice: document.getElementById("priceUnder").value,
+    //       highPrice: document.getElementById("priceUpper").value,
+    //       giftTaste: this.selectedGift,
+    //     })
+    //     .then((response) => {
+    //       console.log(response);
+    //       Swal.fire({
+    //         text: "관심 선물이 정상적으로 변경되었습니다.",
+    //         icon: "success",
+    //         // iconColor: "#000000",
+    //         confirmButtonColor: "#666666",
+    //         confirmButtonText: "확인",
+    //       });
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       Swal.fire({
+    //         text: "관심 선물 변경에 실패했습니다.",
+    //         icon: "warning",
+    //         // iconColor: "#000000",
+    //         confirmButtonColor: "#666666",
+    //         confirmButtonText: "확인",
+    //       });
+    //     });
+    // },
   },
 };
 </script>

@@ -24,11 +24,14 @@ import { deleteUser } from "@/api/userApi.js";
 export default {
   methods: {
     async userDelete() {
-      const request = {};
-
-      let response = await deleteUser(request);
+      console.log("회원탈퇴");
+      let response = await deleteUser();
       console.log("응답 데이터", response);
+
       if (response.statusCode == 200) {
+        this.$cookies.remove("autoLoginCookie");
+        this.$cookies.remove("userIdCookie");
+
         Swal.fire({
           text: "회원 탈퇴가 정상적으로 처리되었습니다.",
           icon: "success",

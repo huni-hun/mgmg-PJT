@@ -7,7 +7,7 @@
       <hr class="hrStyle" />
     </v-row>
     <v-row>
-      <label class="col-4 PasswordEditNoDrag" for="pwPasswordEditInput" id="pwPasswordEditLabel">비밀번호</label>
+      <label class="col-4 PasswordEditNoDrag" for="pwPasswordEditInput" id="pwPasswordEditLabel">새로운 비밀번호</label>
       <div class="inputStyle col-4">
         <v-text-field
           :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
@@ -94,13 +94,14 @@ export default {
   },
   methods: {
     async userPasswordEdit() {
+      console.log(this.userPw);
       if (this.pwValidation && this.pwCheckValidation) {
         var new_password = this.userPw;
 
         const request = {
           newPassword: new_password,
         };
-
+        console.log(request);
         let response = await editPasswordInfo(request);
         console.log("응답 데이터", response);
         if (response.statusCode == 200) {
