@@ -35,15 +35,15 @@
       </div>
     </div>
     <div
-      class="diarymiddle"
-      v-show="img"
+      class="diaryImg"
+      v-show="imageFile"
       :style="{
         backgroundImage:
           'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
       }"
     >
       <div class="selectImg">
-        <img v-if="img" :src="img" />
+        <img v-if="imageFile" :src="imageFile" />
       </div>
     </div>
     <div
@@ -69,7 +69,11 @@
           <img class="btn_image" src="@/assets/diary/editIcon.png" />
         </button>
         <button type="button">
-          <img class="btn_image" src="@/assets/diary/deleteIcon.png" />
+          <img
+            class="btn_image"
+            src="@/assets/diary/deleteIcon.png"
+            @click="deleteClick"
+          />
         </button>
       </div>
     </div>
@@ -77,7 +81,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
+import { diaryDetailView, diaryDelete } from "@/api/diary.js";
 
 export default {
   data: () => ({
@@ -116,23 +121,38 @@ export default {
       "lightning",
       "mild",
     ],
+
+    no: 0, // 일기 번호
+    date: "",
+    weather: "",
+    imageFile: "",
+    content: "",
+    thema: "",
+    emotion: "",
+    gift: "",
+    music: "",
   }),
-  computed: {
-    ...mapState("diaryStore", [
-      "content",
-      "date",
-      "img",
-      "thema",
-      "emotion",
-      // "gift",
-      // "music",
-      "weather",
-    ]),
-  },
   methods: {
-    editClick() {
-      // 클릭시 수정하면 새로 감정분석 될거다. 알림 모달
+    async deleteClick() {
+      await diaryDelete(this.no)
+        .then((res) => {
+          console.log("diaryDelete success", res.data);
+        })
+        .catch((error) => console.log("diaryDelete error", error));
     },
+  },
+  async created() {
+    this.no = this.$route.params.no;
+    console.log("일기상세보기");
+    const res = await diaryDetailView(this.no);
+    this.date = res.diaryDate;
+    this.weather = res.weather;
+    this.imageFile = res.diaryImg;
+    this.content = res.diaryContent;
+    this.thema = res.diaryThema;
+    this.emotion = res.emotion;
+    // this.gift=res.giftNo;
+    // this.music=res.musicNo;
   },
 };
 </script>
@@ -172,7 +192,13 @@ export default {
   height: 100%;
   flex-basis: 70vh;
 }
-.diarymiddle > .selectImg {
+.diaryImg {
+  background-size: 100% 100%;
+  height: 100%;
+  /* max-height: 40vh; */
+  flex-basis: 40vh;
+}
+.diaryImg > .selectImg {
   position: relative;
   height: 100%;
 }

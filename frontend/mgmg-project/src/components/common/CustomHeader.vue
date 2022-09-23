@@ -27,7 +27,9 @@
         <v-list>
           <v-list-item v-for="(item, index) in items" :key="index">
             <v-list-item-title
-              ><router-link :to="item.link">{{ item.title }}</router-link></v-list-item-title
+              ><router-link :to="item.link">{{
+                item.title
+              }}</router-link></v-list-item-title
             >
           </v-list-item>
         </v-list>
@@ -47,8 +49,7 @@ export default {
       { title: "로그인", link: "/login" },
       { title: "회원가입", link: "/signup" },
       { title: "마이페이지", link: "/my" },
-      { title: "일기작성", link: "/diaryWriting" },
-      { title: "일기상세", link: "/diarydetail" },
+      // { title: "일기상세", link: "/diarydetail" },
       { title: "업적", link: "/achieve" },
       { title: "관심목록", link: "/interestlist" },
       { title: "통계", link: "/statistics" },
