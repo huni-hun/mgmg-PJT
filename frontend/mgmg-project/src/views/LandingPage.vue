@@ -5,9 +5,7 @@
     </div>
     <div>
       <p>
-        <router-link :to="`/diaryWriting/${no}/${date}`"
-          >오늘 일기 작성</router-link
-        >
+        <router-link :to="`/diaryWriting/${date}`">오늘 일기 작성</router-link>
       </p>
       <p>
         <router-link :to="`/diaryDetail/${no}`">일기 작성 상세</router-link>
