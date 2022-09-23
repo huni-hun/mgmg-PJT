@@ -123,7 +123,16 @@ async function findpw(params) {
   });
   return response.data;
 }
-//음악 취향 조회
+//글꼴 수정
+async function changeFont(request) {
+  let response = await API.put(`${ACCOUNT}` + "/mypage/diaryfont", request, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+//음악 취향 조회 - 목록조회
 async function showInterestMusic() {
   let response = await API.get(`${ACCOUNT}` + "/mypage/music", {
     headers: {
@@ -132,7 +141,7 @@ async function showInterestMusic() {
   });
   return response.data;
 }
-//선물 취향 조회
+//선물 취향 조회 - 목록조회
 async function showInterestGift() {
   let response = await API.get(`${ACCOUNT}` + "/mypage/gift", {
     headers: {
@@ -141,7 +150,7 @@ async function showInterestGift() {
   });
   return response.data;
 }
-//음악 취향 변경
+//음악 취향 변경 - 마이페이지
 async function changeInterestMusic(request) {
   let response = await API.put(`${ACCOUNT}` + "/mypage/musicchange", request, {
     headers: {
@@ -150,9 +159,27 @@ async function changeInterestMusic(request) {
   });
   return response.data;
 }
-//선물 취향 변경
+//선물 취향 변경 - 마이페이지
 async function changeInterestGift(request) {
   let response = await API.put(`${ACCOUNT}` + "/mypage/giftchange", request, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+//관심 음악 삭제 - 목록조회
+async function deleteMusic(request) {
+  let response = await API.delete(`${ACCOUNT}` + "/interest/music", request, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+//관심 선물 삭제 - 목록조회
+async function deleteGift(request) {
+  let response = await API.delete(`${ACCOUNT}` + "/interest/gift", request, {
     headers: {
       Authorization: "Bearer " + store.state.accessToken,
     },
@@ -174,10 +201,13 @@ export {
   autoLogin,
   findId,
   findpw,
+  changeFont,
   showInterestMusic,
   showInterestGift,
   changeInterestMusic,
   changeInterestGift,
+  deleteMusic,
+  deleteGift,
 };
 
 //----------------------------------------------------------------
