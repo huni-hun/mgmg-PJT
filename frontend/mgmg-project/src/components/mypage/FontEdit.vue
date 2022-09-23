@@ -54,6 +54,7 @@ export default {
         diaryFont: this.selectedFontNum,
       };
       let response = await changeFont(request);
+      console.log(request);
       console.log("응답 데이터", response);
 
       Swal.fire({
