@@ -83,6 +83,7 @@
 <script>
 // import { mapState } from "vuex";
 import { diaryDetailView, diaryDelete } from "@/api/diary.js";
+import Swal from "sweetalert2";
 
 export default {
   data: () => ({
@@ -133,17 +134,35 @@ export default {
     music: "",
   }),
   methods: {
-    async deleteClick() {
-      await diaryDelete(this.no)
-        .then((res) => {
-          console.log("diaryDelete success", res.data);
-        })
-        .catch((error) => console.log("diaryDelete error", error));
+    deleteClick() {
+      Swal.fire({
+        title: "정말로 삭제하나요?",
+        text: "삭제한 일기는 되돌릴 수 없습니다.",
+        icon: "warning",
+        iconColor: "#11C6FF",
+        showCancelButton: true,
+        confirmButtonColor: "#51516E",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "삭제",
+        cancelButtonText: "취소",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await diaryDelete(this.no);
+          Swal.fire({
+            title: "삭제되었습니다!",
+            text: "",
+            icon: "success",
+            confirmButtonColor: "#51516E",
+            confirmButtonText: "확인",
+          }).then(() => {
+            this.$router.push({ name: "main" });
+          });
+        }
+      });
     },
   },
   async created() {
     this.no = this.$route.params.no;
-    console.log("일기상세보기");
     const res = await diaryDetailView(this.no);
     this.date = res.diaryDate;
     this.weather = res.weather;
