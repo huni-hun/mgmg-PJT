@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-public class StatisticsDto {
+public class StatisticsEmotionDto {
     private String emotion;
     private long percent;
 }
