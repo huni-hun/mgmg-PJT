@@ -54,14 +54,14 @@
     </div>
     <div
       class="diarymiddle"
-      v-show="uploadImageFile"
+      v-show="uploadImageSrc"
       :style="{
         backgroundImage:
           'url(' + require(`@/assets/diary/uploadimg/${backImg}.png`) + ')',
       }"
     >
       <div class="selectImg">
-        <img v-if="uploadImageFile" :src="uploadImageFile" />
+        <img v-if="uploadImageSrc" :src="uploadImageSrc" />
         <v-icon large color="gray darken-2" @click="cancelImage">
           mdi-close
         </v-icon>
@@ -119,14 +119,16 @@ export default {
     ],
     uploadReady: true,
 
-    date: "2022-08-05",
+    date: "2022-08-12",
     weather: "sunny",
-    uploadImageFile: "",
+    uploadImageSrc: "",
+    imageFile: "",
     diary: "",
     backImg: "blackLine",
   }),
   methods: {
     ...mapActions("diaryStore", ["fetchDiary"]),
+
     async writingCompletion() {
       const userData = {
         diaryContent: this.diary,
@@ -139,14 +141,13 @@ export default {
       };
 
       let form = new FormData();
-      form.append("multipartFile", this.uploadImageFile);
+      form.append("multipartFile", this.imageFile);
       form.append(
         "diaryRequest",
         new Blob([JSON.stringify(userData)], { type: "application/json" })
       );
 
       this.fetchDiary(form);
-      this.$router.push({ name: "diarydetail" });
     },
     selectFile() {
       this.uploadReady = true;
@@ -155,10 +156,11 @@ export default {
     },
     readFile(e) {
       const file = e.target.files[0];
-      this.uploadImageFile = URL.createObjectURL(file);
+      this.uploadImageSrc = URL.createObjectURL(file);
+      this.imageFile = file;
     },
     cancelImage() {
-      this.uploadImageFile = null;
+      this.uploadImageSrc = null;
       this.uploadReady = false;
       this.$nextTick(() => {
         this.uploadReady = true;
