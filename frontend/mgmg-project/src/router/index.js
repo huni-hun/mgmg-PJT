@@ -25,7 +25,10 @@ import InterestListPage from "../views/InterestListPage.vue"; // 부모
 import InterestMusic from "../components/interestlist/InterestMusicShow.vue";
 import InterestGift from "../components/interestlist/InterestGiftShow.vue";
 import AchieveList from "../components/achieve/AchieveList.vue";
-import StatisticsPage from "../views/StatisticsPage.vue";
+import StatisticsPage from "../views/StatisticsPage.vue"; // 통계 부모
+import DayDetail from "../components/statistics/DayDetail.vue";
+import PeriodDetail from "../components/statistics/PeriodDetail.vue";
+
 // 공지사항
 import NoticePage from "../views/NoticePage.vue"; // 부모
 import NoticeDetail from "../components/board/NoticeDetail.vue";
@@ -108,8 +111,20 @@ const routes = [
   },
   {
     path: "/statistics",
-    name: "statistics",
+    // name: "statistics",
     component: StatisticsPage,
+    children: [
+      {
+        path: "",
+        name: "perioddetail",
+        component: PeriodDetail,
+      },
+      {
+        path: "day",
+        name: "daydetail",
+        component: DayDetail,
+      },
+    ],
   },
   {
     path: "/notice",
