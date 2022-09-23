@@ -85,8 +85,8 @@ async function editPasswordInfo(request) {
   return response.data;
 }
 //마이페이지 회원 탈퇴
-async function deleteUser(request) {
-  let response = await API.delete(`${ACCOUNT}` + "/mypage", request, {
+async function deleteUser() {
+  let response = await API.delete(`${ACCOUNT}` + "/mypage", {
     headers: {
       Authorization: "Bearer " + store.state.accessToken,
     },
@@ -123,8 +123,62 @@ async function findpw(params) {
   });
   return response.data;
 }
+//음악 취향 조회
+async function showInterestMusic() {
+  let response = await API.get(`${ACCOUNT}` + "/mypage/music", {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+//선물 취향 조회
+async function showInterestGift() {
+  let response = await API.get(`${ACCOUNT}` + "/mypage/gift", {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+//음악 취향 변경
+async function changeInterestMusic(request) {
+  let response = await API.put(`${ACCOUNT}` + "/mypage/musicchange", request, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+//선물 취향 변경
+async function changeInterestGift(request) {
+  let response = await API.put(`${ACCOUNT}` + "/mypage/giftchange", request, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
 
-export { idDoubleCheck, emailDoubleCheck, emailNumCheck, signUp, myCheck, showUserInfo, editUserInfo, editPasswordInfo, deleteUser, logIn, autoLogin, findId, findpw };
+export {
+  idDoubleCheck,
+  emailDoubleCheck,
+  emailNumCheck,
+  signUp,
+  myCheck,
+  showUserInfo,
+  editUserInfo,
+  editPasswordInfo,
+  deleteUser,
+  logIn,
+  autoLogin,
+  findId,
+  findpw,
+  showInterestMusic,
+  showInterestGift,
+  changeInterestMusic,
+  changeInterestGift,
+};
 
 //----------------------------------------------------------------
 // import axios from "axios";

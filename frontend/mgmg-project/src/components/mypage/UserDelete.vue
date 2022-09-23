@@ -24,9 +24,7 @@ import { deleteUser } from "@/api/userApi.js";
 export default {
   methods: {
     async userDelete() {
-      const request = {};
-
-      let response = await deleteUser(request);
+      let response = await deleteUser();
       console.log("응답 데이터", response);
       if (response.statusCode == 200) {
         this.$cookies.remove("autoLoginCookie");
