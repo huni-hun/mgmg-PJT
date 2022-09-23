@@ -9,7 +9,7 @@
       </div>
     </v-row>
     <v-row>
-      <CustomButton btnText="확인" />
+      <CustomButton btnText="확인" @click="userChangeFont" />
     </v-row>
   </v-container>
 </template>
@@ -19,6 +19,7 @@ import axios from "axios";
 import CustomButton from "../common/CustomButton.vue";
 import api_url from "@/api/index.js";
 import Swal from "sweetalert2";
+import { changeFont } from "@/api/userApi.js";
 export default {
   data() {
     return {
@@ -48,36 +49,53 @@ export default {
       console.log(this.selectedFont);
     },
     // 폰트 변경 버튼 선택시
-    userChangeFont() {
-      axios
-        .put(api_url.accounts.font_edit(), {
-          headers: {
-            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-            Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-          },
-          diaryFont: this.selectedFontNum,
-        })
-        .then((response) => {
-          console.log(response);
-          Swal.fire({
-            text: "폰트가 정상적으로 변경되었습니다.",
-            icon: "success",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          Swal.fire({
-            text: "폰트 변경에 실패했습니다.",
-            icon: "warning",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
-          });
-        });
+    async userChangeFont() {
+      var request = {
+        diaryFont: this.selectedFontNum,
+      };
+      let response = await changeFont(request);
+      console.log("응답 데이터", response);
+
+      Swal.fire({
+        text: "글꼴이 변경되었습니다.",
+        icon: "success",
+        // iconColor: "#000000",
+        confirmButtonColor: "#666666",
+        confirmButtonText: "확인",
+      });
+      // this.$router.push("/main");
     },
+
+    // userChangeFont() {
+    //   axios
+    //     .put(api_url.accounts.font_edit(), {
+    //       headers: {
+    //         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
+    //         Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
+    //       },
+    //       diaryFont: this.selectedFontNum,
+    //     })
+    //     .then((response) => {
+    //       console.log(response);
+    //       Swal.fire({
+    //         text: "폰트가 정상적으로 변경되었습니다.",
+    //         icon: "success",
+    //         // iconColor: "#000000",
+    //         confirmButtonColor: "#666666",
+    //         confirmButtonText: "확인",
+    //       });
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       Swal.fire({
+    //         text: "폰트 변경에 실패했습니다.",
+    //         icon: "warning",
+    //         // iconColor: "#000000",
+    //         confirmButtonColor: "#666666",
+    //         confirmButtonText: "확인",
+    //       });
+    //     });
+    // },
   },
   components: { CustomButton },
 };
