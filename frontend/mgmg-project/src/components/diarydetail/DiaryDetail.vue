@@ -66,7 +66,11 @@
     >
       <div>
         <button type="button">
-          <img class="btn_image" src="@/assets/diary/editIcon.png" />
+          <img
+            class="btn_image"
+            src="@/assets/diary/editIcon.png"
+            @click="editClick"
+          />
         </button>
         <button type="button">
           <img
@@ -134,6 +138,27 @@ export default {
     music: "",
   }),
   methods: {
+    editClick() {
+      Swal.fire({
+        html: "<b>수정한 일기를 바탕으로<br> 감정분석이 다시 시작됩니다</b>",
+        icon: "warning",
+        iconColor: "#11C6FF",
+        showCancelButton: true,
+        confirmButtonColor: "#51516E",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "수정",
+        cancelButtonText: "취소",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          // 일기 수정할 내용들
+          this.$router.push({
+            name: "diarywriting",
+            params: { date: this.date },
+            query: { no: this.no },
+          });
+        }
+      });
+    },
     deleteClick() {
       Swal.fire({
         title: "정말로 삭제하나요?",

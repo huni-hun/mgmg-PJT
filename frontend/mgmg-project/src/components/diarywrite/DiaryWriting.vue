@@ -1,12 +1,9 @@
 <template>
   <div class="outDiv">
-    <div
-      class="diaryTop"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/writingtop/${backImg}.png`) + ')',
-      }"
-    >
+    <div class="diaryTop" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
+    }">
       <div class="flexTop">
         <v-row>
           <v-col cols="3">
@@ -16,33 +13,19 @@
             <span>날씨 :</span>
           </v-col>
           <v-col cols="2">
-            <v-select
-              :items="weatherImg"
-              :value="weather"
-              :menu-props="{ maxHeight: '80%', overflowX: true }"
-            >
+            <v-select :items="weatherImg" :value="weather" :menu-props="{ maxHeight: '80%', overflowX: true }">
               <template v-slot:selection="{ item }">
-                <v-img
-                  class="selectWeather"
-                  :src="require(`@/assets/diary/weather/${item}.png`)"
-              /></template>
+                <v-img class="selectWeather" :src="require(`@/assets/diary/weather/${item}.png`)" />
+              </template>
               <template v-slot:item="{ item }">
-                <v-img
-                  class="selectWeather"
-                  :src="require(`@/assets/diary/weather/${item}.png`)"
-                  @click="weather = item"
-              /></template>
+                <v-img class="selectWeather" :src="require(`@/assets/diary/weather/${item}.png`)"
+                  @click="weather = item" />
+              </template>
             </v-select>
           </v-col>
           <v-col>
-            <input
-              v-if="uploadReady"
-              ref="file"
-              type="file"
-              accept="image/gif,image/jpeg,image/jpg,image/png"
-              hidden
-              @change="readFile($event)"
-            />
+            <input v-if="uploadReady" ref="file" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" hidden
+              @change="readFile($event)" />
             <v-btn icon small>
               <v-icon color="blue lighten-3" @click="selectFile">
                 mdi-image-outline
@@ -52,14 +35,10 @@
         </v-row>
       </div>
     </div>
-    <div
-      class="diarymiddle"
-      v-show="uploadImageSrc"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/uploadimg/${backImg}.png`) + ')',
-      }"
-    >
+    <div class="diarymiddle" v-show="uploadImageSrc" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
+    }">
       <div class="selectImg">
         <img v-if="uploadImageSrc" :src="uploadImageSrc" />
         <v-icon large color="gray darken-2" @click="cancelImage">
@@ -67,87 +46,103 @@
         </v-icon>
       </div>
     </div>
-    <div
-      class="diarymiddle"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/middle/${backImg}.png`) + ')',
-      }"
-    >
+    <div class="diarymiddle" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+    }">
       <div>
-        <v-textarea
-          v-model="diary"
-          auto-grow
-          outlined
-          single-line
-          :value="diary"
-          label="일기를 써보자"
-        />
+        <v-textarea v-model="diary" auto-grow outlined single-line :value="diary" label="일기를 써보자" />
       </div>
     </div>
-    <div
-      class="diarybottom"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/bottom/${backImg}.png`) + ')',
-      }"
-    >
-      <custom-button
-        class="customButton"
-        btnText="작성완료"
-        @click="writingCompletion"
-      />
+    <div class="diarybottom" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
+    }">
+      <custom-button v-if="isEdit" class="customButton" btnText="수정완료" @click="writingCompletion" />
+      <custom-button v-else class="customButton" btnText="작성완료" @click="writingCompletion" />
     </div>
   </div>
 </template>
 
 <script>
 import eventBus from "./eventBus.js";
-import { mapActions } from "vuex";
+import { diaryWrite, diaryDetailView, diaryEdit } from "@/api/diary.js";
+// import { mapActions } from "vuex";
 
 export default {
-  data: () => ({
-    weatherImg: [
-      "sunny",
-      "overcast",
-      "cloudy",
-      "windy",
-      "rain",
-      "snow",
-      "lightning",
-      "mild",
-    ],
-    uploadReady: true,
+  data: function () {
+    return {
+      weatherImg: [
+        "sunny",
+        "overcast",
+        "cloudy",
+        "windy",
+        "rain",
+        "snow",
+        "lightning",
+        "mild",
+      ],
+      uploadReady: true,
 
-    date: "2022-08-12",
-    weather: "sunny",
-    uploadImageSrc: "",
-    imageFile: "",
-    diary: "",
-    backImg: "blackLine",
-  }),
+      date: "",
+      weather: "sunny",
+      uploadImageSrc: "",
+      imageFile: "",
+      diary: "",
+      thema: "blackLine",
+
+      isEdit: this.$route.query,
+    };
+  },
   methods: {
-    ...mapActions("diaryStore", ["fetchDiary"]),
+    // ...mapActions("diaryStore", ["fetchDiary"]),
 
     async writingCompletion() {
-      const userData = {
+      const diaryData = {
         diaryContent: this.diary,
         diaryDate: this.date,
         weather: this.weather,
-        diaryThema: this.backImg,
+        diaryThema: this.thema,
         emotion: "기쁨",
         musicNo: 0,
         giftNo: 0,
       };
+      // date: this.date,
 
       let form = new FormData();
       form.append("multipartFile", this.imageFile);
-      form.append(
-        "diaryRequest",
-        new Blob([JSON.stringify(userData)], { type: "application/json" })
-      );
+      // form.append(
+      //   "diaryRequest",
+      //   new Blob([JSON.stringify(diaryData)], { type: "application/json" })
+      // );
 
-      this.fetchDiary(form);
+      if (this.no === undefined) {
+        // 일반 작성 create
+        form.append(
+          "diaryRequest",
+          new Blob([JSON.stringify(diaryData)], { type: "application/json" })
+        );
+        await diaryWrite(form).then((res) => {
+          console.log("vuex success", res);
+          this.$router.push({
+            name: "diarydetail",
+            params: { no: res.diaryNo },
+          });
+        });
+      } else {
+        // 일기 수정 update
+        form.append(
+          "diaryUpdateRequest",
+          new Blob([JSON.stringify(diaryData)], { type: "application/json" })
+        );
+        await diaryEdit(this.no, form).then((res) => {
+          console.log("vuex success", res);
+          this.$router.push({
+            name: "diarydetail",
+            params: { no: this.no },
+          });
+        });
+      }
     },
     selectFile() {
       this.uploadReady = true;
@@ -166,11 +161,24 @@ export default {
         this.uploadReady = true;
       });
     },
+    async isEditView() {
+      if (this.$route.query !== undefined) {
+        const res = await diaryDetailView(this.no);
+        this.weather = res.weather;
+        this.uploadImageSrc = res.diaryImg;
+        this.imageFile = res.diaryImg;
+        this.diary = res.diaryContent;
+        this.thema = res.diaryThema;
+      }
+    },
   },
   created() {
     eventBus.$on("backImgChoice", (props) => {
-      this.backImg = props;
+      this.thema = props;
     });
+    this.date = this.$route.params.date;
+    this.no = this.$route.query.no;
+    this.isEditView();
   },
 };
 </script>
@@ -184,11 +192,13 @@ export default {
   flex-direction: column;
   justify-content: center;
 }
+
 .diaryTop {
   background-size: 100% 100%;
   height: 100%;
   flex-basis: 10vh;
 }
+
 .flexTop {
   width: 81%;
   height: 100%;
@@ -197,13 +207,16 @@ export default {
   align-content: center;
   align-items: center;
 }
-.flexTop > .row {
+
+.flexTop>.row {
   margin: 0px;
   align-items: baseline;
 }
+
 .v-select {
   padding: 0px;
 }
+
 .selectWeather {
   width: 2%;
   max-width: 50px;
@@ -214,11 +227,13 @@ export default {
   height: 100%;
   flex-basis: 45vh;
 }
-.diarymiddle > .selectImg {
+
+.diarymiddle>.selectImg {
   position: relative;
   height: 100%;
 }
-.selectImg > img {
+
+.selectImg>img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -226,7 +241,8 @@ export default {
   max-width: 70%;
   max-height: 80%;
 }
-.selectImg > .v-icon {
+
+.selectImg>.v-icon {
   position: absolute;
   top: 8%;
   right: 11%;
@@ -234,7 +250,9 @@ export default {
   max-width: 70%;
   max-height: 80%;
 }
+
 @import url("@/assets/font/font.css");
+
 .v-text-field {
   width: 81%;
   height: 100%;
@@ -242,9 +260,11 @@ export default {
   font-family: "KyoboHandwriting2019";
   font-size: xx-large;
 }
-.v-text-field >>> fieldset {
+
+.v-text-field>>>fieldset {
   border: none;
 }
+
 .diarybottom {
   background-size: 100% 100%;
   height: 100%;
