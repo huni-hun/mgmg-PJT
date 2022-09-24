@@ -85,8 +85,8 @@ const routes = [
     ],
   },
   {
-    path: "/diaryWriting/:date",
-    name: "diaryWriting",
+    path: "/diarywriting/:date",
+    name: "diarywriting",
     component: DiaryWritingPage,
   },
   {

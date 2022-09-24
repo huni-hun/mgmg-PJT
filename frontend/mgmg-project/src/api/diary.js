@@ -12,7 +12,7 @@ async function diaryWrite(userData) {
     },
   });
 
-  return response;
+  return response.data;
 }
 
 async function monthlyDiaryList(pid) {
@@ -38,10 +38,11 @@ async function diaryDetailView(pid) {
 async function diaryEdit(pid, userData) {
   let response = await API.put(`${DIARY}/${pid}`, userData, {
     headers: {
+      "Content-Type": "multipart/form-data",
       Authorization: "Bearer " + store.state.accessToken,
     },
   });
-
+  console.log(response);
   return response.data;
 }
 
