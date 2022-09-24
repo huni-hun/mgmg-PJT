@@ -5,10 +5,14 @@
     </div>
     <div>
       <p>
-        <router-link :to="`/diaryWriting/${date}`">오늘 일기 작성</router-link>
+        <router-link :to="`/diarywriting/${date}`">일기 작성</router-link>
+        <v-date-picker v-model="date" no-title></v-date-picker>
       </p>
+
+      <hr />
+
       <p>
-        <router-link :to="`/diaryDetail/${no}`">일기 작성 상세</router-link>
+        <router-link :to="`/diarydetail/${no}`">일기 상세</router-link>
         <v-text-field v-model="no" label="일기번호 입력" :value="no" />
       </p>
     </div>
@@ -18,7 +22,7 @@
 <script>
 export default {
   data: () => ({
-    date: "",
+    date: new Date().toISOString(),
     no: null,
   }),
 
