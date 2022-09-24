@@ -9,12 +9,15 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
 
 @Getter
 @Setter
 @ApiModel("DiaryResponse")
 public class DiaryResponse extends BaseResponseBody {
+
+    @ApiModelProperty(name = "일기 번호")
+    Long diaryNo;
 
     @ApiModelProperty(name = "일기 내용")
     String diaryContent;
@@ -51,8 +54,11 @@ public class DiaryResponse extends BaseResponseBody {
 
     public static DiaryResponse of(Diary diary, Integer statusCode, String message) {
         DiaryResponse res = new DiaryResponse();
+        res.setDiaryNo(diary.getDiaryNo());
         res.setDiaryContent(diary.getDiaryContent());
-        res.setDiaryDate(diary.getDiaryDate().toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String diaryDate = dateFormat.format(diary.getDiaryDate());
+        res.setDiaryDate(diaryDate);
         res.setDay(diary.getDay());
         res.setWriteDate(diary.getWriteDate());
         res.setWeather(diary.getWeather());
