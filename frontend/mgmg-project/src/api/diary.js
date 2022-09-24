@@ -56,8 +56,8 @@ async function diaryDelete(pid) {
   return response.data;
 }
 
-async function musicInterest(pid, userData) {
-  let response = await API.post(`${DIARY}/interestmusic/${pid}`, userData, {
+async function musicInterest(pid) {
+  let response = await API.post(`${DIARY}/interestmusic/${pid}`, {
     headers: {
       Authorization: "Bearer " + store.state.accessToken,
     },
