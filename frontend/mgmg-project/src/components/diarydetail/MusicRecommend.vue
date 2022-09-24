@@ -94,7 +94,6 @@ export default {
 
 .video-container {
   position: relative;
-  min-width: 100%;
   width: 100%;
   padding-top: 50%;
 }
