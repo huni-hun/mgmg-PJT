@@ -10,6 +10,9 @@
 
       <v-spacer></v-spacer>
       <p>
+        <router-link to="/">랜딩페이지</router-link>
+      </p>
+      <p>
         <router-link to="/achieve">나의업적</router-link>
       </p>
       <p>
@@ -44,12 +47,10 @@ export default {
 
   data: () => ({
     items: [
-      { title: "랜딩페이지", link: "/" },
       { title: "메인페이지", link: "/main" },
       { title: "로그인", link: "/login" },
       { title: "회원가입", link: "/signup" },
       { title: "마이페이지", link: "/my" },
-      // { title: "일기상세", link: "/diarydetail" },
       { title: "업적", link: "/achieve" },
       { title: "관심목록", link: "/interestlist" },
       { title: "통계", link: "/statistics" },
