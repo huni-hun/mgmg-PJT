@@ -91,7 +91,7 @@ export default {
       diary: "",
       thema: "blackLine",
 
-      isEdit: this.$route.query,
+      isEdit: this.$route.query.no,
     };
   },
   methods: {
@@ -162,7 +162,7 @@ export default {
       });
     },
     async isEditView() {
-      if (this.$route.query !== undefined) {
+      if (this.$route.query.no !== undefined) {
         const res = await diaryDetailView(this.no);
         this.weather = res.weather;
         this.uploadImageSrc = res.diaryImg;
