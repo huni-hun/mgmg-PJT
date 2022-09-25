@@ -6,13 +6,13 @@
     }">
       <div class="flexTop">
         <v-row>
-          <v-col cols="3">
+          <v-col>
             <span>날짜 : {{ date }}</span>
           </v-col>
-          <v-col cols="1">
+          <v-col>
             <span>날씨 :</span>
           </v-col>
-          <v-col cols="2">
+          <v-col>
             <v-select :items="weatherImg" :value="weather" :menu-props="{ maxHeight: '80%', overflowX: true }">
               <template v-slot:selection="{ item }">
                 <v-img class="selectWeather" :src="require(`@/assets/diary/weather/${item}.png`)" />
@@ -136,7 +136,7 @@ export default {
           new Blob([JSON.stringify(diaryData)], { type: "application/json" })
         );
         await diaryEdit(this.no, form).then((res) => {
-          console.log("vuex success", res);
+          console.log("edit success", res);
           this.$router.push({
             name: "diarydetail",
             params: { no: this.no },
@@ -204,6 +204,7 @@ export default {
   height: 100%;
   margin: 0 auto;
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5%, auto));
   align-content: center;
   align-items: center;
 }

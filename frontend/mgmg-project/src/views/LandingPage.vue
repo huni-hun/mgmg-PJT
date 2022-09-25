@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="backgruound">
     <div>
       <h1>LandingPage입니다.</h1>
     </div>
@@ -37,4 +37,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.backgruound {
+  height: 100%;
+  background: white;
+}
+</style>

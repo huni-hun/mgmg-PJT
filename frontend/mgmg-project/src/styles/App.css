@@ -1,0 +1,13 @@
+@import url("@/assets/font/font.css");
+
+#app {
+  font-family: "SeoulNamsanEB";
+  font-size: clamp(0.5rem, 2vw, 1.2em);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+main {
+  min-height: 92%;
+  background-image: url("@/assets/background.png");
+  background-size: cover;
+}
