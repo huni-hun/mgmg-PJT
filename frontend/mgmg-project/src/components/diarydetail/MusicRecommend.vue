@@ -33,9 +33,7 @@
 
 <script>
 import { musicInterest, musicBad } from "@/api/diary.js";
-// import { musicBad } from "@/api/diary.js";
-// import axios from "axios";
-// import store from "@/store/modules/userStore";
+
 export default {
   data: function () {
     return {
@@ -47,30 +45,24 @@ export default {
 
       selectMusic: "",
 
-      recommendNo: this.$route.params.no,
+      recommendNo: 1,
     }
+  },
+  methods: {
+
   },
   // eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle
   async beforeDestroy() {
     // 음악 추천 받아오고 실행
     if (this.selectMusic == "good") {
       console.log("good 선택");
+      console.log("추천번호", this.recommendNo);
       await musicInterest(this.recommendNo);
-      // axios.post(process.env.VUE_APP_API_URL + `/api/diary/interestmusic/${this.recommendNo}`, {
-      //   headers: {
-      //     Authorization: "Bearer " + store.state.accessToken,
-      //   },
-      // })
-      //   .then(function (response) {
-      //     console.log(response);
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
     } else if (this.selectMusic == "bad") {
       console.log("bad 선택");
       await musicBad(this.recommendNo);
     }
+
   },
 };
 </script>

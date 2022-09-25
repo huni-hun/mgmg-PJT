@@ -56,41 +56,57 @@ async function diaryDelete(pid) {
 }
 
 async function musicInterest(pid) {
-  let response = await API.post(`${DIARY}/interestmusic/${pid}`, {
-    headers: {
-      Authorization: "Bearer " + store.state.accessToken,
-    },
-  });
+  let response = await API.post(
+    `${DIARY}/interestmusic/${pid}`,
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + store.state.accessToken,
+      },
+    }
+  );
 
   return response.data;
 }
 
 async function musicBad(pid) {
-  let response = await API.post(`${DIARY}/badmusic/${pid}`, {
-    headers: {
-      Authorization: "Bearer " + store.state.accessToken,
-    },
-  });
+  let response = await API.post(
+    `${DIARY}/badmusic/${pid}`,
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + store.state.accessToken,
+      },
+    }
+  );
 
   return response.data;
 }
 
 async function giftInterest(pid) {
-  let response = await API.post(`${DIARY}/interestgift/${pid}`, {
-    headers: {
-      Authorization: "Bearer " + store.state.accessToken,
-    },
-  });
+  let response = await API.post(
+    `${DIARY}/interestgift/${pid}`,
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + store.state.accessToken,
+      },
+    }
+  );
 
   return response.data;
 }
 
 async function giftOpen(pid) {
-  let response = await API.post(`${DIARY}/opengift/${pid}`, {
-    headers: {
-      Authorization: "Bearer " + store.state.accessToken,
-    },
-  });
+  let response = await API.post(
+    `${DIARY}/opengift/${pid}`,
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + store.state.accessToken,
+      },
+    }
+  );
 
   return response.data;
 }
