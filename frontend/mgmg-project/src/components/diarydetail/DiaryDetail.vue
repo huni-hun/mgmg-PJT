@@ -1,83 +1,55 @@
 <template>
   <div class="outDiv">
-    <div
-      class="diaryTop"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/detailtop/${thema}.png`) + ')',
-      }"
-    >
+    <div class="diaryTop" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/detailtop/${thema}.png`) + ')',
+    }">
       <div class="topOutDiv">
         <div class="box">
-          <img
-            alt="감정티콘"
-            :src="
-              require(`@/assets/emoticon/${
-                this.emoImgs[this.emotions.indexOf(this.emotion, 0)]
-              }.png`)
-            "
-          />
+          <img alt="감정티콘" :src="
+            require(`@/assets/emoticon/${
+              this.emoImgs[this.emotions.indexOf(this.emotion, 0)]
+            }.png`)
+          " />
         </div>
 
         <div>
           <p>날짜 {{ date }}</p>
           <div>
             날씨
-            <img
-              style="width: 30px"
-              alt="날씨티콘"
-              :src="require(`@/assets/diary/weather/${weather}.png`)"
-            />
+            <img style="width: 30px" alt="날씨티콘" :src="require(`@/assets/diary/weather/${weather}.png`)" />
           </div>
 
           <p>감정 {{ emotion }}</p>
         </div>
       </div>
     </div>
-    <div
-      class="diaryImg"
-      v-show="imageFile"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
-      }"
-    >
+    <div class="diaryImg" v-show="imageFile" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
+    }">
       <div class="selectImg">
         <img v-if="imageFile" :src="imageFile" />
       </div>
     </div>
-    <div
-      class="diarymiddle"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
-      }"
-    >
+    <div class="diarymiddle" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+    }">
       <div>
         <v-textarea readonly auto-grow outlined single-line :value="content" />
       </div>
     </div>
-    <div
-      class="diarybottom"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
-      }"
-    >
+    <div class="diarybottom" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
+    }">
       <div>
         <button type="button">
-          <img
-            class="btn_image"
-            src="@/assets/diary/editIcon.png"
-            @click="editClick"
-          />
+          <img class="btn_image" src="@/assets/diary/editIcon.png" @click="editClick" />
         </button>
         <button type="button">
-          <img
-            class="btn_image"
-            src="@/assets/diary/deleteIcon.png"
-            @click="deleteClick"
-          />
+          <img class="btn_image" src="@/assets/diary/deleteIcon.png" @click="deleteClick" />
         </button>
       </div>
     </div>
@@ -93,7 +65,7 @@ export default {
   data: () => ({
     emotions: [
       "화",
-      "피곤",
+      "짜증",
       "평온",
       "기대",
       "피곤",
@@ -150,7 +122,6 @@ export default {
         cancelButtonText: "취소",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          // 일기 수정할 내용들
           this.$router.push({
             name: "diarywriting",
             params: { date: this.date },
@@ -210,11 +181,13 @@ export default {
   flex-direction: column;
   justify-content: center;
 }
+
 .diaryTop {
   background-size: 100% 100%;
   height: 100%;
   flex-basis: 2vh;
 }
+
 .topOutDiv {
   width: 100%;
   margin: 0 auto;
@@ -223,30 +196,36 @@ export default {
   place-items: center;
   align-items: center;
 }
+
 .box {
   height: 100%;
   margin: 10px 20px;
 }
+
 .box img {
   width: 100%;
   max-width: 200px;
 }
+
 .diarymiddle {
   background-size: 100% 100%;
   height: 100%;
   flex-basis: 70vh;
 }
+
 .diaryImg {
   background-size: 100% 100%;
   height: 100%;
   /* max-height: 40vh; */
   flex-basis: 40vh;
 }
-.diaryImg > .selectImg {
+
+.diaryImg>.selectImg {
   position: relative;
   height: 100%;
 }
-.selectImg > img {
+
+.selectImg>img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -254,10 +233,13 @@ export default {
   max-width: 70%;
   max-height: 80%;
 }
+
 .btn_image {
   width: 40%;
 }
+
 @import url("@/assets/font/font.css");
+
 .v-text-field {
   width: 81%;
   height: 100%;
@@ -265,9 +247,11 @@ export default {
   font-family: "KyoboHandwriting2019";
   font-size: xx-large;
 }
-.v-text-field >>> fieldset {
+
+.v-text-field>>>fieldset {
   border: none;
 }
+
 .diarybottom {
   background-size: 100% 100%;
   height: 100%;

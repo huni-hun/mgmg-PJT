@@ -29,11 +29,11 @@
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in items" :key="index">
-            <v-list-item-title
-              ><router-link :to="item.link">{{
-                item.title
-              }}</router-link></v-list-item-title
-            >
+            <v-list-item-title>
+              <router-link :to="item.link">{{
+              item.title
+              }}</router-link>
+            </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
