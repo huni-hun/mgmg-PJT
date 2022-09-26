@@ -10,6 +10,9 @@
 
       <v-spacer></v-spacer>
       <p>
+        <router-link to="/">랜딩페이지</router-link>
+      </p>
+      <p>
         <router-link to="/achieve">나의업적</router-link>
       </p>
       <p>
@@ -26,9 +29,11 @@
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in items" :key="index">
-            <v-list-item-title
-              ><router-link :to="item.link">{{ item.title }}</router-link></v-list-item-title
-            >
+            <v-list-item-title>
+              <router-link :to="item.link">{{
+              item.title
+              }}</router-link>
+            </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -42,13 +47,10 @@ export default {
 
   data: () => ({
     items: [
-      { title: "랜딩페이지", link: "/" },
       { title: "메인페이지", link: "/main" },
       { title: "로그인", link: "/login" },
       { title: "회원가입", link: "/signup" },
       { title: "마이페이지", link: "/my" },
-      { title: "일기작성", link: "/diaryWriting" },
-      { title: "일기상세", link: "/diarydetail" },
       { title: "업적", link: "/achieve" },
       { title: "관심목록", link: "/interestlist" },
       { title: "통계", link: "/statistics" },

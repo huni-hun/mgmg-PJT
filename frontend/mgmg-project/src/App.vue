@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <CustomHeader />
+    <CustomHeader ref="header" />
     <v-main>
       <router-view />
     </v-main>
@@ -11,22 +11,14 @@
 import CustomHeader from "./components/common/CustomHeader.vue";
 export default {
   name: "App",
+  components: { CustomHeader },
 
   data: () => ({
-    //
   }),
-  components: { CustomHeader },
+
 };
 </script>
 
-<style>
-/* @font-face {
-  font-family: "Cafe24Oneprettynight";
-  src: url("@/assets/font/Cafe24Oneprettynight.ttf");
-}
-#app {
-  font-family: "Cafe24Oneprettynight";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
+<style scoped src="./styles/App.css" >
+
 </style>
