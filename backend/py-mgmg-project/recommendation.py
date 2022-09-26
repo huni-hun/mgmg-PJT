@@ -17,21 +17,23 @@ session = engine.sessionmaker()
 
 def getMusicRecommendations(recommendMusicRequest):
     try:
-        results = {"user_id": recommendMusicRequest.user_id, "diary_result": recommendMusicRequest.diary_result}
+        session.commit()
+        
         user = session.query(User).filter(User.user_id==recommendMusicRequest.user_id).one()
         musicTaste = session.query(MusicGenre).filter(MusicGenre.user_no==user.user_no).all()
+       
         datas = readMusicData(musicTaste)
         datas2 = datas.loc[:,['화', '기쁨', '슬픔', '평온', '공포', '기대', '창피', '피곤', '짜증', '사랑']]
         result = find_similar_musics(recommendMusicRequest.diary_result, datas2)
         music = session.query(Music).filter(Music.music_no==result[0][0]).one()
+        
         return music
     except:
         return {"result": "null"}
 
 
 def readMusicData(musicTaste):
-    df = pandas.read_excel(FILE_PATH['music'],index_col = "인덱스")
-
+    df = pandas.read_csv(FILE_PATH['music'], sep='|',index_col = '인덱스' ,encoding='utf-8')
     datas = df[(df['장르'] == musicTaste[0].music_genre_name)]
 
     for i in range(1,len(musicTaste)):
