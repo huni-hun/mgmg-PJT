@@ -1,6 +1,6 @@
 package com.ssafy.mgmgproject.api.controller;
 
-import com.ssafy.mgmgproject.api.dto.StatisticsDto;
+import com.ssafy.mgmgproject.api.dto.StatisticsEmotionDto;
 import com.ssafy.mgmgproject.api.response.StatisticsDayListResponse;
 import com.ssafy.mgmgproject.api.response.StatisticsDayResponse;
 import com.ssafy.mgmgproject.api.response.StatisticsPercentListResponse;
@@ -47,7 +47,7 @@ public class StatisticsController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUser().getUserNo();
         try {
-            List<StatisticsDto> statisticsDtos =  statisticsService.selectStatisticsPercentList(userNo,startDate,endDate);
+            List<StatisticsEmotionDto> statisticsDtos =  statisticsService.selectStatisticsPercentList(userNo,startDate,endDate);
             if(statisticsDtos==null || statisticsDtos.size()==0 ){
                 return ResponseEntity.status(402).body(BaseResponseBody.of(402, "이 기간동안 쓴 일기가 없습니다."));
             }
@@ -71,7 +71,7 @@ public class StatisticsController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUser().getUserNo();
         try {
-            Map<String,List<StatisticsDto>> statisticsDtos =  statisticsService.selectStatisticsDayList(userNo);
+            Map<String,List<Integer>> statisticsDtos =  statisticsService.selectStatisticsDayList(userNo);
             if(statisticsDtos==null || statisticsDtos.size()==0 ){
                 return ResponseEntity.status(401).body(BaseResponseBody.of(401, "요일별 통계 조회에 실패했습니다."));
             }
@@ -94,7 +94,7 @@ public class StatisticsController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUser().getUserNo();
         try {
-            StatisticsDto statisticsDto = statisticsService.selectStatisticsDay(userNo,day);
+            StatisticsEmotionDto statisticsDto = statisticsService.selectStatisticsDay(userNo,day);
             if(statisticsDto==null ){
                 return ResponseEntity.status(401).body(BaseResponseBody.of(401, "요일 선택 조회에 실패했습니다."));
             }
