@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { notice_post } from "@/store/modules/etcStore";
+import { notice_detail_put, notice_detail_get } from "@/store/modules/etcStore";
 export default {
   data() {
     return {
@@ -45,18 +45,24 @@ export default {
       checkbox: true,
     };
   },
+  async created() {
+    this.noticeData = await notice_detail_get(this.$route.params.pid);
+    this.title = this.noticeData.noticeTitle;
+    this.content = this.noticeData.noticeContent;
+    this.checkbox = this.noticeData.fixedFlag;
+  },
   methods: {
     sendPost() {
-      notice_post({
+      notice_detail_put(this.$route.params.pid, {
         noticeTitle: this.title,
         noticeContent: this.content,
         fixedFlag: this.checkbox,
       }).then(() => {
-        this.$router.replace("/notice");
+        this.$router.push(`/notice/detail/${this.$route.params.pid}`);
       });
     },
     goBack() {
-      this.$router.replace("/notice");
+      this.$router.push(`/notice/detail/${this.$route.params.pid}`);
     },
   },
 };

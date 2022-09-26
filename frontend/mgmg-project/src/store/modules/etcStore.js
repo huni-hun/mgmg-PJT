@@ -68,7 +68,7 @@ async function notice_get(params) {
 
 async function notice_post(request) {
   // 공지사항 작성
-  const response = await API.get(`/notice`, request, {
+  const response = await API.post(`/notice`, request, {
     headers: {
       Authorization: `Bearer ${store.state.accessToken}`,
     },
@@ -88,7 +88,7 @@ async function notice_detail_get(pid) {
 
 async function notice_detail_put(pid, request) {
   // 공지사항 수정
-  const response = await API.get(`/notice/${pid}`, request, {
+  const response = await API.put(`/notice/${pid}`, request, {
     headers: {
       Authorization: `Bearer ${store.state.accessToken}`,
     },
@@ -98,7 +98,7 @@ async function notice_detail_put(pid, request) {
 
 async function notice_detail_delete(pid) {
   // 공지사항 삭제
-  const response = await API.get(`/notice/${pid}`, {
+  const response = await API.delete(`/notice/${pid}`, {
     headers: {
       Authorization: `Bearer ${store.state.accessToken}`,
     },
