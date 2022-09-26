@@ -26,7 +26,7 @@ public class BadgeServiceImpl implements BadgeService{
 
     @Override
     public List<Map<String,Object>> selectBadgeList(User user) {
-        List<AchievedBadge> achievedBadges = achievedBadgeRepository.findByUser(user);
+        List<AchievedBadge> achievedBadges = achievedBadgeRepository.findByUserOrderByBadgeAsc(user);
         List<Badge> badges = badgeRepository.findAll();
         List<Map<String, Object>> result = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class BadgeServiceImpl implements BadgeService{
 
     @Override
     public List<Map<String,Object>> selectAchievedBadgeList(User user) {
-        List<AchievedBadge> achievedBadges = achievedBadgeRepository.findByUser(user);
+        List<AchievedBadge> achievedBadges = achievedBadgeRepository.findByUserOrderByBadgeAsc(user);
         List<Badge> badges = badgeRepository.findAll();
         List<Map<String, Object>> result = new ArrayList<>();
 

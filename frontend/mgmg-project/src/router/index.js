@@ -143,7 +143,7 @@ const routes = [
     component: NoticePage,
     children: [
       {
-        path: "detail",
+        path: "detail/:pid",
         name: "noticedetail",
         component: NoticeDetail,
       },
