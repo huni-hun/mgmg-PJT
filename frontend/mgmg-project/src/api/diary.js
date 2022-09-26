@@ -95,14 +95,4 @@ async function giftOpen(pid) {
   return response.data;
 }
 
-export {
-  diaryWrite,
-  monthlyDiaryList,
-  diaryDetailView,
-  diaryEdit,
-  diaryDelete,
-  musicInterest,
-  musicBad,
-  giftInterest,
-  giftOpen,
-};
+export { diaryWrite, monthlyDiaryList, diaryDetailView, diaryEdit, diaryDelete, musicInterest, musicBad, giftInterest, giftOpen };
