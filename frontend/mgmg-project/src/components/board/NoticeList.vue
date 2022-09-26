@@ -7,7 +7,7 @@
           <!-- 게시판 -->
           <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="dataList"
             :page="page"
             :items-per-page="itemsPerPage"
             :search="search"
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { notice_get } from "@/store/modules/etcStore";
+
 export default {
   name: "NoticePage",
   data() {
@@ -44,7 +46,7 @@ export default {
       search: "",
       page: 1,
       pageCount: 5,
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       headers: [
         {
           text: "번호",
@@ -55,167 +57,41 @@ export default {
         { text: "제목", align: "center", value: "noticeTitle", sortable: false },
         { text: "등록일", align: "center", value: "noticeDate", sortable: false },
       ],
-      desserts: [
-        {
-          noticeNo: 1,
-          noticeTitle: "안녕하세요 제목01입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 2,
-          noticeTitle: "안녕하세요 제목02입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 3,
-          noticeTitle: "안녕하세요 제목03입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 4,
-          noticeTitle: "안녕하세요 제목4입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 5,
-          noticeTitle: "안녕하세요 제목5입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 6,
-          noticeTitle: "안녕하세요 제목6입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 7,
-          noticeTitle: "안녕하세요 제목7입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 8,
-          noticeTitle: "안녕하세요 제목8입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 9,
-          noticeTitle: "안녕하세요 제목9입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 10,
-          noticeTitle: "안녕하세요 제목10입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 11,
-          noticeTitle: "안녕하세요 제목11입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 12,
-          noticeTitle: "안녕하세요 제목12입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 13,
-          noticeTitle: "안녕하세요 제목13입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 14,
-          noticeTitle: "안녕하세요 제목14입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 15,
-          noticeTitle: "안녕하세요 제목15입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 16,
-          noticeTitle: "안녕하세요 제목16입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 17,
-          noticeTitle: "안녕하세요 제목17입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 18,
-          noticeTitle: "안녕하세요 제목18입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 19,
-          noticeTitle: "안녕하세요 제목19입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 20,
-          noticeTitle: "안녕하세요 제목20입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 21,
-          noticeTitle: "안녕하세요 제목21입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 22,
-          noticeTitle: "안녕하세요 제목22입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 23,
-          noticeTitle: "안녕하세요 제목23입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 24,
-          noticeTitle: "안녕하세요 제목24입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 25,
-          noticeTitle: "안녕하세요 제목25입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 26,
-          noticeTitle: "안녕하세요 제목26입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 27,
-          noticeTitle: "안녕하세요 제목27입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 28,
-          noticeTitle: "안녕하세요 제목28입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 29,
-          noticeTitle: "안녕하세요 제목29입니다.",
-          noticeDate: "2022.09.22",
-        },
-        {
-          noticeNo: 30,
-          noticeTitle: "안녕하세요 제목30입니다.",
-          noticeDate: "2022.09.22",
-        },
-      ],
+      dataList: [],
+      tatalPage: 0,
+      data: Object,
     };
   },
   methods: {
-    //     openDetails(val) {
-    //   this.$router.push("details/"val.id)
-    // }
-    openDetails() {
-      this.$router.push("/notice/detail");
+    openDetails(val) {
+      this.$router.push("details/" + val.noticeNo);
     },
+    // openDetails() {
+    //   this.$router.push("/notice/detail");
+    // },
+
+    async getPage(pid) {
+      console.log("=========공지사항 조회==========");
+      this.data = await notice_get({
+        page: pid,
+      });
+      this.dataList = this.data.page;
+      this.pageCount = this.data.totalPage;
+    },
+
+    async getKeywordPage(pid, keyword) {
+      console.log("=========공지사항 조회==========");
+      this.data = await notice_get({
+        page: pid,
+        keyword: keyword,
+      });
+      this.dataList = this.data.page;
+      this.pageCount = this.data.totalPage;
+    },
+  },
+  async created() {
+    await this.getPage(1);
+    console.log(this.dataList, this.tatalPage);
   },
   components: {},
 };
