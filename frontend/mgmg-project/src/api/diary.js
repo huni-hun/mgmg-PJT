@@ -98,17 +98,23 @@ async function giftInterest(pid) {
 }
 
 async function giftOpen(pid) {
-  let response = await API.post(
-    `${DIARY}/opengift/${pid}`,
-    {},
-    {
-      headers: {
-        Authorization: "Bearer " + store.state.accessToken,
-      },
-    }
-  );
+  let response = await API.get(`${DIARY}/gift/${pid}`, {
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
 
   return response.data;
 }
 
-export { diaryWrite, monthlyDiaryList, diaryDetailView, diaryEdit, diaryDelete, musicInterest, musicBad, giftInterest, giftOpen };
+export {
+  diaryWrite,
+  monthlyDiaryList,
+  diaryDetailView,
+  diaryEdit,
+  diaryDelete,
+  musicInterest,
+  musicBad,
+  giftInterest,
+  giftOpen,
+};

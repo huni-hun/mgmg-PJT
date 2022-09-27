@@ -2,17 +2,23 @@
   <div class="outDiv">
     <p>이 날의 추천 선물</p>
     <div v-if="!isClick" class="giftBoxDiv">
-      <img alt="giftbox" src="@/assets/diary/giftbox.png" @click="giftView" />
+      <img loading="lazy" alt="giftbox" src="@/assets/diary/giftbox.png" @click="giftView" />
     </div>
     <div class="gridDiv" v-else>
-      <div>{{giftImg}}</div>
+
+      <v-img alt="선물 이미지" :src=giftImg />
+
       <div>
         <p>상품명: {{giftName}}</p>
         <p>가 격: {{giftPrice}}</p>
-        <p>구매하러가기 {{giftLink}}</p>
+        <p>
+          <button @click="clickLink()">
+            구매하러가기 <v-icon small> mdi-open-in-new </v-icon>
+          </button>
+        </p>
 
         <label class="ridioButton">
-          <input type="radio" name="gift" value="interest" v-model="interestGift">
+          <input type="checkbox" name="gift" value="" v-model="interestGift">
           <span class="btnText">관심 선물 추가</span>
         </label>
       </div>
@@ -27,33 +33,45 @@ export default {
     return {
       isClick: false,
 
-      giftNo: this.$route.params.no,
+      diaryNo: this.$route.params.no,
       interestGift: "",
 
-      giftImg: "선물 이미지",
-      giftName: "심플 챌린지 자수 레터링 5컬러 데일리 볼캡 여성 캡모자",
-      giftPrice: "10,700",
-      giftLink: "링크주소",
+      giftImg: "",
+      giftName: "",
+      giftPrice: "",
+      giftLink: "1",
     }
   },
   methods: {
     async giftView() {
       this.isClick = true;
-      await giftOpen(this.giftNo).then((res) => {
+      await giftOpen(this.diaryNo).then((res) => {
         console.log("gift success", res);
+        this.giftImg = res.giftImg;
+        this.giftName = res.giftName;
+        this.giftPrice = res.giftPrice;
+        this.giftLink = res.giftUrl;
       }).catch((error) => {
         console.log("gift error", error);
       })
+    },
+    clickLink() {
+      window.open(this.giftLink);
     },
   },
   // eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle
   async beforeDestroy() {
     // 선물 추천 받아오고 실행
-    if (this.interestGift == "interest") {
+    console.log("선물추천", this.interestGift)
+    if (this.interestGift) {
       console.log("interest 선택");
       await giftInterest(this.giftNo);
     }
   },
+  created() {
+    let test = false;
+    this.isClick = test;
+  }
 };
 </script>
 
@@ -83,11 +101,11 @@ export default {
   align-items: center;
 }
 
-.ridioButton input[type="radio"] {
+.ridioButton input[type="checkbox"] {
   display: none;
 }
 
-.ridioButton input[type="radio"]+span {
+.ridioButton input[type="checkbox"]+span {
   display: inline-block;
   padding: 10px 10px;
   background-color: #ffffff;
@@ -101,7 +119,7 @@ export default {
   color: #000000;
 }
 
-.ridioButton input[type="radio"]:checked+span {
+.ridioButton input[type="checkbox"]:checked+span {
   background-color: #ebb8cd;
   color: white;
   border: none;
