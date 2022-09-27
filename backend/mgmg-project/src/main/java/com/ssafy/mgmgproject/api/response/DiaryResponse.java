@@ -43,14 +43,6 @@ public class DiaryResponse extends BaseResponseBody {
     @ApiModelProperty(name = "감정")
     String emotion;
 
-    @ApiModelProperty(name = "추천노래")
-    Music music;
-
-    @ApiModelProperty(name = "추천선물")
-    Gift gift;
-
-    @ApiModelProperty(name = "선물오픈여부")
-    Boolean openGift;
 
     public static DiaryResponse of(Diary diary, Integer statusCode, String message) {
         DiaryResponse res = new DiaryResponse();
@@ -65,9 +57,6 @@ public class DiaryResponse extends BaseResponseBody {
         res.setDiaryImg(diary.getDiaryImg());
         res.setEmotion(diary.getEmotion());
         res.setDiaryThema(diary.getDiaryThema());
-        res.setMusic(diary.getMusic());
-        res.setGift(diary.getGift());
-        res.setOpenGift(diary.isOpenGift());
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;

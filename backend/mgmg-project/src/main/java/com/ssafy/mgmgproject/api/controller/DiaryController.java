@@ -2,11 +2,8 @@ package com.ssafy.mgmgproject.api.controller;
 
 import com.ssafy.mgmgproject.api.request.DiaryRequest;
 import com.ssafy.mgmgproject.api.request.SearchItemRequest;
-import com.ssafy.mgmgproject.api.response.recommendGiftGetResponse;
+import com.ssafy.mgmgproject.api.response.*;
 import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
-import com.ssafy.mgmgproject.api.response.DiaryListMapping;
-import com.ssafy.mgmgproject.api.response.DiaryListResponse;
-import com.ssafy.mgmgproject.api.response.DiaryResponse;
 import com.ssafy.mgmgproject.api.service.BadgeService;
 import com.ssafy.mgmgproject.api.service.DiaryService;
 import com.ssafy.mgmgproject.api.service.UserService;
@@ -15,7 +12,6 @@ import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.common.util.NaverShopSearch;
 import com.ssafy.mgmgproject.db.entity.*;
 import io.swagger.annotations.*;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -99,12 +95,15 @@ public class DiaryController {
             @ApiResponse(code = 401, message = "일기 수정 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> writeDiary(@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo,
+    public ResponseEntity<? extends BaseResponseBody> writeDiary(@ApiIgnore Authentication authentication,
+                                                                 @PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo,
                                                                  @RequestPart(required = false) @ApiParam(value = "일기 이미지") MultipartFile multipartFile,
                                                                  @RequestPart @ApiParam(value = "일기 정보", required = true) DiaryUpdateRequest diaryUpdateRequest) throws Exception{
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUser().getUserNo();
         Diary diary;
         try {
-            diary = diaryService.updateDiary(diaryNo, multipartFile, diaryUpdateRequest);
+            diary = diaryService.updateDiary(userNo, diaryNo, multipartFile, diaryUpdateRequest);
             if (diary == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 수정에 실패하였습니다."));
         }
         catch (Exception e){
@@ -140,10 +139,15 @@ public class DiaryController {
             @ApiResponse(code = 401, message = "일기 상세 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> getByDiaryNo (@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
+    public ResponseEntity<? extends BaseResponseBody> getByDiaryNo (@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUser().getUserNo();
         Diary diary;
         try {
-            diary = diaryService.getByDiaryNo(diaryNo);
+            diary = diaryService.getByDiaryNo(userNo, diaryNo);
+            if(diary==null){
+                return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 상세 조회에 실패하였습니다."));
+            }
         }
         catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 상세 조회에 실패하였습니다."));
@@ -158,8 +162,10 @@ public class DiaryController {
             @ApiResponse(code = 401, message = "일기 삭제 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> deleteDiary (@PathVariable @ApiParam(value = "일기번호", required = true) Long diaryNo)  throws Exception{
-        int result = diaryService.deleteDiary(diaryNo);
+    public ResponseEntity<? extends BaseResponseBody> deleteDiary (@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "일기번호", required = true) Long diaryNo)  throws Exception{
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUser().getUserNo();
+        int result = diaryService.deleteDiary(userNo, diaryNo);
         if(result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "일기 삭제 성공하였습니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 삭제에 실패하였습니다."));
     }
@@ -208,19 +214,6 @@ public class DiaryController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 선물 추가에 성공하였습니다."));
     }
 
-    @PostMapping("/opengift/{diaryNo}")
-    @ApiOperation(value = "선물 오픈", notes = "선물을 오픈한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "선물 오픈 성공", response = BaseResponseBody.class),
-            @ApiResponse(code = 401, message = "선물 오픈 실패", response = BaseResponseBody.class),
-            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
-    })
-    public ResponseEntity<? extends BaseResponseBody> addInterestGift(@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
-        int result = diaryService.openGift(diaryNo);
-        if(result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "선물 오픈에 성공하였습니다."));
-        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "선물 오픈에 실패하였습니다."));
-    }
-
     @PostMapping("/badmusic/{musicNo}")
     @ApiOperation(value = "음악 비추천 리스트 추가", notes = "추천받고 싶지 않은 음악을 추가한다.")
     @ApiResponses({
@@ -231,10 +224,10 @@ public class DiaryController {
     public ResponseEntity<? extends BaseResponseBody> addBadMusic(@ApiIgnore Authentication authentication,
                                                                   @PathVariable @ApiParam(value = "음악번호", required = true) Long musicNo) throws Exception{
         UserDetails userDetails = (UserDetails) authentication.getDetails();
-        String userId = userDetails.getUsername();
+        Long userNo = userDetails.getUser().getUserNo();
         BadMusic badMusic;
         try {
-            badMusic = diaryService.addBadMusic(userId, musicNo);
+            badMusic = diaryService.addBadMusic(userNo, musicNo);
             if (badMusic == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "음악 비추천 리스트 추가에 실패하였습니다."));
         }
         catch (Exception e){
@@ -253,16 +246,64 @@ public class DiaryController {
     public ResponseEntity<? extends BaseResponseBody> cancelBadMusic(@ApiIgnore Authentication authentication,
                                                                      @PathVariable @ApiParam(value = "음악번호", required = true) Long musicNo) throws Exception{
         UserDetails userDetails = (UserDetails) authentication.getDetails();
-        String userId = userDetails.getUsername();
+        Long userNo = userDetails.getUser().getUserNo();
         int result;
         try {
-            result = diaryService.deleteBadMusic(userId, musicNo);
+            result = diaryService.deleteBadMusic(userNo, musicNo);
             if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "음악 비추천 리스트에서 삭제를 실패하였습니다."));
         }
         catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "음악 비추천 리스트에서 삭제를 실패하였습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "음악 비추천 리스트에서 삭제를 성공하였습니다."));
+    }
+
+    @GetMapping("/detail/{diaryNo}/music")
+    @ApiOperation(value = "일기 상세 조회시 노래 추천", notes = "일기를 상제 조회시 노래를 추천한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "일기 상세 조회시 노래 추천 성공", response = DiaryMusicResponse.class),
+            @ApiResponse(code = 401, message = "일기 상세 조회시 노래 추천 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> getMusic (@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUser().getUserNo();
+        Diary diary;
+        String checkMusic;
+        try {
+            diary = diaryService.getByDiaryNo(userNo, diaryNo);
+            if(diary==null){
+                return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 상세 조회시 노래 추천에 실패하였습니다."));
+            }
+            checkMusic = diaryService.checkMusic(userNo,diary.getMusic().getMusicNo());
+        }
+        catch (Exception e){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 상세 조회시 노래 추천에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(DiaryMusicResponse.of(diary, checkMusic, 200, "일기 상세 조회시 노래 추천에 성공하였습니다."));
+    }
+
+    @GetMapping("/detail/{diaryNo}/gift")
+    @ApiOperation(value = "일기 상세 조회시 선물 추천", notes = "일기를 상제 조회시 선물을 추천한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "일기 상세 조회시 선물 추천 성공", response = DiaryGiftResponse.class),
+            @ApiResponse(code = 401, message = "일기 상세 조회시 선물 추천 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> getGift (@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUser().getUserNo();
+        Diary diary;
+        try {
+            diary = diaryService.getByDiaryNo(userNo, diaryNo);
+            if(diary==null){
+                return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 상세 조회시 선물 추천에 실패하였습니다."));
+            }
+        }
+        catch (Exception e){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 상세 조회시 선물 추천에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(DiaryGiftResponse.of(diary, 200, "일기 상세 조회시 선물 추천에 성공하였습니다."));
     }
 
 }

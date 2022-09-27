@@ -90,8 +90,8 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     @Transactional
-    public Diary updateDiary(Long diaryNo, MultipartFile multipartFile, DiaryUpdateRequest diaryUpdateRequest) {
-        Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
+    public Diary updateDiary(Long userNo, Long diaryNo, MultipartFile multipartFile, DiaryUpdateRequest diaryUpdateRequest) {
+        Diary diary = diaryRepository.findByUser_UserNoAndDiaryNo(userNo,diaryNo).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryUpdateRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryUpdateRequest.getGiftNo()).orElse(null);
         if (diary.getGift() != gift) diary.closeGift();
@@ -135,16 +135,16 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Diary getByDiaryNo(Long diaryNo) {
-        return diaryRepository.findByDiaryNo(diaryNo).orElse(null);
+    public Diary getByDiaryNo(Long userNo, Long diaryNo) {
+        return diaryRepository.findByUser_UserNoAndDiaryNo(userNo, diaryNo).orElse(null);
     }
 
     @Override
     @Transactional
-    public int deleteDiary(Long diaryNo) {
+    public int deleteDiary(Long userNo, Long diaryNo) {
         Diary diary;
         try {
-            diary = diaryRepository.findByDiaryNo(diaryNo).get();
+            diary = diaryRepository.findByUser_UserNoAndDiaryNo(userNo, diaryNo).get();
         } catch (Exception e) {
             return 0;
         }
@@ -219,8 +219,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Gift writeRecommendGift(SearchItemRequest searchItemRequest, Long diaryNo, User user) {
-        if(openGift(diaryNo, user) == 0 ) return null;
+    public Gift writeRecommendGift(SearchItemRequest searchItemRequest) {
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("<b>", ""));
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("</b>", ""));
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("&quot", ""));
@@ -235,9 +234,9 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Transactional
-    public int openGift(Long diaryNo, User user) {
-        Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
-        if (diary == null || diary.getUser() != user) return 0;
+    public int openGift(Long userNo, Long diaryNo) {
+        Diary diary = diaryRepository.findByUser_UserNoAndDiaryNo(userNo, diaryNo).orElse(null);
+        if (diary == null) return 0;
         else {
             diary.openGift();
             diaryRepository.save(diary);
@@ -285,32 +284,44 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     @Transactional
-    public BadMusic addBadMusic(String userId, Long musicNo) {
-        User user = userRepository.findByUserId(userId).orElse(null);
-        Music music = musicRepository.findByMusicNo(musicNo).orElse(null);
-        InterestMusic interestMusic = interestMusicRepository.findByUserAndMusic(user,music).orElse(null);
+    public BadMusic addBadMusic(Long userNo, Long musicNo) {
+        InterestMusic interestMusic = interestMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo,musicNo).orElse(null);
         if(interestMusic==null){
-            BadMusic badMusic = BadMusic.builder()
-                    .user(user)
-                    .music(music)
-                    .build();
-            badMusicRepository.save(badMusic);
-            return badMusic;
+            User user = userRepository.findById(userNo).orElse(null);
+            Music music = musicRepository.findById(musicNo).orElse(null);
+            if(user!=null && music!=null){
+                BadMusic badMusic = BadMusic.builder()
+                        .user(user)
+                        .music(music)
+                        .build();
+                badMusicRepository.save(badMusic);
+                return badMusic;
+            }
         }
         return null;
     }
 
     @Override
     @Transactional
-    public int deleteBadMusic(String userId, Long musicNo){
-        User user = userRepository.findByUserId(userId).orElse(null);
-        Music music = musicRepository.findByMusicNo(musicNo).orElse(null);
-        BadMusic badMusic = badMusicRepository.findByUserAndMusic(user,music).orElse(null);
+    public int deleteBadMusic(Long userNo, Long musicNo){
+        BadMusic badMusic = badMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo,musicNo).orElse(null);
         if(badMusic!=null){
-            badMusicRepository.deleteByUserAndMusic(user,music);
+            badMusicRepository.deleteById(badMusic.getBadMusicNo());
             return 1;
         }
         return 0;
     }
 
+    @Override
+    public String checkMusic(Long userNo, Long musicNo){
+        InterestMusic interestMusic = interestMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo,musicNo).orElse(null);
+        if(interestMusic!=null){
+            return "good";
+        }
+        BadMusic badMusic = badMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo,musicNo).orElse(null);
+        if(badMusic!=null){
+            return "bad";
+        }
+        return "none";
+    }
 }

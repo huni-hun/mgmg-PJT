@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
-    Optional<Diary> findByDiaryNo(Long diaryNo);
+    Optional<Diary> findByUser_UserNoAndDiaryNo(Long userNo,Long diaryNo);
 
     @Transactional
     Optional<Diary> deleteByDiaryNo(Long diaryNo);

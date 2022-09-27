@@ -16,13 +16,13 @@ public interface DiaryService {
 
     Diary writeDiary(Long userNo, MultipartFile multipartFile, DiaryRequest diaryRequest);
 
-    Diary updateDiary(Long diaryNo, MultipartFile multipartFile, DiaryUpdateRequest diaryUpdateRequest);
+    Diary updateDiary(Long userNo, Long diaryNo, MultipartFile multipartFile, DiaryUpdateRequest diaryUpdateRequest);
 
     List<DiaryListMapping> getDiaryMonthList(Long userNo, String date) throws ParseException;
 
-    Diary getByDiaryNo(Long diaryNo);
+    Diary getByDiaryNo(Long userNo, Long diaryNo);
 
-    int deleteDiary(Long diaryNo);
+    int deleteDiary(Long userNo, Long diaryNo);
 
     InterestMusic addInterestMusic(String userId, Long musicNo);
 
@@ -30,13 +30,15 @@ public interface DiaryService {
 
     String getUserInfo(Date birth, String gender, List<String> giftCategories, Long lowPrice, Long highPrice);
 
-    Gift writeRecommendGift(SearchItemRequest searchItemRequest, Long diaryNo, User user);
+    Gift writeRecommendGift(SearchItemRequest searchItemRequest);
 
-    int openGift(Long diaryNo, User user);
+    int openGift(Long userNo, Long diaryNo);
 
     int uploadImg(Diary diary, MultipartFile multipartFile) throws IOException;
 
-    BadMusic addBadMusic(String userId, Long musicNo);
+    BadMusic addBadMusic(Long userNo, Long musicNo);
 
-    int deleteBadMusic(String userId, Long musicNo);
+    int deleteBadMusic(Long userNo, Long diaryNo);
+
+    String checkMusic(Long diaryNo, Long musicNo);
 }
