@@ -212,7 +212,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public Gift writeRecommendGift(SearchItemRequest searchItemRequest, Long diaryNo, User user) {
-        openGift(diaryNo, user);
+        if(openGift(diaryNo, user) == 0 ) return null;
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("<b>", ""));
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("</b>", ""));
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("&quot", ""));

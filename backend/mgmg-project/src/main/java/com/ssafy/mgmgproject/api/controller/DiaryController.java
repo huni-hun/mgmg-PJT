@@ -86,6 +86,7 @@ public class DiaryController {
         try {
             SearchItemRequest result = naverShopSearch.fromJSONtoItems(naverShopSearch.search(userInfo));
             gift = diaryService.writeRecommendGift(result, diaryNo, user);
+            if(gift == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "선물추천에 실패하였습니다."));
         }
         catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "선물추천에 실패하였습니다."));
