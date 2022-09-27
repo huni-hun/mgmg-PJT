@@ -104,9 +104,14 @@ public class DiaryServiceImpl implements DiaryService {
                     music,
                     gift
             );
+
+            if (multipartFile != null) {
+                uploadImg(diary, multipartFile);
+            } else if (diary.getDiaryImg() != null) {
+                deleteS3Img(diary);
+                diary.updateImg(null);
+            }
         }
-        if (multipartFile != null) uploadImg(diary, multipartFile);
-        diaryRepository.save(diary);
         return diary;
     }
 
