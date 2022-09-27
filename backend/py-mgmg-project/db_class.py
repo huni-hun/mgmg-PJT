@@ -20,6 +20,7 @@ class MusicGenre(Base):
   music_genre_no = Column(BigInteger, primary_key=True, autoincrement=True)
   music_genre_name = Column(String, nullable=False)
   user_no = Column(BigInteger, nullable=False)
+  emotion_name = Column(String, nullable=False)
 
 class User(Base):
   __tablename__ = 'user'

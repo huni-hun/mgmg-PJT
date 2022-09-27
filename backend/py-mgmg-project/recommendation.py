@@ -20,7 +20,7 @@ def getMusicRecommendations(recommendMusicRequest, diary_result):
         session.commit()
         
         user = session.query(User).filter(User.user_id==recommendMusicRequest.user_id).one()
-        musicTaste = session.query(MusicGenre).filter(MusicGenre.user_no==user.user_no).all()
+        musicTaste = session.query(MusicGenre).filter((MusicGenre.user_no==user.user_no)&(MusicGenre.emotion_name==recommendMusicRequest.diary_emotion)).all()
 
         datas = readMusicData(musicTaste)
         datas2 = datas.loc[:,['화', '기쁨', '슬픔', '평온', '공포', '기대', '창피', '피곤', '짜증', '사랑']]
