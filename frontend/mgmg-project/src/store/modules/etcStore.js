@@ -106,4 +106,37 @@ async function notice_detail_delete(pid) {
   return response.data;
 }
 
-export { achieve_list, achieve_detail, achieve_get_list, statistics_day, statistics_percent, notice_get, notice_post, notice_detail_get, notice_detail_put, notice_detail_delete };
+async function notification_list() {
+  // 알림 리스트
+  const response = await API.get(`/notification`, {
+    headers: {
+      Authorization: `Bearer ${store.state.accessToken}`,
+    },
+  });
+  return response.data;
+}
+
+async function notification_check() {
+  // 알림 체크 true & false
+  const response = await API.get(`/notification/check`, {
+    headers: {
+      Authorization: `Bearer ${store.state.accessToken}`,
+    },
+  });
+  return response.data;
+}
+
+export {
+  achieve_list,
+  achieve_detail,
+  achieve_get_list,
+  statistics_day,
+  statistics_percent,
+  notice_get,
+  notice_post,
+  notice_detail_get,
+  notice_detail_put,
+  notice_detail_delete,
+  notification_list,
+  notification_check,
+};

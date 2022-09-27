@@ -1,9 +1,11 @@
 <template>
   <div class="outDiv">
-    <div class="diaryTop" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
-    }">
+    <div
+      class="diaryTop"
+      :style="{
+        backgroundImage: 'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
+      }"
+    >
       <div class="flexTop">
         <v-row>
           <v-col>
@@ -18,46 +20,47 @@
                 <v-img class="selectWeather" :src="require(`@/assets/diary/weather/${item}.png`)" />
               </template>
               <template v-slot:item="{ item }">
-                <v-img class="selectWeather" :src="require(`@/assets/diary/weather/${item}.png`)"
-                  @click="weather = item" />
+                <v-img class="selectWeather" :src="require(`@/assets/diary/weather/${item}.png`)" @click="weather = item" />
               </template>
             </v-select>
           </v-col>
           <v-col>
-            <input v-if="uploadReady" ref="file" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" hidden
-              @change="readFile($event)" />
+            <input v-if="uploadReady" ref="file" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" hidden @change="readFile($event)" />
             <v-btn icon small>
-              <v-icon color="blue lighten-3" @click="selectFile">
-                mdi-image-outline
-              </v-icon>
+              <v-icon color="blue lighten-3" @click="selectFile"> mdi-image-outline </v-icon>
             </v-btn>
           </v-col>
         </v-row>
       </div>
     </div>
-    <div class="diarymiddle" v-show="uploadImageSrc" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
-    }">
+    <div
+      class="diarymiddle"
+      v-show="uploadImageSrc"
+      :style="{
+        backgroundImage: 'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
+      }"
+    >
       <div class="selectImg">
         <img v-if="uploadImageSrc" :src="uploadImageSrc" />
-        <v-icon large color="gray darken-2" @click="cancelImage">
-          mdi-close
-        </v-icon>
+        <v-icon large color="gray darken-2" @click="cancelImage"> mdi-close </v-icon>
       </div>
     </div>
-    <div class="diarymiddle" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
-    }">
+    <div
+      class="diarymiddle"
+      :style="{
+        backgroundImage: 'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+      }"
+    >
       <div>
         <v-textarea v-model="diary" auto-grow outlined single-line :value="diary" label="일기를 써보자" />
       </div>
     </div>
-    <div class="diarybottom" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
-    }">
+    <div
+      class="diarybottom"
+      :style="{
+        backgroundImage: 'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
+      }"
+    >
       <custom-button v-if="isEdit" class="customButton" btnText="수정완료" @click="writingCompletion" />
       <custom-button v-else class="customButton" btnText="작성완료" @click="writingCompletion" />
     </div>
@@ -72,16 +75,7 @@ import { diaryWrite, diaryDetailView, diaryEdit } from "@/api/diary.js";
 export default {
   data: function () {
     return {
-      weatherImg: [
-        "sunny",
-        "overcast",
-        "cloudy",
-        "windy",
-        "rain",
-        "snow",
-        "lightning",
-        "mild",
-      ],
+      weatherImg: ["sunny", "overcast", "cloudy", "windy", "rain", "snow", "lightning", "mild"],
       uploadReady: true,
 
       date: "",
@@ -118,10 +112,7 @@ export default {
 
       if (this.no === undefined) {
         // 일반 작성 create
-        form.append(
-          "diaryRequest",
-          new Blob([JSON.stringify(diaryData)], { type: "application/json" })
-        );
+        form.append("diaryRequest", new Blob([JSON.stringify(diaryData)], { type: "application/json" }));
         await diaryWrite(form).then((res) => {
           console.log("vuex success", res);
           this.$router.push({
@@ -131,10 +122,7 @@ export default {
         });
       } else {
         // 일기 수정 update
-        form.append(
-          "diaryUpdateRequest",
-          new Blob([JSON.stringify(diaryData)], { type: "application/json" })
-        );
+        form.append("diaryUpdateRequest", new Blob([JSON.stringify(diaryData)], { type: "application/json" }));
         await diaryEdit(this.no, form).then((res) => {
           console.log("edit success", res);
           this.$router.push({
@@ -209,7 +197,7 @@ export default {
   align-items: center;
 }
 
-.flexTop>.row {
+.flexTop > .row {
   margin: 0px;
   align-items: baseline;
 }
@@ -229,12 +217,12 @@ export default {
   flex-basis: 45vh;
 }
 
-.diarymiddle>.selectImg {
+.diarymiddle > .selectImg {
   position: relative;
   height: 100%;
 }
 
-.selectImg>img {
+.selectImg > img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -243,7 +231,7 @@ export default {
   max-height: 80%;
 }
 
-.selectImg>.v-icon {
+.selectImg > .v-icon {
   position: absolute;
   top: 8%;
   right: 11%;
@@ -262,7 +250,7 @@ export default {
   font-size: xx-large;
 }
 
-.v-text-field>>>fieldset {
+.v-text-field >>> fieldset {
   border: none;
 }
 

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+// import store from "@/store/modules/userStore";
 // 메인
 import LandingPage from "../views/LandingPage.vue";
 import MainPage from "../views/MainPage.vue";
@@ -38,6 +39,8 @@ import NoticeDetail from "../components/board/NoticeDetail.vue";
 import NoticeList from "../components/board/NoticeList.vue";
 import NoticeWriting from "../components/board/NoticeWriting.vue";
 import NoticeEdit from "../components/board/NoticeEdit.vue";
+// 404 페이지
+import PageNotFound from "../components/common/PageNotFound.vue";
 
 //컴포넌트 보는 용도 (추후 삭제예정)
 import Calendar from "../components/common/CustomCalendar.vue";
@@ -170,6 +173,15 @@ const routes = [
     name: "calendar",
     component: Calendar,
   },
+  {
+    path: "/404",
+    name: "pagenotfound",
+    component: PageNotFound,
+  },
+  {
+    path: "*",
+    redirect: "/404",
+  },
 ];
 
 const router = new VueRouter({
@@ -177,5 +189,40 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+// // 로우터 가드
+// router.beforeEach((to, from, next) => {
+//   const token = store.state.accessToken
+//   // 토근이 존재할때 로그인화면으로 가려고하면 메인으로 이동
+//   if(to.name === 'login') {
+//     if(token) {
+//       next({ name:'main' })
+//     }
+//   }
+//     // 토근이 존재할때 회원가입화면으로 가려고하면 메인으로 이동
+//     else if (to.name === 'signup') {
+//       if(token) {
+//         next({ name:'main' })
+//       }
+//     }
+//     // 토큰이 존재하는데 랜딩페이지로 가려고하면 메인으로 이동
+//     else if (to.name === 'landing') {
+//       if(token) {
+//         next({ name:'main' })
+//       }
+//     }
+//     // 토큰이 없는데 메인페이지로 가려고하면 로그인으로 이동
+//     else if (to.name === 'main') {
+//       if(!token) {
+//         next({ name:'login' })
+//       }
+//     }
+//     // 토큰이 없는데 마이페이지로 가려고하면 로그인으로 이동
+//     else if (to.name === 'myCheck') {
+//       if(!token) {
+//         next({ name:'login' })
+//       }
+//     }
+// })  // 로우터 가드 끝
 
 export default router;

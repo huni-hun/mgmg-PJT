@@ -1,6 +1,7 @@
 // import api_url from "@/api/index.js";
 import Vue from "vue";
 import Vuex from "vuex";
+// import { notification_check } from "@/store/modules/etcStore";
 // import { API } from "@/store";
 // import Swal from "sweetalert2";
 
@@ -17,6 +18,7 @@ const userStore = {
     refreshToken: "", // persistent cookies에 저장하기 @@@@@@@@@@@@@
     diaryFont: 0,
     admin: 0,
+    isInf: false, // 알림창을 위한 변수
   },
   getters: {},
   mutations: {
@@ -42,6 +44,7 @@ const userStore = {
       console.log(state.refreshToken);
       state.admin = data.admin;
     },
+    IS_INF: (state, isInf) => (state.isInf = isInf),
   },
   actions: {
     // 로그인
@@ -66,6 +69,19 @@ const userStore = {
     //     })
     //     .catch((err) => {
     //       console.log("에러내용" + err);
+    //     });
+    // },
+    // async check_achiveve({ commit }) {
+    //   console.log("----일기 작성 후, 업적이 있는지 확인----");
+    //   await notification_check()
+    //     .then((res) => {
+    //       console.log(res);
+    //       const value = res.data.notificationFlag;
+    //       console.log(value);
+    //       commit("IS_INF", value);
+    //     })
+    //     .catch((err) => {
+    //       console.error(err.response.data);
     //     });
     // },
   },
