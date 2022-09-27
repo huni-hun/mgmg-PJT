@@ -53,9 +53,9 @@ public class DiaryController {
         fos.write(file.getBytes());
         fos.close();
 
-        String test = speechToText.play(convFile);
-        
-        return ResponseEntity.status(200).body(SpeeachToTextResponse.of(test,200, "변환 성공"));
+        String result = speechToText.play(convFile);
+
+        return ResponseEntity.status(200).body(SpeeachToTextResponse.of(result,200, "변환 성공"));
     }
 
     @PostMapping()
