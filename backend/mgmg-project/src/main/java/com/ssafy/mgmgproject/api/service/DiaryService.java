@@ -30,9 +30,9 @@ public interface DiaryService {
 
     String getUserInfo(Date birth, String gender, List<String> giftCategories, Long lowPrice, Long highPrice);
 
-    Gift writeRecommendGift(SearchItemRequest searchItemRequest);
+    Gift writeRecommendGift(SearchItemRequest searchItemRequest, Long diaryNo, User user);
 
-    int openGift(Long userNo, Long diaryNo);
+    void openGift(Diary diary, User user);
 
     int uploadImg(Diary diary, MultipartFile multipartFile) throws IOException;
 
