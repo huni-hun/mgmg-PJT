@@ -6,9 +6,9 @@
         <div>
           <v-container>
             <v-row>
-              <input class="inputBox" type="text" id="showYear" name="showYear" :value="showYear" @change="getInputYearMonth()" />
+              <input class="inputBox" type="text" id="showYear" name="showYear" :value="showYear" @input="getInputYearMonth()" />
               <div class="inputBox">.</div>
-              <input class="inputBox" type="text" id="showMonth" name="showMonth" :value="showMonth" @change="getInputYearMonth()" />
+              <input class="inputBox" type="text" id="showMonth" name="showMonth" :value="showMonth" @input="getInputYearMonth()" />
               <!--             
               <input class="inputBox" type="text" id="showYear" name="showYear" :value="showYear" @change="maketargetMonth(showYear, showMonth)" />
               <div class="inputBox">.</div>
@@ -141,38 +141,84 @@ export default {
     },
     //axios로 몽글이 가져오는 함수
     async monthlyDiaryList(monthInput) {
+      this.emotionLst = [
+        ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
+        ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
+        ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
+        ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
+        ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
+        ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
+        ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
+      ];
+      //일기 번호 리스트
+      this.diaryNum = [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+      ];
       console.log("월별 몽글이 리스트");
       let response = await monthlyDiaryList(monthInput);
       console.log("응답 데이터", response);
 
+      var diaryDirectionLst = [];
+
       if (response.statusCode == 200) {
         console.log(response);
         this.diaryLst = response.diaries;
-
+        // var diaryDirection;
         if (this.diaryLst.length > 0) {
           console.log("다이어리스트있음", this.diaryLst);
-          var rep;
-          for (rep = 0; rep < this.diaryLst.length; rep++) {
-            var weeks;
-            for (weeks = 0; weeks < this.monthLst.length; weeks++) {
-              var days;
-              for (days = 0; days < this.monthLst[weeks].length; days++) {
-                console.log(this.diaryLst[rep].diaryDate.slice(8, 10));
-                // console.log(rep);
+          var weeks;
+          for (weeks = 0; weeks < this.monthLst.length; weeks++) {
+            var days;
+            for (days = 0; days < this.monthLst[weeks].length; days++) {
+              var rep;
+              for (rep = 0; rep < this.diaryLst.length; rep++) {
                 if (this.monthLst[weeks][days] == this.diaryLst[rep].diaryDate.slice(8, 10)) {
-                  console.log(this.diaryLst[rep].emotion);
-                  console.log(this.diaryLst[rep].diaryNo);
-                  console.log(weeks, days);
-
-                  this.emotionLst[weeks][days] = this.diaryLst[rep].emotion;
-                  this.diaryNum[weeks][days] = this.diaryLst[rep].diaryNo;
-                } else {
-                  this.emotionLst[weeks][days] = "없음";
-                  this.diaryNum[weeks][days] = 0;
+                  diaryDirectionLst.push([weeks, days, this.diaryLst[rep].emotion, this.diaryLst[rep].diaryNo]);
                 }
               }
             }
           }
+          console.log("diaryDirectionLst", diaryDirectionLst);
+          var diaryIdx;
+          for (diaryIdx = 0; diaryIdx < diaryDirectionLst.length; diaryIdx++) {
+            console.log(diaryIdx);
+            this.emotionLst[diaryDirectionLst[diaryIdx][0]][diaryDirectionLst[diaryIdx][1]] = diaryDirectionLst[diaryIdx][2];
+            this.diaryNum[diaryDirectionLst[diaryIdx][0]][diaryDirectionLst[diaryIdx][1]] = diaryDirectionLst[diaryIdx][3];
+          }
+          console.log("emotionLst", this.emotionLst);
+
+          // var weeks;
+          // for (weeks = 0; weeks < this.monthLst.length; weeks++) {
+          //   var days;
+          //   for (days = 0; days < this.monthLst[weeks].length; days++) {
+          //     var rep;
+          //     for (rep = 0; rep < this.diaryLst.length; rep++) {
+          //       // console.log(rep);
+          //       if (this.monthLst[weeks][days] == this.diaryLst[rep].diaryDate.slice(8, 10)) {
+          //         console.log("rep", rep, "weeks", weeks, "days", days);
+          //         console.log("날짜", this.diaryLst[rep].diaryDate.slice(8, 10));
+          //         console.log("감정", this.diaryLst[rep].emotion);
+          //         console.log("일기번호", this.diaryLst[rep].diaryNo);
+          //         console.log("몇주, 며칠", weeks, days);
+
+          //         this.emotionLst[weeks][days] = this.diaryLst[rep].emotion;
+          //         this.diaryNum[weeks][days] = this.diaryLst[rep].diaryNo;
+
+          //         console.log("감정 들어올때마다 감정리스트 출력", this.emotionLst);
+          //         console.log("감정 들어올때마다 일기번호리스트 출력", this.diaryNum);
+          //       } else {
+          //         this.emotionLst[weeks][days] = "없음";
+          //         this.diaryNum[weeks][days] = 0;
+          //       }
+          //     }
+          //   }
+          // }
         } else {
           console.log("다이어리스트없음", this.diaryLst);
           //감정 리스트
@@ -208,8 +254,8 @@ export default {
     updateEmotionLst() {
       // this.$set(this.emotionLst, "emotion", this.emotionLst);
       this.emotionsLst = [...this.emotionLst]; //이걸로 하면 되긴 되는데 무한 반복 됨.
-      console.log(this.emotionsLst, this.emotionLst);
-      console.log("updateEmotionLst");
+      // console.log(this.emotionsLst, this.emotionLst);
+      // console.log("updateEmotionLst");
       // vm.$forceUpdate();
     },
     //과거 일기 내역 확인
@@ -357,6 +403,9 @@ export default {
         }
       }
       console.log(this.showYear, "년", this.showMonth, "월", this.monthLst);
+      this.showYear = Number(this.showYear);
+      this.showMonth = Number(this.showMonth);
+      // this.showYear = String(this.showYear)
     },
 
     //이전달

@@ -1,5 +1,5 @@
 <template>
-  <v-container @click="test" class="calendarDate">
+  <v-container @click="test(showYear, showMonth, dateNum, diaryNumber)" class="calendarDate">
     <div>{{ dateNum }}</div>
     <!-- <div @click="test()">{{ emotionImgLst[emotionImg] }}</div> -->
     <img v-if="!!emotionImgLst[emotionImg] && !this.isToday()" class="emoticonImg" :src="require(`@/assets/emoticon/${emotionImgLst[emotionImg]}.png`)" alt="" />
@@ -25,10 +25,6 @@ export default {
         사랑: "love",
         없음: "",
       },
-      nowYear: this.showYear,
-      nowMonth: this.showMonth,
-      nowDate: this.dateNum,
-      diaryNum: this.diaryNumber,
     };
   },
   methods: {
@@ -48,10 +44,41 @@ export default {
       //오늘이 아니면 false
     },
     //아니면
-    test() {
-      console.log(this.showYear, this.showMonth);
+    test(year, month, date, diarynum) {
+      console.log(this.showYear, this.showMonth, this.dateNum, this.diaryNumber);
+      //다이어리 넘버 0일떄랑 숫자일떄 구분
+      if (diarynum == 0) {
+        //일기작성
+        this.$router.push({
+          name: "diarywriting",
+          params: { date: this.changeDateFormat(year, month, date) },
+        });
+      } else {
+        //일기 상세보기
+        this.$router.push({
+          name: "diarydetail",
+          params: { no: diarynum },
+        });
+      }
+      // console.log(this.nowEmotion);
       //   console.log(this.emotionImg);
       // console.log(this.emtionImgLst["기쁨"]);
+    },
+    changeDateFormat(year, month, date) {
+      var finYear = String(year);
+      var finMonth;
+      var finDate;
+      if (month < 10) {
+        finMonth = "0" + String(month);
+      } else {
+        finMonth = String(month);
+      }
+      if (date < 10) {
+        finDate = "0" + String(date);
+      } else {
+        finDate = String(date);
+      }
+      return finYear + "-" + finMonth + "-" + finDate;
     },
   },
 };
