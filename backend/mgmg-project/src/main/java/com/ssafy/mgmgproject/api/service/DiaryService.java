@@ -35,4 +35,8 @@ public interface DiaryService {
     int openGift(Long diaryNo, User user);
 
     int uploadImg(Diary diary, MultipartFile multipartFile) throws IOException;
+
+    BadMusic addBadMusic(String userId, Long musicNo);
+
+    int deleteBadMusic(String userId, Long musicNo);
 }

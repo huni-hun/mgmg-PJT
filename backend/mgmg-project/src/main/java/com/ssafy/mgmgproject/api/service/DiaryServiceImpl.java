@@ -50,6 +50,9 @@ public class DiaryServiceImpl implements DiaryService {
     @Autowired
     InterestGiftRepository interestGiftRepository;
 
+    @Autowired
+    BadMusicRepository badMusicRepository;
+
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
@@ -273,6 +276,36 @@ public class DiaryServiceImpl implements DiaryService {
 
     public String fileNameFilter(String filename) {
         return filename.replaceAll("[^a-zA-Z0-9가-힣_.]", "").replaceAll(" ", "");
+    }
+
+    @Override
+    @Transactional
+    public BadMusic addBadMusic(String userId, Long musicNo) {
+        User user = userRepository.findByUserId(userId).orElse(null);
+        Music music = musicRepository.findByMusicNo(musicNo).orElse(null);
+        InterestMusic interestMusic = interestMusicRepository.findByUserAndMusic(user,music).orElse(null);
+        if(interestMusic==null){
+            BadMusic badMusic = BadMusic.builder()
+                    .user(user)
+                    .music(music)
+                    .build();
+            badMusicRepository.save(badMusic);
+            return badMusic;
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public int deleteBadMusic(String userId, Long musicNo){
+        User user = userRepository.findByUserId(userId).orElse(null);
+        Music music = musicRepository.findByMusicNo(musicNo).orElse(null);
+        BadMusic badMusic = badMusicRepository.findByUserAndMusic(user,music).orElse(null);
+        if(badMusic!=null){
+            badMusicRepository.deleteByUserAndMusic(user,music);
+            return 1;
+        }
+        return 0;
     }
 
 }
