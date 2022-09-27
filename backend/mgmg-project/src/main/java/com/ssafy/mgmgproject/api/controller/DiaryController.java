@@ -209,18 +209,5 @@ public class DiaryController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 선물 추가에 성공하였습니다."));
     }
 
-    @PostMapping("/opengift/{diaryNo}")
-    @ApiOperation(value = "선물 오픈", notes = "선물을 오픈한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "선물 오픈 성공", response = BaseResponseBody.class),
-            @ApiResponse(code = 401, message = "선물 오픈 실패", response = BaseResponseBody.class),
-            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
-    })
-    public ResponseEntity<? extends BaseResponseBody> addInterestGift(@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
-        int result = diaryService.openGift(diaryNo);
-        if(result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "선물 오픈에 성공하였습니다."));
-        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "선물 오픈에 실패하였습니다."));
-    }
-
 }
 
