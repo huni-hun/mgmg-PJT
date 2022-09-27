@@ -31,9 +31,17 @@
       <div>{{ week }}</div> -->
       <div v-for="(week0, index2) in week" :key="index2" class="col-1">
         <v-col>
-          <div v-if="week0 != 0">{{ week0 }}</div>
-          <emotionImage v-if="week0 != 0" :dateNum="week0" :emotionImg="emotionsLst[index1][index2]" name="emotionImg" />
-          <div v-if="week0 != 0" name="emotion">{{ emotionsLst[index1][index2] }}</div>
+          <!-- <div v-if="week0 != 0">{{ week0 }}</div> -->
+          <emotionImage
+            v-if="week0 != 0"
+            :showYear="showYear"
+            :showMonth="showMonth"
+            :dateNum="week0"
+            :emotionImg="emotionsLst[index1][index2]"
+            :diaryNumber="diaryNum[index1][index2]"
+            name="emotionImg"
+          />
+          <!-- <div v-if="week0 != 0" name="emotion">{{ emotionsLst[index1][index2] }}</div> -->
         </v-col>
       </div>
     </v-row>
@@ -53,20 +61,6 @@ import EmotionImage from "@/components/common/CustomCalendarImage.vue";
 
 export default {
   components: { EmotionImage },
-  // updated() {
-  //   this.getInputYearMonth();
-  // },
-  // updated() {
-  //   console.log("updateddddddddddddddddddddd");
-  //   this.$nextTick(function () {
-  //     // this.getInputYearMonth()
-  //     console.log("updateeeeeeeeeeeeeeeeeeeeee");
-  //     // this.updateEmotionLst();
-  //     // Code that will run only after the
-  //     // entire view has been re-rendered
-  //   });
-  // },
-  // updated: {this.updateEmotionLst()},
   data() {
     return {
       emotionImage: "0",
@@ -240,9 +234,9 @@ export default {
       this.showMonth = now.getMonth() + 1;
       this.showDate = now.getDate();
 
-      console.log(this.showYear, this.showMonth, this.showDate);
-      console.log(this.changeToString(this.showYear, this.showMonth)); //202201꼴
-      console.log(this.reputation(this.changeToString(this.showYear, this.showMonth))); //190001부터 몇개의 달을 거치는가
+      // console.log(this.showYear, this.showMonth, this.showDate);
+      // console.log(this.changeToString(this.showYear, this.showMonth)); //202201꼴
+      // console.log(this.reputation(this.changeToString(this.showYear, this.showMonth))); //190001부터 몇개의 달을 거치는가
       console.log(this.lastdayFirstDate(this.changeToString(this.showYear, this.showMonth)));
       //axios에 연, 월 보내서 몽글이 찍기
       this.monthlyDiaryList(this.changeToAxiosShape(this.showYear, this.showMonth));
