@@ -10,6 +10,7 @@ import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.auth.UserDetails;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.common.util.NaverShopSearch;
+import com.ssafy.mgmgproject.common.util.SpeechToText;
 import com.ssafy.mgmgproject.db.entity.*;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 @Api(value = "일기 API")
@@ -37,6 +40,23 @@ public class DiaryController {
 
     @Autowired
     NaverShopSearch naverShopSearch;
+
+    @Autowired
+    SpeechToText speechToText;
+
+    @PostMapping("/speeach")
+    public ResponseEntity<? extends BaseResponseBody> test(@RequestPart MultipartFile file) throws Exception{
+
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+
+        String test = speechToText.play(convFile);
+        
+        return ResponseEntity.status(200).body(SpeeachToTextResponse.of(test,200, "변환 성공"));
+    }
 
     @PostMapping()
     @ApiOperation(value = "일기 작성", notes = "일기를 작성한다.")
