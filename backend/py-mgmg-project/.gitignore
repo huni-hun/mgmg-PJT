@@ -4,3 +4,6 @@
 secrets.json
 musicData.xlsx
 musicData.csv
+model/
+.cache
+.idea/

@@ -15,7 +15,7 @@ FILE_PATH = secrets["FILE_PATH"]
 engine = engineconn()
 session = engine.sessionmaker()
 
-def getMusicRecommendations(recommendMusicRequest):
+def getMusicRecommendations(recommendMusicRequest, diary_result):
     try:
         session.commit()
         
@@ -24,7 +24,7 @@ def getMusicRecommendations(recommendMusicRequest):
 
         datas = readMusicData(musicTaste)
         datas2 = datas.loc[:,['화', '기쁨', '슬픔', '평온', '공포', '기대', '창피', '피곤', '짜증', '사랑']]
-        similar_musics = find_similar_musics(recommendMusicRequest.diary_result, datas2)
+        similar_musics = find_similar_musics(diary_result, datas2)
         similar_music_no = check_bad_music(user, similar_musics)
 
         music = session.query(Music).filter(Music.music_no==similar_music_no).one()
