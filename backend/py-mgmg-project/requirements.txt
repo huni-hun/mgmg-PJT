@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+pandas
+pydantic
+numpy
+
+# recommendation.py install
+sqlalchemy
+pymysql
+
+# predict
+mxnet
+gluonnlp
+sentencepiece
+transformers==4.8.1
+torch
+git+https://git@github.com/SKTBrain/KoBERT.git@master
