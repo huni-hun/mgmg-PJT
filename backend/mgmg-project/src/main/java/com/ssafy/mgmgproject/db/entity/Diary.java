@@ -42,7 +42,7 @@ public class Diary {
     @Column(name = "write_date", length = 16)
     private String writeDate;
 
-    @Column(name = "weather", length = 5)
+    @Column(name = "weather", length = 9)
     private String weather;
 
     @Column(name = "diary_img", length = 255)
@@ -80,6 +80,10 @@ public class Diary {
         this.diaryThema = diaryThema;
         this.emotion = emotion;
         this.music = music;
+        this.gift = gift;
+    }
+
+    public void updateGift(Gift gift) {
         this.gift = gift;
     }
 
