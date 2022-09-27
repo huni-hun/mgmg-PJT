@@ -1,7 +1,5 @@
 package com.ssafy.mgmgproject.api.request;
 
-import com.ssafy.mgmgproject.db.entity.GiftCategory;
-import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -11,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -42,7 +41,7 @@ public class UserRegistPostRequest {
     String gender;
 
     @NotEmpty
-    List<String> musicTaste;
+    Map<String,List<String>> musicTaste;
 
     @NotEmpty
     List<String> giftTaste;

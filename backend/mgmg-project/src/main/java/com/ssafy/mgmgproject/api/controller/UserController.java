@@ -8,8 +8,6 @@ import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.auth.UserDetails;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.common.util.JwtTokenUtil;
-import com.ssafy.mgmgproject.db.entity.GiftCategory;
-import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import com.ssafy.mgmgproject.db.entity.User;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +21,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "유저 API")
 @CrossOrigin("*")
@@ -303,8 +302,8 @@ public class UserController {
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
 
-        List<String> musicGenres = userService.searchMusicGenre(user);
-        return ResponseEntity.status(200).body(SearchMusicGenreGetResponse.of(musicGenres, 200, "음악 취향이 조사되었습니다."));
+        Map<String,List<String>> musicTaste = userService.searchMusicGenre(user);
+        return ResponseEntity.status(200).body(SearchMusicGenreGetResponse.of(musicTaste, 200, "음악 취향이 조사되었습니다."));
     }
 
     @GetMapping("/mypage/gift")

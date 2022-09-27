@@ -3,7 +3,7 @@ package com.ssafy.mgmgproject.api.service;
 
 import com.ssafy.mgmgproject.api.dto.StatisticsEmotionDto;
 import com.ssafy.mgmgproject.db.repository.DiaryRepository;
-import com.ssafy.mgmgproject.db.repository.DiaryRepositorySurport;
+import com.ssafy.mgmgproject.db.repository.DiaryRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.*;
 public class StatisticsServiceImpl implements StatisticsService{
 
     @Autowired
-    DiaryRepositorySurport diaryRepositorySurport;
+    DiaryRepositorySupport diaryRepositorySurport;
 
     @Autowired
     DiaryRepository diaryRepository;

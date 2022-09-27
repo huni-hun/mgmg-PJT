@@ -9,18 +9,19 @@ import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import com.ssafy.mgmgproject.db.entity.User;
 import com.ssafy.mgmgproject.db.repository.GiftCategoryRepository;
 import com.ssafy.mgmgproject.db.repository.MusicGenreRepository;
+import com.ssafy.mgmgproject.db.repository.MusicGenreRepositorySupport;
 import com.ssafy.mgmgproject.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
+
+    final String[] emotionList = {"공포", "기대", "기쁨", "사랑", "슬픔", "짜증", "창피", "평온", "피곤", "화"};
 
     @Autowired
     UserRepository userRepository;
@@ -33,6 +34,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     GiftCategoryRepository giftCategoryRepository;
+
+    @Autowired
+    MusicGenreRepositorySupport musicGenreRepositorySupport;
 
     @Override
     public User getByUserId(String userId) {
@@ -53,12 +57,18 @@ public class UserServiceImpl implements UserService{
                 .build();
         userRepository.save(user);
 
-        for (String taste : userRegistInfo.getMusicTaste()) {
-            MusicGenre musicTaste = MusicGenre.builder()
-                            .user(user)
-                            .musicGenreName(taste)
-                            .build();
-            musicGenreRepository.save(musicTaste);
+
+        Map<String,List<String>> musicTasteMap = userRegistInfo.getMusicTaste();
+        for(String emotion: emotionList){
+            List<String> musicGenreList = musicTasteMap.get(emotion);
+            for (String musicGenre : musicGenreList) {
+                MusicGenre musicTaste = MusicGenre.builder()
+                        .user(user)
+                        .emotionName(emotion)
+                        .musicGenreName(musicGenre)
+                        .build();
+                musicGenreRepository.save(musicTaste);
+            }
         }
 
         for (String taste : userRegistInfo.getGiftTaste()) {
@@ -119,13 +129,20 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<String> searchMusicGenre(User user) {
+    public Map<String,List<String>> searchMusicGenre(User user) {
+
+        Map<String,List<String>> musicTaste= new HashMap<>();
         List<MusicGenre> musicGenres = musicGenreRepository.findByUser(user);
-        List<String> list = new ArrayList<>();
-        for(MusicGenre musicGenre : musicGenres){
-            list.add(musicGenre.getMusicGenreName());
+
+        for(String emotion: emotionList){
+            musicTaste.put(emotion,new ArrayList<>());
         }
-        return list;
+
+        for(MusicGenre musicGenre: musicGenres){
+            musicTaste.get(musicGenre.getEmotionName()).add(musicGenre.getMusicGenreName());
+        }
+
+        return musicTaste;
     }
 
     @Override
@@ -141,15 +158,22 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public void changeMusicGenre(User user, UserChangeMusicPutRequest userChangeMusicPutRequest) {
-        musicGenreRepository.deleteByUser(user);
+        musicGenreRepositorySupport.deleteByUser(user);
 
-        for (String taste : userChangeMusicPutRequest.getMusicTaste()) {
-            MusicGenre musicTaste = MusicGenre.builder()
-                    .user(user)
-                    .musicGenreName(taste)
-                    .build();
-            musicGenreRepository.save(musicTaste);
+        Map<String,List<String>> musicTasteMap = userChangeMusicPutRequest.getMusicTaste();
+
+        for(String emotion: emotionList){
+            List<String> musicGenreList = musicTasteMap.get(emotion);
+            for (String musicGenre : musicGenreList) {
+                MusicGenre musicTaste = MusicGenre.builder()
+                        .user(user)
+                        .emotionName(emotion)
+                        .musicGenreName(musicGenre)
+                        .build();
+                musicGenreRepository.save(musicTaste);
+            }
         }
+
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.ssafy.mgmgproject.api.request.UserUpdatePutRequest;
 import com.ssafy.mgmgproject.db.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     User getByUserId(String userId);
@@ -27,7 +28,7 @@ public interface UserService {
 
     void deleteUser(User user);
 
-    List<String> searchMusicGenre(User user);
+    Map<String,List<String>> searchMusicGenre(User user);
 
     List<String> searchGiftCategory(User user);
 

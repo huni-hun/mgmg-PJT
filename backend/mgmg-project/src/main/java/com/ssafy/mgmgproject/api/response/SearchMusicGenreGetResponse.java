@@ -1,26 +1,26 @@
 package com.ssafy.mgmgproject.api.response;
 
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
-import com.ssafy.mgmgproject.db.entity.MusicGenre;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
 @ApiModel("SearchMusicGenreGetResponse")
 public class SearchMusicGenreGetResponse extends BaseResponseBody {
-    @ApiModelProperty(name = "musicGenre")
-    List<String> musicGenres;
+    @ApiModelProperty(name = "감정별 선호음악장르 리스트")
+    Map<String,List<String>> musicTaste;
 
-    public static SearchMusicGenreGetResponse of(List<String> musicGenres, Integer statusCode, String message) {
+    public static SearchMusicGenreGetResponse of(Map<String,List<String>> musicTaste, Integer statusCode, String message) {
         SearchMusicGenreGetResponse res = new SearchMusicGenreGetResponse();
         res.setStatusCode(statusCode);
         res.setMessage(message);
-        res.setMusicGenres(musicGenres);
+        res.setMusicTaste(musicTaste);
         return res;
     }
 }
