@@ -16,7 +16,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class DiaryRepositorySurport {
+public class DiaryRepositorySupport {
     private final JPAQueryFactory jpaQueryFactory;
 
     QDiary qDiary = QDiary.diary;
