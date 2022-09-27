@@ -4,10 +4,7 @@ import com.ssafy.mgmgproject.api.request.DiaryRequest;
 import com.ssafy.mgmgproject.api.request.SearchItemRequest;
 import com.ssafy.mgmgproject.api.request.DiaryUpdateRequest;
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
-import com.ssafy.mgmgproject.db.entity.Diary;
-import com.ssafy.mgmgproject.db.entity.Gift;
-import com.ssafy.mgmgproject.db.entity.InterestGift;
-import com.ssafy.mgmgproject.db.entity.InterestMusic;
+import com.ssafy.mgmgproject.db.entity.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -33,9 +30,9 @@ public interface DiaryService {
 
     String getUserInfo(Date birth, String gender, List<String> giftCategories, Long lowPrice, Long highPrice);
 
-    Gift writeRecommendGift(SearchItemRequest searchItemRequest);
+    Gift writeRecommendGift(SearchItemRequest searchItemRequest, Long diaryNo, User user);
 
-    int openGift(Long diaryNo);
+    int openGift(Long diaryNo, User user);
 
     int uploadImg(Diary diary, MultipartFile multipartFile) throws IOException;
 }

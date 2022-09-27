@@ -68,13 +68,14 @@ public class DiaryController {
         return ResponseEntity.status(200).body(DiaryResponse.of(diary, 200, "일기 작성에 성공하였습니다."));
     }
 
-    @GetMapping("/gift")
+    @GetMapping("/gift/{diaryNo}")
     @ApiOperation(value = "추천 선물 추가", notes = "네이버 api를 호출해서 사용자에게 선물을 추천한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "선물 추천 성공", response = recommendGiftGetResponse.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> recommendGift(@ApiIgnore Authentication authentication) throws Exception{
+    public ResponseEntity<? extends BaseResponseBody> recommendGift(@ApiIgnore Authentication authentication,
+                                                                    @PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
@@ -84,7 +85,8 @@ public class DiaryController {
 
         try {
             SearchItemRequest result = naverShopSearch.fromJSONtoItems(naverShopSearch.search(userInfo));
-            gift = diaryService.writeRecommendGift(result);
+            gift = diaryService.writeRecommendGift(result, diaryNo, user);
+            if(gift == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "선물추천에 실패하였습니다."));
         }
         catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "선물추천에 실패하였습니다."));
@@ -206,19 +208,6 @@ public class DiaryController {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "관심 선물 추가에 실패하였습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 선물 추가에 성공하였습니다."));
-    }
-
-    @PostMapping("/opengift/{diaryNo}")
-    @ApiOperation(value = "선물 오픈", notes = "선물을 오픈한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "선물 오픈 성공", response = BaseResponseBody.class),
-            @ApiResponse(code = 401, message = "선물 오픈 실패", response = BaseResponseBody.class),
-            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
-    })
-    public ResponseEntity<? extends BaseResponseBody> addInterestGift(@PathVariable @ApiParam(value = "일기 번호", required = true) Long diaryNo) throws Exception{
-        int result = diaryService.openGift(diaryNo);
-        if(result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "선물 오픈에 성공하였습니다."));
-        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "선물 오픈에 실패하였습니다."));
     }
 
 }

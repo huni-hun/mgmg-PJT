@@ -211,7 +211,8 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Gift writeRecommendGift(SearchItemRequest searchItemRequest) {
+    public Gift writeRecommendGift(SearchItemRequest searchItemRequest, Long diaryNo, User user) {
+        if(openGift(diaryNo, user) == 0 ) return null;
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("<b>", ""));
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("</b>", ""));
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("&quot", ""));
@@ -226,9 +227,9 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Transactional
-    public int openGift(Long diaryNo) {
+    public int openGift(Long diaryNo, User user) {
         Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
-        if (diary == null) return 0;
+        if (diary == null || diary.getUser() != user) return 0;
         else {
             diary.openGift();
             diaryRepository.save(diary);
