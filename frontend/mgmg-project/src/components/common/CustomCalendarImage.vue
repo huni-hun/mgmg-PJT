@@ -1,7 +1,6 @@
 <template>
-  <v-container>
+  <v-container @click="test" class="calendarDate">
     <div>{{ dateNum }}</div>
-    <div v-if="!emotionImgLst[emotionImg] && this.isToday()">{{ diaryNumber }}</div>
     <!-- <div @click="test()">{{ emotionImgLst[emotionImg] }}</div> -->
     <img v-if="!!emotionImgLst[emotionImg] && !this.isToday()" class="emoticonImg" :src="require(`@/assets/emoticon/${emotionImgLst[emotionImg]}.png`)" alt="" />
   </v-container>
@@ -61,5 +60,8 @@ export default {
 <style>
 .emoticonImg {
   width: 3rem;
+}
+.calendarDate {
+  background-color: antiquewhite;
 }
 </style>
