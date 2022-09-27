@@ -26,3 +26,10 @@ class User(Base):
 
   user_no = Column(BigInteger, primary_key=True, autoincrement=True)
   user_id = Column(String, nullable=False)
+
+class BadMusic(Base):
+  __tablename__ = 'bad_music'
+
+  bad_music_no = Column(BigInteger, primary_key=True, autoincrement=True)
+  music_no = Column(BigInteger, nullable=False)
+  user_no = Column(BigInteger, nullable=False)

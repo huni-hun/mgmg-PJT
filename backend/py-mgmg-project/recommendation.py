@@ -5,7 +5,7 @@ import json
 import os.path
 
 from db_conn import engineconn
-from db_class import User, MusicGenre, Music
+from db_class import User, MusicGenre, Music, BadMusic
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SECRET_FILE = os.path.join(BASE_DIR, 'secrets.json')
@@ -21,11 +21,13 @@ def getMusicRecommendations(recommendMusicRequest):
         
         user = session.query(User).filter(User.user_id==recommendMusicRequest.user_id).one()
         musicTaste = session.query(MusicGenre).filter(MusicGenre.user_no==user.user_no).all()
-       
+
         datas = readMusicData(musicTaste)
         datas2 = datas.loc[:,['화', '기쁨', '슬픔', '평온', '공포', '기대', '창피', '피곤', '짜증', '사랑']]
-        result = find_similar_musics(recommendMusicRequest.diary_result, datas2)
-        music = session.query(Music).filter(Music.music_no==result[0][0]).one()
+        similar_musics = find_similar_musics(recommendMusicRequest.diary_result, datas2)
+        similar_music_no = check_bad_music(user, similar_musics)
+
+        music = session.query(Music).filter(Music.music_no==similar_music_no).one()
         
         return music
     except:
@@ -56,3 +58,13 @@ def find_similar_musics(input, datas):
     result.sort(key= lambda r: r[1], reverse= True)
 
     return result
+
+def check_bad_music(user, similar_musics):
+
+        for similar_music in similar_musics:
+            print(similar_music[0])
+            bad_music = session.query(BadMusic).filter((BadMusic.user_no==user.user_no)&(BadMusic.music_no==similar_music[0])).first()
+            if bad_music == None:
+                return similar_music[0]
+
+        return 0
