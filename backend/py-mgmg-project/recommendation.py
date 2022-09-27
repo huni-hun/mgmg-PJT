@@ -15,11 +15,10 @@ FILE_PATH = secrets["FILE_PATH"]
 engine = engineconn()
 session = engine.sessionmaker()
 
-def getMusicRecommendations(recommendMusicRequest, diary_result, diary_emotion):
-    try:
+def getMusicRecommendations(predictDiaryRequest, diary_result, diary_emotion):
         session.commit()
         
-        user = session.query(User).filter(User.user_id==recommendMusicRequest.user_id).one()
+        user = session.query(User).filter(User.user_id==predictDiaryRequest.user_id).one()
         musicTaste = session.query(MusicGenre).filter((MusicGenre.user_no==user.user_no)&(MusicGenre.emotion_name==diary_emotion)).all()
 
         datas = readMusicData(musicTaste)
@@ -28,11 +27,8 @@ def getMusicRecommendations(recommendMusicRequest, diary_result, diary_emotion):
         similar_music_no = check_bad_music(user, similar_musics)
 
         music = session.query(Music).filter(Music.music_no==similar_music_no).one()
-        
-        return music
-    except:
-        return {"result": "null"}
 
+        return music.music_no
 
 def readMusicData(musicTaste):
     df = pandas.read_csv(FILE_PATH['music'], sep='|',index_col = '인덱스' ,encoding='utf-8')
