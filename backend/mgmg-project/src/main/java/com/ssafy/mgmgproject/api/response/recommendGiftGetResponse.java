@@ -12,6 +12,9 @@ import lombok.Setter;
 @ApiModel("recommendGiftGetResponse")
 public class recommendGiftGetResponse extends BaseResponseBody {
 
+    @ApiModelProperty(name = "선물 번호")
+    Long giftNo;
+
     @ApiModelProperty(name = "선물 이름")
     String giftName;
 
@@ -26,6 +29,7 @@ public class recommendGiftGetResponse extends BaseResponseBody {
 
     public static recommendGiftGetResponse of(Gift gift, Integer statusCode, String message) {
         recommendGiftGetResponse res = new recommendGiftGetResponse();
+        res.setGiftNo(gift.getGiftNo());
         res.setGiftName(gift.getGiftName());
         res.setGiftPrice(gift.getGiftPrice());
         res.setGiftImg(gift.getGiftImg());
