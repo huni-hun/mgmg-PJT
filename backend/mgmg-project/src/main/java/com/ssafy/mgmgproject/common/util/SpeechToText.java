@@ -20,21 +20,24 @@ import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class SpeechToText {
 
-    // Clova Speech secret key
-    private static final String SECRET = "f334e9a396894ef29b02e022a714e320";
-    // Clova Speech invoke URL
-    private static final String INVOKE_URL = "https://clovaspeech-gw.ncloud.com/external/v1/3795/482bbbf362b6beef440e7468c27a0f24c7484f28ed26350b91471d614e169a17";
+    @Value("${Naver.STT-Secret}")
+    private String SECRET;
+
+    @Value("${Naver.STT-INVOKEURL}")
+    private String INVOKE_URL;
 
     private CloseableHttpClient httpClient = HttpClients.createDefault();
     private Gson gson = new Gson();
 
-    private static final Header[] HEADERS = new Header[] {
+    private Header[] HEADERS = new Header[] {
             new BasicHeader("Accept","application/json"),
             new BasicHeader("X-CLOVASPEECH-API-KEY", SECRET),
     };
@@ -171,6 +174,8 @@ public class SpeechToText {
     }
 
     public String upload(File file, NestRequestEntity nestRequestEntity) {
+        System.out.println(INVOKE_URL);
+        System.out.println(SECRET);
         HttpPost httpPost = new HttpPost(INVOKE_URL + "/recognizer/upload");
         httpPost.setHeaders(HEADERS);
 
@@ -192,9 +197,9 @@ public class SpeechToText {
     }
 
     public String play(File file) {
-        final SpeechToText clovaSpeechClient = new SpeechToText();
+        SpeechToText clovaSpeechClient = new SpeechToText();
         NestRequestEntity requestEntity = new NestRequestEntity();
-        final String result =
+        String result =
                 clovaSpeechClient.upload(file, requestEntity);
 
         JSONParser parser = new JSONParser();
@@ -206,7 +211,8 @@ public class SpeechToText {
         }
 
         JSONObject jsonObj = (JSONObject) obj;
-        String parseData = (String)jsonObj.get("text");
+        System.out.println(jsonObj.get("text"));
+        String parseData = (String) jsonObj.get("text");
 
         return parseData;
     }
