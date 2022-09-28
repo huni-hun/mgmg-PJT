@@ -1,7 +1,6 @@
 <template>
   <v-container @click="test(showYear, showMonth, dateNum, diaryNumber)" class="calendarDate">
     <div>{{ dateNum }}</div>
-    <!-- <div @click="test()">{{ emotionImgLst[emotionImg] }}</div> -->
     <img v-if="!!emotionImgLst[emotionImg] && !this.isToday()" class="emoticonImg" :src="require(`@/assets/emoticon/${emotionImgLst[emotionImg]}.png`)" alt="" />
   </v-container>
 </template>
@@ -45,8 +44,7 @@ export default {
     },
     //아니면
     test(year, month, date, diarynum) {
-      console.log(this.showYear, this.showMonth, this.dateNum, this.diaryNumber);
-      //다이어리 넘버 0일떄랑 숫자일떄 구분
+      //다이어리 넘버 0일떄랑 숫자일 때 구분
       if (diarynum == 0) {
         //일기작성
         this.$router.push({
@@ -60,9 +58,6 @@ export default {
           params: { no: diarynum },
         });
       }
-      // console.log(this.nowEmotion);
-      //   console.log(this.emotionImg);
-      // console.log(this.emtionImgLst["기쁨"]);
     },
     changeDateFormat(year, month, date) {
       var finYear = String(year);

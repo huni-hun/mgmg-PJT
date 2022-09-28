@@ -9,10 +9,6 @@
               <input class="inputBox" type="text" id="showYear" name="showYear" :value="showYear" @input="getInputYearMonth()" />
               <div class="inputBox">.</div>
               <input class="inputBox" type="text" id="showMonth" name="showMonth" :value="showMonth" @input="getInputYearMonth()" />
-              <!--             
-              <input class="inputBox" type="text" id="showYear" name="showYear" :value="showYear" @change="maketargetMonth(showYear, showMonth)" />
-              <div class="inputBox">.</div>
-              <input class="inputBox" type="text" id="showMonth" name="showMonth" :value="showMonth" @change="maketargetMonth(showYear, showMonth)" /> -->
             </v-row>
           </v-container>
         </div>
@@ -27,11 +23,8 @@
       </div>
     </v-row>
     <v-row v-for="(week, index1) in monthLst" :key="index1">
-      <!-- <div v-for="(day, idx) in week" :key="idx">{{ day }}</div>
-      <div>{{ week }}</div> -->
       <div v-for="(week0, index2) in week" :key="index2" class="col-1">
         <v-col>
-          <!-- <div v-if="week0 != 0">{{ week0 }}</div> -->
           <emotionImage
             v-if="week0 != 0"
             :showYear="showYear"
@@ -41,17 +34,9 @@
             :diaryNumber="diaryNum[index1][index2]"
             name="emotionImg"
           />
-          <!-- <div v-if="week0 != 0" name="emotion">{{ emotionsLst[index1][index2] }}</div> -->
         </v-col>
       </div>
     </v-row>
-    <!-- <v-row>
-      <div v-for="(week1, index) in monthLst[1]" :key="index">
-        <v-col>
-          <div>{{ week1 }}</div>
-        </v-col>
-      </div>
-    </v-row> -->
   </v-container>
 </template>
 
@@ -124,21 +109,12 @@ export default {
         ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
         ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
       ],
-      testInt: 1,
     };
   },
-  // computed: {
-  //   emotionsLst(){
-  //     return this.emotionLst
-  //   }
-  // },
   mounted() {
     this.setTodayYearMonth();
   },
   methods: {
-    test() {
-      console.log(this.diaryLst[0]);
-    },
     //axios로 몽글이 가져오는 함수
     async monthlyDiaryList(monthInput) {
       this.emotionLst = [
@@ -160,18 +136,15 @@ export default {
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
       ];
-      console.log("월별 몽글이 리스트");
       let response = await monthlyDiaryList(monthInput);
-      console.log("응답 데이터", response);
 
       var diaryDirectionLst = [];
 
       if (response.statusCode == 200) {
-        console.log(response);
+        // console.log(response);
         this.diaryLst = response.diaries;
         // var diaryDirection;
         if (this.diaryLst.length > 0) {
-          console.log("다이어리스트있음", this.diaryLst);
           var weeks;
           for (weeks = 0; weeks < this.monthLst.length; weeks++) {
             var days;
@@ -184,43 +157,12 @@ export default {
               }
             }
           }
-          console.log("diaryDirectionLst", diaryDirectionLst);
           var diaryIdx;
           for (diaryIdx = 0; diaryIdx < diaryDirectionLst.length; diaryIdx++) {
-            console.log(diaryIdx);
             this.emotionLst[diaryDirectionLst[diaryIdx][0]][diaryDirectionLst[diaryIdx][1]] = diaryDirectionLst[diaryIdx][2];
             this.diaryNum[diaryDirectionLst[diaryIdx][0]][diaryDirectionLst[diaryIdx][1]] = diaryDirectionLst[diaryIdx][3];
           }
-          console.log("emotionLst", this.emotionLst);
-
-          // var weeks;
-          // for (weeks = 0; weeks < this.monthLst.length; weeks++) {
-          //   var days;
-          //   for (days = 0; days < this.monthLst[weeks].length; days++) {
-          //     var rep;
-          //     for (rep = 0; rep < this.diaryLst.length; rep++) {
-          //       // console.log(rep);
-          //       if (this.monthLst[weeks][days] == this.diaryLst[rep].diaryDate.slice(8, 10)) {
-          //         console.log("rep", rep, "weeks", weeks, "days", days);
-          //         console.log("날짜", this.diaryLst[rep].diaryDate.slice(8, 10));
-          //         console.log("감정", this.diaryLst[rep].emotion);
-          //         console.log("일기번호", this.diaryLst[rep].diaryNo);
-          //         console.log("몇주, 며칠", weeks, days);
-
-          //         this.emotionLst[weeks][days] = this.diaryLst[rep].emotion;
-          //         this.diaryNum[weeks][days] = this.diaryLst[rep].diaryNo;
-
-          //         console.log("감정 들어올때마다 감정리스트 출력", this.emotionLst);
-          //         console.log("감정 들어올때마다 일기번호리스트 출력", this.diaryNum);
-          //       } else {
-          //         this.emotionLst[weeks][days] = "없음";
-          //         this.diaryNum[weeks][days] = 0;
-          //       }
-          //     }
-          //   }
-          // }
         } else {
-          console.log("다이어리스트없음", this.diaryLst);
           //감정 리스트
           this.emotionLst = [
             ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
@@ -244,49 +186,20 @@ export default {
         }
         this.updateEmotionLst();
       }
-
-      //몽글이 이미지
-
-      // console.log(this.diaryLst[0].diaryDate);
-      console.log(this.emotionLst);
-      console.log(this.diaryNum);
     },
     updateEmotionLst() {
-      // this.$set(this.emotionLst, "emotion", this.emotionLst);
-      this.emotionsLst = [...this.emotionLst]; //이걸로 하면 되긴 되는데 무한 반복 됨.
-      // console.log(this.emotionsLst, this.emotionLst);
-      // console.log("updateEmotionLst");
-      // vm.$forceUpdate();
-    },
-    //과거 일기 내역 확인
-    writtenDiray(day) {
-      console.log(this.diaryLst);
-      console.log("DDDDDDDDDD", this.diaryLst.length);
-      var rep;
-      for (rep = 0; rep < this.diaryLst.length; rep++) {
-        console.log("EEEEEEEEEEE", this.diaryLst[rep]);
-        if (this.diaryLst[rep].diaryDate.slice(8, 10) == day) {
-          console.log("결과조회", this.diaryLst[rep].diaryNo, this.diaryLst[rep].emotion);
-        }
-      }
-      this.diaryLst;
+      this.emotionsLst = [...this.emotionLst];
     },
 
     //오늘 날짜 가져오기
     setTodayYearMonth() {
-      console.log("오늘 연월 가져오기");
       var now = new Date();
       this.showYear = now.getFullYear();
       this.showMonth = now.getMonth() + 1;
       this.showDate = now.getDate();
 
-      // console.log(this.showYear, this.showMonth, this.showDate);
-      // console.log(this.changeToString(this.showYear, this.showMonth)); //202201꼴
-      // console.log(this.reputation(this.changeToString(this.showYear, this.showMonth))); //190001부터 몇개의 달을 거치는가
-      console.log(this.lastdayFirstDate(this.changeToString(this.showYear, this.showMonth)));
-      //axios에 연, 월 보내서 몽글이 찍기
+      this.lastdayFirstDate(this.changeToString(this.showYear, this.showMonth));
       this.monthlyDiaryList(this.changeToAxiosShape(this.showYear, this.showMonth));
-
       this.makeMonthList(this.changeToString(this.showYear, this.showMonth));
     },
     //입력한 곳에 있는 값을 가져오기
@@ -294,14 +207,8 @@ export default {
       this.showYear = document.getElementById("showYear").value;
       this.showMonth = document.getElementById("showMonth").value;
 
-      // console.log(this.showYear, this.showMonth);
-      // console.log(this.changeToString(this.showYear, this.showMonth)); //202201꼴
-      // console.log(this.reputation(this.changeToString(this.showYear, this.showMonth))); //190001부터 몇개의 달을 거치는가
-      console.log(this.lastdayFirstDate(this.changeToString(this.showYear, this.showMonth)));
-      //axios에 연, 월 보내서 몽글이 찍기
-      console.log("input", this.showYear, this.showMonth);
+      this.lastdayFirstDate(this.changeToString(this.showYear, this.showMonth));
       this.monthlyDiaryList(this.changeToAxiosShape(this.showYear, this.showMonth));
-
       this.makeMonthList(this.changeToString(this.showYear, this.showMonth));
     },
 
@@ -316,10 +223,10 @@ export default {
     //연, 월 숫자 받아서 202201 꼴 string으로 바꿔주기
     changeToAxiosShape(year, month) {
       if (month < 10) {
-        console.log(String(year) + "-0" + String(month));
+        // console.log(String(year) + "-0" + String(month));
         return String(year) + "-0" + String(month);
       } else {
-        console.log(String(year) + "-" + String(month));
+        // console.log(String(year) + "-" + String(month));
         return String(year) + "-" + String(month);
       }
     },
@@ -328,8 +235,6 @@ export default {
     reputation(targetMonth) {
       var year = targetMonth.slice(0, 4);
       var month = targetMonth.slice(4, 6);
-      // console.log(year, month);
-      // console.log((year - 1900) * 12 + (month - 1));
       return (year - 1900) * 12 + (month - 1);
     },
 
@@ -367,16 +272,14 @@ export default {
         } else {
           this.lastday = 30;
         }
-        // this.firstDay = this.day;
       }
-      console.log("마지막날", this.lastday, "시작요일", this.repeatDay);
+      // console.log("마지막날", this.lastday, "시작요일", this.repeatDay);
     },
 
     // 달력에 표시할 날짜 리스트 만들기
     makeMonthList() {
       var startday = this.repeatDay;
       var lastdate = this.lastday;
-      // console.log(startday, lastdate);
       var rep;
       var week;
       var days = 1;
@@ -387,7 +290,6 @@ export default {
         } else {
           this.monthLst[0][rep] = days;
           days = days + 1;
-          // this.writtenDiray(days);
         }
       }
       //둘째 주부터
@@ -396,29 +298,24 @@ export default {
           if (days <= lastdate) {
             this.monthLst[week][rep] = days;
             days = days + 1;
-            // this.writtenDiray(days);
           } else {
             this.monthLst[week][rep] = 0;
           }
         }
       }
-      console.log(this.showYear, "년", this.showMonth, "월", this.monthLst);
       this.showYear = Number(this.showYear);
       this.showMonth = Number(this.showMonth);
-      // this.showYear = String(this.showYear)
     },
 
     //이전달
     beforeMonth() {
       // this.showMonth--;
       document.getElementById("showMonth").value = Number(this.showMonth) - 1;
-      console.log("aaaaaaaaaa" + this.showMonth);
       this.getInputYearMonth();
     },
     //다음달
     afterMonth() {
       document.getElementById("showMonth").value = Number(this.showMonth) + 1;
-      console.log("aaaaaaaaaa" + this.showMonth);
       this.getInputYearMonth();
     },
   },
