@@ -58,7 +58,6 @@ def find_similar_musics(input, datas):
 def check_bad_music(user, similar_musics):
 
         for similar_music in similar_musics:
-            print(similar_music[0])
             bad_music = session.query(BadMusic).filter((BadMusic.user_no==user.user_no)&(BadMusic.music_no==similar_music[0])).first()
             if bad_music == None:
                 return similar_music[0]
