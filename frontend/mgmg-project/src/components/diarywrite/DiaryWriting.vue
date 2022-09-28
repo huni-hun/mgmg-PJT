@@ -61,15 +61,28 @@
       <custom-button v-if="isEdit" class="customButton" btnText="수정완료" @click="writingCompletion" />
       <custom-button v-else class="customButton" btnText="작성완료" @click="writingCompletion" />
     </div>
+    <div class="microButton">
+      <button :class="[onRec? `onMike` : `offMike` ]" fab @click="onRec ? onRecAudio() : offRecAudio()">
+        <v-icon v-if="onRec">mdi-microphone</v-icon>
+        <v-icon v-else>mdi-microphone-off</v-icon>
+      </button>
+    </div>
+    <div v-if="isLoading" class="loading-container">
+      <LodingView />
+    </div>
   </div>
 </template>
 
 <script>
 import eventBus from "./eventBus.js";
-import { diaryWrite, diaryDetailView, diaryEdit } from "@/api/diary.js";
+import { diaryWrite, diaryDetailView, diaryEdit, sttWrite } from "@/api/diary.js";
+import { notification_check } from "@/store/modules/etcStore";
+import { HZRecorder } from "@/components/diarywrite/HZRecorder.js";
+import LodingView from "./LodingView.vue";
 // import { mapActions } from "vuex";
 
 export default {
+  components: { LodingView },
   data: function () {
     return {
       weatherImg: [
@@ -83,39 +96,92 @@ export default {
         "mild",
       ],
       uploadReady: true,
-
       date: "",
       weather: "sunny",
       uploadImageSrc: "",
       imageFile: "",
       diary: "",
       thema: "blackLine",
+      // 감정 분석 결과 추가로 받을 것
+      emotion: "기쁨",
+      musicNo: 5,
+      giftNo: 1,
 
+      // 오디오 스트림
+      stream: null,
+      media: null,
+      onRec: true,
+      source: null,
+      audioUrl: null,
+      disabled: false,
+      audioCtx: null,
+      analyser: null,
+
+      // 수정 여부
       isEdit: this.$route.query.no,
+      isLoading: false,
     };
   },
   methods: {
     // ...mapActions("diaryStore", ["fetchDiary"]),
+    onRecAudio() {
+      console.log(process.env.VUE_APP_API_URL);
+      console.log(process.env.EMOTION_APP_API_URL);
+      console.log(process.env.YOUTUBE_API_KEY);
+      this.onRec = !this.onRec;
+      // 음원 정보를 담은 노드를 생성하거나 음원을 실행 또는 디코딩 시키는일을 한다.
+      this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      // 자바스크립트를 통해 음원의 진행상태에 직접 접근에 사용된다.
+      this.analyser = this.audioCtx.createScriptProcessor(0, 1, 1);
 
+      navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+        const recorder = new HZRecorder(stream);
+        recorder.start();
+        this.stream = stream;
+        this.media = recorder;
+        const source = this.audioCtx.createMediaStreamSource(stream);
+        this.source = source;
+        this.source.connect(this.analyser);
+        this.analyser.connect(this.audioCtx.destination);
+      });
+    },
+    offRecAudio() {
+      var mp3Blob = this.media.upload();
+      var form = new FormData();
+      form.append("file", mp3Blob);
+      // 음성 전송
+      this.isLoading = true;
+      sttWrite(form).then((res) => {
+        this.isLoading = false;
+        console.log("전송된 음성입니다", res);
+        this.diary += res.text;
+      }).catch((err) => {
+        this.isLoading = false;
+        console.log(err);
+      });
+      this.onRec = !this.onRec;
+      // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
+      this.stream.getAudioTracks().forEach(function (track) {
+        track.stop();
+      });
+      //미디어 캡처 중지
+      this.media.stop();
+      // 메서드가 호출 된 노드 연결 해제
+      this.analyser.disconnect();
+      this.source.disconnect();
+    },
     async writingCompletion() {
       const diaryData = {
         diaryContent: this.diary,
         diaryDate: this.date,
         weather: this.weather,
         diaryThema: this.thema,
-        emotion: "기쁨",
-        musicNo: 0,
-        giftNo: 0,
+        emotion: this.emotion,
+        musicNo: this.musicNo,
+        giftNo: this.giftNo,
       };
-      // date: this.date,
-
       let form = new FormData();
       form.append("multipartFile", this.imageFile);
-      // form.append(
-      //   "diaryRequest",
-      //   new Blob([JSON.stringify(diaryData)], { type: "application/json" })
-      // );
-
       if (this.no === undefined) {
         // 일반 작성 create
         form.append(
@@ -123,13 +189,16 @@ export default {
           new Blob([JSON.stringify(diaryData)], { type: "application/json" })
         );
         await diaryWrite(form).then((res) => {
-          console.log("vuex success", res);
+          console.log("writing success", res);
           this.$router.push({
             name: "diarydetail",
             params: { no: res.diaryNo },
           });
         });
-      } else {
+        this.isCheck = await notification_check();
+        this.$store.commit("IS_INF", this.isCheck.notificationFlag);
+      }
+      else {
         // 일기 수정 update
         console.log("수정된 이미지 src : ", this.imageFile);
         form.append(
@@ -183,6 +252,7 @@ export default {
     this.no = this.$route.query.no;
     this.isEditView();
   },
+
 };
 </script>
 
@@ -276,5 +346,46 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.microButton {
+  position: fixed;
+  bottom: 60px;
+  right: 17vw;
+  width: 50px;
+  height: 50px;
+}
+
+.microButton>button {
+  width: 100%;
+  height: 100%;
+  border-radius: 70%;
+  object-fit: cover;
+}
+
+.onMike {
+  background-color: #888898
+}
+
+.v-icon {
+  color: beige;
+}
+
+.offMike {
+  background-color: rgb(236, 72, 72);
+}
+
+.loading {
+  z-index: 2;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
+}
+
+.loading>* {
+  z-index: 2;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
 }
 </style>
