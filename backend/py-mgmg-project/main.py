@@ -14,7 +14,7 @@ class predictDiaryRequest(BaseModel):
     user_id: str
     diary_content: str
 
-@app.post('/api/diary/predict')
+@app.post('/predict/diary')
 async def predictDiary(predictDiaryRequest: predictDiaryRequest):
     try:
         diary_result, diary_emotion = predict(predictDiaryRequest.diary_content, model, tok)
