@@ -28,14 +28,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpeechToText {
 
-    @Value("${Naver.STT-Secret}")
-    private String SECRET;
-
-    @Value("${Naver.STT-INVOKEURL}")
-    private String INVOKE_URL;
-
     private CloseableHttpClient httpClient = HttpClients.createDefault();
     private Gson gson = new Gson();
+
+    private static String SECRET;
+    private static String INVOKE_URL;
+
+    @Value("${Naver.STT-Secret}")
+    private void setSECRET(String secretKey){
+        this.SECRET=secretKey;
+    }
+
+    @Value("${Naver.STT-INVOKEURL}")
+    private void setInvokeUrl(String url){
+        this.INVOKE_URL=url;
+    }
 
     private Header[] HEADERS = new Header[] {
             new BasicHeader("Accept","application/json"),
@@ -174,8 +181,6 @@ public class SpeechToText {
     }
 
     public String upload(File file, NestRequestEntity nestRequestEntity) {
-        System.out.println(INVOKE_URL);
-        System.out.println(SECRET);
         HttpPost httpPost = new HttpPost(INVOKE_URL + "/recognizer/upload");
         httpPost.setHeaders(HEADERS);
 
@@ -197,9 +202,9 @@ public class SpeechToText {
     }
 
     public String play(File file) {
-        SpeechToText clovaSpeechClient = new SpeechToText();
+        final SpeechToText clovaSpeechClient = new SpeechToText();
         NestRequestEntity requestEntity = new NestRequestEntity();
-        String result =
+        final String result =
                 clovaSpeechClient.upload(file, requestEntity);
 
         JSONParser parser = new JSONParser();
@@ -211,7 +216,6 @@ public class SpeechToText {
         }
 
         JSONObject jsonObj = (JSONObject) obj;
-        System.out.println(jsonObj.get("text"));
         String parseData = (String) jsonObj.get("text");
 
         return parseData;
