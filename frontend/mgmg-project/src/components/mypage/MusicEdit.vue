@@ -5,10 +5,20 @@
       <v-row>감정별로 선호하는 음악 장르를 선택하세요.</v-row>
       <v-row><hr class="hrStyle" /></v-row>
       <v-row>
-        <v-col class="genreCheckLst" v-for="(emotion, index) in emotionLst1" :key="index">
+        <v-col
+          class="genreCheckLst"
+          v-for="(emotion, index) in emotionLst1"
+          :key="index"
+        >
           <v-container>
             <v-row>
-              <img :src="require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)" alt="" class="emoticonImg" />
+              <img
+                :src="
+                  require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)
+                "
+                alt=""
+                class="emoticonImg"
+              />
             </v-row>
             <v-row>
               <div>{{ emotion }}</div>
@@ -47,7 +57,16 @@ export default {
       emotionLst1: ["평온", "기쁨", "사랑", "짜증", "피곤"],
       emotionEnglishLst1: ["calm", "happy", "love", "annoyed", "fatigue"],
 
-      genreLst1: ["R&B/Soul", "댄스", "랩/힙합", "록/메탈", "발라드", "인디음악", "트로트", "포크/블루스"],
+      genreLst1: [
+        "R&B/Soul",
+        "댄스",
+        "랩/힙합",
+        "록/메탈",
+        "발라드",
+        "인디음악",
+        "트로트",
+        "포크/블루스",
+      ],
 
       musicTaste: {
         피곤: [],
@@ -81,13 +100,16 @@ export default {
       for (rep = 0; rep < 5; rep++) {
         console.log(this.emotionLst1[rep]);
         console.log(this.musicTaste[this.emotionLst1[rep]]);
-        if (this.musicTaste[this.emotionLst1[rep]].length == 0) {
+        if (
+          typeof this.musicTaste[this.emotionLst1[rep]] == "undefined" ||
+          this.musicTaste[this.emotionLst1[rep]].length == 0
+        ) {
           isAllChecked = false;
         }
       }
       if (!isAllChecked) {
         Swal.fire({
-          text: "감정별 장르는 최소 1개 선택해야 합니다.",
+          text: "감정별로 음악 장르를 1개 이상 선택해야 합니다.",
           icon: "warning",
           // iconColor: "#000000",
           confirmButtonColor: "#666666",
@@ -104,13 +126,16 @@ export default {
       for (rep = 0; rep < 5; rep++) {
         console.log(this.emotionLst2[rep]);
         console.log(this.musicTaste[this.emotionLst2[rep]]);
-        if (this.musicTaste[this.emotionLst2[rep]].length == 0) {
+        if (
+          typeof this.musicTaste[this.emotionLst2[rep]] == "undefined" ||
+          this.musicTaste[this.emotionLst2[rep]].length == 0
+        ) {
           isAllChecked = false;
         }
       }
       if (!isAllChecked) {
         Swal.fire({
-          text: "감정별 장르는 최소 1개 선택해야 합니다.",
+          text: "감정별로 음악 장르를 1개 이상 선택해야 합니다.",
           icon: "warning",
           // iconColor: "#000000",
           confirmButtonColor: "#666666",
@@ -219,7 +244,8 @@ export default {
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
 }
 .selected {
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25),
+    inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
 .genreCheckLst {
   width: 20%;

@@ -5,12 +5,18 @@
       <!-- <v-col> -->
       <v-row class="signupNoDrag" @click="test()">회원가입</v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="idSignupInput" id="idSignupLabel">아이디</label>
+        <label class="col-4 signupNoDrag" for="idSignupInput" id="idSignupLabel"
+          >아이디</label
+        >
         <CustomInput v-model="idSignupInput" class="col-4" />
-        <div class="col-4"><custom-button btnText="중복확인" @click="idDoubleCheck" /></div>
+        <div class="col-4">
+          <custom-button btnText="중복확인" @click="idDoubleCheck" />
+        </div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
+        <label class="col-4 signupNoDrag" for="pwSignupInput" id="pwSignupLabel"
+          >비밀번호</label
+        >
         <div class="inputStyle col-4">
           <v-text-field
             :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
@@ -30,7 +36,12 @@
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="pwCheckSignupInput" id="pwCheckSignupLabel">비밀번호 확인</label>
+        <label
+          class="col-4 signupNoDrag"
+          for="pwCheckSignupInput"
+          id="pwCheckSignupLabel"
+          >비밀번호 확인</label
+        >
         <div class="inputStyle col-4">
           <v-text-field
             :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'"
@@ -50,28 +61,55 @@
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="emailSignupInput" id="emailSignupLabel">이메일</label>
+        <label
+          class="col-4 signupNoDrag"
+          for="emailSignupInput"
+          id="emailSignupLabel"
+          >이메일</label
+        >
         <CustomInput v-model="emailSignupInput" class="col-4" />
         <div class="col-4">
           <custom-button btnText="인증하기" @click="emailDubleCheck" />
         </div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="emailcheckSignupInput" id="emailcheckSignupLabel">인증번호</label>
+        <label
+          class="col-4 signupNoDrag"
+          for="emailcheckSignupInput"
+          id="emailcheckSignupLabel"
+          >인증번호</label
+        >
         <CustomInput v-model="emailcheckSignupInput" class="col-4" />
         <div class="col-4">
           <custom-button btnText="확인" @click="emailNumCheck" />
         </div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="nameSignupInput" id="nameSignupLabel">이름</label>
+        <label
+          class="col-4 signupNoDrag"
+          for="nameSignupInput"
+          id="nameSignupLabel"
+          >이름</label
+        >
         <CustomInput v-model="nameSignupInput" class="col-4" />
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
+        <label
+          class="col-4 signupNoDrag"
+          for="birthSignupInput"
+          id="birthSignupLabel"
+          >생년월일</label
+        >
         <div class="col-4">
-          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
+          <v-menu
+            v-model="menu2"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 single-line
@@ -86,15 +124,29 @@
                 :change="birthCheck()"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
+            <v-date-picker
+              v-model="date"
+              no-title
+              @input="menu2 = false"
+            ></v-date-picker>
           </v-menu>
         </div>
         <div class="col-4"></div>
       </v-row>
       <v-row>
         <label class="col-4" for="" id="genderSignupLabel">성별</label>
-        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
-        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
+        <CustomButton
+          class="col-3"
+          :class="{ selectedGender: userGenderNum == 1 }"
+          @click="changeGender(1)"
+          btnText="남자"
+        />
+        <CustomButton
+          class="col-3"
+          :class="{ selectedGender: userGenderNum == 2 }"
+          @click="changeGender(2)"
+          btnText="여자"
+        />
         <div class="col-4"></div>
       </v-row>
       <v-row>
@@ -102,13 +154,19 @@
       </v-row>
       <v-row>
         <label for="">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus obcaecati dolore molestiae ad debitis perspiciatis consequuntur doloribus ex ratione consectetur eaque quo
-          maiores quas ipsa, nihil, facere saepe maxime.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+          necessitatibus obcaecati dolore molestiae ad debitis perspiciatis
+          consequuntur doloribus ex ratione consectetur eaque quo maiores quas
+          ipsa, nihil, facere saepe maxime.
         </label>
       </v-row>
       <v-row>
         <v-col>
-          <v-checkbox v-model="ruleCheck" :label="`약관 내용에 동의합니다.`" @click="ruleApproveCheck"></v-checkbox>
+          <v-checkbox
+            v-model="ruleCheck"
+            :label="`약관 내용에 동의합니다.`"
+            @click="ruleApproveCheck"
+          ></v-checkbox>
           <!-- <input type="checkbox" id="ruleCheck" />
           <label for="ruleCheck" class="signupNoDrag"> 약관 내용에 동의합니다.</label> -->
         </v-col>
@@ -124,7 +182,15 @@ import { emailDoubleCheck } from "@/api/userApi.js";
 import { emailNumCheck } from "@/api/userApi.js";
 
 export default {
-  props: ["userid", "userpassword", "useremail", "username", "userbirth", "usergender", "userrulecheck"],
+  props: [
+    "userid",
+    "userpassword",
+    "useremail",
+    "username",
+    "userbirth",
+    "usergender",
+    "userrulecheck",
+  ],
   computed: {
     testComputed() {
       return this.userId;
@@ -137,24 +203,37 @@ export default {
       showPwCheck: false,
       password: "Password",
       rules: {
-        pwRequired: (v) => this.pwValidationCheck(v) || "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
-        pwCheckRequired: (v) => this.pwCheckValidationCheck(v) || "비밀번호가 일치하지 않습니다.",
+        pwRequired: (v) =>
+          this.pwValidationCheck(v) ||
+          "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
+        pwCheckRequired: (v) =>
+          this.pwCheckValidationCheck(v) || "비밀번호가 일치하지 않습니다.",
       },
       // 달력
-      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
+      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
       menu: false,
       modal: false,
       menu2: false,
       // 커스텀 인풋
       idSignupInput: {
         labelText: "아이디를 입력하세요.",
-        rules: [(v) => !!v || "아이디는 필수값입니다.", (v) => /^[A-Za-z]/.test(v) || "아이디는 영어로 시작해야 합니다.", (v) => this.idValidationCheck(v) || "영어, 숫자 포함 6자 이상 16자 이하"],
+        rules: [
+          (v) => !!v || "아이디는 필수값입니다.",
+          (v) => /^[A-Za-z]/.test(v) || "아이디는 영어로 시작해야 합니다.",
+          (v) =>
+            this.idValidationCheck(v) || "영어, 숫자 포함 6자 이상 16자 이하",
+        ],
         hint: "아이디를 입력하세요.",
         id: "idSignupInput",
       },
       emailSignupInput: {
         labelText: "이메일을 입력하세요.",
-        rules: [(v) => !!v || "이메일은 필수값입니다.", (v) => this.emailValidationCheck(v) || "이메일 형식을 확인해주세요."],
+        rules: [
+          (v) => !!v || "이메일은 필수값입니다.",
+          (v) => this.emailValidationCheck(v) || "이메일 형식을 확인해주세요.",
+        ],
         hint: "이메일을 입력하세요.",
         id: "emailSignupInput",
       },
@@ -168,7 +247,9 @@ export default {
         labelText: "이름을 입력하세요.",
         rules: [
           (v) => !!v || "이름은 필수값입니다.",
-          (v) => /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/.test(v) || "이름은 한글과 영어만 입력 받습니다.",
+          (v) =>
+            /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/.test(v) ||
+            "이름은 한글과 영어만 입력 받습니다.",
           (v) => this.nameValidationCheck(v) || "이름은 한 글자 이상입니다.",
         ],
         hint: "이름을 입력하세요.",
@@ -192,6 +273,8 @@ export default {
       // 중복 검사
       idDuplicated: false,
       emailDuplicated: false,
+      //이메일 인증 여부
+      emailAuthentication: false,
       // 약관 동의 여부
       ruleCheck: false,
       // 한 항목이라도 false면 다음 버튼 비활성화하기
@@ -200,9 +283,17 @@ export default {
   methods: {
     finalValidSignup() {
       var finalValidation =
-        this.idValidation && this.pwValidation && this.emailValidation && this.nameValidation && this.GenderValidation && this.idDuplicated && this.emailDuplicated && this.ruleCheck;
+        this.idValidation &&
+        this.pwValidation &&
+        this.emailValidation &&
+        this.nameValidation &&
+        this.GenderValidation &&
+        this.idDuplicated &&
+        this.emailDuplicated &&
+        this.emailAuthentication &&
+        this.ruleCheck;
       this.$emit("finalValidSignup", finalValidation);
-      
+
       console.log("자식 최종 유효성 평가", finalValidation);
       console.log("아이디유효성", this.idValidation);
       console.log("비밀번호유효성", this.pwValidation);
@@ -234,7 +325,8 @@ export default {
     },
     // 비밀번호 정규식 검사
     pwValidationCheck(user_pw) {
-      const regPw = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[a-zA-Z0-9#?!@$ %^&*-]{8,16}$/;
+      const regPw =
+        /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[a-zA-Z0-9#?!@$ %^&*-]{8,16}$/;
       if (regPw.test(user_pw)) {
         this.userPw = user_pw;
         this.$emit("userpasswordSignup", user_pw);
@@ -258,10 +350,12 @@ export default {
     },
     // 이메일 정규식 검사
     emailValidationCheck(user_email) {
-      const regEmail = /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+      const regEmail =
+        /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
       if (regEmail.test(user_email)) {
         this.$emit("useremailSignup", user_email);
         this.userEmail = user_email;
+        this.emailValidation = true;
         return true;
       } else {
         this.emailValidation = false;
@@ -291,204 +385,109 @@ export default {
           userId: user_id,
         };
 
-        let response = await idDoubleCheck(params);
-        console.log("응답 데이터", response);
-        if (response.statusCode == 200) {
-          Swal.fire({
-            text: "사용 가능한 아이디 입니다.",
-            icon: "success",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
+        await idDoubleCheck(params)
+          .then((res) => {
+            console.log(res);
+            Swal.fire({
+              text: "사용 가능한 아이디 입니다.",
+              icon: "success",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+            this.idDuplicated = true;
+            this.finalValidSignup();
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              text: "사용 불가능한 아이디입니다.",
+              icon: "warning",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+            this.idDuplicated = false;
+            this.finalValidSignup();
           });
-          this.idDuplicated = true;
-          this.finalValidSignup();
-        } else {
-          Swal.fire({
-            text: "사용 불가능한 아이디입니다.",
-            icon: "warning",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
-            // },
-          });
-          this.idDuplicated = false;
-          this.finalValidSignup();
-        }
         console.log("아이디 중복검사결과", this.idDuplicated);
       }
     },
-    // idDoubleCheck(user_id) {
-    //   console.log(api_url.accounts.id_check());
-    //   axios
-    //     .get(api_url.accounts.id_check(), {
-    //       params: {
-    //         userId: user_id,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       if (response.data.statusCode == "200") {
-    //         console.log(response.data);
-    //         Swal.fire({
-    //           text: "사용 가능한 아이디입니다.",
-    //           icon: "success",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //           // },
-    //         });
-    //         this.idDuplicated = true;
-    //         this.finalValidSignup();
-    //       } else {
-    //         Swal.fire({
-    //           text: "사용 불가능한 아이디입니다.",
-    //           icon: "warning",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //           // },
-    //         });
-    //         this.idDuplicated = false;
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       Swal.fire({
-    //         text: "사용 불가능한 아이디입니다.",
-    //         icon: "warning",
-    //         // iconColor: "#000000",
-    //         confirmButtonColor: "#666666",
-    //         confirmButtonText: "확인",
-    //         // },
-    //       });
-    //       this.idDuplicated = false;
-    //     });
-    // },
     // 이메일 api 전송
     async emailDubleCheck() {
       console.log(this.emailValidation);
       console.log(this.userEmail);
-      var user_email = this.userEmail;
+      if (this.emailValidation) {
+        var user_email = this.userEmail;
 
-      const request = {
-        email: user_email,
-      };
-      let response = await emailDoubleCheck(request);
-      console.log("응답 데이터", response);
-
-      if (response.statusCode == 200) {
-        this.emailValidation = true;
-        this.finalValidSignup();
-        Swal.fire({
-          text: "이메일로 인증 번호를 보냈습니다.",
-          icon: "success",
-          // iconColor: "#000000",
-          confirmButtonColor: "#666666",
-          confirmButtonText: "확인",
-          // },
-        });
+        const params = {
+          email: user_email,
+        };
+        await emailDoubleCheck(params)
+          .then((res) => {
+            console.log(res);
+            this.emailDuplicated = true;
+            this.finalValidSignup();
+            Swal.fire({
+              text: "이메일로 인증 번호를 보냈습니다.",
+              icon: "success",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              text: "사용 불가능한 이메일입니다.",
+              icon: "warning",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+            this.emailDuplicated = false;
+            this.finalValidSignup();
+          });
       }
     },
-    // emailDubleCheck() {
-    //   console.log(this.userEmail);
-    //   axios
-    //     .post(api_url.accounts.email(), {
-    //       email: this.userEmail,
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //       if (response.data.statusCode == "200") {
-    //         Swal.fire({
-    //           text: "이메일로 인증 번호를 보냈습니다.",
-    //           icon: "success",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //           // },
-    //         });
-    //       } else {
-    //         Swal.fire({
-    //           text: "인증번호를 보내지 못했습니다.",
-    //           icon: "warning",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //           // },
-    //         });
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       Swal.fire({
-    //         text: "인증번호를 보내지 못했습니다.",
-    //         icon: "warning",
-    //         // iconColor: "#000000",
-    //         confirmButtonColor: "#666666",
-    //         confirmButtonText: "확인",
-    //         // },
-    //       });
-    //     });
-    // },
 
     // 인증번호 일치여부 확인- api 가져오기 (확인 되면 emailValidation true로 변경) 일치하지 않으면 정규식 사용해서 인증번호가 일치하지 않습니다(가능하면)
     async emailNumCheck() {
-      var user_email = this.userEmail;
-      var user_emailNum = document.getElementById("emailcheckSignupInput").value;
+      if (this.emailValidation && this.emailDuplicated) {
+        var user_email = this.userEmail;
+        var user_emailNum = document.getElementById(
+          "emailcheckSignupInput"
+        ).value;
 
-      const params = {
-        user_email: user_email,
-        user_emailNum: user_emailNum,
-      };
-
-      let response = await emailNumCheck(params);
-      console.log("응답 데이터", response);
-      if (response.statusCode == 200) {
-        this.emailDuplicated = true;
-        this.finalValidSignup();
-        Swal.fire({
-          text: "인증번호가 확인되었습니다.",
-          icon: "success",
-          // iconColor: "#000000",
-          confirmButtonColor: "#666666",
-          confirmButtonText: "확인",
-        });
+        const params = {
+          user_email: user_email,
+          user_emailNum: user_emailNum,
+        };
+        await emailNumCheck(params)
+          .then((res) => {
+            console.log(res);
+            this.emailAuthentication = true;
+            this.finalValidSignup();
+            Swal.fire({
+              text: "인증번호가 확인되었습니다.",
+              icon: "success",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              text: "인증번호가 틀렸습니다.",
+              icon: "warning",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
+            this.emailAuthentication = false;
+            this.finalValidSignup();
+          });
       }
     },
 
-    // emailNumCheck() {
-    //   axios
-    //     .get(api_url.accounts.email_check(), {
-    //       params: {
-    //         email: this.userEmail,
-    //         emailNum: document.getElementById("emailcheckSignupInput").value,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       if (response.data.statusCode == "200") {
-    //         this.emailDuplicated = true;
-    //         this.finalValidSignup();
-    //         Swal.fire({
-    //           text: "인증번호가 확인되었습니다.",
-    //           icon: "success",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //           // },
-    //         });
-    //       } else {
-    //         this.emailDuplicated = false;
-    //         Swal.fire({
-    //           text: "인증번호가 다릅니다.",
-    //           icon: "warning",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //           // },
-    //         });
-    //       }
-    //       console.log(response.data);
-    //     });
-    // },
     //생일 날짜 emit
     birthCheck() {
       this.$emit("userbirthSignup", this.date);
