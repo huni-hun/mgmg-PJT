@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-row>음악 장르 (1/2)</v-row>
+      <v-row>음악 장르 (2/2)</v-row>
       <v-row>감정별로 선호하는 음악 장르를 선택하세요.</v-row>
       <v-row><hr class="hrStyle" /></v-row>
       <v-row>
@@ -31,13 +31,13 @@
       </v-row>
 
       <!-- <v-row>관심 음악</v-row>
-      <v-row>좋아하는 음악 장르를 선택하세요. 최소 1개, 최대 5개까지 선택할 수 있습니다.</v-row>
-      <v-row><hr class="hrStyle" /></v-row>
-      <v-row>
-        <div class="col-3" v-for="music in musicLst" :key="music" @click="addMusic(music)">
-          <div class="musicLstBox" :class="{ selected: selectedMusic.includes(music) }">{{ music }}</div>
-        </div>
-      </v-row> -->
+        <v-row>좋아하는 음악 장르를 선택하세요. 최소 1개, 최대 5개까지 선택할 수 있습니다.</v-row>
+        <v-row><hr class="hrStyle" /></v-row>
+        <v-row>
+          <div class="col-3" v-for="music in musicLst" :key="music" @click="addMusic(music)">
+            <div class="musicLstBox" :class="{ selected: selectedMusic.includes(music) }">{{ music }}</div>
+          </div>
+        </v-row> -->
     </v-container>
   </div>
 </template>
@@ -46,22 +46,17 @@
 export default {
   data() {
     return {
-      emotionLst1: ["평온", "기쁨", "사랑", "짜증", "피곤"],
-      emotionEnglishLst1: ["calm", "happy", "love", "annoyed", "fatigue"],
+      emotionLst1: ["기대", "슬픔", "창피", "화", "공포"],
+      emotionEnglishLst1: ["expect", "sad", "shame", "angry", "fear"],
       genreLst1: ["R&B/Soul", "댄스", "랩/힙합", "록/메탈", "발라드", "인디음악", "트로트", "포크/블루스"],
       musicTaste1: {
-        피곤: [],
-        평온: [],
-        짜증: [],
-        기쁨: [],
-        사랑: [],
-        // 슬픔: [],
-        // 공포: [],
+        기대: [],
+        슬픔: [],
+        창피: [],
+        화: [],
+        공포: [],
         // 피곤: [],
-        // 화: [],
-        // 기대: [],
         // 평온: [],
-        // 창피: [],
         // 짜증: [],
         // 기쁨: [],
         // 사랑: [],
@@ -77,43 +72,10 @@ export default {
         //있으면 삭제
         this.musicTaste1[emotion].pop(genre);
       }
-      // console.log(this.musicTaste1);
-      this.$emit("updateMusic", this.musicTaste1);
+      //   console.log(this.musicTaste1);
+      this.$emit("updateMusicSecond", this.musicTaste2);
     },
   },
-
-  // props: ["selectMusic"],
-  // mounted() {
-  //   this.musicSurveyMounted();
-  // },
-  // data() {
-  //   return {
-  //     musicLst: ["댄스", "랩/힙합", "록/메탈", "발라드", "인디음악", "트로트", "포크/블루스", "R&B/Soul"],
-  //     selectedMusic: ["댄스"],
-  //     // selectedMusic: this.$store.state.userStore.interestMusicLstSignup,
-  //   };
-  // },
-  // methods: {
-  //   // 음악 선택. 선택리스트에 없으면 추가, 있으면 제거
-  //   musicSurveyMounted() {
-  //     this.$emit("selectMusics", this.selectedMusic);
-  //   },
-  //   addMusic(music) {
-  //     if (this.selectedMusic.includes(music)) {
-  //       if (this.selectedMusic.length == 1) {
-  //         return;
-  //       }
-  //       this.selectedMusic.splice(this.selectedMusic.indexOf(music), 1);
-  //     } else if (this.selectedMusic.length >= 5) {
-  //       return;
-  //     } else {
-  //       this.selectedMusic.push(music);
-  //     }
-  //     // this.$store.state.userStore.interestMusicLstSignup = this.selectedMusic;
-  //     // console.log(this.selectedMusic);
-  //     this.$emit("selectMusics", this.selectedMusic);
-  //   },
-  // },
 };
 </script>
 

@@ -13,13 +13,16 @@
       @ruleCheckSignup="setRuleCheck"
       @finalValidSignup="finalValidCheck"
     />
-    <MusicSurvey v-if="signupOrder == 2" @selectMusics="setMusic" />
-    <GiftSurvey v-if="signupOrder == 3" @selectGifts="setGift" @upperPriceSignup="setUpperPrice" @underPriceSignup="setUnderPrice" />
+    <MusicSurvey v-if="signupOrder == 2" @updateMusic="setMusic1" />
+    <MusicSurveySecond v-if="signupOrder == 3" @updateMusicSecond="setMusic2" />
+    <GiftSurvey v-if="signupOrder == 4" @selectGifts="setGift" @upperPriceSignup="setUpperPrice" @underPriceSignup="setUnderPrice" />
     <customButton btnText="다음" id="page1Next" v-if="signupOrder == 1" @click="signupNext"></customButton>
     <customButton btnText="이전" id="page2Before" v-if="signupOrder == 2" @click="signupBefore"></customButton>
     <customButton btnText="다음" id="page2Next" v-if="signupOrder == 2" @click="signupNext"></customButton>
     <customButton btnText="이전" id="page3Before" v-if="signupOrder == 3" @click="signupBefore"></customButton>
-    <customButton btnText="완료" id="page3FNext" v-if="signupOrder == 3" @click="signUp"></customButton>
+    <customButton btnText="다음" id="page2Next" v-if="signupOrder == 3" @click="signupNext"></customButton>
+    <customButton btnText="이전" id="page3Before" v-if="signupOrder == 4" @click="signupBefore"></customButton>
+    <customButton btnText="완료" id="page3FNext" v-if="signupOrder == 4" @click="signUp"></customButton>
   </div>
 </template>
 
@@ -27,15 +30,18 @@
 import SignUp from "@/components/signup/SignupComponent.vue";
 import GiftSurvey from "@/components/signup/GiftSurvey.vue";
 import MusicSurvey from "@/components/signup/MusicSurvey.vue";
+import MusicSurveySecond from "@/components/signup/MusicSurveySecond.vue";
 import Swal from "sweetalert2";
 import { signUp } from "@/api/userApi.js";
 
 export default {
-  components: { SignUp, GiftSurvey, MusicSurvey },
+  components: { SignUp, GiftSurvey, MusicSurvey, MusicSurveySecond },
   data() {
     return {
       signupOrder: 1,
-      selectMusic: [],
+      selectMusic: {},
+      selectMusicSecond: {},
+      musicTaste: {},
       selectGift: [],
       userId: "",
       userPassword: "",
@@ -76,9 +82,15 @@ export default {
       this.selectGift = value;
       console.log("부모!!!!!!!", this.selectGift);
     },
-    setMusic(value) {
+    setMusic1(value) {
       this.selectMusic = value;
-      console.log(this.selectMusic);
+      this.musicTaste = this.musicTaste.push(this.selectMusic);
+      console.log(this.musicTaste);
+    },
+    setMusic2(value) {
+      this.selectMusicSecond = value;
+      this.musicTaste = this.musicTaste.push(this.selectMusicSecond);
+      console.log(this.musicTaste);
     },
     setUserid(value) {
       this.userId = value;
@@ -164,4 +176,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

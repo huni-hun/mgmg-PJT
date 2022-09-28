@@ -13,12 +13,8 @@ export default {
   name: "App",
   components: { CustomHeader },
 
-  data: () => ({
-  }),
-
+  data: () => ({}),
 };
 </script>
 
-<style scoped src="./styles/App.css" >
-
-</style>
+<style src="./styles/App.css"></style>

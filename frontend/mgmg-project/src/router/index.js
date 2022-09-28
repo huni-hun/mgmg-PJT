@@ -43,7 +43,7 @@ import NoticeEdit from "../components/board/NoticeEdit.vue";
 import PageNotFound from "../components/common/PageNotFound.vue";
 
 //컴포넌트 보는 용도 (추후 삭제예정)
-import Calendar from "../components/common/CustomCalendar.vue";
+import SinupMusic from "../components/signup/MusicSurvey.vue";
 
 Vue.use(VueRouter);
 
@@ -169,9 +169,9 @@ const routes = [
     ],
   },
   {
-    path: "/calendar",
-    name: "calendar",
-    component: Calendar,
+    path: "/SinupMusic",
+    name: "SinupMusic",
+    component: SinupMusic,
   },
   {
     path: "/404",

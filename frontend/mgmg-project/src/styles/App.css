@@ -11,3 +11,10 @@ main {
   background-image: url("@/assets/background.png");
   background-size: cover;
 }
+
+body {
+  -ms-overflow-style: none;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
