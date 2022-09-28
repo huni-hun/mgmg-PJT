@@ -1,8 +1,7 @@
 <template>
   <div class="outDiv">
     <div class="diaryTop" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
+      backgroundImage: 'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
     }">
       <div class="flexTop">
         <v-row>
@@ -27,36 +26,29 @@
             <input v-if="uploadReady" ref="file" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" hidden
               @change="readFile($event)" />
             <v-btn icon small>
-              <v-icon color="blue lighten-3" @click="selectFile">
-                mdi-image-outline
-              </v-icon>
+              <v-icon color="blue lighten-3" @click="selectFile"> mdi-image-outline </v-icon>
             </v-btn>
           </v-col>
         </v-row>
       </div>
     </div>
     <div class="diarymiddle" v-show="uploadImageSrc" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
+      backgroundImage: 'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
     }">
       <div class="selectImg">
         <img v-if="uploadImageSrc" :src="uploadImageSrc" />
-        <v-icon large color="gray darken-2" @click="cancelImage">
-          mdi-close
-        </v-icon>
+        <v-icon large color="gray darken-2" @click="cancelImage"> mdi-close </v-icon>
       </div>
     </div>
     <div class="diarymiddle" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+      backgroundImage: 'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
     }">
       <div>
         <v-textarea v-model="diary" auto-grow outlined single-line :value="diary" label="일기를 써보자" />
       </div>
     </div>
     <div class="diarybottom" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
+      backgroundImage: 'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
     }">
       <custom-button v-if="isEdit" class="customButton" btnText="수정완료" @click="writingCompletion" />
       <custom-button v-else class="customButton" btnText="작성완료" @click="writingCompletion" />
@@ -75,27 +67,20 @@
 
 <script>
 import eventBus from "./eventBus.js";
-import { diaryWrite, diaryDetailView, diaryEdit, sttWrite } from "@/api/diary.js";
+import { diaryDetailView, diaryEdit, diaryWrite, sttWrite } from "@/api/diary.js";
 import { notification_check } from "@/store/modules/etcStore";
 import { HZRecorder } from "@/components/diarywrite/HZRecorder.js";
 import LodingView from "./LodingView.vue";
-// import { mapActions } from "vuex";
+import axios from 'axios';
+import store from "@/store/modules/userStore";
 
 export default {
   components: { LodingView },
   data: function () {
     return {
-      weatherImg: [
-        "sunny",
-        "overcast",
-        "cloudy",
-        "windy",
-        "rain",
-        "snow",
-        "lightning",
-        "mild",
-      ],
+      weatherImg: ["sunny", "overcast", "cloudy", "windy", "rain", "snow", "lightning", "mild"],
       uploadReady: true,
+      userId: "",
       date: "",
       weather: "sunny",
       uploadImageSrc: "",
@@ -104,7 +89,7 @@ export default {
       thema: "blackLine",
       // 감정 분석 결과 추가로 받을 것
       emotion: "기쁨",
-      musicNo: 5,
+      musicNo: 1,
       giftNo: 1,
 
       // 오디오 스트림
@@ -125,9 +110,6 @@ export default {
   methods: {
     // ...mapActions("diaryStore", ["fetchDiary"]),
     onRecAudio() {
-      console.log(process.env.VUE_APP_API_URL);
-      console.log(process.env.EMOTION_APP_API_URL);
-      console.log(process.env.YOUTUBE_API_KEY);
       this.onRec = !this.onRec;
       // 음원 정보를 담은 노드를 생성하거나 음원을 실행 또는 디코딩 시키는일을 한다.
       this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -171,48 +153,23 @@ export default {
       this.source.disconnect();
     },
     async writingCompletion() {
-      const diaryData = {
-        diaryContent: this.diary,
-        diaryDate: this.date,
-        weather: this.weather,
-        diaryThema: this.thema,
-        emotion: this.emotion,
-        musicNo: this.musicNo,
-        giftNo: this.giftNo,
-      };
-      let form = new FormData();
-      form.append("multipartFile", this.imageFile);
-      if (this.no === undefined) {
-        // 일반 작성 create
-        form.append(
-          "diaryRequest",
-          new Blob([JSON.stringify(diaryData)], { type: "application/json" })
-        );
-        await diaryWrite(form).then((res) => {
-          console.log("writing success", res);
-          this.$router.push({
-            name: "diarydetail",
-            params: { no: res.diaryNo },
-          });
-        });
-        this.isCheck = await notification_check();
-        this.$store.commit("IS_INF", this.isCheck.notificationFlag);
+      const userDiary = {
+        user_id: "sad1234",
+        diary_content: this.diary,
       }
-      else {
-        // 일기 수정 update
-        console.log("수정된 이미지 src : ", this.imageFile);
-        form.append(
-          "diaryUpdateRequest",
-          new Blob([JSON.stringify(diaryData)], { type: "application/json" })
-        );
-        await diaryEdit(this.no, form).then((res) => {
-          console.log("edit success", res);
-          this.$router.push({
-            name: "diarydetail",
-            params: { no: this.no },
-          });
-        });
-      }
+      console.log(store.state.userId);
+      console.log(this.diary);
+      this.isLoading = true;
+
+      await axios.post(`${process.env.VUE_APP_EMOTION_API_URL}/predict/diary`, userDiary, {
+      }).then(async (res) => {
+        console.log("감정분석 결과", res);
+        this.emotion = res.data.emotion;
+        this.musicNo = res.data.music_no;
+
+        this.isLoading = false;
+        this.dataSend();
+      })
     },
     selectFile() {
       this.uploadReady = true;
@@ -243,8 +200,48 @@ export default {
         this.thema = res.diaryThema;
       }
     },
+    async dataSend() {
+      const diaryData = {
+        diaryContent: this.diary,
+        diaryDate: this.date,
+        weather: this.weather,
+        diaryThema: this.thema,
+        emotion: this.emotion,
+        musicNo: this.musicNo,
+        giftNo: this.giftNo,
+      };
+      let form = new FormData();
+      form.append("multipartFile", this.imageFile);
+      if (this.no === undefined) {
+        // 일반 작성 create
+        form.append("diaryRequest", new Blob([JSON.stringify(diaryData)], { type: "application/json" }));
+
+        await diaryWrite(form).then((res) => {
+          this.isLoading = false;
+          console.log("writing success", res);
+          this.$router.push({
+            name: "diarydetail",
+            params: { no: res.diaryNo },
+          });
+        });
+        this.isCheck = await notification_check();
+        this.$store.commit("IS_INF", this.isCheck.notificationFlag);
+      }
+      else {
+        // 일기 수정 update
+        form.append("diaryUpdateRequest", new Blob([JSON.stringify(diaryData)], { type: "application/json" }));
+        await diaryEdit(this.no, form).then((res) => {
+          console.log("edit success", res);
+          this.$router.push({
+            name: "diarydetail",
+            params: { no: this.no },
+          });
+        });
+      }
+    }
   },
   created() {
+    this.userId = store.state.userId;
     eventBus.$on("backImgChoice", (props) => {
       this.thema = props;
     });
@@ -252,7 +249,6 @@ export default {
     this.no = this.$route.query.no;
     this.isEditView();
   },
-
 };
 </script>
 

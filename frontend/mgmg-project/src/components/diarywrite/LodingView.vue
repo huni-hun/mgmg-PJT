@@ -1,7 +1,7 @@
 <template>
     <div class="loading">
         <v-progress-linear color="light-green darken-4" height="8" indeterminate striped />
-        <p>음성데이터를 글씨로 변환중입니다.</p>
+        <p>데이터 로딩중입니다 </p>
         <v-progress-linear color="light-green darken-4" height="8" indeterminate striped />
     </div>
 </template>
