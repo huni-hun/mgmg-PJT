@@ -29,15 +29,6 @@
           </v-container>
         </v-col>
       </v-row>
-
-      <!-- <v-row>관심 음악</v-row>
-      <v-row>좋아하는 음악 장르를 선택하세요. 최소 1개, 최대 5개까지 선택할 수 있습니다.</v-row>
-      <v-row><hr class="hrStyle" /></v-row>
-      <v-row>
-        <div class="col-3" v-for="music in musicLst" :key="music" @click="addMusic(music)">
-          <div class="musicLstBox" :class="{ selected: selectedMusic.includes(music) }">{{ music }}</div>
-        </div>
-      </v-row> -->
     </v-container>
   </div>
 </template>
@@ -55,16 +46,6 @@ export default {
         짜증: [],
         기쁨: [],
         사랑: [],
-        // 슬픔: [],
-        // 공포: [],
-        // 피곤: [],
-        // 화: [],
-        // 기대: [],
-        // 평온: [],
-        // 창피: [],
-        // 짜증: [],
-        // 기쁨: [],
-        // 사랑: [],
       },
     };
   },
