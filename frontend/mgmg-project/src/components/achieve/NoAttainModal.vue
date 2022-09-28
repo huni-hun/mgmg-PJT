@@ -7,7 +7,7 @@
           <p class="text-h5 text--primary">{{ badge.badgeName }}</p>
           <p class="text-h6 text--primary">{{ badgeDetail.badgeContent }}</p>
           <div class="card-date">
-            미획득<br />
+            {{ badgeDetail.badgeCodition }}<br />
             {{ badgeDetail.achievedBadgeDate }}
           </div>
         </v-card-text>

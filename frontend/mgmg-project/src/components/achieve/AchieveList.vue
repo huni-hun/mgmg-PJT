@@ -1,21 +1,15 @@
 <template>
-  <div>
-    <!-- 그리드랑 반복 랜더링 활용하기 -->
-    <v-container class="justify-center custom">
-      <v-btn class="left-arrow" icon @click="turnLeft">
-        <v-icon size="100">mdi-menu-left</v-icon>
-      </v-btn>
-      <!-- 일단 억지로 grid row를 5개로 줘서 했지만, 반응형이 안 됨 -->
-      <v-row class="five-cols">
-        <v-col v-for="badge in badgesList" :key="badge.badgeNo">
-          <achieveBadge :badge="badge" />
-        </v-col>
-      </v-row>
-      <v-btn class="right-arrow" icon @click="turnRight">
-        <v-icon size="100">mdi-menu-right</v-icon>
-      </v-btn>
-    </v-container>
-  </div>
+  <v-carousel hide-delimiters height="90%">
+    <v-carousel-item v-for="(item, i) in badgeList" :key="i">
+      <v-container fluid>
+        <v-row class="five-cols">
+          <v-col v-for="badge in item" :key="badge.badgeNo">
+            <achieveBadge :badge="badge" />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-carousel-item>
+  </v-carousel>
 </template>
 
 <script>
@@ -32,28 +26,20 @@ export default {
       // Axios 통신하면서 바로 데이터를 저장하는 방식으로 구현하자.
       badges: [],
       badgeList: [],
+      badgeList1: [],
+      badgeList2: [],
+      badgeList3: [],
     };
   },
-  methods: {
-    turnLeft() {
-      if (this.badgeStart) {
-        // 0 이 아니면,(좌측)
-        this.badgeStart -= 15;
-        this.badgeEnd -= 15;
-        this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
-      }
-    },
-    turnRight() {
-      if (this.badgeEnd < 36) {
-        this.badgeStart += 15;
-        this.badgeEnd += 15;
-        this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
-      }
-    },
-  },
+  methods: {},
   async created() {
     this.badges = await achieve_list();
-    this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
+    this.badgeList1 = this.badges.badges.slice(0, 15);
+    this.badgeList2 = this.badges.badges.slice(15, 30);
+    this.badgeList3 = this.badges.badges.slice(30, this.badges.badges.length);
+    this.badgeList.push(this.badgeList1);
+    this.badgeList.push(this.badgeList2);
+    this.badgeList.push(this.badgeList3);
   },
   computed: {
     badgesList() {
@@ -75,16 +61,26 @@ export default {
   grid-template-columns: repeat(5, 1fr);
 }
 
-.left-arrow {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
+/* Desktop First */
+
+@media (max-width: 1023px) {
+  .five-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.right-arrow {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  right: 0;
+@media (max-width: 767px) {
+  .five-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .five-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>
