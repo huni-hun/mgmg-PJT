@@ -314,16 +314,18 @@ public class DiaryController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUser().getUserNo();
         Diary diary;
+        String checkGift;
         try {
             diary = diaryService.getByDiaryNo(userNo, diaryNo);
             if(diary==null){
                 return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 상세 조회시 선물 추천에 실패하였습니다."));
             }
+            checkGift = diaryService.checkGift(userNo,diary.getGift().getGiftNo());
         }
         catch (Exception e){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 상세 조회시 선물 추천에 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(DiaryGiftResponse.of(diary, 200, "일기 상세 조회시 선물 추천에 성공하였습니다."));
+        return ResponseEntity.status(200).body(DiaryGiftResponse.of(diary,checkGift, 200, "일기 상세 조회시 선물 추천에 성공하였습니다."));
     }
 
 }

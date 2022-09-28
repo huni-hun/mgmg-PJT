@@ -40,5 +40,7 @@ public interface DiaryService {
 
     int deleteBadMusic(Long userNo, Long diaryNo);
 
-    String checkMusic(Long diaryNo, Long musicNo);
+    String checkMusic(Long userNo, Long musicNo);
+
+    String checkGift(Long userNo, Long giftNo);
 }

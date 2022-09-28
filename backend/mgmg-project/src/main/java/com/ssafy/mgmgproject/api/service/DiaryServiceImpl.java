@@ -324,4 +324,13 @@ public class DiaryServiceImpl implements DiaryService {
         }
         return "none";
     }
+
+    @Override
+    public String checkGift(Long userNo, Long giftNo){
+        InterestGift interestGift = interestGiftRepository.findByUser_UserNoAndGift_GiftNo(userNo,giftNo).orElse(null);
+        if(interestGift!=null){
+            return "good";
+        }
+        return "none";
+    }
 }

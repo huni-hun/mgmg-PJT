@@ -22,12 +22,16 @@ public class DiaryGiftResponse extends BaseResponseBody {
     @ApiModelProperty(name = "추천선물")
     Gift gift;
 
+    @ApiModelProperty(name = "추천선물 관심 체크 여부")
+    String checkGift;
 
-    public static DiaryGiftResponse of(Diary diary, Integer statusCode, String message) {
+
+    public static DiaryGiftResponse of(Diary diary, String checkGift, Integer statusCode, String message) {
         DiaryGiftResponse res = new DiaryGiftResponse();
         res.setDiaryNo(diary.getDiaryNo());
         res.setOpenGift(diary.isOpenGift());
         res.setGift(diary.getGift());
+        res.setCheckGift(checkGift);
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;
