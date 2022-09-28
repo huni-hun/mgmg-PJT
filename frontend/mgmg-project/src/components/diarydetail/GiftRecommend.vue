@@ -18,7 +18,7 @@
         </p>
 
         <label class="ridioButton">
-          <input type="checkbox" name="gift" value="" v-model="interestGift">
+          <input type="checkbox" name="gift" v-model="interestGift">
           <span class="btnText">관심 선물 추가</span>
         </label>
       </div>
@@ -27,15 +27,18 @@
 </template>
 
 <script>
-import { giftOpen, giftInterest } from "@/api/diary.js";
+import { giftOpen, giftInterest, detailGift, cancleGift } from "@/api/diary.js";
+//detailGift
 export default {
   data: function () {
     return {
       isClick: false,
 
       diaryNo: this.$route.params.no,
-      interestGift: "",
+      interestGift: false,
+      beforeGiftCheck: "",
 
+      giftNo: 0,
       giftImg: "",
       giftName: "",
       giftPrice: "",
@@ -47,6 +50,7 @@ export default {
       this.isClick = true;
       await giftOpen(this.diaryNo).then((res) => {
         console.log("gift success", res);
+        this.giftNo = res.giftNo;
         this.giftImg = res.giftImg;
         this.giftName = res.giftName;
         this.giftPrice = res.giftPrice;
@@ -61,16 +65,31 @@ export default {
   },
   // eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle
   async beforeDestroy() {
-    // 선물 추천 받아오고 실행
-    console.log("선물추천", this.interestGift)
+    if (this.beforeGiftCheck == this.interestGift) return;
+
     if (this.interestGift) {
-      console.log("interest 선택");
+      // console.log("none->관심 선물 추가")
       await giftInterest(this.giftNo);
     }
+    else {
+      // console.log("관심 선물 추가 -> none")
+      await cancleGift(this.giftNo);
+    }
   },
-  created() {
-    let test = false;
-    this.isClick = test;
+  async created() {
+    await detailGift(this.diaryNo).then((res) => {
+      console.log(res);
+      this.isClick = res.openGift;
+      if (this.isClick) {
+        this.interestGift = (res.checkGift === "good") ? true : false;
+        this.beforeGiftCheck = this.interestGift;
+        this.giftNo = res.gift.giftNo;
+        this.giftImg = res.gift.giftImg;
+        this.giftName = res.gift.giftName;
+        this.giftPrice = res.gift.giftPrice;
+        this.giftLink = res.gift.giftUrl;
+      }
+    });
   }
 };
 </script>
