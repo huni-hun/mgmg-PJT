@@ -1,41 +1,19 @@
 <template>
-  <Doughnut
-    :chart-options="chartOptions"
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height"
-  />
+  <div>
+    <div class="relative h-350-px">
+      <canvas id="donut-chart" height:=height width:=width></canvas>
+    </div>
+  </div>
 </template>
 
 <script>
-import { Doughnut } from "vue-chartjs/legacy";
-
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale } from "chart.js";
+import Chart from "chart.js";
 import { statistics_percent } from "@/store/modules/etcStore";
-
 import moment from "moment";
-
-ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
 export default {
   name: "DoughnutChart",
-  components: {
-    Doughnut,
-  },
   props: {
-    chartId: {
-      type: String,
-      default: "doughnut-chart",
-    },
-    datasetIdKey: {
-      type: String,
-      default: "label",
-    },
     width: {
       type: Number,
       default: 400,
@@ -44,19 +22,6 @@ export default {
       type: Number,
       default: 400,
     },
-    cssClasses: {
-      default: "",
-      type: String,
-    },
-    styles: {
-      type: Object,
-      default: () => {},
-    },
-    plugins: {
-      type: Array,
-      default: () => [],
-    },
-    // 날짜데이터
     startDate: {
       type: String,
       default: moment().subtract(1, "weeks").format("YYYY-MM-DD"),
@@ -118,13 +83,15 @@ export default {
       this.chartData.datasets[0].data = [];
       for (var value of this.dater) {
         this.chartData.labels.push(value.emotion);
-        this.chartData.datasets[0].backgroundColor.push(this.colorsData[value.emotion]);
+        this.chartData.datasets[0].backgroundColor.push(
+          this.colorsData[value.emotion]
+        );
         this.chartData.datasets[0].data.push(value.percent);
       }
       this.$emit("send-emotion", this.chartData.labels[0]);
     },
   },
-  async created() {
+  async mounted() {
     this.periodData = await statistics_percent({
       startDate: this.startDate,
       endDate: this.endDate,
@@ -133,10 +100,41 @@ export default {
 
     for (var value of this.dater) {
       this.chartData.labels.push(value.emotion);
-      this.chartData.datasets[0].backgroundColor.push(this.colorsData[value.emotion]);
+      this.chartData.datasets[0].backgroundColor.push(
+        this.colorsData[value.emotion]
+      );
       this.chartData.datasets[0].data.push(value.percent);
     }
     this.$emit("send-emotion", this.chartData.labels[0]);
+
+    this.$nextTick(function () {
+      let config = {
+        type: "doughnut",
+        data: {
+          labels: this.chartData.labels,
+          datasets: this.chartData.datasets,
+          backgroundColor: this.chartData.backgroundColor
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: false,
+            text: "Statistics Percent",
+          },
+          legend: {
+            labels: {
+              usePointStyle: true,
+              fontColor: "rgba(0,0,0,1)",
+              fontSize: 15
+            },
+          },
+        },
+      };
+
+      let ctx = document.getElementById("donut-chart").getContext("2d");
+      window.myBar = new Chart(ctx, config);
+
+    });
   },
 };
 </script>

@@ -3,15 +3,24 @@
     <v-container class="justify-center">
       <v-row>
         <v-col>
-          <donutGraph :startDate="startDate" :endDate="endDate" />
+          <donut-graph :startDate="startDate" :endDate="endDate" />
         </v-col>
         <v-col>
           <div class="period-board">
-            <img class="sticker" :src="require(`@/assets/statistics/adehesive_plaster.png`)" alt="" />
+            <img
+              class="sticker"
+              :src="require(`@/assets/statistics/adehesive_plaster.png`)"
+              alt=""
+            />
             <br />
             <!-- 달력 picker -->
             <div v-if="isPicker">
-              <v-text-field v-model="dateRangeText" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
+              <v-text-field
+                v-model="dateRangeText"
+                label="Date range"
+                prepend-icon="mdi-calendar"
+                readonly
+              ></v-text-field>
               <v-date-picker v-model="dates" range no-title></v-date-picker>
               <!-- 취소 -> 원상복귀, 확인 -> startDate, endDate 바꾸기 -->
               <v-btn @click="selectFunc()" elevation="2">뒤로</v-btn>
@@ -21,17 +30,25 @@
             <div v-else class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="primary" dark v-bind="attrs" v-on="on"> {{ menuTitle }} </v-btn>
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                    {{ menuTitle }}
+                  </v-btn>
                 </template>
                 <v-list>
                   <v-list-item v-for="(item, index) in items" :key="index">
-                    <v-list-item-title @click="periodFunc(item.func)">{{ item.title }}</v-list-item-title>
+                    <v-list-item-title @click="periodFunc(item.func)">{{
+                      item.title
+                    }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
               </v-menu>
               <p @click="selectFunc()">{{ startDate }} ~ {{ endDate }}</p>
               <p>가장 많이 느낀 감정</p>
-              <img class="badge" :src="require(`@/assets/badge/a1.png`)" alt="" />
+              <img
+                class="badge"
+                :src="require(`@/assets/badge/a1.png`)"
+                alt=""
+              />
               <p>사랑은 돌아오는거야(명언)</p>
             </div>
           </div>

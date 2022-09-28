@@ -39,6 +39,15 @@ async function statistics_day() {
   return response.data;
 }
 
+async function statistics_day_detail(day) {
+  const response = await API.get(`/statistics/day/${day}`, {
+    headers: {
+      Authorization: `Bearer ${store.state.accessToken}`,
+    },
+  });
+  return response.data;
+}
+
 async function statistics_percent(params) {
   const response = await API.get(`/statistics/percent`, {
     headers: {
@@ -131,6 +140,7 @@ export {
   achieve_detail,
   achieve_get_list,
   statistics_day,
+  statistics_day_detail,
   statistics_percent,
   notice_get,
   notice_post,

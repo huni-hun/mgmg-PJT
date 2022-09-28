@@ -3,7 +3,7 @@
     <v-container class="justify-center">
       <v-row>
         <v-col>
-          <barGraph />
+          <bar-graph />
         </v-col>
       </v-row>
     </v-container>
