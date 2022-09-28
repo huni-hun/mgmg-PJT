@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface InterestGiftRepository extends JpaRepository<InterestGift, Long> {
     List<InterestGift> findByUser(User user);
-    void deleteByUserAndInterestGiftNo(User user, long giftNo);
+    void deleteByUserAndGift_GiftNo(User user, long giftNo);
     Optional<InterestGift> findByUser_UserNoAndGift_GiftNo(long userNo, long giftNo);
 }
 

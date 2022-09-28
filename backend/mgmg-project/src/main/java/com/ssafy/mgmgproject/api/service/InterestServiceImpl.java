@@ -33,12 +33,12 @@ public class InterestServiceImpl implements InterestService{
     @Override
     @Transactional
     public void deleteInterestMusic(User user, long musicNo) {
-        interestMusicRepository.deleteByUserAndInterestMusicNo(user, musicNo);
+        interestMusicRepository.deleteByUserAndMusic_MusicNo(user, musicNo);
     }
 
     @Override
     @Transactional
     public void deleteInterestGift(User user, long giftNo) {
-        interestGiftRepository.deleteByUserAndInterestGiftNo(user, giftNo);
+        interestGiftRepository.deleteByUserAndGift_GiftNo(user, giftNo);
     }
 }
