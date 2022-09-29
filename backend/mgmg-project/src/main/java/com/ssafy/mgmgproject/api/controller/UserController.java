@@ -318,7 +318,7 @@ public class UserController {
         User user = userService.getByUserId(userId);
 
         List<String> giftCategories = userService.searchGiftCategory(user);
-        return ResponseEntity.status(200).body(SearchGiftCategoryGetResponse.of(giftCategories, 200, "선물 취향이 조회되었습니다."));
+        return ResponseEntity.status(200).body(SearchGiftCategoryGetResponse.of(giftCategories,user, 200, "선물 취향이 조회되었습니다."));
     }
 
     @PutMapping("/mypage/musicchange")
