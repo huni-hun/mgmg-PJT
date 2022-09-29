@@ -15,54 +15,14 @@
     />
     <MusicSurvey v-if="signupOrder == 2" @updateMusic="setMusic1" />
     <MusicSurveySecond v-if="signupOrder == 3" @updateMusicSecond="setMusic2" />
-    <GiftSurvey
-      v-if="signupOrder == 4"
-      @selectGifts="setGift"
-      @upperPriceSignup="setUpperPrice"
-      @underPriceSignup="setUnderPrice"
-    />
-    <customButton
-      btnText="다음"
-      id="page1Next"
-      v-if="signupOrder == 1"
-      @click="signupNext1page"
-    ></customButton>
-    <customButton
-      btnText="이전"
-      id="page2Before"
-      v-if="signupOrder == 2"
-      @click="signupBefore"
-    ></customButton>
-    <customButton
-      btnText="다음"
-      id="page2Next"
-      v-if="signupOrder == 2"
-      @click="signupNext2page"
-    ></customButton>
-    <customButton
-      btnText="이전"
-      id="page3Before"
-      v-if="signupOrder == 3"
-      @click="signupBefore"
-    ></customButton>
-    <customButton
-      btnText="다음"
-      id="page3Next"
-      v-if="signupOrder == 3"
-      @click="signupNext3page"
-    ></customButton>
-    <customButton
-      btnText="이전"
-      id="page4Before"
-      v-if="signupOrder == 4"
-      @click="signupBefore"
-    ></customButton>
-    <customButton
-      btnText="완료"
-      id="page4FNext"
-      v-if="signupOrder == 4"
-      @click="signUp"
-    ></customButton>
+    <GiftSurvey v-if="signupOrder == 4" @selectGifts="setGift" @upperPriceSignup="setUpperPrice" @underPriceSignup="setUnderPrice" />
+    <customButton btnText="다음" id="page1Next" v-if="signupOrder == 1" @click="signupNext1page"></customButton>
+    <customButton btnText="이전" id="page2Before" v-if="signupOrder == 2" @click="signupBefore"></customButton>
+    <customButton btnText="다음" id="page2Next" v-if="signupOrder == 2" @click="signupNext2page"></customButton>
+    <customButton btnText="이전" id="page3Before" v-if="signupOrder == 3" @click="signupBefore"></customButton>
+    <customButton btnText="다음" id="page3Next" v-if="signupOrder == 3" @click="signupNext3page"></customButton>
+    <customButton btnText="이전" id="page4Before" v-if="signupOrder == 4" @click="signupBefore"></customButton>
+    <customButton btnText="완료" id="page4FNext" v-if="signupOrder == 4" @click="signUp"></customButton>
   </div>
 </template>
 
@@ -107,17 +67,7 @@ export default {
       this.signupOrder--;
     },
     signupNext1page() {
-      console.log(
-        this.userId,
-        this.userPassword,
-        this.userEmail,
-        this.userName,
-        this.userBirth,
-        this.userGender,
-        this.userRuleCheck,
-        this.userUnderPrice,
-        this.userUpperPrice
-      );
+      console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender, this.userRuleCheck, this.userUnderPrice, this.userUpperPrice);
       if (this.finalValid) {
         this.signupOrder++;
       } else {
@@ -135,10 +85,7 @@ export default {
       var rep;
       //하나라도 비어있는 항목 있으면 안됨.
       for (rep = 0; rep < 5; rep++) {
-        if (
-          typeof this.selectMusic[this.emotionLst1[rep]] == "undefined" ||
-          this.selectMusic[this.emotionLst1[rep]].length == 0
-        ) {
+        if (typeof this.selectMusic[this.emotionLst1[rep]] == "undefined" || this.selectMusic[this.emotionLst1[rep]].length == 0) {
           isAllChecked = false;
         }
       }
@@ -161,10 +108,7 @@ export default {
       for (rep = 0; rep < 5; rep++) {
         console.log(this.emotionLst2[rep]);
         console.log(this.selectMusicSecond[this.emotionLst2[rep]]);
-        if (
-          typeof this.selectMusicSecond[this.emotionLst2[rep]] == "undefined" ||
-          this.selectMusicSecond[this.emotionLst2[rep]].length == 0
-        ) {
+        if (typeof this.selectMusicSecond[this.emotionLst2[rep]] == "undefined" || this.selectMusicSecond[this.emotionLst2[rep]].length == 0) {
           isAllChecked = false;
         }
       }
@@ -189,8 +133,7 @@ export default {
       var rep;
       for (rep = 0; rep < 5; rep++) {
         console.log(this.emotionLst1[rep]);
-        this.musicTaste[this.emotionLst1[rep]] =
-          this.selectMusic[this.emotionLst1[rep]];
+        this.musicTaste[this.emotionLst1[rep]] = this.selectMusic[this.emotionLst1[rep]];
       }
       // this.musicTaste = this.musicTaste.push(this.selectMusic);
       console.log(this.musicTaste);
@@ -200,8 +143,7 @@ export default {
       var rep;
       for (rep = 0; rep < 5; rep++) {
         console.log(this.emotionLst2[rep]);
-        this.musicTaste[this.emotionLst2[rep]] =
-          this.selectMusicSecond[this.emotionLst2[rep]];
+        this.musicTaste[this.emotionLst2[rep]] = this.selectMusicSecond[this.emotionLst2[rep]];
       }
       // this.musicTaste = this.musicTaste.push(this.selectMusic);
       console.log(this.musicTaste);
@@ -243,17 +185,7 @@ export default {
       console.log(this.userUnderPrice);
     },
     check() {
-      console.log(
-        this.userId,
-        this.userPassword,
-        this.userEmail,
-        this.userName,
-        this.userBirth,
-        this.userGender,
-        this.userRuleCheck,
-        this.userUnderPrice,
-        this.userUpperPrice
-      );
+      console.log(this.userId, this.userPassword, this.userEmail, this.userName, this.userBirth, this.userGender, this.userRuleCheck, this.userUnderPrice, this.userUpperPrice);
       console.log(this.selectGift, this.selectMusic);
     },
     async signUp() {

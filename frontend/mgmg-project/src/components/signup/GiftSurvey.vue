@@ -29,7 +29,7 @@
         </v-col>
         <v-col>
           <div>
-            <input type="number" id="underPrice" name="underPrice" :value="underPrice" step="1000" min="10000" :max="upperPrice" @change="changeUnder()" />
+            <input type="number" id="underPrice" name="underPrice" :value="underPrice" step="1000" min="10000" :max="upperPrice - 1000" @change="changeUnder()" />
             <label for="">~</label>
             <input type="number" id="upperPrice" name="upperPrice" :value="upperPrice" step="1000" :min="underPrice" max="1000000" @change="changeUpper()" />
           </div>
@@ -83,25 +83,29 @@ export default {
       this.$emit("upperPriceSignup", this.upperPrice);
     },
     changeUnder() {
-      this.underPrice = document.getElementById("underPrice").value;
-      this.upperPrice = document.getElementById("upperPrice").value;
-      if (this.underPrice > this.upperPrice) {
-        this.underPrice = this.upperPrice;
+      this.underPrice = Number(document.getElementById("underPrice").value);
+      this.upperPrice = Number(document.getElementById("upperPrice").value);
+      if (this.underPrice >= this.upperPrice) {
+        this.underPrice = this.upperPrice - 1000;
       }
       if (this.underPrice > 1000000) {
-        this.underPrice = this.upperPrice;
-      } else if (this.underPrice < 10000) [(this.underPrice = 10000)];
+        this.underPrice = 990000;
+      } else if (this.underPrice < 10000) {
+        this.underPrice = this.upperPrice - 1000;
+      }
       this.$emit("underPriceSignup", this.underPrice);
     },
     changeUpper() {
-      this.underPrice = document.getElementById("underPrice").value;
-      this.upperPrice = document.getElementById("upperPrice").value;
-      if (this.underPrice > this.upperPrice) {
-        this.upperPrice = this.underPrice;
+      this.underPrice = Number(document.getElementById("underPrice").value);
+      this.upperPrice = Number(document.getElementById("upperPrice").value);
+      if (this.underPrice >= this.upperPrice) {
+        this.upperPrice = this.underPrice + 1000;
       }
       if (this.upperPrice > 1000000) {
         this.upperPrice = 1000000;
-      } else if (this.upperPrice < 10000) [(this.upperPrice = this.underPrice)];
+      } else if (this.upperPrice < 10000) {
+        this.upperPrice = this.underPrice + 1000;
+      }
       this.$emit("upperPriceSignup", this.upperPrice);
     },
     // 선물 선택. 선택리스트에 없으면 추가, 있으면 제거
