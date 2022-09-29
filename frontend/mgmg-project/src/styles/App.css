@@ -16,3 +16,31 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
+
+.app_view {
+  max-width: 80vw;
+}
+
+@media (max-width: 1199px) {
+  .app_view {
+    max-width: 85vw;
+  }
+}
+
+@media (max-width: 991px) {
+  .app_view {
+    max-width: 89vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .app_view {
+    max-width: 94vw;
+  }
+}
+
+@media (max-width: 575px) {
+  .app_view {
+    max-width: 98vw;
+  }
+}
