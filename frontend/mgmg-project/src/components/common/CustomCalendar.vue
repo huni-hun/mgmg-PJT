@@ -1,43 +1,43 @@
 <template>
-  <v-container class="calendar">
-    <v-row>
-      <v-col class="col-4"><div @click="beforeMonth()">이전달</div></v-col>
-      <v-col class="col-4">
-        <div>
-          <v-container>
-            <v-row>
-              <input class="inputBox" type="text" id="showYear" name="showYear" :value="showYear" @input="getInputYearMonth()" />
-              <div class="inputBox">.</div>
-              <input class="inputBox" type="text" id="showMonth" name="showMonth" :value="showMonth" @input="getInputYearMonth()" />
-            </v-row>
-          </v-container>
+  <div class="body">
+    <v-container class="calendar">
+      <v-row>
+        <v-col class="col-1"><div @click="beforeMonth()" class="leftAlign">이전달</div></v-col>
+        <v-col class="col-10">
+          <!-- <v-container> -->
+          <v-row class="yearMonth">
+            <input class="inputLabel" type="text" id="showYear" name="showYear" :value="showYear" @input="getInputYearMonth()" />
+            <div class="inputDotLabel">.</div>
+            <input class="inputLabel" type="text" id="showMonth" name="showMonth" :value="showMonth" @input="getInputYearMonth()" />
+          </v-row>
+          <!-- </v-container> -->
+        </v-col>
+        <v-col class="col-1"><div @click="afterMonth()" class="rightAlign">다음달</div></v-col>
+      </v-row>
+      <v-row class="dateTable">
+        <div v-for="day in days" :key="day.idx" class="dayContainer" @click="updateEmotionLst()">
+          <v-col>
+            <div class="dayName">{{ day.dayName }}</div>
+          </v-col>
         </div>
-      </v-col>
-      <v-col class="col-4"><div @click="afterMonth()">다음달</div></v-col>
-    </v-row>
-    <v-row>
-      <div v-for="day in days" :key="day.idx" class="col-1" @click="updateEmotionLst()">
-        <v-col>
-          <div>{{ day.dayName }}</div>
-        </v-col>
-      </div>
-    </v-row>
-    <v-row v-for="(week, index1) in monthLst" :key="index1">
-      <div v-for="(week0, index2) in week" :key="index2" class="col-1">
-        <v-col>
-          <emotionImage
-            v-if="week0 != 0"
-            :showYear="showYear"
-            :showMonth="showMonth"
-            :dateNum="week0"
-            :emotionImg="emotionsLst[index1][index2]"
-            :diaryNumber="diaryNum[index1][index2]"
-            name="emotionImg"
-          />
-        </v-col>
-      </div>
-    </v-row>
-  </v-container>
+      </v-row>
+      <v-row class="dateTable" v-for="(week, index1) in monthLst" :key="index1">
+        <div v-for="(week0, index2) in week" :key="index2" class="dayContainer">
+          <v-col>
+            <emotionImage
+              v-if="week0 != 0"
+              :showYear="showYear"
+              :showMonth="showMonth"
+              :dateNum="week0"
+              :emotionImg="emotionsLst[index1][index2]"
+              :diaryNumber="diaryNum[index1][index2]"
+              name="emotionImg"
+            />
+          </v-col>
+        </div>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -312,24 +312,145 @@ export default {
       // this.showMonth--;
       document.getElementById("showMonth").value = Number(this.showMonth) - 1;
       this.getInputYearMonth();
+      if (this.showMonth == 0) {
+        this.showYear--;
+        this.showMonth = 12;
+      }
     },
     //다음달
     afterMonth() {
       document.getElementById("showMonth").value = Number(this.showMonth) + 1;
       this.getInputYearMonth();
+      if (this.showMonth == 13) {
+        this.showYear++;
+        this.showMonth = 1;
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-.calendar {
-  width: 100vw;
-  height: 80vh;
-  border: 2px solid black;
+.body {
+  /* width: 80vw; */
+  /* border: 2px solid black; */
+  background-color: white;
 }
-.inputBox {
+/* .calendar {
+  margin: 2rem;
+  border: 2px solid black;
+} */
+.yearMonth {
+  margin-bottom: 2%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.leftAlign {
+  text-align: left;
+}
+.rightAlign {
+  text-align: right;
+}
+.dateTable {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dayContainer {
+  width: 13%;
+  height: auto;
+  padding: 2px;
+}
+.dayName {
+  text-align: center;
+  margin-bottom: 0.2rem;
+}
+.inputLabel {
+  font-size: 1.5em;
   width: 3em;
-  margin: 0;
+  text-align: center;
+  /* margin: 0; */
+}
+.inputDotLabel {
+  font-size: 1.5em;
+  /* width: 1em; */
+  text-align: center;
+}
+.container {
+  padding: 0;
+}
+.col-xl,
+.col-xl-auto,
+.col-xl-12,
+.col-xl-11,
+.col-xl-10,
+.col-xl-9,
+.col-xl-8,
+.col-xl-7,
+.col-xl-6,
+.col-xl-5,
+.col-xl-4,
+.col-xl-3,
+.col-xl-2,
+.col-xl-1,
+.col-lg,
+.col-lg-auto,
+.col-lg-12,
+.col-lg-11,
+.col-lg-10,
+.col-lg-9,
+.col-lg-8,
+.col-lg-7,
+.col-lg-6,
+.col-lg-5,
+.col-lg-4,
+.col-lg-3,
+.col-lg-2,
+.col-lg-1,
+.col-md,
+.col-md-auto,
+.col-md-12,
+.col-md-11,
+.col-md-10,
+.col-md-9,
+.col-md-8,
+.col-md-7,
+.col-md-6,
+.col-md-5,
+.col-md-4,
+.col-md-3,
+.col-md-2,
+.col-md-1,
+.col-sm,
+.col-sm-auto,
+.col-sm-12,
+.col-sm-11,
+.col-sm-10,
+.col-sm-9,
+.col-sm-8,
+.col-sm-7,
+.col-sm-6,
+.col-sm-5,
+.col-sm-4,
+.col-sm-3,
+.col-sm-2,
+.col-sm-1,
+.col,
+.col-auto,
+.col-12,
+.col-11,
+.col-10,
+.col-9,
+.col-8,
+.col-7,
+.col-6,
+.col-5,
+.col-4,
+.col-3,
+.col-2,
+.col-1 {
+  padding: 0;
 }
 </style>
