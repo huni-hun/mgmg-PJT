@@ -160,8 +160,18 @@ async function changeInterestGift(request) {
   return response.data;
 }
 //관심 음악 삭제 - 목록조회
-async function deleteMusic(request) {
-  let response = await API.delete(`${ACCOUNT}` + "/interest/music", request, {
+async function deleteInterestMusic(musicNo) {
+  let response = await API.delete("/interest/music", {
+    data: { musicNo: musicNo },
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+//관심 음악 조회 - 목록조회
+async function getInterestMusic() {
+  let response = await API.get("/interest/music", {
     headers: {
       Authorization: "Bearer " + store.state.accessToken,
     },
@@ -169,8 +179,18 @@ async function deleteMusic(request) {
   return response.data;
 }
 //관심 선물 삭제 - 목록조회
-async function deleteGift(request) {
-  let response = await API.delete(`${ACCOUNT}` + "/interest/gift", request, {
+async function deleteInterestGift(giftNo) {
+  let response = await API.delete("/interest/gift", {
+    data: { giftNo: giftNo },
+    headers: {
+      Authorization: "Bearer " + store.state.accessToken,
+    },
+  });
+  return response.data;
+}
+//관심 선물 조회 - 목록조회
+async function getInterestGift() {
+  let response = await API.get("/interest/gift", {
     headers: {
       Authorization: "Bearer " + store.state.accessToken,
     },
@@ -196,8 +216,10 @@ export {
   showInterestGift,
   changeInterestMusic,
   changeInterestGift,
-  deleteMusic,
-  deleteGift,
+  getInterestMusic,
+  deleteInterestMusic,
+  getInterestGift,
+  deleteInterestGift,
 };
 
 //----------------------------------------------------------------
