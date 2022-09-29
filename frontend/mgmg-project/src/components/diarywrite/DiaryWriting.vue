@@ -154,11 +154,9 @@ export default {
     },
     async writingCompletion() {
       const userDiary = {
-        user_id: "sad1234",
+        user_id: store.state.userId,
         diary_content: this.diary,
       }
-      console.log(store.state.userId);
-      console.log(this.diary);
       this.isLoading = true;
 
       await axios.post(`${process.env.VUE_APP_EMOTION_API_URL}/predict/diary`, userDiary, {

@@ -13,19 +13,9 @@
         </v-col>
         <v-col>
           <div class="inputStyle">
-            <v-text-field
-              :rules="[pwRequired]"
-              :type="password"
-              label="비밀번호를 입력하세요."
-              name="input-10-2"
-              hint="비밀번호를 입력하세요."
-              value=""
-              class="input-group--focused"
-              single-line
-              outlined
-              id="pwLoginInput"
-              @keyup.enter="login"
-            ></v-text-field>
+            <v-text-field :rules="[pwRequired]" :type="password" label="비밀번호를 입력하세요." name="input-10-2"
+              hint="비밀번호를 입력하세요." value="" class="input-group--focused" single-line outlined id="pwLoginInput"
+              @keyup.enter="login"></v-text-field>
           </div>
         </v-col>
       </v-row>
@@ -125,9 +115,11 @@ export default {
         //자동 로그인 선택한 경우
         if (autoflag) {
           this.loginAuto(response, request);
+          this.$store.state.userStore.userId = this.$cookies.get("userIdCookie");
         } else {
           //자동 로그인 선택 안한 경우
           this.loginNotAuto(response);
+          this.$store.state.userStore.userId = userId;
         }
         this.$router.push("/main");
       }
@@ -223,6 +215,7 @@ export default {
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   padding: 0;
 }
+
 .noDrag {
   -webkit-user-select: none;
   -moz-user-select: none;
