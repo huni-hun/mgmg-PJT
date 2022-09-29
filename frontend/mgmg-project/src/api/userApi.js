@@ -132,15 +132,6 @@ async function changeFont(request) {
   });
   return response.data;
 }
-//음악 취향 조회 - 목록조회
-async function showInterestMusic() {
-  let response = await API.get(`${ACCOUNT}` + "/mypage/music", {
-    headers: {
-      Authorization: "Bearer " + store.state.accessToken,
-    },
-  });
-  return response.data;
-}
 //선물 취향 조회 - 목록조회
 async function showInterestGift() {
   let response = await API.get(`${ACCOUNT}` + "/mypage/gift", {
@@ -202,7 +193,6 @@ export {
   findId,
   findpw,
   changeFont,
-  showInterestMusic,
   showInterestGift,
   changeInterestMusic,
   changeInterestGift,

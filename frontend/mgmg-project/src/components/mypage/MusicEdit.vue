@@ -3,22 +3,37 @@
     <v-container v-if="interestMusicPage == 1">
       <v-row>음악 장르 (1/2)</v-row>
       <v-row>감정별로 선호하는 음악 장르를 선택하세요.</v-row>
-      <!-- <v-row>
-        <v-checkbox label="happy" :value="happy" input-value="checkBox" @change="test()" v-model="happy"></v-checkbox>
-      </v-row> -->
       <v-row><hr class="hrStyle" /></v-row>
       <v-row>
-        <v-col class="genreCheckLst" v-for="(emotion, index) in emotionLst1" :key="index">
+        <v-col
+          class="genreCheckLst"
+          v-for="(emotion, index) in emotionLst1"
+          :key="index"
+        >
           <v-container>
             <v-row>
-              <img :src="require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)" alt="" class="emoticonImg" />
+              <img
+                :src="
+                  require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)
+                "
+                alt=""
+                class="emoticonImg"
+              />
             </v-row>
             <v-row>
               <div>{{ emotion }}</div>
             </v-row>
             <v-row>
               <v-col>
-                <v-checkbox hide-details class="genreCheckBox" v-for="(genre, idx) in genreLst" :key="idx" :label="genreLst[idx]" :value="genre" v-model="input1[emotion][idx]"></v-checkbox>
+                <v-checkbox
+                  hide-details
+                  class="genreCheckBox"
+                  v-for="(genre, idx) in genreLst"
+                  :key="idx"
+                  :label="genreLst[idx]"
+                  :value="genre"
+                  v-model="input1[emotion][idx]"
+                ></v-checkbox>
               </v-col>
             </v-row>
           </v-container>
@@ -31,23 +46,43 @@
       <v-row>감정별로 선호하는 음악 장르를 선택하세요.</v-row>
       <v-row><hr class="hrStyle" /></v-row>
       <v-row>
-        <v-col class="genreCheckLst" v-for="(emotion, index) in emotionLst2" :key="index">
+        <v-col
+          class="genreCheckLst"
+          v-for="(emotion, index) in emotionLst2"
+          :key="index"
+        >
           <v-container>
             <v-row>
-              <img :src="require(`@/assets/emoticon/${emotionEnglishLst2[index]}.png`)" alt="" class="emoticonImg" />
+              <img
+                :src="
+                  require(`@/assets/emoticon/${emotionEnglishLst2[index]}.png`)
+                "
+                alt=""
+                class="emoticonImg"
+              />
             </v-row>
             <v-row>
               <div>{{ emotion }}</div>
             </v-row>
             <v-row>
               <v-col>
-                <v-checkbox hide-details class="genreCheckBox" v-for="(genre, idx) in genreLst" :key="idx" :label="genreLst[idx]" :value="genre" v-model="input1[emotion][idx]"></v-checkbox>
+                <v-checkbox
+                  hide-details
+                  class="genreCheckBox"
+                  v-for="(genre, idx) in genreLst"
+                  :key="idx"
+                  :label="genreLst[idx]"
+                  :value="genre"
+                  v-model="input1[emotion][idx]"
+                ></v-checkbox>
               </v-col>
             </v-row>
           </v-container>
         </v-col>
       </v-row>
-      <v-row><CustomButton btnText="이전" @click="musicEditBefore1Page" /></v-row>
+      <v-row
+        ><CustomButton btnText="이전" @click="musicEditBefore1Page"
+      /></v-row>
       <v-row><CustomButton btnText="완료" @click="musicEditFinish" /></v-row>
     </v-container>
   </div>
@@ -56,8 +91,10 @@
 <script>
 import CustomButton from "../common/CustomButton.vue";
 import Swal from "sweetalert2";
-// import { showInterestMusic } from "@/api/userApi.js";
+import store from "@/store/modules/userStore";
+import axios from "axios";
 import { changeInterestMusic } from "@/api/userApi.js";
+
 export default {
   data() {
     return {
@@ -68,9 +105,29 @@ export default {
       emotionEnglishLst1: ["calm", "happy", "love", "annoyed", "fatigue"],
       emotionLst2: ["기대", "슬픔", "창피", "화", "공포"],
       emotionEnglishLst2: ["expect", "sad", "shame", "angry", "fear"],
-      emotionLst: ["평온", "기쁨", "사랑", "짜증", "피곤", "기대", "슬픔", "창피", "화", "공포"],
+      emotionLst: [
+        "평온",
+        "기쁨",
+        "사랑",
+        "짜증",
+        "피곤",
+        "기대",
+        "슬픔",
+        "창피",
+        "화",
+        "공포",
+      ],
 
-      genreLst: ["R&B/Soul", "댄스", "랩/힙합", "록/메탈", "발라드", "인디음악", "트로트", "포크/블루스"],
+      genreLst: [
+        "R&B/Soul",
+        "댄스",
+        "랩/힙합",
+        "록/메탈",
+        "발라드",
+        "인디음악",
+        "트로트",
+        "포크/블루스",
+      ],
       input1: {
         평온: ["", "", "", "", "", "", "", ""],
         기쁨: ["", "", "", "", "", "", "", ""],
@@ -84,7 +141,6 @@ export default {
         공포: ["", "", "", "", "", "", "", ""],
       },
       testInput: true,
-
       musicTaste: {
         피곤: [],
         평온: [],
@@ -99,10 +155,48 @@ export default {
       },
     };
   },
-  // mounted() {
-  //   this.setgenreLst2();
-  // },
+  created() {
+    this.check();
+  },
   methods: {
+    check() {
+      axios({
+        url: process.env.VUE_APP_API_URL + "/api/user/mypage/music",
+        method: "get",
+        headers: { Authorization: `Bearer ${store.state.accessToken}` },
+      })
+        .then(({ data }) => {
+          let list = {
+            평온: ["", "", "", "", "", "", "", ""],
+            기쁨: ["", "", "", "", "", "", "", ""],
+            사랑: ["", "", "", "", "", "", "", ""],
+            짜증: ["", "", "", "", "", "", "", ""],
+            피곤: ["", "", "", "", "", "", "", ""],
+            기대: ["", "", "", "", "", "", "", ""],
+            슬픔: ["", "", "", "", "", "", "", ""],
+            창피: ["", "", "", "", "", "", "", ""],
+            화: ["", "", "", "", "", "", "", ""],
+            공포: ["", "", "", "", "", "", "", ""],
+          };
+          for (
+            let emotionIndex = 0;
+            emotionIndex < this.emotionLst.length;
+            emotionIndex++
+          ) {
+            const emotion = this.emotionLst[emotionIndex];
+            for (let index = 0; index < this.genreLst.length; index++) {
+              if (data.musicTaste[emotion].includes(this.genreLst[index])) {
+                list[emotion][index] = this.genreLst[index];
+              }
+            }
+          }
+
+          this.input1 = list;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     test() {
       console.log(this.happy);
     },
@@ -185,7 +279,9 @@ export default {
           for (genRep = 0; genRep < 8; genRep++) {
             console.log(this.musicTaste[this.emotionLst[emoRep]]);
             if (this.input1[this.emotionLst[emoRep]][genRep] != "") {
-              this.musicTaste[this.emotionLst[emoRep]].push(this.input1[this.emotionLst[emoRep]][genRep]);
+              this.musicTaste[this.emotionLst[emoRep]].push(
+                this.input1[this.emotionLst[emoRep]][genRep]
+              );
             }
             console.log(this.musicTaste[this.emotionLst[emoRep]]);
           }
@@ -233,7 +329,8 @@ export default {
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
 }
 .selected {
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25),
+    inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
 .genreCheckLst {
   width: 20%;
