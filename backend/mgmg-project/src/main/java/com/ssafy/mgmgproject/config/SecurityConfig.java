@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/user/email",
             "/api/user/emailcheck",
 
-            "/api/diary/speeach"
+            "/api/diary/speech"
     };
 
     @Autowired
