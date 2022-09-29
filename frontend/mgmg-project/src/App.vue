@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <CustomHeader ref="header" />
+    <CustomHeader ref="header" v-if="(`landing`!=$route.name)" />
     <v-main>
       <router-view />
     </v-main>
@@ -17,4 +17,6 @@ export default {
 };
 </script>
 
-<style src="./styles/App.css"></style>
+<style src="./styles/App.css">
+
+</style>
