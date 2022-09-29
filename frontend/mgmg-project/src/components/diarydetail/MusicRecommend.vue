@@ -124,7 +124,7 @@ export default {
       this.musicArtist = res.music.artist;
       this.musicYear = res.music.releaseDate;
       this.musicNo = res.music.musicNo;
-      this.getYoutubeList();
+      // this.getYoutubeList();
     }).catch((err) => {
       console.log(err);
     });

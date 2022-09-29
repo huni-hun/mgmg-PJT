@@ -97,7 +97,7 @@ export default {
     },
     checkMusic(music) {
       this.picked = music;
-      this.getYoutubeList(music.music.musicName + " " + music.music.artist);
+      // this.getYoutubeList(music.music.musicName + " " + music.music.artist);
     },
     async getYoutubeList(searchContent) {
       const config = {
