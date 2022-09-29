@@ -45,10 +45,8 @@ public class DiaryController {
     SpeechToText speechToText;
 
     @PostMapping("/speeach")
-    public ResponseEntity<? extends BaseResponseBody> test(@RequestPart MultipartFile file) throws Exception{
-
+    public ResponseEntity<? extends BaseResponseBody> STT(@RequestPart MultipartFile file) throws Exception{
         File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
