@@ -1,8 +1,12 @@
 <template>
   <v-container>
-    <div>
-      <!-- <h1>MainPage입니다</h1> -->
-      <Calendar class="calendar" />
+    <div class="mainpageBody">
+      <div>
+        <v-spacer></v-spacer>
+        <label class="mainpageTitle">날짜를 클릭해서 일기를 써보세요.</label>
+        <v-spacer></v-spacer>
+      </div>
+      <Calendar class="mainpageCalendar" />
     </div>
   </v-container>
 </template>
@@ -17,9 +21,12 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  width: 80vw;
+.mainpageBody {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
   margin: 0;
+  font-display: center;
 }
 /* @media (max-width: 1023px) {
   .body {
@@ -42,8 +49,14 @@ export default {
     margin: 0;
   }
 } */
-.calendar {
+.mainpageCalendar {
   width: 100%;
   padding: 2rem;
+}
+.mainpageTitle {
+  display: block;
+  width: 100%;
+  font-size: 1.5rem;
+  margin-bottom: 1%;
 }
 </style>

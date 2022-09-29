@@ -2,8 +2,11 @@
   <div class="body">
     <v-container class="calendar">
       <v-row>
-        <v-col class="col-1"><div @click="beforeMonth()" class="leftAlign">이전달</div></v-col>
-        <v-col class="col-10">
+        <v-col class="leftAlign">
+          <!-- <div @click="beforeMonth()" class="leftAlign">이전달</div> -->
+          <v-icon @click="beforeMonth()" class="leftAlign">mdi-menu-left</v-icon>
+        </v-col>
+        <v-col class="centerYearMonth">
           <!-- <v-container> -->
           <v-row class="yearMonth">
             <input class="inputLabel" type="text" id="showYear" name="showYear" :value="showYear" @input="getInputYearMonth()" />
@@ -12,7 +15,10 @@
           </v-row>
           <!-- </v-container> -->
         </v-col>
-        <v-col class="col-1"><div @click="afterMonth()" class="rightAlign">다음달</div></v-col>
+        <v-col class="rightAlign">
+          <!-- <div @click="afterMonth()" class="rightAlign">다음달</div> -->
+          <v-icon @click="afterMonth()" class="rightAlign">mdi-menu-right</v-icon>
+        </v-col>
       </v-row>
       <v-row class="dateTable">
         <div v-for="day in days" :key="day.idx" class="dayContainer" @click="updateEmotionLst()">
@@ -340,16 +346,28 @@ export default {
   margin: 2rem;
   border: 2px solid black;
 } */
+.leftArrow {
+  width: 10%;
+}
+.rightArrow {
+  width: 10%;
+}
+.centerYearMonth {
+  width: 80%;
+}
 .yearMonth {
-  margin-bottom: 2%;
+  margin-top: 0.5%;
+  /* margin-bottom: 1%; */
   text-align: center;
   display: flex;
   justify-content: center;
 }
 .leftAlign {
+  font-size: 3rem;
   text-align: left;
 }
 .rightAlign {
+  font-size: 3rem;
   text-align: right;
 }
 .dateTable {
@@ -371,11 +389,9 @@ export default {
   font-size: 1.5em;
   width: 3em;
   text-align: center;
-  /* margin: 0; */
 }
 .inputDotLabel {
   font-size: 1.5em;
-  /* width: 1em; */
   text-align: center;
 }
 .container {

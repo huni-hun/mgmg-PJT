@@ -139,9 +139,9 @@ export default {
 }
 .dateNum {
   position: absolute;
-
   margin-top: 8px;
   margin-left: 8px;
+  margin-bottom: 5px;
 }
 .emoticonImg {
   width: 60%;
@@ -160,12 +160,29 @@ export default {
 .container {
   padding: 0;
 }
-@media (max-width: 959px) {
+/* @media (max-width: 1100px) {
+  .emoticonImg {
+    width: 60%;
+    margin-top: 5%;
+  }
+  .dateNum {
+    position: absolute;
+    margin-top: 8px;
+    margin-left: 8px;
+    margin-bottom: 5px;
+  }
+} */
+@media (max-width: 767px) {
   .emoticonImg {
     /* margin-top: 5%; */
     width: 60%;
     height: auto;
     align-content: flex-end;
+  }
+  .dateNum {
+    position: static;
+    margin-top: 8px;
+    margin-left: 0;
   }
 }
 </style>
