@@ -8,11 +8,11 @@
         </v-col>
         <v-col class="centerYearMonth">
           <!-- <v-container> -->
-          <v-row class="yearMonth">
-            <input class="inputLabel" type="text" id="showYear" name="showYear" :value="showYear" @input="getInputYearMonth()" />
-            <div class="inputDotLabel">.</div>
-            <input class="inputLabel" type="text" id="showMonth" name="showMonth" :value="showMonth" @input="getInputYearMonth()" />
-          </v-row>
+          <!-- <v-row class="yearMonth"> -->
+          <input class="inputLabel" type="text" id="showYear" name="showYear" :value="showYear" @input="getInputYearMonth()" />
+          <div class="inputDotLabel">.</div>
+          <input class="inputLabel" type="text" id="showMonth" name="showMonth" :value="showMonth" @input="getInputYearMonth()" />
+          <!-- </v-row> -->
           <!-- </v-container> -->
         </v-col>
         <v-col class="rightAlign">
@@ -354,6 +354,10 @@ export default {
 }
 .centerYearMonth {
   width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 .yearMonth {
   margin-top: 0.5%;

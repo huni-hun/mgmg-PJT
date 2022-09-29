@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="calendarImageBody">
     <v-container @click="test(showYear, showMonth, dateNum, diaryNumber)" :class="{ dateToday: checkToday() == 1, datePast: checkToday() == 0, dateFuture: checkToday() == 2 }">
       <div class="dateNum">{{ dateNum }}</div>
       <img v-if="!!emotionImgLst[emotionImg] && !this.isToday()" class="emoticonImg" :src="require(`@/assets/emoticon/${emotionImgLst[emotionImg]}.png`)" alt="" />
@@ -54,7 +54,7 @@ export default {
 
       var todayNumber = this.changeDateFormatNoDash(todayYear, todayMonth, todayDate);
       var showNumber = this.changeDateFormatNoDash(this.showYear, this.showMonth, this.dateNum);
-      console.log(todayNumber, showNumber);
+      // console.log(todayNumber, showNumber);
       //오늘이면
       if (todayNumber == showNumber) {
         return 1;
@@ -129,8 +129,8 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  height: 5rem;
+.calendarImageBody {
+  height: 6rem;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -183,6 +183,16 @@ export default {
     position: static;
     margin-top: 8px;
     margin-left: 0;
+  }
+}
+@media (max-width: 1357px) {
+  .emoticonImg {
+    margin-top: 10%;
+  }
+}
+@media (max-width: 1880px) {
+  .calendarImageBody {
+    height: 4.5rem;
   }
 }
 </style>

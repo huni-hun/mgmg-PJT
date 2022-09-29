@@ -2,31 +2,111 @@
   <v-container>
     <div class="mainpageBody">
       <div>
-        <v-spacer></v-spacer>
         <label class="mainpageTitle">날짜를 클릭해서 일기를 써보세요.</label>
-        <v-spacer></v-spacer>
       </div>
       <Calendar class="mainpageCalendar" />
     </div>
+    <div class="iconDisplay" v-if="todayDiary"><v-icon class="pencilIcon" @click="diaryWrite">mdi-pencil-circle</v-icon></div>
   </v-container>
 </template>
 
 <script>
+import { monthlyDiaryList } from "@/api/diary.js";
 import Calendar from "@/components/common/CustomCalendar.vue";
 export default {
   components: {
     Calendar,
+  },
+  data() {
+    return {
+      todayDiary: true,
+    };
+  },
+  mounted() {
+    this.todayDiaryCheck();
+  },
+  methods: {
+    diaryWrite() {
+      var now = new Date();
+      var todayYear = now.getFullYear();
+      var todayMonth = now.getMonth() + 1;
+      var todayDate = now.getDate();
+      //일기작성
+      this.$router.push({
+        name: "diarywriting",
+        params: { date: this.changeDateFormat(todayYear, todayMonth, todayDate) },
+      });
+    },
+    async monthlyDiaryList(monthInput) {
+      var now = new Date();
+      var todayYear = now.getFullYear();
+      var todayMonth = now.getMonth() + 1;
+      var todayDate = now.getDate();
+      var dateNum = this.changeDateFormat(todayYear, todayMonth, todayDate);
+
+      let response = await monthlyDiaryList(monthInput);
+      if (response.statusCode == 200) {
+        this.diaryLst = response.diaries;
+        console.log(response);
+        console.log(this.diaryLst);
+
+        var rep;
+        for (rep = 0; rep < this.diaryLst.length; rep++) {
+          console.log(this.diaryLst[rep].diaryDate, dateNum);
+          if (this.diaryLst[rep].diaryDate == dateNum) {
+            this.todayDiary = false;
+          }
+          console.log(this.todayDiary);
+        }
+      }
+    },
+    todayDiaryCheck() {
+      var now = new Date();
+      var todayYear = now.getFullYear();
+      var todayMonth = now.getMonth() + 1;
+      var monthInput = this.changeDateFormatYM(todayYear, todayMonth);
+      console.log(monthInput);
+      this.monthlyDiaryList(monthInput);
+    },
+    changeDateFormat(year, month, date) {
+      var finYear = String(year);
+      var finMonth;
+      var finDate;
+      if (month < 10) {
+        finMonth = "0" + String(month);
+      } else {
+        finMonth = String(month);
+      }
+      if (date < 10) {
+        finDate = "0" + String(date);
+      } else {
+        finDate = String(date);
+      }
+      return finYear + "-" + finMonth + "-" + finDate;
+    },
+    changeDateFormatYM(year, month) {
+      var finYear = String(year);
+      var finMonth;
+      if (month < 10) {
+        finMonth = "0" + String(month);
+      } else {
+        finMonth = String(month);
+      }
+      return finYear + "-" + finMonth;
+    },
   },
 };
 </script>
 
 <style scoped>
 .mainpageBody {
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  justify-content: center; */
-  margin: 0;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
   font-display: center;
+  width: 80%;
 }
 /* @media (max-width: 1023px) {
   .body {
@@ -57,6 +137,14 @@ export default {
   display: block;
   width: 100%;
   font-size: 1.5rem;
-  margin-bottom: 1%;
+  margin-bottom: 3%;
+}
+.iconDisplay {
+  position: fixed;
+  bottom: 6%;
+  right: 10%;
+}
+.pencilIcon {
+  font-size: 5rem;
 }
 </style>
