@@ -62,6 +62,10 @@ export default {
   background: rgba(0, 0, 0, 0.35);
   position: relative;
 }
+
+/* .abbb {
+  max-width: 1080px;
+} */
 /* grid 5개로 나누는 css */
 .five-cols {
   display: grid;

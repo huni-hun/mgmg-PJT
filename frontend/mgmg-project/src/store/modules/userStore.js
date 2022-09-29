@@ -32,6 +32,7 @@ const userStore = {
       state.diaryFont = data.diaryFont;
       console.log(state.accessToken);
       console.log(state.refreshToken);
+      console.log(state.userName);
       state.admin = data.admin;
     },
     // 로그인 상태 유지X 로그인
@@ -42,6 +43,7 @@ const userStore = {
       state.refreshToken = ""; // persistent cookies에 저장하기 @@@@@@@@@@@@@@
       console.log(state.accessToken);
       console.log(state.refreshToken);
+      console.log(state.userName);
       state.admin = data.admin;
     },
     IS_INF: (state, isInf) => (state.isInf = isInf),
