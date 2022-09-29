@@ -4,14 +4,14 @@
       <v-card class="badge-card">
         <img class="badge" :src="require(`@/assets/badge/a${badge.badgeNo}.png`)" alt="" />
         <v-card-text class="badge-text">
-          <p class="text-h5 text--primary">{{ badge.badgeName }}</p>
-          <p class="text-h6 text--primary">{{ badgeDetail.badgeContent }}</p>
+          <p class="badge-name">{{ badge.badgeName }}</p>
+          <p class="badge-content">{{ badgeDetail.badgeContent }}</p>
           <div class="card-date">
             획득날짜<br />
             {{ badgeDetail.achievedBadgeDate }}
           </div>
         </v-card-text>
-        <v-btn class="badge-btn" @click="setDialog"> 확인 </v-btn>
+        <v-btn class="badge-btn" width="10%" @click="setDialog"> 확인 </v-btn>
       </v-card>
     </v-img>
   </div>
@@ -40,12 +40,13 @@ export default {
   border: none;
   background: none;
   height: 100%;
+  font-size: 16px;
 }
 .badge {
   position: absolute;
   top: 15%;
   left: 6%;
-  height: 12rem;
+  height: 70%;
 }
 
 .badge-text {
@@ -54,6 +55,14 @@ export default {
   left: 40%;
   width: 60%;
   text-align: center;
+}
+
+.badge-name {
+  font-size: 1.5em;
+}
+
+.badge-content {
+  font-size: 1em;
 }
 
 .badge-btn {
@@ -69,5 +78,84 @@ export default {
   padding: 0.5rem;
   margin: auto;
   border-radius: 12px;
+  font-size: 1em;
+}
+
+@media (max-width: 500px) {
+  .badge-text {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+  }
+  .badge-name {
+    font-size: 16px;
+  }
+
+  .badge-content {
+    font-size: 12px;
+  }
+
+  .badge-btn {
+    position: absolute;
+    top: 78%;
+    left: 44%;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+  .card-date {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .badge-text {
+    margin: 0;
+    padding: 0;
+  }
+  .badge-name {
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .badge-content {
+    font-size: 8px;
+  }
+
+  .badge-btn {
+    position: absolute;
+    top: 78%;
+    left: 44%;
+    font-size: 8px;
+    border-radius: 4px;
+  }
+  .card-date {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 300px) {
+  .badge-text {
+    margin: 0;
+    padding: 0;
+  }
+  .badge-name {
+    font-size: 8px;
+    font-weight: bold;
+  }
+
+  .badge-content {
+    font-size: 4px;
+  }
+
+  .badge-btn {
+    position: absolute;
+    top: 78%;
+    left: 44%;
+    font-size: 4px;
+    border-radius: 0;
+  }
+  .card-date {
+    font-size: 4px;
+  }
 }
 </style>

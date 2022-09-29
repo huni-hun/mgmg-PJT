@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <!-- 그리드랑 반복 랜더링 활용하기 -->
-    <v-container class="justify-center custom">
-      <v-btn class="left-arrow" icon @click="turnLeft">
-        <v-icon size="100">mdi-menu-left</v-icon>
-      </v-btn>
-      <!-- 일단 억지로 grid row를 5개로 줘서 했지만, 반응형이 안 됨 -->
-      <v-row class="five-cols">
-        <v-col v-for="badge in badgesList" :key="badge.badgeNo">
-          <achieveBadge :badge="badge" />
-        </v-col>
-      </v-row>
-      <v-btn class="right-arrow" icon @click="turnRight">
-        <v-icon size="100">mdi-menu-right</v-icon>
-      </v-btn>
-    </v-container>
-  </div>
+  <v-carousel hide-delimiters height="90%">
+    <v-carousel-item v-for="(item, i) in badgeList" :key="i">
+      <v-sheet color="rgba(255, 255, 255, 0.3)">
+        <v-container fluid>
+          <v-row class="five-cols">
+            <v-col v-for="(badge, index) in item" :key="index">
+              <dumpBadge v-if="badge.badgeName == '없음'" :badge="badge" />
+              <achieveBadge v-else :badge="badge" />
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-sheet>
+    </v-carousel-item>
+  </v-carousel>
 </template>
 
 <script>
 import AchieveBadge from "./AchieveBadge.vue";
+import DumpBadge from "./DumpBadge.vue";
 import { achieve_get_list } from "@/store/modules/etcStore";
 
 export default {
-  name: "NoticePage",
+  name: "GetNoticePage",
   props: { isAchieve: Boolean },
   data() {
     return {
@@ -32,35 +30,56 @@ export default {
       // Axios 통신하면서 바로 데이터를 저장하는 방식으로 구현하자.
       badges: [],
       badgeList: [],
+      badgeList1: [],
+      badgeList2: [],
+      badgeList3: [],
     };
   },
-  methods: {
-    turnLeft() {
-      if (this.badgeStart) {
-        // 0 이 아니면,(좌측)
-        this.badgeStart -= 15;
-        this.badgeEnd -= 15;
-        this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
-      }
-    },
-    turnRight() {
-      if (this.badgeEnd < this.badgeList.length) {
-        this.badgeStart += 15;
-        this.badgeEnd += 15;
-        this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
-      }
-    },
-  },
+  methods: {},
   async created() {
     this.badges = await achieve_get_list();
-    this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
+    const badgeLen = this.badges.badges.length;
+    // 1페이지만 생기는 경우
+    if (badgeLen < 16) {
+      console.log("1페이지만 생기는 경우");
+      this.badgeList1 = this.badges.badges.slice(0, badgeLen);
+
+      for (var i = badgeLen; i < 15; i++) {
+        this.badgeList1.push({ badgeNo: i, badgeName: "없음" });
+      }
+      this.badgeList.push(this.badgeList1);
+      // 2페이지 생기는 경우
+    } else if (badgeLen < 31 && 15 < badgeLen) {
+      console.log("2페이지만 생기는 경우");
+      this.badgeList1 = this.badges.badges.slice(0, 15);
+      this.badgeList2 = this.badges.badges.slice(15, badgeLen);
+
+      for (var j = badgeLen; j < 30; j++) {
+        this.badgeList3.push({ badgeNo: j, badgeName: "없음" });
+      }
+      this.badgeList.push(this.badgeList1);
+      this.badgeList.push(this.badgeList2);
+      // 3페이지 생기는 경우
+    } else if (badgeLen < 45 && 30 < badgeLen) {
+      console.log("3페이지만 생기는 경우");
+      this.badgeList1 = this.badges.badges.slice(0, 15);
+      this.badgeList2 = this.badges.badges.slice(15, 30);
+      this.badgeList3 = this.badges.badges.slice(30, badgeLen);
+      for (var k = badgeLen; k < 45; i++) {
+        this.badgeList3.push({ badgeNo: k, badgeName: "없음" });
+      }
+      this.badgeList.push(this.badgeList1);
+      this.badgeList.push(this.badgeList2);
+      this.badgeList.push(this.badgeList3);
+    }
+    console.log(this.badgeList);
   },
   computed: {
     badgesList() {
       return this.badgeList;
     },
   },
-  components: { AchieveBadge },
+  components: { AchieveBadge, DumpBadge },
 };
 </script>
 
@@ -75,16 +94,26 @@ export default {
   grid-template-columns: repeat(5, 1fr);
 }
 
-.left-arrow {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
+/* Desktop First */
+
+@media (max-width: 1023px) {
+  .five-cols {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 
-.right-arrow {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  right: 0;
+@media (max-width: 767px) {
+  .five-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .five-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

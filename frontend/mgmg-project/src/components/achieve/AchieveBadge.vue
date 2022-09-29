@@ -33,30 +33,34 @@ export default {
 
 <style scoped>
 .badge {
-  height: 10rem;
+  width: 10vw;
+  /* width: 12vw; */
 }
 @media (max-width: 1023px) {
   .badge {
-    height: 12rem;
+    width: 12vw;
   }
 }
 
 @media (max-width: 767px) {
   .badge {
-    height: 10rem;
+    width: auto;
+    height: 10vh;
   }
 }
 
 /* 갤럭시 폴드 */
 @media (max-width: 660px) {
   .badge {
-    height: 6rem;
+    width: auto;
+    height: 10vh;
   }
 }
 
 @media (max-width: 639px) {
   .badge {
-    height: 4rem;
+    width: auto;
+    height: 10vh;
   }
 }
 </style>

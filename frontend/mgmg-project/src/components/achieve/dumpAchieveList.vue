@@ -6,7 +6,7 @@
         <v-icon size="100">mdi-menu-left</v-icon>
       </v-btn>
       <!-- 일단 억지로 grid row를 5개로 줘서 했지만, 반응형이 안 됨 -->
-      <v-row>
+      <v-row class="five-cols">
         <v-col v-for="badge in badgesList" :key="badge.badgeNo">
           <achieveBadge :badge="badge" />
         </v-col>
@@ -20,7 +20,7 @@
 
 <script>
 import AchieveBadge from "./AchieveBadge.vue";
-import { achieve_list } from "@/store/modules/etcStore";
+import { achieve_get_list } from "@/store/modules/etcStore";
 
 export default {
   name: "NoticePage",
@@ -44,7 +44,7 @@ export default {
       }
     },
     turnRight() {
-      if (this.badgeEnd < 36) {
+      if (this.badgeEnd < this.badgeList.length) {
         this.badgeStart += 15;
         this.badgeEnd += 15;
         this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
@@ -52,7 +52,7 @@ export default {
     },
   },
   async created() {
-    this.badges = await achieve_list();
+    this.badges = await achieve_get_list();
     this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
   },
   computed: {

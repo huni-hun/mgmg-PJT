@@ -1,19 +1,23 @@
 <template>
-  <v-carousel hide-delimiters height="90%">
+  <v-carousel hide-delimiters height="100%">
     <v-carousel-item v-for="(item, i) in badgeList" :key="i">
-      <v-container fluid>
-        <v-row class="five-cols">
-          <v-col v-for="badge in item" :key="badge.badgeNo">
-            <achieveBadge :badge="badge" />
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-sheet color="rgba(255, 255, 255, 0.3)">
+        <v-container fluid>
+          <v-row align-content="space-around" class="five-cols">
+            <v-col v-for="badge in item" :key="badge.badgeNo">
+              <dumpBadge v-if="badge.badgeName == '없음'" :badge="badge" />
+              <achieveBadge v-else :badge="badge" />
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-sheet>
     </v-carousel-item>
   </v-carousel>
 </template>
 
 <script>
 import AchieveBadge from "./AchieveBadge.vue";
+import DumpBadge from "./DumpBadge.vue";
 import { achieve_list } from "@/store/modules/etcStore";
 
 export default {
@@ -40,13 +44,16 @@ export default {
     this.badgeList.push(this.badgeList1);
     this.badgeList.push(this.badgeList2);
     this.badgeList.push(this.badgeList3);
+    for (var i = 38; i < 46; i++) {
+      this.badgeList3.push({ badgeNo: i, badgeName: "없음" });
+    }
   },
   computed: {
     badgesList() {
       return this.badgeList;
     },
   },
-  components: { AchieveBadge },
+  components: { AchieveBadge, DumpBadge },
 };
 </script>
 
@@ -66,7 +73,7 @@ export default {
 @media (max-width: 1023px) {
   .five-cols {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 

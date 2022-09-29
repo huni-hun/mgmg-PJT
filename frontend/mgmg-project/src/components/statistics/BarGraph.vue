@@ -163,8 +163,6 @@ export default {
               var firstPoint = activePoints[0];
               var label = window.myBar.data.labels[firstPoint._index];
 
-              alert(label + "요일을 선택했습니다. ");
-
               this.checkDay(label);
             }
           },
