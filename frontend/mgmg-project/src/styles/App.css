@@ -5,9 +5,7 @@
   font-size: clamp(0.5rem, 1.4vw, 1.2em);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-main {
-  min-height: 92%;
+  min-height: 100%;
   background-image: url("@/assets/background.png");
   background-size: cover;
 }
