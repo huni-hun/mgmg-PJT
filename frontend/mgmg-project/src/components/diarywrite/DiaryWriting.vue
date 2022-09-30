@@ -60,7 +60,7 @@
     <div class="microButton">
       <button :class="[onRec? `onMike` : `offMike` ]" fab @click="onRec ? onRecAudio() : offRecAudio()">
         <v-icon v-if="onRec">mdi-microphone</v-icon>
-        <v-icon v-else>mdi-microphone-off</v-icon>
+        <v-icon large v-else>mdi-stop</v-icon>
       </button>
     </div>
     <div v-if="isLoading" class="loading-container">
