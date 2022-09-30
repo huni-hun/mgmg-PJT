@@ -1,7 +1,6 @@
 //SignupPage.vue
 <template>
   <div>
-    <h1 @click="check">SignupPage입니다.</h1>
     <SignUp
       v-if="signupOrder == 1"
       @useridSignup="setUserid"

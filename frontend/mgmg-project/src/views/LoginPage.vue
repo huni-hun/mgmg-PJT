@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>LoginPage입니다.</h1>
+    <img class="titleLogoMG" src="../../src/assets/logo/logo_mg.png" alt="" />
+    <img class="titleLogoText" src="../../src/assets/logo/logo_only_text.png" alt="" />
 
     <router-view></router-view>
     <!-- <LogIn v-if="loginOrder == 1" />
@@ -69,6 +70,12 @@ export default {
 </script>
 
 <style scoped>
+.titleLogoMG {
+  width: 7vw;
+}
+.titleLogoText {
+  width: 18vw;
+}
 .noDrag {
   -webkit-user-select: none;
   -moz-user-select: none;
