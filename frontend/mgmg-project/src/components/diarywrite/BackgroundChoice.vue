@@ -3,10 +3,7 @@
     <span>배경지 선택</span>
     <div class="scroll-image">
       <div v-for="item in backImgs" :key="item" class="choiceImg">
-        <v-img
-          :src="require(`@/assets/diary/choice/${item}.png`)"
-          @click="imgClick(item)"
-        />
+        <v-img :src="require(`@/assets/diary/choice/${item}.png`)" @click="imgClick(item)" />
       </div>
     </div>
   </div>
@@ -16,7 +13,7 @@
 import eventBus from "./eventBus.js";
 export default {
   data: () => ({
-    backImgs: ["blackLine", "blueLine", "blueCheck", "pinkCheck"],
+    backImgs: ["blueCheck", "pinkCheck"],
   }),
   methods: {
     imgClick(props) {
@@ -30,11 +27,12 @@ export default {
 <style scoped>
 .outDiv {
   background-color: rgba(255, 255, 255, 0.7);
-  border: 1px solid black;
-  border-radius: 10px;
+  /* border: 1px solid black; */
+  border-radius: 8px;
   padding: 5px 2vw;
   margin-bottom: 10px;
 }
+
 .scroll-image {
   display: flex;
   align-items: flex-start;
@@ -42,14 +40,29 @@ export default {
   overflow-x: scroll;
   white-space: nowrap;
 }
-.scroll-image > .choiceImg {
+
+.scroll-image::-webkit-scrollbar {
+  height: 10px;
+}
+
+.scroll-image::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+}
+
+.scroll-image::-webkit-scrollbar-track {
+  background-color: grey;
+}
+
+.scroll-image>.choiceImg {
   width: calc(10%);
   margin: 0 15px 15px 0;
 }
-.scroll-image > .choiceImg:nth-of-type(20n),
-.scroll-image > .choiceImg:last-child {
+
+.scroll-image>.choiceImg:nth-of-type(20n),
+.scroll-image>.choiceImg:last-child {
   margin-right: 0;
 }
+
 @media screen and (max-width: 480px) {
   .scroll-image {
     flex-wrap: nowrap;
@@ -63,15 +76,18 @@ export default {
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
   }
-  .scroll-image > .choiceImg {
+
+  .scroll-image>.choiceImg {
     display: block;
     flex: 0 0 auto;
     width: 40%;
     margin: 0 15px 15px 0;
   }
-  .scroll-image > .choiceImg:last-of-type {
+
+  .scroll-image>.choiceImg:last-of-type {
     margin-right: 0;
   }
+
   .scroll-image:after {
     content: "";
     display: block;
