@@ -2,6 +2,9 @@ import torch
 from torch.utils.data import Dataset
 import gluonnlp as nlp
 import numpy as np
+import re
+
+from emoji import core
 from bert import BERTClassifier
 from bert import BERTDataset
 
@@ -41,7 +44,16 @@ def new_softmax(a):
     y = (exp_a / sum_exp_a) * 100
     return np.round(y, 3)
 
+def text_process(text):
+    text = core.replace_emoji(text, replace="")
+    text = re.sub('[a-zA-z]', '', text)
+    text = re.sub('([ㄱ-ㅎㅏ-ㅣ]+)', '', text)
+    text = re.sub('[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"\♥\♡\ㅋ\ㅠ\ㅜ\ㄱ\ㅎ\ㄲ\ㅡ]', '', text)
+    return text
+
 def predict(predict_sentence, model, tok):
+    predict_sentence = text_process(predict_sentence)
+
     data = [predict_sentence, '0']
     dataset_another = [data]
 
