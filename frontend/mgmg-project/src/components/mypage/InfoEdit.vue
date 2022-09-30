@@ -21,18 +21,49 @@
     <v-row>
       <v-col><label for="">생년월일</label></v-col>
       <div class="">
-        <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
           <template v-slot:activator="{ on, attrs }">
-            <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
+            <v-text-field
+              single-line
+              outlined
+              v-model="date"
+              class="inputStyle"
+              append-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+              id="birthSignupInput"
+            ></v-text-field>
           </template>
-          <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
+          <v-date-picker
+            v-model="date"
+            no-title
+            @input="menu2 = false"
+          ></v-date-picker>
         </v-menu>
       </div>
     </v-row>
     <v-row>
       <label class="col-4" for="" id="genderInfoEditLabel">성별</label>
-      <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
-      <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
+      <CustomButton
+        class="col-3"
+        :class="{ selectedGender: userGenderNum == 1 }"
+        @click="changeGender(1)"
+        btnText="남자"
+      />
+      <CustomButton
+        class="col-3"
+        :class="{ selectedGender: userGenderNum == 2 }"
+        @click="changeGender(2)"
+        btnText="여자"
+      />
       <div class="col-4"></div>
     </v-row>
     <v-row>
@@ -66,7 +97,9 @@ export default {
         labelText: "이름을 입력하세요.",
         rules: [
           (v) => !!v || "이름은 필수값입니다.",
-          (v) => /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/.test(v) || "이름은 한글과 영어만 입력 받습니다.",
+          (v) =>
+            /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/.test(v) ||
+            "이름은 한글과 영어만 입력 받습니다.",
           (v) => this.nameValidationCheck(v) || "이름은 한 글자 이상입니다.",
         ],
         hint: "이름을 입력하세요.",
@@ -76,7 +109,10 @@ export default {
       // 이메일 커스텀 인풋
       emailInfoEditInput: {
         labelText: "이메일을 입력하세요.",
-        rules: [(v) => !!v || "이메일은 필수값입니다.", (v) => this.emailValidationCheck(v) || "이메일 형식을 확인해주세요."],
+        rules: [
+          (v) => !!v || "이메일은 필수값입니다.",
+          (v) => this.emailValidationCheck(v) || "이메일 형식을 확인해주세요.",
+        ],
         hint: "이메일을 입력하세요.",
         id: "emailInfoEditInput",
         input: "",
@@ -142,7 +178,8 @@ export default {
     },
     // 이메일 정규식 검사
     emailValidationCheck(user_email) {
-      const regEmail = /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+      const regEmail =
+        /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
       if (regEmail.test(user_email)) {
         this.userEmail = user_email;
         this.emailValidation = true;
@@ -185,18 +222,27 @@ export default {
           gender: user_gender,
         };
 
-        let response = await editUserInfo(request);
-        console.log("응답 데이터", response);
-        if (response.statusCode == 200) {
-          Swal.fire({
-            text: "회원 정보가 정상적으로 변경되었습니다.",
-            icon: "success",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
+        await editUserInfo(request)
+          .then((res) => {
+            console.log(res);
+            Swal.fire({
+              text: "회원 정보가 정상적으로 변경되었습니다.",
+              icon: "success",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+            this.$router.push("/my/myinfo");
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              text: "잠시후 다시 시도해주세요.",
+              icon: "warning",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
           });
-          this.$router.push("/my/myinfo");
-        }
       }
     },
     // // 버튼 누르면, 이름 이메일 값 확인해서 axios 실행

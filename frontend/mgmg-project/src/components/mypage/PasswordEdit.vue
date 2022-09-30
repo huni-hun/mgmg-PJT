@@ -7,7 +7,12 @@
       <hr class="hrStyle" />
     </v-row>
     <v-row>
-      <label class="col-4 PasswordEditNoDrag" for="pwPasswordEditInput" id="pwPasswordEditLabel">새로운 비밀번호</label>
+      <label
+        class="col-4 PasswordEditNoDrag"
+        for="pwPasswordEditInput"
+        id="pwPasswordEditLabel"
+        >새로운 비밀번호</label
+      >
       <div class="inputStyle col-4">
         <v-text-field
           :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
@@ -27,7 +32,12 @@
       <div class="col-4"></div>
     </v-row>
     <v-row>
-      <label class="col-4 PasswordEditNoDrag" for="pwCheckPasswordEditInput" id="pwCheckPasswordEditLabel">비밀번호 확인</label>
+      <label
+        class="col-4 PasswordEditNoDrag"
+        for="pwCheckPasswordEditInput"
+        id="pwCheckPasswordEditLabel"
+        >비밀번호 확인</label
+      >
       <div class="inputStyle col-4">
         <v-text-field
           :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'"
@@ -67,12 +77,16 @@ export default {
       showPwCheck: false,
       password: "Password",
       rules: {
-        pwRequired: (v) => this.pwValidatedCheck(v) || "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
-        pwCheckRequired: (v) => this.pwCheckValidatedCheck(v) || "비밀번호가 일치하지 않습니다.",
+        pwRequired: (v) =>
+          this.pwValidatedCheck(v) ||
+          "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
+        pwCheckRequired: (v) =>
+          this.pwCheckValidatedCheck(v) || "비밀번호가 일치하지 않습니다.",
       },
       // 비밀번호 정규식 검사
       pwValidatedCheck(user_pw) {
-        const regPw = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[a-zA-Z0-9#?!@$ %^&*-]{8,16}$/;
+        const regPw =
+          /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[a-zA-Z0-9#?!@$ %^&*-]{8,16}$/;
         if (regPw.test(user_pw)) {
           this.userPw = user_pw;
           this.pwValidation = true;
@@ -101,19 +115,27 @@ export default {
         const request = {
           newPassword: new_password,
         };
-        console.log(request);
-        let response = await editPasswordInfo(request);
-        console.log("응답 데이터", response);
-        if (response.statusCode == 200) {
-          Swal.fire({
-            text: "비밀번호가 정상적으로 변경되었습니다.",
-            icon: "success",
-            // iconColor: "#000000",
-            confirmButtonColor: "#666666",
-            confirmButtonText: "확인",
+        await editPasswordInfo(request)
+          .then((res) => {
+            console.log(res);
+            Swal.fire({
+              text: "비밀번호가 정상적으로 변경되었습니다.",
+              icon: "success",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
+            this.$router.push("/my/myinfo");
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              text: "잠시후 다시 시도해주세요.",
+              icon: "warning",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+            });
           });
-          this.$router.push("/my/myinfo");
-        }
       }
     },
     // userPasswordEdit() {

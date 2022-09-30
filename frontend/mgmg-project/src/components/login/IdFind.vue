@@ -62,28 +62,31 @@ export default {
         userEmail: userEmail,
       };
 
-      let response = await findId(params);
-      console.log("응답 데이터", response);
-      if (response.statusCode == 200) {
-        this.getUserId = response.userId;
-        Swal.fire({
-          text: "가입하신 아이디는\n" + response.userId + "입니다.",
-          icon: "success",
-          // iconColor: "#000000",
-          confirmButtonColor: "#666666",
-          confirmButtonText: "확인",
-          // },
+      await findId(params)
+        .then((res) => {
+          this.getUserId = res.userId;
+          Swal.fire({
+            text: "가입하신 아이디는\n" + res.userId + "입니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+            // },
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status == 401) {
+            Swal.fire({
+              text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+              icon: "warning",
+              // iconColor: "#000000",
+              confirmButtonColor: "#666666",
+              confirmButtonText: "확인",
+              // },
+            });
+          }
         });
-      } else if (response.statusCode == 401) {
-        Swal.fire({
-          text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-          icon: "warning",
-          // iconColor: "#000000",
-          confirmButtonColor: "#666666",
-          confirmButtonText: "확인",
-          // },
-        });
-      }
     },
     // findId() {
     //   const userName = document.getElementById("nameIdFindInput").value;

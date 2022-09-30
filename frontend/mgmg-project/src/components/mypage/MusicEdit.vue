@@ -297,19 +297,28 @@ export default {
         musicTaste: this.musicTaste,
       };
 
-      let response = await changeInterestMusic(request);
-      console.log("응답 데이터", response);
-      if (response.statusCode == 200) {
-        Swal.fire({
-          text: "음악 장르가 정상적으로 변경되었습니다.",
-          icon: "success",
-          // iconColor: "#000000",
-          confirmButtonColor: "#666666",
-          confirmButtonText: "확인",
-        });
+      await changeInterestMusic(request)
+        .then((res) => {
+          console.log(res);
+          Swal.fire({
+            text: "음악 장르가 정상적으로 변경되었습니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
 
-        this.$router.push("/my/myinfo");
-      }
+          this.$router.push("/my/myinfo");
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "잠시후 다시 시도해주세요.",
+            icon: "warning",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+        });
     },
   },
   components: { CustomButton },

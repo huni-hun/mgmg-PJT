@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import swal from "sweetalert2";
+import Swal from "sweetalert2";
 import { findpw } from "@/api/userApi.js";
 export default {
   data() {
@@ -56,21 +56,29 @@ export default {
         userEmail: userEmail,
       };
 
-      let response = await findpw(params);
-      console.log("응답 데이터", response);
-      if (response.statusCode == 200) {
-        console.log(response.message);
-        swal.fire({
-          // toast: true,
-          // title: "ID 누락",
-          text: "이메일로 임시 비밀번호를 보냈습니다.",
-          icon: "success",
-          // iconColor: "#000000",
-          confirmButtonColor: "#666666",
-          confirmButtonText: "확인",
-          // },
+      await findpw(params)
+        .then((res) => {
+          console.log(res);
+          Swal.fire({
+            // toast: true,
+            // title: "ID 누락",
+            text: "이메일로 임시 비밀번호를 보냈습니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+            // },
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "잠시후 다시 시도해주세요.",
+            icon: "warning",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
         });
-      }
     },
 
     // findPw() {

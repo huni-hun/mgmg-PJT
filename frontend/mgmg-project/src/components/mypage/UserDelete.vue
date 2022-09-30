@@ -8,7 +8,9 @@
         <label for="">※ 회원 탈퇴 시 모든 개인 정보는 삭제됩니다.</label>
       </v-row>
       <v-row>
-        <label for="">※ 탈퇴 처리 후에는 아이디 및 데이터를 복구할 수 없습니다.</label>
+        <label for=""
+          >※ 탈퇴 처리 후에는 아이디 및 데이터를 복구할 수 없습니다.</label
+        >
       </v-row>
       <v-row>
         <CustomButton btnText="탈퇴하기" @click="userDelete" />
@@ -25,22 +27,30 @@ export default {
   methods: {
     async userDelete() {
       console.log("회원탈퇴");
-      let response = await deleteUser();
-      console.log("응답 데이터", response);
+      await deleteUser()
+        .then((res) => {
+          console.log(res);
+          this.$cookies.remove("autoLoginCookie");
+          this.$cookies.remove("userIdCookie");
 
-      if (response.statusCode == 200) {
-        this.$cookies.remove("autoLoginCookie");
-        this.$cookies.remove("userIdCookie");
-
-        Swal.fire({
-          text: "회원 탈퇴가 정상적으로 처리되었습니다.",
-          icon: "success",
-          // iconColor: "#000000",
-          confirmButtonColor: "#666666",
-          confirmButtonText: "확인",
+          Swal.fire({
+            text: "회원 탈퇴가 정상적으로 처리되었습니다.",
+            icon: "success",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+          this.$router.push("/main");
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "잠시후 다시 시도해주세요.",
+            icon: "warning",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
         });
-        this.$router.push("/main");
-      }
     },
   },
 

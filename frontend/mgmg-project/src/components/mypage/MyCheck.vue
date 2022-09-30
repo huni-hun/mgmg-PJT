@@ -59,22 +59,24 @@ export default {
       const request = {
         password: check_pw,
       };
-      let response = await myCheck(request);
-      console.log("응답 데이터", response);
-      if (response.statusCode == 200) {
-        this.$router.push("/my/myinfo");
-      } else {
-        Swal.fire({
-          // toast: true,
-          // title: "ID 누락",
-          text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-          icon: "warning",
-          // iconColor: "#000000",
-          confirmButtonColor: "#666666",
-          confirmButtonText: "확인",
-          // },
+      await myCheck(request)
+        .then((res) => {
+          console.log(res);
+          this.$router.push("/my/myinfo");
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            // toast: true,
+            // title: "ID 누락",
+            text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
+            icon: "warning",
+            // iconColor: "#000000",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+            // },
+          });
         });
-      }
     },
   },
 };

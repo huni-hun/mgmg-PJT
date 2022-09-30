@@ -2,26 +2,45 @@
   <div>
     <v-container>
       <v-row>
-        <v-col> <label for="idLoginInput" class="noDrag" id="idLoginLabel">아이디</label></v-col>
+        <v-col>
+          <label for="idLoginInput" class="noDrag" id="idLoginLabel"
+            >아이디</label
+          ></v-col
+        >
         <v-col>
           <CustomInput v-model="idLoginInput" />
         </v-col>
       </v-row>
       <v-row>
         <v-col>
-          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel">비밀번호</label>
+          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel"
+            >비밀번호</label
+          >
         </v-col>
         <v-col>
           <div class="inputStyle">
-            <v-text-field :rules="[pwRequired]" :type="password" label="비밀번호를 입력하세요." name="input-10-2"
-              hint="비밀번호를 입력하세요." value="" class="input-group--focused" single-line outlined id="pwLoginInput"
-              @keyup.enter="login"></v-text-field>
+            <v-text-field
+              :rules="[pwRequired]"
+              :type="password"
+              label="비밀번호를 입력하세요."
+              name="input-10-2"
+              hint="비밀번호를 입력하세요."
+              value=""
+              class="input-group--focused"
+              single-line
+              outlined
+              id="pwLoginInput"
+              @keyup.enter="login"
+            ></v-text-field>
           </div>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
-          <v-checkbox v-model="loginNext" :label="`로그인 상태 유지하기`"></v-checkbox>
+          <v-checkbox
+            v-model="loginNext"
+            :label="`로그인 상태 유지하기`"
+          ></v-checkbox>
         </v-col>
         <v-col>
           <CustomButton @click="login" btnText="로그인" />
@@ -34,6 +53,7 @@
 <script>
 import { autoLogin } from "@/api/userApi.js";
 import { logIn } from "@/api/userApi.js";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -72,15 +92,11 @@ export default {
           userId: userId,
         };
         console.log("자동로그인 실행");
-        console.log(request);
 
-        let response = await autoLogin(request);
-        console.log(response);
-        console.log("응답 데이터", response);
-        if (response.statusCode == 200) {
-          this.loginAuto(response, request);
+        await autoLogin(request).then((res) => {
+          this.loginAuto(res, request);
           this.$router.push("/main");
-        }
+        });
       }
       //그 외는 아무것도 안함.
     },
@@ -109,20 +125,29 @@ export default {
         autoFlag: autoflag,
       };
 
-      let response = await logIn(request);
-      console.log("응답 데이터", response);
-      if (response.statusCode == 200) {
-        //자동 로그인 선택한 경우
-        if (autoflag) {
-          this.loginAuto(response, request);
-          this.$store.state.userStore.userId = this.$cookies.get("userIdCookie");
-        } else {
-          //자동 로그인 선택 안한 경우
-          this.loginNotAuto(response);
-          this.$store.state.userStore.userId = userId;
-        }
-        this.$router.push("/main");
-      }
+      await logIn(request)
+        .then((res) => {
+          //자동 로그인 선택한 경우
+          if (autoflag) {
+            this.loginAuto(res, request);
+            this.$store.state.userStore.userId =
+              this.$cookies.get("userIdCookie");
+          } else {
+            //자동 로그인 선택 안한 경우
+            this.loginNotAuto(res);
+            this.$store.state.userStore.userId = userId;
+          }
+          this.$router.push("/main");
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "잠시후 다시 시도해주세요.",
+            icon: "warning",
+            confirmButtonColor: "#666666",
+            confirmButtonText: "확인",
+          });
+        });
     },
   },
   // login() {
