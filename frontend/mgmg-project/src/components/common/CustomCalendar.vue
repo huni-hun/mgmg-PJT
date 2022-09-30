@@ -4,24 +4,47 @@
       <v-row>
         <v-col class="leftAlign">
           <!-- <div @click="beforeMonth()" class="leftAlign">이전달</div> -->
-          <v-icon @click="beforeMonth()" class="leftAlign">mdi-menu-left</v-icon>
+          <v-icon @click="beforeMonth()" class="leftAlign"
+            >mdi-menu-left</v-icon
+          >
         </v-col>
         <v-col class="centerYearMonth">
           <!-- <v-container> -->
           <!-- <v-row class="yearMonth"> -->
-          <input class="inputLabel" type="text" id="showYear" name="showYear" :value="showYear" @input="getInputYearMonth()" />
+          <input
+            class="inputLabel"
+            type="number"
+            id="showYear"
+            name="showYear"
+            :value="showYear"
+            @input="getInputYearMonth()"
+          />
           <div class="inputDotLabel">.</div>
-          <input class="inputLabel" type="text" id="showMonth" name="showMonth" :value="showMonth" @input="getInputYearMonth()" />
+          <input
+            class="inputLabel"
+            type="number"
+            id="showMonth"
+            name="showMonth"
+            :value="showMonth"
+            @input="getInputYearMonth()"
+          />
           <!-- </v-row> -->
           <!-- </v-container> -->
         </v-col>
         <v-col class="rightAlign">
           <!-- <div @click="afterMonth()" class="rightAlign">다음달</div> -->
-          <v-icon @click="afterMonth()" class="rightAlign">mdi-menu-right</v-icon>
+          <v-icon @click="afterMonth()" class="rightAlign"
+            >mdi-menu-right</v-icon
+          >
         </v-col>
       </v-row>
       <v-row class="dateTable">
-        <div v-for="day in days" :key="day.idx" class="dayContainer" @click="updateEmotionLst()">
+        <div
+          v-for="day in days"
+          :key="day.idx"
+          class="dayContainer"
+          @click="updateEmotionLst()"
+        >
           <v-col>
             <div class="dayName">{{ day.dayName }}</div>
           </v-col>
@@ -68,6 +91,10 @@ export default {
       showYear: 1900,
       showMonth: 1,
       showDate: 1,
+
+      todayYear: 1900,
+      todayMonth: 1,
+
       //반복해서 해당달의 시작요일, 마지막날 구할때 전역으로 쓰는 변수
       repeatYear: 1900, //년
       repeatMonth: 1, //월
@@ -157,16 +184,28 @@ export default {
             for (days = 0; days < this.monthLst[weeks].length; days++) {
               var rep;
               for (rep = 0; rep < this.diaryLst.length; rep++) {
-                if (this.monthLst[weeks][days] == this.diaryLst[rep].diaryDate.slice(8, 10)) {
-                  diaryDirectionLst.push([weeks, days, this.diaryLst[rep].emotion, this.diaryLst[rep].diaryNo]);
+                if (
+                  this.monthLst[weeks][days] ==
+                  this.diaryLst[rep].diaryDate.slice(8, 10)
+                ) {
+                  diaryDirectionLst.push([
+                    weeks,
+                    days,
+                    this.diaryLst[rep].emotion,
+                    this.diaryLst[rep].diaryNo,
+                  ]);
                 }
               }
             }
           }
           var diaryIdx;
           for (diaryIdx = 0; diaryIdx < diaryDirectionLst.length; diaryIdx++) {
-            this.emotionLst[diaryDirectionLst[diaryIdx][0]][diaryDirectionLst[diaryIdx][1]] = diaryDirectionLst[diaryIdx][2];
-            this.diaryNum[diaryDirectionLst[diaryIdx][0]][diaryDirectionLst[diaryIdx][1]] = diaryDirectionLst[diaryIdx][3];
+            this.emotionLst[diaryDirectionLst[diaryIdx][0]][
+              diaryDirectionLst[diaryIdx][1]
+            ] = diaryDirectionLst[diaryIdx][2];
+            this.diaryNum[diaryDirectionLst[diaryIdx][0]][
+              diaryDirectionLst[diaryIdx][1]
+            ] = diaryDirectionLst[diaryIdx][3];
           }
         } else {
           //감정 리스트
@@ -200,12 +239,17 @@ export default {
     //오늘 날짜 가져오기
     setTodayYearMonth() {
       var now = new Date();
+      this.todayYear = now.getFullYear();
+      this.todayMonth = now.getMonth() + 1;
+
       this.showYear = now.getFullYear();
       this.showMonth = now.getMonth() + 1;
       this.showDate = now.getDate();
 
       this.lastdayFirstDate(this.changeToString(this.showYear, this.showMonth));
-      this.monthlyDiaryList(this.changeToAxiosShape(this.showYear, this.showMonth));
+      this.monthlyDiaryList(
+        this.changeToAxiosShape(this.showYear, this.showMonth)
+      );
       this.makeMonthList(this.changeToString(this.showYear, this.showMonth));
     },
     //입력한 곳에 있는 값을 가져오기
@@ -213,8 +257,26 @@ export default {
       this.showYear = document.getElementById("showYear").value;
       this.showMonth = document.getElementById("showMonth").value;
 
+      if (this.showMonth < 1) {
+        this.showYear--;
+        this.showMonth = 12;
+      } else if (12 < this.showMonth) {
+        this.showYear++;
+        this.showMonth = 1;
+      }
+
+      if (
+        (this.todayYear == this.showYear && this.todayMonth < this.showMonth) ||
+        this.todayYear < this.showYear
+      ) {
+        this.showYear = this.todayYear;
+        this.showMonth = this.todayMonth;
+      }
+
       this.lastdayFirstDate(this.changeToString(this.showYear, this.showMonth));
-      this.monthlyDiaryList(this.changeToAxiosShape(this.showYear, this.showMonth));
+      this.monthlyDiaryList(
+        this.changeToAxiosShape(this.showYear, this.showMonth)
+      );
       this.makeMonthList(this.changeToString(this.showYear, this.showMonth));
     },
 
@@ -268,7 +330,12 @@ export default {
 
         //월별 일 개수 구하기
         //윤년 2월 29일까지
-        if ((this.repeatYear % 4 == 0 && this.repeatMonth == 2 && this.repeatYear % 100 != 0) || (this.repeatYear % 400 == 0 && this.repeatMonth == 2)) {
+        if (
+          (this.repeatYear % 4 == 0 &&
+            this.repeatMonth == 2 &&
+            this.repeatYear % 100 != 0) ||
+          (this.repeatYear % 400 == 0 && this.repeatMonth == 2)
+        ) {
           this.lastday = 29;
           //일반 2월 28일까지
         } else if (this.repeatMonth == 2) {
@@ -318,19 +385,11 @@ export default {
       // this.showMonth--;
       document.getElementById("showMonth").value = Number(this.showMonth) - 1;
       this.getInputYearMonth();
-      if (this.showMonth == 0) {
-        this.showYear--;
-        this.showMonth = 12;
-      }
     },
     //다음달
     afterMonth() {
       document.getElementById("showMonth").value = Number(this.showMonth) + 1;
       this.getInputYearMonth();
-      if (this.showMonth == 13) {
-        this.showYear++;
-        this.showMonth = 1;
-      }
     },
   },
 };
