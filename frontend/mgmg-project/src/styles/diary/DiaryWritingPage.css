@@ -1,0 +1,31 @@
+* {
+  margin: 0 auto;
+}
+
+.page {
+  max-width: 80%;
+}
+
+@media (max-width: 1199px) {
+  .page {
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 991px) {
+  .page {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 767px) {
+  .page {
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 575px) {
+  .page {
+    max-width: 100%;
+  }
+}
