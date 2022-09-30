@@ -160,7 +160,7 @@ async function cancleBadMusic(pid) {
 }
 
 async function sttWrite(formData) {
-  let response = await API.post(`${DIARY}/speeach`, formData, {
+  let response = await API.post(`${DIARY}/speech`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: "Bearer " + store.state.accessToken,
