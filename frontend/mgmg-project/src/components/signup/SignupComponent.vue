@@ -3,20 +3,15 @@
     <!-- <div></div> -->
     <v-container class="signupContainer" id="signupContainer">
       <!-- <v-col> -->
-      <v-row class="signupNoDrag" @click="test()">회원가입</v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="idSignupInput" id="idSignupLabel"
-          >아이디</label
-        >
+        <label class="col-4 signupNoDrag" for="idSignupInput" id="idSignupLabel">아이디</label>
         <CustomInput v-model="idSignupInput" class="col-4" />
         <div class="col-4">
           <custom-button btnText="중복확인" @click="idDoubleCheck" />
         </div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="pwSignupInput" id="pwSignupLabel"
-          >비밀번호</label
-        >
+        <label class="col-4 signupNoDrag" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
         <div class="inputStyle col-4">
           <v-text-field
             :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
@@ -36,12 +31,7 @@
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label
-          class="col-4 signupNoDrag"
-          for="pwCheckSignupInput"
-          id="pwCheckSignupLabel"
-          >비밀번호 확인</label
-        >
+        <label class="col-4 signupNoDrag" for="pwCheckSignupInput" id="pwCheckSignupLabel">비밀번호 확인</label>
         <div class="inputStyle col-4">
           <v-text-field
             :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'"
@@ -61,55 +51,28 @@
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label
-          class="col-4 signupNoDrag"
-          for="emailSignupInput"
-          id="emailSignupLabel"
-          >이메일</label
-        >
+        <label class="col-4 signupNoDrag" for="emailSignupInput" id="emailSignupLabel">이메일</label>
         <CustomInput v-model="emailSignupInput" class="col-4" />
         <div class="col-4">
           <custom-button btnText="인증하기" @click="emailDubleCheck" />
         </div>
       </v-row>
       <v-row>
-        <label
-          class="col-4 signupNoDrag"
-          for="emailcheckSignupInput"
-          id="emailcheckSignupLabel"
-          >인증번호</label
-        >
+        <label class="col-4 signupNoDrag" for="emailcheckSignupInput" id="emailcheckSignupLabel">인증번호</label>
         <CustomInput v-model="emailcheckSignupInput" class="col-4" />
         <div class="col-4">
           <custom-button btnText="확인" @click="emailNumCheck" />
         </div>
       </v-row>
       <v-row>
-        <label
-          class="col-4 signupNoDrag"
-          for="nameSignupInput"
-          id="nameSignupLabel"
-          >이름</label
-        >
+        <label class="col-4 signupNoDrag" for="nameSignupInput" id="nameSignupLabel">이름</label>
         <CustomInput v-model="nameSignupInput" class="col-4" />
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label
-          class="col-4 signupNoDrag"
-          for="birthSignupInput"
-          id="birthSignupLabel"
-          >생년월일</label
-        >
+        <label class="col-4 signupNoDrag" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
         <div class="col-4">
-          <v-menu
-            v-model="menu2"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-          >
+          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 single-line
@@ -124,29 +87,15 @@
                 :change="birthCheck()"
               ></v-text-field>
             </template>
-            <v-date-picker
-              v-model="date"
-              no-title
-              @input="menu2 = false"
-            ></v-date-picker>
+            <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
           </v-menu>
         </div>
         <div class="col-4"></div>
       </v-row>
       <v-row>
         <label class="col-4" for="" id="genderSignupLabel">성별</label>
-        <CustomButton
-          class="col-3"
-          :class="{ selectedGender: userGenderNum == 1 }"
-          @click="changeGender(1)"
-          btnText="남자"
-        />
-        <CustomButton
-          class="col-3"
-          :class="{ selectedGender: userGenderNum == 2 }"
-          @click="changeGender(2)"
-          btnText="여자"
-        />
+        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
+        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
         <div class="col-4"></div>
       </v-row>
       <v-row>
@@ -154,19 +103,13 @@
       </v-row>
       <v-row>
         <label for="">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-          necessitatibus obcaecati dolore molestiae ad debitis perspiciatis
-          consequuntur doloribus ex ratione consectetur eaque quo maiores quas
-          ipsa, nihil, facere saepe maxime.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus obcaecati dolore molestiae ad debitis perspiciatis consequuntur doloribus ex ratione consectetur eaque quo
+          maiores quas ipsa, nihil, facere saepe maxime.
         </label>
       </v-row>
       <v-row>
         <v-col>
-          <v-checkbox
-            v-model="ruleCheck"
-            :label="`약관 내용에 동의합니다.`"
-            @click="ruleApproveCheck"
-          ></v-checkbox>
+          <v-checkbox v-model="ruleCheck" :label="`약관 내용에 동의합니다.`" @click="ruleApproveCheck"></v-checkbox>
           <!-- <input type="checkbox" id="ruleCheck" />
           <label for="ruleCheck" class="signupNoDrag"> 약관 내용에 동의합니다.</label> -->
         </v-col>
@@ -182,15 +125,7 @@ import { emailDoubleCheck } from "@/api/userApi.js";
 import { emailNumCheck } from "@/api/userApi.js";
 
 export default {
-  props: [
-    "userid",
-    "userpassword",
-    "useremail",
-    "username",
-    "userbirth",
-    "usergender",
-    "userrulecheck",
-  ],
+  props: ["userid", "userpassword", "useremail", "username", "userbirth", "usergender", "userrulecheck"],
   computed: {
     testComputed() {
       return this.userId;
@@ -203,37 +138,24 @@ export default {
       showPwCheck: false,
       password: "Password",
       rules: {
-        pwRequired: (v) =>
-          this.pwValidationCheck(v) ||
-          "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
-        pwCheckRequired: (v) =>
-          this.pwCheckValidationCheck(v) || "비밀번호가 일치하지 않습니다.",
+        pwRequired: (v) => this.pwValidationCheck(v) || "영어, 숫자, 특수문자 포함 8자 이상 16자 이하",
+        pwCheckRequired: (v) => this.pwCheckValidationCheck(v) || "비밀번호가 일치하지 않습니다.",
       },
       // 달력
-      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
+      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
       menu: false,
       modal: false,
       menu2: false,
       // 커스텀 인풋
       idSignupInput: {
         labelText: "아이디를 입력하세요.",
-        rules: [
-          (v) => !!v || "아이디는 필수값입니다.",
-          (v) => /^[A-Za-z]/.test(v) || "아이디는 영어로 시작해야 합니다.",
-          (v) =>
-            this.idValidationCheck(v) || "영어, 숫자 포함 6자 이상 16자 이하",
-        ],
+        rules: [(v) => !!v || "아이디는 필수값입니다.", (v) => /^[A-Za-z]/.test(v) || "아이디는 영어로 시작해야 합니다.", (v) => this.idValidationCheck(v) || "영어, 숫자 포함 6자 이상 16자 이하"],
         hint: "아이디를 입력하세요.",
         id: "idSignupInput",
       },
       emailSignupInput: {
         labelText: "이메일을 입력하세요.",
-        rules: [
-          (v) => !!v || "이메일은 필수값입니다.",
-          (v) => this.emailValidationCheck(v) || "이메일 형식을 확인해주세요.",
-        ],
+        rules: [(v) => !!v || "이메일은 필수값입니다.", (v) => this.emailValidationCheck(v) || "이메일 형식을 확인해주세요."],
         hint: "이메일을 입력하세요.",
         id: "emailSignupInput",
       },
@@ -247,9 +169,7 @@ export default {
         labelText: "이름을 입력하세요.",
         rules: [
           (v) => !!v || "이름은 필수값입니다.",
-          (v) =>
-            /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/.test(v) ||
-            "이름은 한글과 영어만 입력 받습니다.",
+          (v) => /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/.test(v) || "이름은 한글과 영어만 입력 받습니다.",
           (v) => this.nameValidationCheck(v) || "이름은 한 글자 이상입니다.",
         ],
         hint: "이름을 입력하세요.",
@@ -325,8 +245,7 @@ export default {
     },
     // 비밀번호 정규식 검사
     pwValidationCheck(user_pw) {
-      const regPw =
-        /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[a-zA-Z0-9#?!@$ %^&*-]{8,16}$/;
+      const regPw = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[a-zA-Z0-9#?!@$ %^&*-]{8,16}$/;
       if (regPw.test(user_pw)) {
         this.userPw = user_pw;
         this.$emit("userpasswordSignup", user_pw);
@@ -350,8 +269,7 @@ export default {
     },
     // 이메일 정규식 검사
     emailValidationCheck(user_email) {
-      const regEmail =
-        /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+      const regEmail = /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
       if (regEmail.test(user_email)) {
         this.$emit("useremailSignup", user_email);
         this.userEmail = user_email;
@@ -451,9 +369,7 @@ export default {
     async emailNumCheck() {
       if (this.emailValidation && this.emailDuplicated) {
         var user_email = this.userEmail;
-        var user_emailNum = document.getElementById(
-          "emailcheckSignupInput"
-        ).value;
+        var user_emailNum = document.getElementById("emailcheckSignupInput").value;
 
         const params = {
           user_email: user_email,
