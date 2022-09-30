@@ -3,48 +3,52 @@
     <div class="diaryTop" :style="{
       backgroundImage: 'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
     }">
-      <div class="flexTop">
-        <v-row>
-          <v-col>
+      <div class="flexTop" :style="{fontFamily:`${font}`}">
+        <div class="flexLeft">
+          <div>
             <span>날짜 : {{ date }}</span>
-          </v-col>
-          <v-col>
+          </div>
+          <div class="weatherDiv">
             <span>날씨 :</span>
-          </v-col>
-          <v-col>
-            <v-select :items="weatherImg" :value="weather" :menu-props="{ maxHeight: '80%', overflowX: true }">
+            <v-select class="selectWeather" :items="weatherImg" :value="weather" flat solo dense
+              background-color="transparent" :menu-props="{ maxHeight: '80%', overflowX: true }" hide-details>
               <template v-slot:selection="{ item }">
-                <v-img class="selectWeather" :src="require(`@/assets/diary/weather/${item}.png`)" />
+                <v-img class="weatherImg" :src="require(`@/assets/diary/weather/${item}.png`)" />
               </template>
               <template v-slot:item="{ item }">
-                <v-img class="selectWeather" :src="require(`@/assets/diary/weather/${item}.png`)"
+                <v-img class="weatherImg" :src="require(`@/assets/diary/weather/${item}.png`)"
                   @click="weather = item" />
               </template>
             </v-select>
-          </v-col>
-          <v-col>
-            <input v-if="uploadReady" ref="file" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" hidden
-              @change="readFile($event)" />
-            <v-btn icon small>
-              <v-icon color="blue lighten-3" @click="selectFile"> mdi-image-outline </v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
+          </div>
+        </div>
+        <div>
+          <input v-if="uploadReady" ref="file" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" hidden
+            @change="readFile($event)" />
+          <v-btn icon small>
+            <v-icon color="blue lighten-3" @click="selectFile" large> mdi-image-outline </v-icon>
+          </v-btn>
+        </div>
       </div>
     </div>
     <div class="diarymiddle" v-show="uploadImageSrc" :style="{
-      backgroundImage: 'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
+      backgroundImage: 'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
     }">
       <div class="selectImg">
         <img v-if="uploadImageSrc" :src="uploadImageSrc" />
-        <v-icon large color="gray darken-2" @click="cancelImage"> mdi-close </v-icon>
+        <v-icon large color="grey darken-2" @click="cancelImage"> mdi-close </v-icon>
       </div>
     </div>
     <div class="diarymiddle" :style="{
       backgroundImage: 'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+      fontFamily:`${font}`,
     }">
-      <div>
-        <v-textarea v-model="diary" auto-grow outlined single-line :value="diary" label="일기를 써보자" />
+      <div class="textWriteDiv">
+        <textarea class="textWrite" minlength="50" maxlength="500" v-model="diary" placeholder="일기를 써보자"
+          spellcheck="false" @input="autoResizeTextarea($event.target)"></textarea>
+      </div>
+      <div class="textLength">
+        <sup>(<span id="nowByte">0</span>/500text)</sup>
       </div>
     </div>
     <div class="diarybottom" :style="{
@@ -86,8 +90,10 @@ export default {
       uploadImageSrc: "",
       imageFile: "",
       diary: "",
-      thema: "blackLine",
-      // 감정 분석 결과 추가로 받을 것
+      thema: "blueCheck",
+      font: "",
+
+      // 감정 분석 결과 이후
       emotion: "기쁨",
       musicNo: 1,
       giftNo: 1,
@@ -161,12 +167,18 @@ export default {
 
       await axios.post(`${process.env.VUE_APP_EMOTION_API_URL}/predict/diary`, userDiary, {
       }).then(async (res) => {
-        console.log("감정분석 결과", res);
-        this.emotion = res.data.emotion;
-        this.musicNo = res.data.music_no;
+        // console.log("감정분석 결과", res);
+        let statusCode = res.data.statusCode;
 
+        if (statusCode == 401) {
+          alert(res.data.message)
+        }
+        else {
+          this.emotion = res.data.emotion;
+          this.musicNo = res.data.music_no;
+          this.dataSend();
+        }
         this.isLoading = false;
-        this.dataSend();
       })
     },
     selectFile() {
@@ -236,6 +248,21 @@ export default {
           });
         });
       }
+    },
+    autoResizeTextarea(obj) {
+      const text_len = obj.value.length; //입력한 문자수
+
+      obj.style.height = 'auto';
+      let height = obj.scrollHeight; // 높이
+      obj.style.height = `${height}px`;
+
+      if (text_len < 50) {
+        document.getElementById("nowByte").innerText = text_len;
+        document.getElementById("nowByte").style.color = "red";
+      } else {
+        document.getElementById("nowByte").innerText = text_len;
+        document.getElementById("nowByte").style.color = "blue";
+      }
     }
   },
   created() {
@@ -245,141 +272,12 @@ export default {
     });
     this.date = this.$route.params.date;
     this.no = this.$route.query.no;
+    this.font = "KyoboHandwriting2019"
     this.isEditView();
   },
 };
 </script>
 
-<style scoped>
-.outDiv {
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 1px solid black;
-  padding: 2px 2px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+<style scoped src="@/styles/diary/DiaryStyle.css">
 
-.diaryTop {
-  background-size: 100% 100%;
-  height: 100%;
-  flex-basis: 10vh;
-}
-
-.flexTop {
-  width: 81%;
-  height: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(5%, auto));
-  align-content: center;
-  align-items: center;
-}
-
-.flexTop>.row {
-  margin: 0px;
-  align-items: baseline;
-}
-
-.v-select {
-  padding: 0px;
-}
-
-.selectWeather {
-  width: 2%;
-  max-width: 50px;
-}
-
-.diarymiddle {
-  background-size: 100% 100%;
-  height: 100%;
-  flex-basis: 45vh;
-}
-
-.diarymiddle>.selectImg {
-  position: relative;
-  height: 100%;
-}
-
-.selectImg>img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 70%;
-  max-height: 80%;
-}
-
-.selectImg>.v-icon {
-  position: absolute;
-  top: 8%;
-  right: 11%;
-  transform: translate(-50%, -50%);
-  max-width: 70%;
-  max-height: 80%;
-}
-
-@import url("@/assets/font/font.css");
-
-.v-text-field {
-  width: 81%;
-  height: 100%;
-  margin: 0 auto;
-  font-family: "KyoboHandwriting2019";
-  font-size: xx-large;
-}
-
-.v-text-field>>>fieldset {
-  border: none;
-}
-
-.diarybottom {
-  background-size: 100% 100%;
-  height: 100%;
-  flex-basis: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.microButton {
-  position: fixed;
-  bottom: 60px;
-  right: 17vw;
-  width: 50px;
-  height: 50px;
-}
-
-.microButton>button {
-  width: 100%;
-  height: 100%;
-  border-radius: 70%;
-  object-fit: cover;
-}
-
-.onMike {
-  background-color: #888898
-}
-
-.v-icon {
-  color: beige;
-}
-
-.offMike {
-  background-color: rgb(236, 72, 72);
-}
-
-.loading {
-  z-index: 2;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
-}
-
-.loading>* {
-  z-index: 2;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
-}
 </style>
