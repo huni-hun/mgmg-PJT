@@ -2,7 +2,7 @@
 <template>
   <div class="signupTotal">
     <div class="signupTitle"><label for="">회원가입</label></div>
-    <div class="signupBody">
+    <div class="signupBody noScrollBox">
       <SignUp
         v-if="signupOrder == 1"
         @useridSignup="setUserid"
@@ -17,13 +17,25 @@
       <MusicSurvey v-if="signupOrder == 2" @updateMusic="setMusic1" />
       <MusicSurveySecond v-if="signupOrder == 3" @updateMusicSecond="setMusic2" />
       <GiftSurvey v-if="signupOrder == 4" @selectGifts="setGift" @upperPriceSignup="setUpperPrice" @underPriceSignup="setUnderPrice" />
-      <customButton btnText="다음" id="page1Next" v-if="signupOrder == 1" @click="signupNext1page"></customButton>
-      <customButton btnText="이전" id="page2Before" v-if="signupOrder == 2" @click="signupBefore"></customButton>
-      <customButton btnText="다음" id="page2Next" v-if="signupOrder == 2" @click="signupNext2page"></customButton>
-      <customButton btnText="이전" id="page3Before" v-if="signupOrder == 3" @click="signupBefore"></customButton>
-      <customButton btnText="다음" id="page3Next" v-if="signupOrder == 3" @click="signupNext3page"></customButton>
-      <customButton btnText="이전" id="page4Before" v-if="signupOrder == 4" @click="signupBefore"></customButton>
-      <customButton btnText="완료" id="page4FNext" v-if="signupOrder == 4" @click="signUp"></customButton>
+
+      <div class="signupButton1Page" v-if="signupOrder == 1">
+        <customButton class="signupButton" btnText="다음" id="page1Next" @click="signupNext1page"></customButton>
+      </div>
+
+      <div class="signupButton2Page" v-if="signupOrder == 2">
+        <customButton class="signupButton" btnText="이전" id="page2Before" @click="signupBefore"></customButton>
+        <customButton class="signupButton" btnText="다음" id="page2Next" @click="signupNext2page"></customButton>
+      </div>
+
+      <div class="signupButton3Page" v-if="signupOrder == 3">
+        <customButton class="signupButton" btnText="이전" id="page3Before" @click="signupBefore"></customButton>
+        <customButton class="signupButton" btnText="다음" id="page3Next" @click="signupNext3page"></customButton>
+      </div>
+
+      <div class="signupButton4Page" v-if="signupOrder == 4">
+        <customButton class="signupButton" btnText="이전" id="page4Before" @click="signupBefore"></customButton>
+        <customButton class="signupButton" btnText="완료" id="page4FNext" @click="signUp"></customButton>
+      </div>
     </div>
   </div>
 </template>
@@ -256,5 +268,23 @@ export default {
 .signupBody {
   background-color: white;
   padding: 5% 10%;
+  height: 75vh;
+  /* 내부 스크롤 */
+  overflow: auto;
+}
+.signupButton1Page {
+  display: flex;
+  justify-content: center;
+}
+.signupButton {
+  width: 20%;
+  margin: 0 2%;
+}
+.noScrollBox {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.noScrollBox::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 </style>

@@ -3,16 +3,18 @@
     <!-- <div></div> -->
     <v-container class="signupContainer" id="signupContainer">
       <!-- <v-col> -->
-      <v-row>
-        <label class="col-4 signupNoDrag" for="idSignupInput" id="idSignupLabel">아이디</label>
-        <CustomInput v-model="idSignupInput" class="col-4" />
-        <div class="col-4">
+      <v-row class="signupInputCommon">
+        <label class="signupNoDrag signupLabel" for="idSignupInput" id="idSignupLabel">아이디</label>
+        <div class="signupInput">
+          <CustomInput v-model="idSignupInput" />
+        </div>
+        <div class="signupButton">
           <custom-button btnText="중복확인" @click="idDoubleCheck" />
         </div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
-        <div class="inputStyle col-4">
+        <label class="signupNoDrag signupLabel" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
+        <div class="inputStyle signupInput">
           <v-text-field
             :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.pwRequired]"
@@ -31,8 +33,8 @@
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="pwCheckSignupInput" id="pwCheckSignupLabel">비밀번호 확인</label>
-        <div class="inputStyle col-4">
+        <label class="signupNoDrag signupLabel" for="pwCheckSignupInput" id="pwCheckSignupLabel">비밀번호 확인</label>
+        <div class="inputStyle signupInput">
           <v-text-field
             :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.pwCheckRequired]"
@@ -51,27 +53,33 @@
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="emailSignupInput" id="emailSignupLabel">이메일</label>
-        <CustomInput v-model="emailSignupInput" class="col-4" />
-        <div class="col-4">
+        <label class="signupNoDrag signupLabel" for="emailSignupInput" id="emailSignupLabel">이메일</label>
+        <div class="signupInput">
+          <CustomInput v-model="emailSignupInput" />
+        </div>
+        <div class="signupButton">
           <custom-button btnText="인증하기" @click="emailDubleCheck" />
         </div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="emailcheckSignupInput" id="emailcheckSignupLabel">인증번호</label>
-        <CustomInput v-model="emailcheckSignupInput" class="col-4" />
-        <div class="col-4">
+        <label class="signupNoDrag signupLabel" for="emailcheckSignupInput" id="emailcheckSignupLabel">인증번호</label>
+        <div class="signupInput">
+          <CustomInput v-model="emailcheckSignupInput" />
+        </div>
+        <div class="signupButton">
           <custom-button btnText="확인" @click="emailNumCheck" />
         </div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="nameSignupInput" id="nameSignupLabel">이름</label>
-        <CustomInput v-model="nameSignupInput" class="col-4" />
+        <label class="signupNoDrag signupLabel" for="nameSignupInput" id="nameSignupLabel">이름</label>
+        <div class="signupInput">
+          <CustomInput v-model="nameSignupInput" />
+        </div>
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4 signupNoDrag" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
-        <div class="col-4">
+        <label class="signupNoDrag signupLabel" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
+        <div class="signupInput">
           <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
@@ -93,26 +101,24 @@
         <div class="col-4"></div>
       </v-row>
       <v-row>
-        <label class="col-4" for="" id="genderSignupLabel">성별</label>
-        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
-        <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
+        <label class="signupNoDrag signupGenderLabel" for="" id="genderSignupLabel">성별</label>
+        <div class="genderInputLine">
+          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
+          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
+        </div>
         <div class="col-4"></div>
       </v-row>
-      <v-row>
-        <label for="" class="signupNoDrag">약관 동의</label>
+      <v-row class="ruleCheckTitle">
+        <label for="" class="signupNoDrag ruleCheckTitleLabel">약관 동의</label>
       </v-row>
-      <v-row>
+      <v-row class="ruleCheckBody">
         <label for="">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam necessitatibus obcaecati dolore molestiae ad debitis perspiciatis consequuntur doloribus ex ratione consectetur eaque quo
           maiores quas ipsa, nihil, facere saepe maxime.
         </label>
       </v-row>
-      <v-row>
-        <v-col>
-          <v-checkbox v-model="ruleCheck" :label="`약관 내용에 동의합니다.`" @click="ruleApproveCheck"></v-checkbox>
-          <!-- <input type="checkbox" id="ruleCheck" />
-          <label for="ruleCheck" class="signupNoDrag"> 약관 내용에 동의합니다.</label> -->
-        </v-col>
+      <v-row class="ruleCheckBox">
+        <v-checkbox v-model="ruleCheck" :label="`약관 내용에 동의합니다.`" @click="ruleApproveCheck"></v-checkbox>
       </v-row>
     </v-container>
   </div>
@@ -435,6 +441,68 @@ export default {
   width: inherit;
   height: inherit;
 }
+/* .signupInputCommon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 10%;
+} */
+.signupLabel {
+  display: block;
+  width: 30%;
+  padding-left: 10%;
+}
+.genderInputLine {
+  width: 70%;
+}
+.signupGenderLabel {
+  display: block;
+  width: 25%;
+  padding-left: 10%;
+}
+.signupInput {
+  width: 40%;
+}
+.signupButton {
+  width: 30%;
+  padding-left: 10%;
+}
+.signupGenderButton {
+  width: 35%;
+  margin-left: 2%;
+}
+/* 약관동의 */
+.ruleCheckTitle {
+  margin-top: 5%;
+  margin-bottom: 1%;
+}
+.ruleCheckTitleLabel {
+  font-size: 1.5rem;
+}
+.ruleCheckBox {
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 1199px) {
+  .ruleCheckTitle {
+    margin-top: 8%;
+  }
+}
+@media (max-width: 767px) {
+  .signupLabel {
+    width: 100%;
+  }
+}
+
+/* .inputStyle:deep(v-input__slot) {
+  min-height: 10%;
+} */
+/* .v-text-field--filled > .v-input__control > .v-input__slot,
+.v-text-field--full-width > .v-input__control > .v-input__slot,
+.v-text-field--outlined > .v-input__control > .v-input__slot {
+  min-height: 10px;
+} */
 .inputStyle:deep(fieldset) {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);

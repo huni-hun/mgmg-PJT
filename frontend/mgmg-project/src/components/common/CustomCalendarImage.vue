@@ -18,7 +18,7 @@ export default {
         공포: "fear",
         피곤: "fatigue",
         화: "angry",
-        기대: "expeck",
+        기대: "expect",
         평온: "calm",
         창피: "shame",
         짜증: "annoyed",
