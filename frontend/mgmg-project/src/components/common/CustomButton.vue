@@ -17,7 +17,7 @@ button {
   appearance: none;
 
   margin: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.5rem 0.5rem 1.5rem;
 
   text-align: center;
   text-decoration: none;
@@ -25,21 +25,22 @@ button {
   display: inline-block;
   width: auto;
 
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 10px;
+  background-color: #51516E;
+  color: white;
+  border-radius: 5px;
 
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25));
+  /* filter: drop-shadow(1px 1px 1px 2px #707070); */
 
   cursor: pointer;
 
   transition: 0.2s;
 
-  color: #000000;
 }
+
 button:hover {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #69698d;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: white;
 }
 </style>
 
