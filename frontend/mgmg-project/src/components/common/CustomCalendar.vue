@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="calendarBody">
     <v-container class="calendar">
       <v-row>
         <v-col class="leftAlign">
@@ -337,7 +337,7 @@ export default {
 </script>
 
 <style scoped>
-.body {
+.calendarBody {
   /* width: 80vw; */
   /* border: 2px solid black; */
   background-color: white;

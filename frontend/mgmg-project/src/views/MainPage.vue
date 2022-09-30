@@ -136,7 +136,7 @@ export default {
 .mainpageTitle {
   display: block;
   width: 100%;
-  font-size: 1.5rem;
+  font-size: 2vw;
   margin-bottom: 3%;
 }
 .iconDisplay {
@@ -145,6 +145,27 @@ export default {
   right: 10%;
 }
 .pencilIcon {
-  font-size: 5rem;
+  font-size: 5vw;
+}
+@media (max-width: 991px) {
+  .mainpageBody {
+    width: 100%;
+  }
+  .pencilIcon {
+    font-size: 6vw;
+  }
+}
+@media (max-width: 767px) {
+  .mainpageTitle {
+    font-size: 3vw;
+  }
+  .pencilIcon {
+    font-size: 9vw;
+  }
+}
+@media (max-width: 575px) {
+  .pencilIcon {
+    font-size: 15vw;
+  }
 }
 </style>
