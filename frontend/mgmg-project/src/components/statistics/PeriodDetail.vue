@@ -3,24 +3,17 @@
     <v-container class="justify-center">
       <v-row>
         <v-col>
-          <donut-graph :startDate="startDate" :endDate="endDate" />
+          <div class="donut-frame">
+            <donut-graph :startDate="startDate" :endDate="endDate" @send-emotion="sendEmotion" />
+          </div>
         </v-col>
         <v-col>
           <div class="period-board">
-            <img
-              class="sticker"
-              :src="require(`@/assets/statistics/adehesive_plaster.png`)"
-              alt=""
-            />
+            <img class="sticker" :src="require(`@/assets/statistics/adehesive_plaster.png`)" alt="" />
             <br />
             <!-- 달력 picker -->
             <div v-if="isPicker">
-              <v-text-field
-                v-model="dateRangeText"
-                label="Date range"
-                prepend-icon="mdi-calendar"
-                readonly
-              ></v-text-field>
+              <v-text-field v-model="dateRangeText" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
               <v-date-picker v-model="dates" range no-title></v-date-picker>
               <!-- 취소 -> 원상복귀, 확인 -> startDate, endDate 바꾸기 -->
               <v-btn @click="selectFunc()" elevation="2">뒤로</v-btn>
@@ -36,20 +29,15 @@
                 </template>
                 <v-list>
                   <v-list-item v-for="(item, index) in items" :key="index">
-                    <v-list-item-title @click="periodFunc(item.func)">{{
-                      item.title
-                    }}</v-list-item-title>
+                    <v-list-item-title @click="periodFunc(item.func)">{{ item.title }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
               </v-menu>
               <p @click="selectFunc()">{{ startDate }} ~ {{ endDate }}</p>
-              <p>가장 많이 느낀 감정</p>
-              <img
-                class="badge"
-                :src="require(`@/assets/badge/a1.png`)"
-                alt=""
-              />
-              <p>사랑은 돌아오는거야(명언)</p>
+              <p>제일 많이 느낀 감정</p>
+              <img class="badge" :src="require(`@/assets/badge/a1.png`)" alt="" />
+              <p>{{ emotionExplanation }}</p>
+              <p>by. {{ explanationPerson }}</p>
             </div>
           </div>
         </v-col>
@@ -83,7 +71,10 @@ export default {
     agoYears: moment().subtract(1, "years").format("YYYY-MM-DD"),
     isPicker: false,
     dates: [],
-    emotion: "",
+    emotion: Object,
+    emotionExplanation: "너! 일기 안 썼어",
+    explanationPerson: "최명권",
+    mostEmotion: "몽글", // 이미지
   }),
   methods: {
     // 달력 on/off 함수
@@ -102,6 +93,7 @@ export default {
         this.startDate = this.dates[1];
         this.endDate = this.dates[0];
       }
+      this.menuTitle = "기간 통계";
       this.isPicker = !this.isPicker; // 마지막으로 picker 끔
     },
     periodFunc(period) {
@@ -133,9 +125,13 @@ export default {
       }
     },
     sendEmotion(emotData) {
-      console.log("=====감정확인=====");
+      //
+      console.log("=====감정 데이터 확인=====");
       this.emotion = emotData;
       console.log(this.emotion);
+      this.emotionExplanation = emotData.emotionExplanation;
+      this.explanationPerson = emotData.explanationPerson;
+      this.mostEmotion = emotData.mostEmotion;
     },
   },
   components: { DonutGraph },
@@ -159,6 +155,12 @@ export default {
   background-image: url("@/assets/statistics/bg_grid_paper.png");
   border-radius: 10%;
   position: relative;
+}
+
+.donut-frame {
+  background-color: rgba(226, 226, 226, 0.356);
+  width: auto;
+  height: auto;
 }
 
 .sticker {

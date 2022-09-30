@@ -178,6 +178,7 @@ a {
 }
 
 @media (max-width: 639px) {
+  /* 헤더 형태 변환은 display: none; 을 통해 이뤄짐. */
   .desk-nav-bar {
     display: none;
   }

@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div class="relative h-350-px">
+    <div v-if="isData" class="relative h-350-px">
       <canvas id="donut-chart" height:=height width:=width></canvas>
+    </div>
+    <div v-else>
+      <h2>해당 기간 일기가 자성되지 않았습니다.</h2>
     </div>
   </div>
 </template>
@@ -35,6 +38,10 @@ export default {
     return {
       periodData: Object,
       dater: Object,
+      isData: false,
+      emotionExplanation:"",
+      explanationPerson:"",
+      mostEmotion:"",
       colorsData: {
         슬픔: "rgb(118, 127, 227)",
         공포: "rgb(110, 98, 146)",
@@ -62,20 +69,37 @@ export default {
       },
     };
   },
-  watch: {
-    startDate() {
-      this.resetDonut();
-    },
-    endDate() {
-      this.resetDonut();
-    },
+  computed:{
+    watchDate: function(){
+      return [this.startDate, this.endDate]
+    }
   },
+  watch: {
+    watchDate: function(){
+      this.resetDonut()
+    }
+  },
+
+  
   methods: {
     async resetDonut() {
-      this.periodData = await statistics_percent({
+      await statistics_percent({
         startDate: this.startDate,
         endDate: this.endDate,
-      });
+      })
+      .then((res)=>{
+        console.log('성공이라고?')
+        this.isData = false
+        this.periodData = res
+      })
+      .catch((err)=>{
+        this.isData = false
+        this.periodData = Object
+        this.$emit("send-emotion",  this.periodData);  // 정보 올리기
+        console.log({...err})
+        return
+      })
+      
       this.dater = this.periodData.statistics;
       // 데이터 리셋
       this.chartData.labels = [];
@@ -88,26 +112,9 @@ export default {
         );
         this.chartData.datasets[0].data.push(value.percent);
       }
-      this.$emit("send-emotion", this.chartData.labels[0]);
-    },
-  },
-  async mounted() {
-    this.periodData = await statistics_percent({
-      startDate: this.startDate,
-      endDate: this.endDate,
-    });
-    this.dater = this.periodData.statistics;
-
-    for (var value of this.dater) {
-      this.chartData.labels.push(value.emotion);
-      this.chartData.datasets[0].backgroundColor.push(
-        this.colorsData[value.emotion]
-      );
-      this.chartData.datasets[0].data.push(value.percent);
-    }
-    this.$emit("send-emotion", this.chartData.labels[0]);
-
-    this.$nextTick(function () {
+      this.$emit("send-emotion",  this.periodData);  // 정보 올리기
+      this.isData = true // reset
+      this.$nextTick(function () {
       let config = {
         type: "doughnut",
         data: {
@@ -130,11 +137,16 @@ export default {
           },
         },
       };
-
       let ctx = document.getElementById("donut-chart").getContext("2d");
       window.myBar = new Chart(ctx, config);
-
     });
+    },
+  },
+  async mounted() {
+    await this.resetDonut();
   },
 };
 </script>
+<style scoped>
+
+</style>
