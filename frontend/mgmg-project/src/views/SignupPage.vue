@@ -287,4 +287,10 @@ export default {
 .noScrollBox::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/
 }
+@media (max-width: 575px) {
+  .signupBody {
+    background-color: white;
+    padding: 5% 2%;
+  }
+}
 </style>

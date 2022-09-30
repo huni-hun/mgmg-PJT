@@ -9,7 +9,7 @@
           <CustomInput v-model="idSignupInput" />
         </div>
         <div class="signupButton">
-          <custom-button btnText="중복확인" @click="idDoubleCheck" />
+          <custom-button class="signupBtnWidth" btnText="중복확인" @click="idDoubleCheck" />
         </div>
       </v-row>
       <v-row>
@@ -58,7 +58,7 @@
           <CustomInput v-model="emailSignupInput" />
         </div>
         <div class="signupButton">
-          <custom-button btnText="인증하기" @click="emailDubleCheck" />
+          <custom-button class="signupBtnWidth" btnText="인증하기" @click="emailDubleCheck" />
         </div>
       </v-row>
       <v-row>
@@ -67,7 +67,7 @@
           <CustomInput v-model="emailcheckSignupInput" />
         </div>
         <div class="signupButton">
-          <custom-button btnText="확인" @click="emailNumCheck" />
+          <custom-button class="signupBtnWidth" btnText="확인" @click="emailNumCheck" />
         </div>
       </v-row>
       <v-row>
@@ -465,11 +465,15 @@ export default {
 }
 .signupButton {
   width: 30%;
-  padding-left: 10%;
+  padding-left: 3%;
+}
+.signupBtnWidth {
+  width: 50%;
 }
 .signupGenderButton {
-  width: 35%;
-  margin-left: 2%;
+  width: 33%;
+  margin-left: 1%;
+  margin-right: 1%;
 }
 /* 약관동의 */
 .ruleCheckTitle {
@@ -492,6 +496,31 @@ export default {
 @media (max-width: 767px) {
   .signupLabel {
     width: 100%;
+    padding-left: 0%;
+  }
+  .signupGenderLabel {
+    width: 100%;
+    padding-left: 0%;
+  }
+  /* .signupInput {
+    width: 80%;
+  } */
+  .signupInput {
+    width: 80%;
+  }
+  .signupButton {
+    width: 20%;
+    padding-left: 0%;
+  }
+  .genderInputLine {
+    width: 100%;
+  }
+  .signupBtnWidth {
+    width: 100%;
+  }
+  .signupGenderButton {
+    width: 45%;
+    margin-left: 1%;
   }
 }
 
