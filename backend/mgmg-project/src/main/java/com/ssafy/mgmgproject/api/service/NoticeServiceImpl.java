@@ -44,17 +44,24 @@ public class NoticeServiceImpl implements NoticeService{
         int rest = pageable.getPageSize() - page.size();
         int totalPage = noticeRepository.countByNoticeTitleContainingAndFixedFlagFalseOrNoticeContentContainingAndFixedFlagFalse(keyword,keyword);
 
-        if(0<totalPage%rest) totalPage=(totalPage/rest)+1;
-        else totalPage=totalPage/rest;
+        if(0<totalPage){
+            if(0<totalPage%rest) totalPage=(totalPage/rest)+1;
+            else totalPage=totalPage/rest;
 
-        if(pageable.getPageNumber()<0 || totalPage<pageable.getPageNumber()+1){
-            return null;
+            if(pageable.getPageNumber()<0 || totalPage<pageable.getPageNumber()+1){
+                return null;
+            }
+
+            Pageable paging = PageRequest.of(pageable.getPageNumber(),rest, Sort.Direction.DESC,"noticeDate");
+            List<NoticeListMapping> notices = noticeRepository.findByNoticeTitleContainingAndFixedFlagFalseOrNoticeContentContainingAndFixedFlagFalseOrderByNoticeNoDesc(keyword,keyword,paging);
+            page.addAll(notices);
+        }else{
+            totalPage=1;
         }
 
-        Pageable paging = PageRequest.of(pageable.getPageNumber(),rest, Sort.Direction.DESC,"noticeDate");
-        List<NoticeListMapping> notices = noticeRepository.findByNoticeTitleContainingAndFixedFlagFalseOrNoticeContentContainingAndFixedFlagFalseOrderByNoticeNoDesc(keyword,keyword,paging);
-        page.addAll(notices);
-
+        if(page==null || page.size()==0){
+            return null;
+        }
         Map<String,Object> result = new HashMap<>();
         result.put("page",page);
         result.put("totalPage",totalPage);
