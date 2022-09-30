@@ -40,10 +40,12 @@
         </v-list>
       </v-menu>
 
-      <h5 class="user-name">{{ isUserName }}님</h5>
       <v-menu class="desk-nav-bar" offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-app-bar-nav-icon class="desk-nav-bar" v-bind="attrs" v-on="on"><v-icon large>mdi-menu-down</v-icon></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon class="desk-nav-bar" v-bind="attrs" v-on="on"
+            ><h5 class="user-name" v-bind="attrs" v-on="on">{{ isUserName }}님</h5>
+            <v-icon large>mdi-menu-down</v-icon></v-app-bar-nav-icon
+          >
           <!-- <v-btn color="primary" dark v-bind="attrs" v-on="on"> Dropdown </v-btn> -->
         </template>
         <v-list>
