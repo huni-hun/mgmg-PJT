@@ -2,12 +2,12 @@
   <div>
     <v-container class="justify-center">
       <v-row>
-        <v-col>
+        <v-col cols="12" sm="6">
           <div class="donut-frame">
             <donut-graph :startDate="startDate" :endDate="endDate" @send-emotion="sendEmotion" />
           </div>
         </v-col>
-        <v-col>
+        <v-col cols="12" sm="6">
           <div class="period-board">
             <img class="sticker" :src="require(`@/assets/statistics/adehesive_plaster.png`)" alt="" />
             <br />
@@ -126,9 +126,7 @@ export default {
     },
     sendEmotion(emotData) {
       //
-      console.log("=====감정 데이터 확인=====");
       this.emotion = emotData;
-      console.log(this.emotion);
       this.emotionExplanation = emotData.emotionExplanation;
       this.explanationPerson = emotData.explanationPerson;
       this.mostEmotion = emotData.mostEmotion;
@@ -148,8 +146,6 @@ export default {
 
 <style scoped>
 .period-board {
-  width: 100%;
-  height: 100%;
   background-size: contain;
   background-repeat: repeat-y;
   background-image: url("@/assets/statistics/bg_grid_paper.png");
@@ -159,8 +155,7 @@ export default {
 
 .donut-frame {
   background-color: rgba(226, 226, 226, 0.356);
-  width: auto;
-  height: auto;
+  height: 40vh;
 }
 
 .sticker {

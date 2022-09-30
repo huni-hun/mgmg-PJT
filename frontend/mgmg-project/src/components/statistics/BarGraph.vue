@@ -38,7 +38,7 @@ export default {
       },
     };
   },
-  async mounted() {
+  async created() {
     this.dayData = await statistics_day();
     this.statistics = this.dayData.statistics;
     this.chartData.datasets = [

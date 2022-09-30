@@ -2,19 +2,13 @@
   <div>
     <v-container class="justify-center">
       <v-row>
-        <v-col>
-          <h1>통계페이지</h1>
-        </v-col>
+        <v-spacer></v-spacer>
+        <v-btn-toggle class="btns" v-model="toggle_exclusive" rounded>
+          <v-btn @click="getPeriod" color="rgb(255, 233, 242)"> 기간별 통계 </v-btn>
+          <v-btn @click="getDays" color="rgb(255, 233, 242)"> 요일별 통계 </v-btn>
+        </v-btn-toggle>
+        <v-spacer></v-spacer>
       </v-row>
-      <v-btn-toggle class="btns" v-model="text" borderless color="rgb(225, 146, 179)" rounded group background-color="rgb(255, 233, 242)">
-        <v-btn value="left" color="rgb(255, 233, 242)">
-          <router-link to="/statistics"> 기간별 통계 </router-link>
-        </v-btn>
-
-        <v-btn value="right" color="rgb(255, 233, 242)">
-          <router-link to="/statistics/day"> 요일별 통계 </router-link>
-        </v-btn>
-      </v-btn-toggle>
 
       <router-view></router-view>
     </v-container>
@@ -23,13 +17,24 @@
 
 <script>
 export default {
-  data: () => ({ text: "left" }),
+  data: () => ({
+    text: "left",
+    toggle_exclusive: undefined,
+  }),
+  methods: {
+    getPeriod() {
+      this.$router.push({ path: "/statistics" });
+    },
+    getDays() {
+      this.$router.push({ path: "/statistics/day" });
+    },
+  },
 };
 </script>
 
 <style scoped>
 .btns {
-  display: flex;
-  justify-content: center;
+  margin-top: 2vh;
+  margin-bottom: 3vh;
 }
 </style>
