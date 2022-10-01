@@ -55,7 +55,7 @@ export default {
       emotionLst1: ["피곤", "평온", "짜증", "기쁨", "사랑"],
       emotionLst2: ["기대", "슬픔", "창피", "화", "공포"],
 
-      signupOrder: 2,
+      signupOrder: 4,
 
       selectMusic: {},
       selectMusicSecond: {},
@@ -263,11 +263,12 @@ export default {
   align-items: center;
 }
 .signupTitle {
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 2.5vw, 2.1rem);
   margin: 1% 0;
   color: white;
 }
 .signupBody {
+  width: 100%;
   background-color: white;
   padding: 5% 10%;
   height: 75vh;
@@ -296,7 +297,7 @@ export default {
 }
 .signupButton {
   width: 20%;
-  margin: 0 2%;
+  margin: 0 2% 3% 2%;
 }
 .justify_content_center {
   display: flex;
@@ -313,6 +314,11 @@ export default {
   .signupBody {
     background-color: white;
     padding: 5% 10%;
+  }
+
+  .signupButton {
+    width: 30%;
+    padding: 1% 0;
   }
 }
 @media (max-width: 330px) {

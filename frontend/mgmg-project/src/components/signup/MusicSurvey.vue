@@ -127,7 +127,7 @@ export default {
 
 <style scoped>
 .musicSurveyTitle {
-  font-size: clamp(1rem, 2.5vw, 2rem);
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
 }
 .hrStyle {
   width: 100%;
