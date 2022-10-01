@@ -4,7 +4,7 @@
       <canvas id="donut-chart" height:=height width:=width></canvas>
     </div>
     <div v-else>
-      <h2>해당 기간 일기가 자성되지 않았습니다.</h2>
+      <img :src="require(`@/assets/statistics/emptiedMsg.png`)" alt="" />
     </div>
   </div>
 </template>
@@ -83,25 +83,31 @@ export default {
   
   methods: {
     async resetDonut() {
+      var nullCheck = false
       await statistics_percent({
         startDate: this.startDate,
         endDate: this.endDate,
       })
       .then((res)=>{
-        console.log('성공이라고?')
         this.isData = false
         this.periodData = res
       })
-      .catch((err)=>{
+      .catch(()=>{
         this.isData = false
         this.periodData = Object
-        this.$emit("send-emotion",  this.periodData);  // 정보 올리기
-        console.log({...err})
-        return
+        this.$emit("send-emotion",  {
+          emotionExplanation:"일기를 써줘요. 당신의 감정을 기억할께요.",
+          explanationPerson: "몽글이",
+          mostEmotion: "몽글"
+        });  // 정보 올리기
+        return nullCheck = true
       })
-      
+      if(nullCheck){
+        return
+      }
       this.dater = this.periodData.statistics;
       // 데이터 리셋
+      console.log(this.dater)
       this.chartData.labels = [];
       this.chartData.datasets[0].backgroundColor = [];
       this.chartData.datasets[0].data = [];
@@ -148,5 +154,65 @@ export default {
 };
 </script>
 <style scoped>
+img{
+  margin: 7vh;
+  height: 26vh;
+  width: auto;
+}
+
+#donut-chart{
+  height: 26vh;
+  width: auto;
+  margin: 0;
+}
+
+/* 큰 태블릿 세로*/
+@media (max-width: 1023px) {
+  img{
+    margin: 2vw;
+    height: 20vh;
+  }
+  #donut-chart{
+    height: 20vh;
+    width: auto;
+    margin: 0;
+  }
+}
+@media (max-width: 960px) {
+  img{
+    margin: 2vw;
+    height: 18vh;
+  }
+  #donut-chart{
+    height: 14vh;
+    width: auto;
+    margin: 0;
+  }
+}
+/* 작은 태블릿 세로*/
+@media (max-width: 767px) {
+  img{
+    margin: 2vw;
+    height: 20vh;
+  }
+  #donut-chart{
+    height: 16vh;
+    width: auto;
+    margin: 0;
+  }
+}
+
+/* 스마트폰 세로 */
+@media (max-width: 480px) {
+  img{
+    margin: 2vw;
+    height: 20vh;
+  }
+  #donut-chart{
+    height: 16vh;
+    width: auto;
+    margin: 0;
+  }
+}
 
 </style>

@@ -2,14 +2,15 @@
   <div>
     <v-container class="justify-center">
       <v-row>
-        <v-col cols="12" sm="6">
+        <v-col cols="12" md="6">
           <div class="donut-frame">
             <donut-graph :startDate="startDate" :endDate="endDate" @send-emotion="sendEmotion" />
           </div>
         </v-col>
-        <v-col cols="12" sm="6">
+        <v-col cols="12" md="6">
           <div class="period-board">
             <img class="sticker" :src="require(`@/assets/statistics/adehesive_plaster.png`)" alt="" />
+
             <br />
             <!-- 달력 picker -->
             <div v-if="isPicker">
@@ -23,8 +24,9 @@
             <div v-else class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                  <v-btn class="periodMenu" color="primary" dark v-bind="attrs" v-on="on">
                     {{ menuTitle }}
+                    <v-icon class="periodMenuIcon" large>mdi-menu-down</v-icon>
                   </v-btn>
                 </template>
                 <v-list>
@@ -33,13 +35,19 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
-              <p @click="selectFunc()">{{ startDate }} ~ {{ endDate }}</p>
-              <p>제일 많이 느낀 감정</p>
-              <img class="badge" :src="require(`@/assets/badge/a1.png`)" alt="" />
-              <p>{{ emotionExplanation }}</p>
-              <p>by. {{ explanationPerson }}</p>
+              <p @click="selectFunc()" class="date-period">{{ startDate }} ~ {{ endDate }}</p>
+              <p v-if="!isMostEmotion" class="most-emotion">일기를 쓰면 배지를 선물로 줘요.</p>
+              <p v-else class="most-emotion">제일 많이 느낀 감정 : "{{ mostEmotion }}"</p>
+              <img class="badge" :src="require(`@/assets/emoticon/${imgSticker}.png`)" alt="" />
+              <p class="explanation">{{ emotionExplanation }}</p>
+              <p class="by-person">by. {{ explanationPerson }}</p>
             </div>
           </div>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <div></div>
         </v-col>
       </v-row>
     </v-container>
@@ -71,10 +79,24 @@ export default {
     agoYears: moment().subtract(1, "years").format("YYYY-MM-DD"),
     isPicker: false,
     dates: [],
-    emotion: Object,
-    emotionExplanation: "너! 일기 안 썼어",
-    explanationPerson: "최명권",
-    mostEmotion: "몽글", // 이미지
+    emotionExplanation: "일기를 써줘요. 당신의 감정을 기억할께요.",
+    explanationPerson: "몽글이",
+    mostEmotion: "몽글", // 가장 많은 감정
+    isMostEmotion: false, // 가장 많은 감정 있는지
+    imgNameData: {
+      슬픔: "sad",
+      공포: "fear",
+      피곤: "fatigue",
+      화: "angry",
+      기대: "expect",
+      평온: "calm",
+      창피: "shame",
+      짜증: "annoyed",
+      기쁨: "happy",
+      사랑: "love",
+      몽글: "mgmg",
+    },
+    imgSticker: "mgmg",
   }),
   methods: {
     // 달력 on/off 함수
@@ -125,11 +147,15 @@ export default {
       }
     },
     sendEmotion(emotData) {
-      //
-      this.emotion = emotData;
       this.emotionExplanation = emotData.emotionExplanation;
       this.explanationPerson = emotData.explanationPerson;
       this.mostEmotion = emotData.mostEmotion;
+      if (this.mostEmotion == "몽글") {
+        this.isMostEmotion = false;
+      } else {
+        this.isMostEmotion = true;
+      }
+      this.imgSticker = this.imgNameData[emotData.mostEmotion];
     },
   },
   components: { DonutGraph },
@@ -147,15 +173,21 @@ export default {
 <style scoped>
 .period-board {
   background-size: contain;
-  background-repeat: repeat-y;
+  background-repeat: repeat;
   background-image: url("@/assets/statistics/bg_grid_paper.png");
   border-radius: 10%;
   position: relative;
+  height: 60vh;
 }
 
 .donut-frame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border-radius: 10%;
   background-color: rgba(226, 226, 226, 0.356);
-  height: 40vh;
+  height: 60vh;
 }
 
 .sticker {
@@ -166,7 +198,117 @@ export default {
   left: 30%;
 }
 
+/* 이미지 */
 .badge {
-  height: 10rem;
+  height: 24vh;
+}
+
+.periodMenu {
+  margin: 1rem;
+}
+
+/* 큰 태블릿 세로*/
+@media (max-width: 1023px) {
+  .period-board {
+    height: 50vh;
+  }
+  .donut-frame {
+    height: 50vh;
+  }
+  .badge {
+    height: 20vh;
+  }
+
+  .periodMenu {
+    margin: 1rem;
+  }
+
+  .date-period {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .most-emotion {
+    font-size: 1rem;
+  }
+
+  .explanation {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .by-person {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 960px) {
+  .period-board {
+    height: 40vh;
+  }
+  .donut-frame {
+    height: 30vh;
+  }
+}
+/* 작은 태블릿 세로*/
+@media (max-width: 767px) {
+  .period-board {
+    height: 36vh;
+  }
+  .donut-frame {
+    height: 30vh;
+  }
+  .badge {
+    height: 12vh;
+  }
+
+  .periodMenu {
+    margin: 0.5rem;
+  }
+
+  .date-period {
+    margin: 0;
+  }
+
+  .most-emotion {
+    margin: 0;
+  }
+
+  .explanation {
+    margin: 0;
+  }
+}
+
+/* 스마트폰 세로 */
+@media (max-width: 480px) {
+  .period-board {
+    height: 39vh;
+  }
+  .donut-frame {
+    height: 27vh;
+  }
+  .periodMenu {
+    font-size: 1em;
+    margin: 1rem 0 0.5em 0;
+  }
+  .periodMenuIcon {
+    font-size: 0.5em;
+  }
+  .date-period {
+    font-size: 0.5rem;
+  }
+  .most-emotion {
+    font-size: 0.5rem;
+  }
+
+  .explanation {
+    font-size: 0.5rem;
+  }
+
+  .by-person {
+    font-size: 0.5rem;
+  }
+}
+/* 갤럭시 폴드 */
+@media (max-width: 300px) {
 }
 </style>
