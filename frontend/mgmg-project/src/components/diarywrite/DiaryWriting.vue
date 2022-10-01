@@ -26,7 +26,7 @@
           <input v-if="uploadReady" ref="file" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" hidden
             @change="readFile($event)" />
           <v-btn icon small>
-            <v-icon color="blue lighten-3" @click="selectFile" large> mdi-image-outline </v-icon>
+            <v-icon color="blue lighten-3" @click="selectFile()" large> mdi-image-outline </v-icon>
           </v-btn>
         </div>
       </div>
@@ -44,7 +44,7 @@
       fontFamily:`${font}`,
     }">
       <div class="textWriteDiv">
-        <textarea class="textWrite" minlength="50" maxlength="500" v-model="diary" placeholder="일기를 써보자"
+        <textarea class="textWrite" ref="textarea" minlength="50" maxlength="500" v-model="diary" placeholder="일기를 써보자"
           spellcheck="false" @input="autoResizeTextarea($event.target)"></textarea>
       </div>
       <div class="textLength">
@@ -143,6 +143,9 @@ export default {
         this.isLoading = false;
         console.log("전송된 음성입니다", res);
         this.diary += res.text;
+        if (500 < this.diary.length)
+          this.diary = this.diary.substring(0, 500);
+        this.autoResizeTextarea(this.$refs.textarea);
       }).catch((err) => {
         this.isLoading = false;
         console.log(err);
@@ -250,7 +253,7 @@ export default {
       }
     },
     autoResizeTextarea(obj) {
-      const text_len = obj.value.length; //입력한 문자수
+      const text_len = this.diary.length; //입력한 문자수
 
       obj.style.height = 'auto';
       let height = obj.scrollHeight; // 높이
