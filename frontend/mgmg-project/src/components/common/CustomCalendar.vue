@@ -1,71 +1,49 @@
 <template>
-  <div class="calendarBody">
-    <v-container class="calendar">
-      <v-row>
-        <v-col class="leftAlign">
-          <!-- <div @click="beforeMonth()" class="leftAlign">이전달</div> -->
-          <v-icon @click="beforeMonth()" class="leftAlign"
-            >mdi-menu-left</v-icon
-          >
-        </v-col>
-        <v-col class="centerYearMonth">
-          <!-- <v-container> -->
-          <!-- <v-row class="yearMonth"> -->
-          <input
-            class="inputLabel"
-            type="number"
-            id="showYear"
-            name="showYear"
-            :value="showYear"
-            @input="getInputYearMonth()"
-          />
-          <div class="inputDotLabel">.</div>
-          <input
-            class="inputLabel"
-            type="number"
-            id="showMonth"
-            name="showMonth"
-            :value="showMonth"
-            @input="getInputYearMonth()"
-          />
-          <!-- </v-row> -->
-          <!-- </v-container> -->
-        </v-col>
-        <v-col class="rightAlign">
-          <!-- <div @click="afterMonth()" class="rightAlign">다음달</div> -->
-          <v-icon @click="afterMonth()" class="rightAlign"
-            >mdi-menu-right</v-icon
-          >
-        </v-col>
-      </v-row>
-      <v-row class="dateTable">
-        <div
-          v-for="day in days"
-          :key="day.idx"
-          class="dayContainer"
-          @click="updateEmotionLst()"
-        >
-          <v-col>
-            <div class="dayName">{{ day.dayName }}</div>
+  <div>
+    <div class="backBox">
+      <div ref="backYellow"></div>
+    </div>
+    <img class="maskingTape" src="@/assets/statistics/maskingTape.png" />
+    <div class="calendarBody" ref="calendar">
+      <div class="calendar">
+        <v-row>
+          <v-col class="leftAlign">
+            <!-- <div @click="beforeMonth()" class="leftAlign">이전달</div> -->
+            <v-icon @click="beforeMonth()" class="leftAlign">mdi-menu-left</v-icon>
           </v-col>
-        </div>
-      </v-row>
-      <v-row class="dateTable" v-for="(week, index1) in monthLst" :key="index1">
-        <div v-for="(week0, index2) in week" :key="index2" class="dayContainer">
-          <v-col>
-            <emotionImage
-              v-if="week0 != 0"
-              :showYear="showYear"
-              :showMonth="showMonth"
-              :dateNum="week0"
-              :emotionImg="emotionsLst[index1][index2]"
-              :diaryNumber="diaryNum[index1][index2]"
-              name="emotionImg"
-            />
+          <v-col class="centerYearMonth">
+            <!-- <v-container> -->
+            <!-- <v-row class="yearMonth"> -->
+            <input class="inputLabel" type="number" id="showYear" name="showYear" :value="showYear"
+              @input="getInputYearMonth()" />
+            <div class="inputDotLabel">.</div>
+            <input class="inputLabel" type="number" id="showMonth" name="showMonth" :value="showMonth"
+              @input="getInputYearMonth()" />
+            <!-- </v-row> -->
+            <!-- </v-container> -->
           </v-col>
-        </div>
-      </v-row>
-    </v-container>
+          <v-col class="rightAlign">
+            <!-- <div @click="afterMonth()" class="rightAlign">다음달</div> -->
+            <v-icon @click="afterMonth()" class="rightAlign">mdi-menu-right</v-icon>
+          </v-col>
+        </v-row>
+        <v-row class="dateTable">
+          <div v-for="day in days" :key="day.idx" class="dayContainer" @click="updateEmotionLst()">
+            <v-col>
+              <div class="dayName">{{ day.dayName }}</div>
+            </v-col>
+          </div>
+        </v-row>
+        <v-row class="dateTable" v-for="(week, index1) in monthLst" :key="index1">
+          <div v-for="(week0, index2) in week" :key="index2" class="dayContainer">
+            <v-col>
+              <emotionImage v-if="week0 != 0" :showYear="showYear" :showMonth="showMonth" :dateNum="week0"
+                :emotionImg="emotionsLst[index1][index2]" :diaryNumber="diaryNum[index1][index2]" name="emotionImg" />
+            </v-col>
+          </div>
+        </v-row>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -142,12 +120,22 @@ export default {
         ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
         ["없음", "없음", "없음", "없음", "없음", "없음", "없음"],
       ],
+
+      width: 0,
+      height: 0,
     };
   },
   mounted() {
     this.setTodayYearMonth();
   },
+  updated() {
+    this.backSize();
+  },
   methods: {
+    handleResize() {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+    },
     //axios로 몽글이 가져오는 함수
     async monthlyDiaryList(monthInput) {
       this.emotionLst = [
@@ -391,26 +379,64 @@ export default {
       document.getElementById("showMonth").value = Number(this.showMonth) + 1;
       this.getInputYearMonth();
     },
+    backSize() {
+      let box = this.$refs.backYellow;
+      box.style.width = 'auto';
+      box.style.height = 'auto';
+      box.style.width = `${(this.$refs.calendar.scrollWidth) * (100 / document.documentElement.clientWidth)}vw`;
+      box.style.height = `${(this.$refs.calendar.scrollHeight) * (100 / document.documentElement.clientHeight)}vh`;
+    }
   },
 };
 </script>
 
 <style scoped>
+.backBox {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  z-index: 1;
+}
+
+.backBox>div {
+  background-color: #E5D7CA;
+  transform: rotate(2.5deg);
+}
+
+.maskingTape {
+  position: absolute;
+  min-width: 160px;
+  width: 12%;
+  max-width: 260px;
+  /* top: 100%; */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
 .calendarBody {
+  position: relative;
+  padding-top: 30px;
+  padding-bottom: 30px;
   /* width: 80vw; */
   /* border: 2px solid black; */
   background-color: white;
+  z-index: 2;
 }
+
 /* .calendar {
   margin: 2rem;
   border: 2px solid black;
 } */
+
 .leftArrow {
   width: 10%;
 }
+
 .rightArrow {
   width: 10%;
 }
+
 .centerYearMonth {
   width: 80%;
   display: flex;
@@ -418,6 +444,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .yearMonth {
   margin-top: 0.5%;
   /* margin-bottom: 1%; */
@@ -425,41 +452,52 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .leftAlign {
   font-size: 3rem;
-  text-align: left;
+  text-align: right;
+  /* margin-left: 5%; */
 }
+
 .rightAlign {
   font-size: 3rem;
-  text-align: right;
+  /* text-align: right; */
+  /* margin-right: 5%; */
 }
+
 .dateTable {
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .dayContainer {
   width: 13%;
   height: auto;
   padding: 2px;
 }
+
 .dayName {
   text-align: center;
   margin-bottom: 0.2rem;
 }
+
 .inputLabel {
   font-size: 1.5em;
   width: 3em;
   text-align: center;
 }
+
 .inputDotLabel {
   font-size: 1.5em;
   text-align: center;
 }
+
 .container {
   padding: 0;
 }
+
 .col-xl,
 .col-xl-auto,
 .col-xl-12,

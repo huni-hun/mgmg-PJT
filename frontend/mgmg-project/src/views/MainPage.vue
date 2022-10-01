@@ -2,11 +2,13 @@
   <v-container>
     <div class="mainpageBody">
       <div>
-        <label class="mainpageTitle">날짜를 클릭해서 일기를 써보세요.</label>
+        <label class="mainpageTitle">" 날짜를 클릭해서 일기를 써보세요! "</label>
       </div>
       <Calendar class="mainpageCalendar" />
     </div>
-    <div class="iconDisplay" v-if="todayDiary"><v-icon class="pencilIcon" @click="diaryWrite">mdi-pencil-circle</v-icon></div>
+    <v-btn class="iconDisplay" fab dark large color="indigo darken-1" v-if="todayDiary" @click="diaryWrite">
+      <v-icon class="pencilIcon"> mdi-pencil</v-icon>
+    </v-btn>
   </v-container>
 </template>
 
@@ -108,6 +110,7 @@ export default {
   font-display: center;
   width: 80%;
 }
+
 /* @media (max-width: 1023px) {
   .body {
     width: 80vw;
@@ -131,38 +134,46 @@ export default {
 } */
 .mainpageCalendar {
   width: 100%;
-  padding: 2rem;
+  /* padding: 2rem; */
 }
+
 .mainpageTitle {
   display: block;
   width: 100%;
-  font-size: 2vw;
-  margin-bottom: 3%;
+  font-size: 1.5vw;
+  margin-bottom: 26px;
 }
+
 .iconDisplay {
   position: fixed;
   bottom: 6%;
   right: 10%;
 }
+
 .pencilIcon {
   font-size: 5vw;
 }
+
 @media (max-width: 991px) {
   .mainpageBody {
     width: 100%;
   }
+
   .pencilIcon {
     font-size: 6vw;
   }
 }
+
 @media (max-width: 767px) {
   .mainpageTitle {
     font-size: 3vw;
   }
+
   .pencilIcon {
     font-size: 9vw;
   }
 }
+
 @media (max-width: 575px) {
   .pencilIcon {
     font-size: 15vw;

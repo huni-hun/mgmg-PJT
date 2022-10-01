@@ -1,8 +1,10 @@
 <template>
   <div class="calendarImageBody">
-    <v-container @click="test(showYear, showMonth, dateNum, diaryNumber)" :class="{ dateToday: checkToday() == 1, datePast: checkToday() == 0, dateFuture: checkToday() == 2 }">
+    <v-container @click="test(showYear, showMonth, dateNum, diaryNumber)"
+      :class="{ dateToday: checkToday() == 1, datePast: checkToday() == 0, dateFuture: checkToday() == 2 }">
       <div class="dateNum">{{ dateNum }}</div>
-      <img v-if="!!emotionImgLst[emotionImg] && !this.isToday()" class="emoticonImg shadow" :src="require(`@/assets/emoticon/${emotionImgLst[emotionImg]}.png`)" alt="" />
+      <img v-if="!!emotionImgLst[emotionImg] && !this.isToday()" class="emoticonImg shadow"
+        :src="require(`@/assets/emoticon/${emotionImgLst[emotionImg]}.png`)" alt="" />
     </v-container>
   </div>
 </template>
@@ -137,32 +139,40 @@ export default {
   align-content: center;
   /* padding: 1rem; */
 }
+
 .dateNum {
   position: absolute;
   margin-top: 8px;
   margin-left: 8px;
   margin-bottom: 5px;
 }
+
 .emoticonImg {
   width: 60%;
   /* height: 5rem; */
   margin: 0 auto;
 }
+
 .datePast {
-  background-color: rgb(246, 240, 251);
+  background-color: #fcf2e6;
 }
+
 .dateToday {
   background-color: rgb(205, 240, 255);
 }
+
 .dateFuture {
   background-color: rgb(219, 219, 219);
 }
+
 .container {
   padding: 0;
 }
+
 .shadow {
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
 }
+
 /* @media (max-width: 1100px) {
   .emoticonImg {
     width: 60%;
@@ -182,17 +192,20 @@ export default {
     height: auto;
     align-content: flex-end;
   }
+
   .dateNum {
     position: static;
     margin-top: 8px;
     margin-left: 0;
   }
 }
+
 @media (max-width: 1357px) {
   .emoticonImg {
     margin-top: 10%;
   }
 }
+
 @media (max-width: 1880px) {
   .calendarImageBody {
     height: 4.5rem;
