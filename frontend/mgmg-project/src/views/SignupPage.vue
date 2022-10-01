@@ -22,17 +22,17 @@
         <customButton class="signupButton" btnText="다음" id="page1Next" @click="signupNext1page"></customButton>
       </div>
 
-      <div class="signupButton2Page" v-if="signupOrder == 2">
+      <div class="signupButton2Page justify_content_center" v-if="signupOrder == 2">
         <customButton class="signupButton" btnText="이전" id="page2Before" @click="signupBefore"></customButton>
         <customButton class="signupButton" btnText="다음" id="page2Next" @click="signupNext2page"></customButton>
       </div>
 
-      <div class="signupButton3Page" v-if="signupOrder == 3">
+      <div class="signupButton3Page justify_content_center" v-if="signupOrder == 3">
         <customButton class="signupButton" btnText="이전" id="page3Before" @click="signupBefore"></customButton>
         <customButton class="signupButton" btnText="다음" id="page3Next" @click="signupNext3page"></customButton>
       </div>
 
-      <div class="signupButton4Page" v-if="signupOrder == 4">
+      <div class="signupButton4Page justify_content_center" v-if="signupOrder == 4">
         <customButton class="signupButton" btnText="이전" id="page4Before" @click="signupBefore"></customButton>
         <customButton class="signupButton" btnText="완료" id="page4FNext" @click="signUp"></customButton>
       </div>
@@ -54,7 +54,9 @@ export default {
     return {
       emotionLst1: ["피곤", "평온", "짜증", "기쁨", "사랑"],
       emotionLst2: ["기대", "슬픔", "창피", "화", "공포"],
-      signupOrder: 1,
+
+      signupOrder: 2,
+
       selectMusic: {},
       selectMusicSecond: {},
       musicTaste: {},
@@ -275,10 +277,30 @@ export default {
 .signupButton1Page {
   display: flex;
   justify-content: center;
+  margin-top: 3%;
+}
+.signupButton2Page {
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+}
+.signupButton3Page {
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+}
+.signupButton4Page {
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
 }
 .signupButton {
   width: 20%;
   margin: 0 2%;
+}
+.justify_content_center {
+  display: flex;
+  justify-content: center;
 }
 .noScrollBox {
   -ms-overflow-style: none; /* IE and Edge */
@@ -290,6 +312,11 @@ export default {
 @media (max-width: 575px) {
   .signupBody {
     background-color: white;
+    padding: 5% 10%;
+  }
+}
+@media (max-width: 330px) {
+  .signupBody {
     padding: 5% 2%;
   }
 }

@@ -118,7 +118,7 @@
         </label>
       </v-row>
       <v-row class="ruleCheckBox">
-        <v-checkbox v-model="ruleCheck" :label="`약관 내용에 동의합니다.`" @click="ruleApproveCheck"></v-checkbox>
+        <v-checkbox hide-details v-model="ruleCheck" :label="`약관 내용에 동의합니다.`" @click="ruleApproveCheck"></v-checkbox>
       </v-row>
     </v-container>
   </div>
@@ -485,7 +485,7 @@ export default {
 }
 .ruleCheckBox {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 @media (max-width: 1199px) {
