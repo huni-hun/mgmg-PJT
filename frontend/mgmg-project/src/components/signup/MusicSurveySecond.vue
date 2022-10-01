@@ -5,13 +5,25 @@
       <v-row>감정별로 선호하는 음악 장르를 선택하세요.</v-row>
       <v-row><hr class="hrStyle" /></v-row>
       <v-row class="pcView">
-        <v-col class="genreCheckLst" v-for="(emotion, index) in emotionLst1" :key="index">
+        <v-col
+          class="genreCheckLst"
+          v-for="(emotion, index) in emotionLst1"
+          :key="index"
+        >
           <v-container>
             <v-row class="justify_content_center">
-              <img class="emoticonImg" :src="require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)" alt="" />
+              <img
+                class="emoticonImg"
+                :src="
+                  require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)
+                "
+                alt=""
+              />
             </v-row>
             <v-row class="justify_content_center">
-              <div class="justify_content_center emotionName">{{ emotion }}</div>
+              <div class="justify_content_center emotionName">
+                {{ emotion }}
+              </div>
             </v-row>
             <v-row>
               <v-col class="genresMargin">
@@ -21,22 +33,34 @@
                   v-for="(genre, index) in genreLst1"
                   :key="index"
                   :label="genreLst1[index]"
-                  :value="genreLst1[index]"
-                  @click="addGenres(emotion, genreLst1[index])"
+                  :value="genre"
+                  v-model="musicTaste2[emotion][index]"
                 ></v-checkbox>
               </v-col>
             </v-row>
           </v-container>
         </v-col>
       </v-row>
-      <v-row class="phoneView" v-for="(emotion, index) in emotionLst1" :key="index">
+      <v-row
+        class="phoneView"
+        v-for="(emotion, index) in emotionLst1"
+        :key="index"
+      >
         <v-col class="genreCheckLst">
           <v-container>
             <v-row class="justify_content_center">
-              <img class="emoticonImg" :src="require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)" alt="" />
+              <img
+                class="emoticonImg"
+                :src="
+                  require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)
+                "
+                alt=""
+              />
             </v-row>
             <v-row class="justify_content_center">
-              <div class="justify_content_center emotionName">{{ emotion }}</div>
+              <div class="justify_content_center emotionName">
+                {{ emotion }}
+              </div>
             </v-row>
             <v-row class="paddingLeft">
               <div>
@@ -47,8 +71,8 @@
                     v-for="(genre, index) in genreLst1"
                     :key="index"
                     :label="genreLst1[index]"
-                    :value="genreLst1[index]"
-                    @click="addGenres(emotion, genreLst1[index])"
+                    :value="genre"
+                    v-model="musicTaste2[emotion][index]"
                   ></v-checkbox>
                 </v-col>
               </div>
@@ -66,28 +90,22 @@ export default {
     return {
       emotionLst1: ["기대", "슬픔", "창피", "화", "공포"],
       emotionEnglishLst1: ["expect", "sad", "shame", "angry", "fear"],
-      genreLst1: ["R&B/Soul", "댄스", "랩/힙합", "록/메탈", "발라드", "인디음악", "트로트", "포크/블루스"],
-      musicTaste2: {
-        기대: [],
-        슬픔: [],
-        창피: [],
-        화: [],
-        공포: [],
-      },
+      genreLst1: [
+        "R&B/Soul",
+        "댄스",
+        "랩/힙합",
+        "록/메탈",
+        "발라드",
+        "인디음악",
+        "트로트",
+        "포크/블루스",
+      ],
+      musicTaste2: {},
     };
   },
-  methods: {
-    addGenres(emotion, genre) {
-      // 선택 리스트의 감정에 해당 장르가 없으면 추가
-      if (!this.musicTaste2[emotion].includes(genre)) {
-        this.musicTaste2[emotion].push(genre);
-      } else {
-        //있으면 삭제
-        this.musicTaste2[emotion].pop(genre);
-      }
-      //   console.log(this.musicTaste2);
-      this.$emit("updateMusicSecond", this.musicTaste2);
-    },
+  props: ["selectMusicSecond"],
+  created() {
+    this.musicTaste2 = this.selectMusicSecond;
   },
 };
 </script>
@@ -107,7 +125,8 @@ export default {
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
 }
 .selected {
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25),
+    inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
 .genreCheckLst {
   width: 100%;
