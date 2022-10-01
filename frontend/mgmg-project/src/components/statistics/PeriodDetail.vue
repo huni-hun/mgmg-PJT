@@ -14,11 +14,18 @@
             <br />
             <!-- 달력 picker -->
             <div v-if="isPicker">
-              <v-text-field v-model="dateRangeText" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
-              <v-date-picker v-model="dates" range no-title></v-date-picker>
-              <!-- 취소 -> 원상복귀, 확인 -> startDate, endDate 바꾸기 -->
-              <v-btn @click="selectFunc()" elevation="2">뒤로</v-btn>
-              <v-btn @click="pickerFunc()" elevation="2">확인</v-btn>
+              <v-row justify="center">
+                <v-dialog v-model="isPicker" persistent max-width="290">
+                  <v-card>
+                    <v-text-field v-model="dateRangeText" background-color="#FFF" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
+                    <v-date-picker v-model="dates" range no-title :max="today" :min="allowMaxDate" color="green" class="custom-picker">
+                      <v-spacer />
+                      <v-btn text class="font-weight-bold" color="gray" @click="selectFunc()"> 취소 </v-btn>
+                      <v-btn text class="font-weight-bold" color="green " @click="pickerFunc()"> 확인 </v-btn>
+                    </v-date-picker>
+                  </v-card>
+                </v-dialog>
+              </v-row>
             </div>
             <!-- menus 와 정보 -->
             <div v-else class="text-center">
@@ -71,6 +78,8 @@ export default {
     menuTitle: "주간 통계",
     periodData: Object,
     data: Object,
+    today: moment().format("YYYY-MM-DD"), // 오늘
+    allowMaxDate: moment().subtract(3, "years").format("YYYY-MM-DD"), // 넉넉하게 3년
     startDate: moment().subtract(1, "weeks").format("YYYY-MM-DD"),
     endDate: moment().format("YYYY-MM-DD"), // 오늘
     nowDate: moment().format("YYYY-MM-DD"),
@@ -157,6 +166,17 @@ export default {
       }
       this.imgSticker = this.imgNameData[emotData.mostEmotion];
     },
+    getDay(date) {
+      const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+      let i = new Date(date).getDay(date);
+      return daysOfWeek[i];
+    },
+    getMonth(date) {
+      const monthName = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+
+      let i = new Date(date).getMonth(date);
+      return monthName[i];
+    },
   },
   components: { DonutGraph },
   created() {
@@ -170,7 +190,75 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+/* 달력 picker */
+.custom-picker {
+  border-radius: 10px !important;
+
+  .v-btn--active.green {
+    background-color: #edffff !important;
+
+    .v-btn__content {
+      color: #00b1bb !important;
+      font-weight: bold !important;
+    }
+  }
+
+  .v-picker__title {
+    display: none !important;
+  }
+
+  .v-date-picker-header {
+    padding-top: 10px !important;
+  }
+}
+
+.v-date-picker-table thead tr th {
+  color: #1c1c1c !important;
+  font-weight: 400 !important;
+
+  &:nth-child(1) {
+    color: #ff7451 !important;
+  }
+
+  &:nth-child(7) {
+    color: #ff7451 !important;
+  }
+}
+
+.v-date-picker-table tbody tr td {
+  &:nth-child(1) {
+    .v-btn--disabled {
+      .v-btn__content {
+        color: #ffcbbe;
+      }
+    }
+
+    .v-btn__content {
+      color: #ff7451;
+    }
+  }
+
+  &:nth-child(7) {
+    .v-btn--disabled {
+      .v-btn__content {
+        color: #ffcbbe;
+      }
+    }
+
+    .v-btn__content {
+      color: #ff7451;
+    }
+  }
+}
+
+.date-picker {
+  max-width: 40vh;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .period-board {
   background-size: contain;
   background-repeat: repeat;
@@ -209,6 +297,10 @@ export default {
 
 /* 큰 태블릿 세로*/
 @media (max-width: 1023px) {
+  .date-picker {
+    max-width: 30vh;
+  }
+
   .period-board {
     height: 50vh;
   }
@@ -242,6 +334,9 @@ export default {
   }
 }
 @media (max-width: 960px) {
+  .date-picker {
+    max-width: 30vw;
+  }
   .period-board {
     height: 40vh;
   }
