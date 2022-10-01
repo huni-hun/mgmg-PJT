@@ -55,7 +55,7 @@ export default {
       emotionLst1: ["피곤", "평온", "짜증", "기쁨", "사랑"],
       emotionLst2: ["기대", "슬픔", "창피", "화", "공포"],
 
-      signupOrder: 4,
+      signupOrder: 1,
 
       selectMusic: {},
       selectMusicSecond: {},

@@ -95,7 +95,15 @@
                 :change="birthCheck()"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
+            <v-date-picker
+              v-model="date"
+              no-title
+              @input="menu2 = false"
+              :weekday-format="getDay"
+              :month-format="getMonth"
+              :title-date-format="getMonth"
+              :header-date-format="getHeaderTitleMonth"
+            ></v-date-picker>
           </v-menu>
         </div>
         <div class="col-4"></div>
@@ -207,6 +215,24 @@ export default {
     };
   },
   methods: {
+    getDay(date) {
+      const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+      let i = new Date(date).getDay(date);
+      return daysOfWeek[i];
+    },
+    getMonth(date) {
+      const monthName = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+
+      let i = new Date(date).getMonth(date);
+      return monthName[i];
+    },
+    getHeaderTitleMonth(date) {
+      const monthName = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+      let i = new Date(date).getMonth(date);
+      const year = new Date(date).getFullYear(date);
+      const month = monthName[i];
+      return `${year}년 ${month}`;
+    },
     finalValidSignup() {
       var finalValidation =
         this.idValidation &&
