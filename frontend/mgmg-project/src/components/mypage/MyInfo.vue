@@ -108,7 +108,7 @@ export default {
 
 .titleLabel {
   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-  margin-bottom: 0.5%;
+  margin: 3% 0% 0.5% 0%;
 }
 
 .myInfoBody {
@@ -127,7 +127,7 @@ export default {
 }
 .myInfoButtonLine {
   width: 100%;
-  margin-top: 7%;
+  margin-top: 5%;
   display: flex;
   justify-content: center;
 }
