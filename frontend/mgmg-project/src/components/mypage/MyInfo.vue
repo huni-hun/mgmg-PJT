@@ -1,45 +1,54 @@
 <template>
-  <v-container>
-    <v-row>
+  <div class="myInfoTotalBody">
+    <div class="titleLabel">
       <label for="">내 정보 확인</label>
-    </v-row>
-    <v-row>
+    </div>
+
+    <div>
       <hr class="hrStyle" />
-    </v-row>
-    <v-row>
-      <v-col><label for="">이름</label></v-col>
-      <v-col
-        ><label for="">{{ userName }}</label></v-col
-      >
-    </v-row>
-    <v-row>
-      <v-col><label for="">아이디</label></v-col>
-      <v-col
-        ><label for="">{{ userId }}</label></v-col
-      >
-    </v-row>
-    <v-row>
-      <v-col><label for="">이메일</label></v-col>
-      <v-col
-        ><label for="">{{ userEmail }}</label></v-col
-      >
-    </v-row>
-    <v-row>
-      <v-col><label for="">생년월일</label></v-col>
-      <v-col
-        ><label for="">{{ userBirth }}</label></v-col
-      >
-    </v-row>
-    <v-row>
-      <v-col><label for="">성별</label></v-col>
-      <v-col
-        ><label for="">{{ userGender }}</label></v-col
-      >
-    </v-row>
-    <v-row>
-      <CustomButton btnText="수정하기" @click="gotoInfoEdit" />
-    </v-row>
-  </v-container>
+    </div>
+
+    <div class="myInfoBody">
+      <div class="myInfoLine">
+        <div class="myInfoBodyLabel"><label for="">이름</label></div>
+        <div class="myInfoBodyContent">
+          <label for="">{{ userName }}</label>
+        </div>
+      </div>
+
+      <div class="myInfoLine">
+        <div class="myInfoBodyLabel"><label for="">아이디</label></div>
+        <div>
+          <label class="myInfoBodyContent" for="">{{ userId }}</label>
+        </div>
+      </div>
+
+      <div class="myInfoLine">
+        <div class="myInfoBodyLabel"><label for="">이메일</label></div>
+        <div>
+          <label class="myInfoBodyContent" for="">{{ userEmail }}</label>
+        </div>
+      </div>
+
+      <div class="myInfoLine">
+        <div class="myInfoBodyLabel"><label for="">생년월일</label></div>
+        <div>
+          <label class="myInfoBodyContent" for="">{{ userBirth }}</label>
+        </div>
+      </div>
+
+      <div class="myInfoLine">
+        <div class="myInfoBodyLabel"><label for="">성별</label></div>
+        <div>
+          <label class="myInfoBodyContent" for="">{{ userGender }}</label>
+        </div>
+      </div>
+
+      <div class="myInfoButtonLine">
+        <CustomButton class="myInfoButton" btnText="수정하기" @click="gotoInfoEdit" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -89,10 +98,47 @@ export default {
 </script>
 
 <style scoped>
+.myInfoTotalBody {
+  width: 100%;
+  padding: 7% 10%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.titleLabel {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  margin-bottom: 0.5%;
+}
+
+.myInfoBody {
+  padding: 5% 5% 0% 5%;
+}
+.myInfoLine {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2%;
+}
+.myInfoBodyLabel {
+  width: 20%;
+}
+.myInfoBodyContent {
+  width: 80%;
+}
+.myInfoButtonLine {
+  width: 100%;
+  margin-top: 7%;
+  display: flex;
+  justify-content: center;
+}
+.myInfoButton {
+  width: 25%;
+}
+
 .hrStyle {
   border: 0.01rem solid #000000;
-  width: 80rem;
 }
+
 .inputStyle:deep(fieldset) {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);

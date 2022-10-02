@@ -77,8 +77,7 @@ export default {
 
 <style scoped>
 .mypageTotalBody {
-  border: 2px solid black;
-  margin-top: 5vw;
+  margin-top: 2vw;
   /* height: 50vh; */
 }
 .mypageBody {
