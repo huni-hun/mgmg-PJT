@@ -127,12 +127,12 @@ export default {
 }
 .myInfoButtonLine {
   width: 100%;
-  margin-top: 5%;
+  margin-top: 10%;
   display: flex;
   justify-content: center;
 }
 .myInfoButton {
-  width: 25%;
+  width: 50%;
 }
 
 .hrStyle {

@@ -1,51 +1,71 @@
 <template>
-  <v-container>
-    <v-row>
+  <div class="infoEditTotalBody">
+    <div class="titleLabel">
       <label for="" @click="firstProcess">회원 정보 변경</label>
-    </v-row>
+    </div>
 
-    <v-row>
+    <div>
       <hr class="hrStyle" />
-    </v-row>
+    </div>
 
-    <v-row>
-      <v-col><label for="">이름</label></v-col>
-      <CustomInput v-model="nameInfoEditInput" class="" />
-    </v-row>
-
-    <v-row>
-      <v-col><label for="">아이디</label></v-col>
-      <label for="">{{ userId }}</label>
-    </v-row>
-
-    <v-row>
-      <v-col><label for="">이메일</label></v-col>
-      <label for="">{{ userEmail }}</label>
-      <CustomInput v-model="emailInfoEditInput" class="" />
-    </v-row>
-
-    <v-row>
-      <v-col><label for="">생년월일</label></v-col>
-      <div class="">
-        <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
-          </template>
-          <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
-        </v-menu>
+    <div class="infoEditBody">
+      <div class="infoEditLine">
+        <div class="infoEditBodyLabel"><label for="">이름</label></div>
+        <div class="infoEditBodyContent">
+          <CustomInput v-model="nameInfoEditInput" class="" />
+        </div>
       </div>
-    </v-row>
 
-    <v-row>
-      <label class="col-4" for="" id="genderInfoEditLabel">성별</label>
-      <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
-      <CustomButton class="col-3" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
-      <div class="col-4"></div>
-    </v-row>
-    <v-row>
-      <CustomButton btnText="수정하기" @click="userInfoEdit" />
-    </v-row>
-  </v-container>
+      <div class="infoEditLine">
+        <div class="infoEditBodyLabel"><label for="">아이디</label></div>
+        <div>
+          <label class="infoEditBodyContent" for="">{{ userId }}</label>
+        </div>
+      </div>
+
+      <div class="infoEditLine">
+        <div class="infoEditBodyLabel"><label for="">이메일</label></div>
+        <div>
+          <label class="infoEditBodyContent" for="">{{ userEmail }}</label>
+        </div>
+        <!-- <CustomInput v-model="emailInfoEditInput" class="" /> -->
+      </div>
+
+      <div class="infoEditLine">
+        <div class="infoEditBodyLabel"><label for="">생년월일</label></div>
+        <div class="infoEditBodyContent">
+          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
+            </template>
+            <v-date-picker
+              :weekday-format="getDay"
+              :month-format="getMonth"
+              :title-date-format="getMonth"
+              :header-date-format="getHeaderTitleMonth"
+              v-model="date"
+              no-title
+              @input="menu2 = false"
+            ></v-date-picker>
+          </v-menu>
+        </div>
+      </div>
+
+      <div class="infoEditLine">
+        <div class="infoEditBodyLabel">
+          <label for="" id="genderInfoEditLabel">성별</label>
+        </div>
+        <div class="infoEditGenderContent">
+          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
+          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
+        </div>
+      </div>
+
+      <div class="infoEditButtonLine">
+        <CustomButton class="infoEditButton" btnText="수정하기" @click="userInfoEdit" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -118,6 +138,24 @@ export default {
     this.firstProcess();
   },
   methods: {
+    getDay(date) {
+      const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+      let i = new Date(date).getDay(date);
+      return daysOfWeek[i];
+    },
+    getMonth(date) {
+      const monthName = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+
+      let i = new Date(date).getMonth(date);
+      return monthName[i];
+    },
+    getHeaderTitleMonth(date) {
+      const monthName = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+      let i = new Date(date).getMonth(date);
+      const year = new Date(date).getFullYear(date);
+      const month = monthName[i];
+      return `${year}년 ${month}`;
+    },
     test() {
       this.nameInfoEditInput.input = "kimminyoung";
       this.userEmail = "min4849@naver.com";
@@ -139,7 +177,6 @@ export default {
 
       this.genToNum(response.gender);
       this.nameInfoEditInput.input = this.userName;
-      // this.emailInfoEditInput.input = this.userEmail;
     },
     // 이름 정규식 검사
     nameValidationCheck(user_name) {
@@ -152,17 +189,6 @@ export default {
         this.nameValidation = false;
       }
     },
-    // 이메일 정규식 검사
-    // emailValidationCheck(user_email) {
-    //   const regEmail = /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-    //   if (regEmail.test(user_email)) {
-    //     this.userEmail = user_email;
-    //     this.emailValidation = true;
-    //     return true;
-    //   } else {
-    //     this.emailValidation = false;
-    //   }
-    // },
     // 성별 선택
     changeGender(gender) {
       this.userGenderNum = gender;
@@ -207,7 +233,7 @@ export default {
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
             });
-            this.$router.push("/my/myinfo");
+            this.$router.push("/my/infoEdit");
           })
           .catch((err) => {
             console.log(err);
@@ -271,6 +297,54 @@ export default {
 </script>
 
 <style scoped>
+.infoEditTotalBody {
+  width: 100%;
+  padding: 7% 10%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.titleLabel {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  margin: 3% 0% 0.5% 0%;
+}
+
+.infoEditBody {
+  padding: 5% 5% 0% 5%;
+}
+.infoEditLine {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2%;
+}
+.infoEditBodyLabel {
+  width: 20%;
+}
+.infoEditBodyContent {
+  width: 80%;
+}
+.infoEditButtonLine {
+  width: 100%;
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+}
+.infoEditButton {
+  width: 50%;
+}
+.infoEditGenderContent {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.genderButton {
+  width: 49%;
+}
+.hrStyle {
+  border: 0.01rem solid #000000;
+}
 .inputStyle:deep(fieldset) {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
@@ -278,7 +352,7 @@ export default {
   padding: 0;
 }
 .selectedGender {
-  background-color: black;
+  background-color: rgb(189, 181, 199);
   color: white;
 }
 </style>
