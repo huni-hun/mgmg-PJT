@@ -12,10 +12,10 @@
         </router-link>
         <hr class="hrStyle" />
 
-        <router-link class="bannerLabelDecoration" to="/my/infoedit">
+        <!-- <router-link class="bannerLabelDecoration" to="/my/infoedit">
           <div class="bannerMenuLabel"><label for="">회원 정보 변경</label></div>
         </router-link>
-        <hr class="hrStyle" />
+        <hr class="hrStyle" /> -->
 
         <router-link class="bannerLabelDecoration" to="/my/passwordedit">
           <div class="bannerMenuLabel"><label for="">비밀번호 수정</label></div>
@@ -78,6 +78,7 @@ export default {
 <style scoped>
 .mypageTotalBody {
   margin-top: 2vw;
+  width: 80%;
   /* height: 50vh; */
 }
 .mypageBody {
@@ -86,8 +87,8 @@ export default {
   justify-content: center;
 }
 .mypageBanner {
-  width: 20%;
-  padding: 1% 1% 1% 1%;
+  width: 25%;
+  padding: 1% 5% 1% 1%;
 }
 .bannerTitleLabel {
   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
@@ -104,7 +105,7 @@ export default {
 }
 
 .mypageView {
-  width: 80%;
+  width: 75%;
   padding: 1%;
 }
 
