@@ -30,7 +30,7 @@ public class DiaryGiftResponse extends BaseResponseBody {
         DiaryGiftResponse res = new DiaryGiftResponse();
         res.setDiaryNo(diary.getDiaryNo());
         res.setOpenGift(diary.isOpenGift());
-        res.setGift(diary.getGift());
+        res.setGift(diary.getGift()!=null?diary.getGift():null);
         res.setCheckGift(checkGift);
         res.setStatusCode(statusCode);
         res.setMessage(message);
