@@ -159,11 +159,10 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2%;
+  margin-bottom: 6%;
   width: 100%;
 }
 .loginButton {
-  padding-right: 5%;
   width: 80%;
 }
 .loginButtonText {
