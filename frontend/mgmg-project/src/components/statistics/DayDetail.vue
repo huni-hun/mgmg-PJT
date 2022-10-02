@@ -19,9 +19,6 @@ export default {
   data: () => ({
     week: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   }),
-  created() {
-    console.log("----------ㅇㅁDayDetail--");
-  },
   components: { BarGraph },
 };
 </script>

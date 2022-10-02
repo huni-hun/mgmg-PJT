@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="/public/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="/public/favicon.ico" />
     <title>몽글몽글</title>
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/manifest.json" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" />
   </head>
@@ -21,16 +21,18 @@
 </html>
 
 <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('./sw.js')
-    .then(registration => {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }) .catch(err => {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker
+        .register("./sw.js")
+        .then((registration) => {
+          // Registration was successful
+          console.log("ServiceWorker registration successful with scope: ", registration.scope);
+        })
+        .catch((err) => {
+          // registration failed :(
+          console.log("ServiceWorker registration failed: ", err);
+        });
     });
-  });
-}
+  }
 </script>

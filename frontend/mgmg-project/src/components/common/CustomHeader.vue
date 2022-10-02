@@ -165,11 +165,11 @@ p {
   margin-right: 4vw;
   padding-top: 1vh;
 }
-
-a {
+/* 라우터 링크 CSS 효과 */
+/* .router-link-active {
   text-decoration: none;
-  color: black;
-}
+  color: white;
+} */
 
 .user-name {
   color: aliceblue;

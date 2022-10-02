@@ -1,9 +1,15 @@
 <template>
   <div>
-    <div class="relative h-350-px">
+    <div id="chart-range" class="relative h-350-px">
       <canvas id="bar-chart" height:=height width:=width></canvas>
     </div>
-    <h3 id="check">요일 그래프를 선택하세요.</h3>
+    <br/>
+    <div class="bar-data-board">
+      <img v-if="nameData" class="badge" :src="require(`@/assets/emoticon/${nameData}.png`)" alt="" />
+      <span id="check">
+        요일 그래프를 선택해주세요!
+      </span>
+    </div>
   </div>
 </template>
 
@@ -31,11 +37,23 @@ export default {
     return {
       dayData: Object,
       statistics: Object,
-
       chartData: {
         labels: ["월", "화", "수", "목", "금", "토", "일"],
         datasets: [],
       },
+      nameData:'',
+      isNameData: {
+      슬픔: "sad",
+      공포: "fear",
+      피곤: "fatigue",
+      화: "angry",
+      기대: "expect",
+      평온: "calm",
+      창피: "shame",
+      짜증: "annoyed",
+      기쁨: "happy",
+      사랑: "love",
+    },
     };
   },
   async created() {
@@ -93,20 +111,24 @@ export default {
         backgroundColor: "rgb(248, 181, 175)", 
       },
     ];
-
+    const mq = window.matchMedia( "(max-width: 639.5px)" );  // 가로 크기 확인
+    
     this.$nextTick(function () {
-      let config = {
-        type: "bar",
+      if (mq.matches===true){ // 모바일 크기
+        let config = {
+        type: "horizontalBar",
         data: {
           labels: this.chartData.labels,
           datasets: this.chartData.datasets,
         },
         options: {
           responsive: true,
+          aspectRatio: 0.75,
           title: {
             display: false,
             text: "Statistics Day",
           },
+          width: 'auto',
           legend: {
             labels: {
               usePointStyle: true,
@@ -171,7 +193,85 @@ export default {
 
       let ctx = document.getElementById("bar-chart").getContext("2d");
       window.myBar = new Chart(ctx, config);
+      }else{  //================================== 데스크탑 크기
+        let config = {
+        type: "bar",
+        data: {
+          labels: this.chartData.labels,
+          datasets: this.chartData.datasets,
+        },
+        options: {
+          responsive: false,
+          title: {
+            display: false,
+            text: "Statistics Day",
+          },
+          width: '100%',
+          legend: {
+            labels: {
+              usePointStyle: true,
+              fontColor: "rgba(0,0,0,1)",
+              fontSize: 15
+            },
+          },
+          scales: {
+            xAxes: [
+              {
+                stacked: true,
+                display: true,
+                scaleLabel: {
+                  display: false,
+                  labelString: "Day",
+                },
+                gridLines: {
+                  borderDash: [2],
+                  borderDashOffset: [2],
+                  color: "rgba(33, 37, 41, 0.3)",
+                  zeroLineColor: "rgba(33, 37, 41, 0.3)",
+                  zeroLineBorderDash: [2],
+                  zeroLineBorderDashOffset: [2],
+                },
+              },
+            ],
+            yAxes: [
+              {
+                stacked: true,
+                display: true,
+                scaleLabel: {
+                  display: false,
+                  labelString: "Value",
+                },
+                gridLines: {
+                  borderDash: [2],
+                  drawBorder: false,
+                  borderDashOffset: [2],
+                  color: "rgba(33, 37, 41, 0.2)",
+                  zeroLineColor: "rgba(33, 37, 41, 0.15)",
+                  zeroLineBorderDash: [2],
+                  zeroLineBorderDashOffset: [2],
+                },
+              },
+            ],
+          },
+          onClick: (event) => {
+            var activePoints = window.myBar.getElementsAtEventForMode(
+              event,
+              "point",
+              window.myBar.options
+            );
+            if (activePoints.length > 0) {
+              var firstPoint = activePoints[0];
+              var label = window.myBar.data.labels[firstPoint._index];
 
+              this.checkDay(label);
+            }
+          },
+        },
+      };
+
+      let ctx = document.getElementById("bar-chart").getContext("2d");
+      window.myBar = new Chart(ctx, config);
+      }
     });
   },
   methods: {
@@ -200,13 +300,120 @@ export default {
           day = "Sun";
           break;
       }
-
       let result = await statistics_day_detail(day);
-      console.log(result);
       const element = document.getElementById("check");
       element.innerHTML =
-        label + "요일에는 " + result.statistics + " 감정이 가장 많아요!";
+      label + "요일에는 " + result.statistics + " 감정이 가장 많아요!";
+      this.nameData =  this.isNameData[result.statistics]
     },
   },
+  computed:{
+    x(){
+      return this.realw * 0.8
+    },
+    y(){
+      return this.realh * 0.4
+    }
+  }
 };
 </script>
+<style scoped>
+  /* 차트 그래프 */
+  #bar-chart{
+    height: 58vh;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* 하단 글씨 */
+  #check{
+    font-size:1.5rem;
+  }
+  /* 몽글이 이미지 */
+  .badge{
+    vertical-align:middle;
+    height: 6vh;
+    margin-right: 1rem;
+  }
+  /* 그래프 뒷배경 */
+  #chart-range{ 
+    display: flex;
+    align-items: center;
+    background-color: rgba(226, 226, 226, 0.356);
+    height: 60vh;
+  }
+  /* 글자 뒤 */
+  .bar-data-board{
+    background-color: rgba(226, 226, 226, 0.356);
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 1023px) {
+    #bar-chart{
+    height: 48vh;
+    width: 100%;
+  }
+
+  .badge{
+    vertical-align:middle;
+    height: 6vh;
+    margin-right: 1rem;
+  }
+
+  #chart-range{ 
+    height: 50vh;
+  }
+
+  .bar-data-board{
+    height: 10vh;
+    text-align: center;
+  }
+
+  }
+  @media (max-width: 960px) {
+    /* #bar-chart{
+    height: 39vh;
+    width: 26vh;
+  } */
+    #chart-range{ 
+    height: 60vh;
+    width:  80vw;
+  }
+  #check{
+    font-size:1rem;
+  }
+
+  }
+  /* 작은 태블릿 세로*/
+  @media (max-width: 767px) {
+    #bar-chart{
+    height: 39vh;
+    width: 26vh;
+  }
+    #chart-range{ 
+    height: 60vh;
+    width: auto;
+  }
+  .badge{
+    vertical-align:middle;
+    height: 4vh;
+    margin-right: 1rem;
+  }
+  }
+
+  /* 스마트폰 세로 */
+  @media (max-width: 639px) {
+    #check{
+    font-size:0.5rem;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  }
+  /* 갤럭시 폴드 */
+  @media (max-width: 300px) {
+  }
+</style>
