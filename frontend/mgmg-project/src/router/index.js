@@ -45,6 +45,8 @@ import PageNotFound from "../components/common/PageNotFound.vue";
 //컴포넌트 보는 용도 (추후 삭제예정)
 import SinupMusic from "../components/signup/MusicSurvey.vue";
 
+import store from "../store/modules/userStore";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -190,39 +192,34 @@ const router = new VueRouter({
   routes,
 });
 
-// // 로우터 가드
-// router.beforeEach((to, from, next) => {
-//   const token = store.state.accessToken;
-//   // 토근이 존재할때 로그인화면으로 가려고하면 메인으로 이동
-//   if (to.name === "login") {
-//     if (token) {
-//       next({ name: "main" });
-//     }
-//   }
-//   // 토근이 존재할때 회원가입화면으로 가려고하면 메인으로 이동
-//   else if (to.name === "signup") {
-//     if (token) {
-//       next({ name: "main" });
-//     }
-//   }
-//   // 토큰이 존재하는데 랜딩페이지로 가려고하면 메인으로 이동
-//   else if (to.name === "landing") {
-//     if (token) {
-//       next({ name: "main" });
-//     }
-//   }
-//   // 토큰이 없는데 메인페이지로 가려고하면 로그인으로 이동
-//   else if (to.name === "main") {
-//     if (!token) {
-//       next({ name: "login" });
-//     }
-//   }
-//   // 토큰이 없는데 마이페이지로 가려고하면 로그인으로 이동
-//   else if (to.name === "myCheck") {
-//     if (!token) {
-//       next({ name: "login" });
-//     }
-//   }
-// }); // 로우터 가드 끝
+// 로우터 가드
+router.beforeEach((to, from, next) => {
+  const token = store.state.accessToken;
+  const admin = store.state.admin;
+
+  if (to.name === "noticewriting" || to.name === "noticeedit") {
+    if (token && admin) {
+      next();
+    }
+  } else if (
+    to.name === "landing" ||
+    to.name === "login" ||
+    to.name === "signup" ||
+    to.name === "findid" ||
+    to.name === "findpw"
+  ) {
+    if (token) {
+      next({ name: "main" });
+    } else {
+      next();
+    }
+  } else {
+    if (!token) {
+      next({ name: "landing" });
+    } else {
+      next();
+    }
+  }
+});
 
 export default router;
