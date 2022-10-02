@@ -1,6 +1,6 @@
 <template>
   <div class="outDiv">
-    <div class="diaryTop" :style="{
+    <div class="diaryDetailTop" :style="{
       backgroundImage:
         'url(' + require(`@/assets/diary/detailtop/${thema}.png`) + ')',
     }">
@@ -13,31 +13,32 @@
           " />
         </div>
 
-        <div>
-          <p>날짜 {{ date }}</p>
-          <div>
-            날씨
-            <img style="width: 30px" alt="날씨티콘" :src="require(`@/assets/diary/weather/${weather}.png`)" />
-          </div>
+        <div class="textGrid" :style="{fontFamily:`${font}`}">
+          <span class="text">날짜 : {{ date }}</span>
 
-          <p>감정 {{ emotion }}</p>
+          <span class="weatherDetailDiv">날씨 :
+            <img class="weatherImg" alt="날씨티콘" :src="require(`@/assets/diary/weather/${weather}.png`)" />
+          </span>
+
+          <span>감정 : {{ emotion }}</span>
         </div>
       </div>
     </div>
-    <div class="diaryImg" v-show="imageFile" :style="{
+    <div class="diarymiddleImg" v-show="imageFile" :style="{
       backgroundImage:
-        'url(' + require(`@/assets/diary/uploadimg/${thema}.png`) + ')',
+        'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
     }">
       <div class="selectImg">
         <img v-if="imageFile" :src="imageFile" />
       </div>
     </div>
-    <div class="diarymiddle" :style="{
+    <div class="diaryDitailmiddle" :style="{
       backgroundImage:
         'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+        fontFamily:`${font}`,
     }">
-      <div>
-        <v-textarea readonly auto-grow outlined single-line :value="content" />
+      <div class="textWriteDiv">
+        <textarea class="textWrite" ref="textarea" readonly v-model="content"></textarea>
       </div>
     </div>
     <div class="diarybottom" :style="{
@@ -63,6 +64,7 @@ import Swal from "sweetalert2";
 
 export default {
   data: () => ({
+    // DB저장된 string 감정
     emotions: [
       "화",
       "짜증",
@@ -74,7 +76,8 @@ export default {
       "사랑",
       "슬픔",
       "창피",
-    ], // DB저장된 string 감정
+    ],
+
     emoImgs: [
       "angry",
       "annoyed",
@@ -86,7 +89,7 @@ export default {
       "love",
       "sad",
       "shame",
-    ], // 이미지 경로
+    ],
 
     weatherImg: [
       "sunny",
@@ -99,15 +102,17 @@ export default {
       "mild",
     ],
 
-    no: 0, // 일기 번호
+    // 일기 내용
+    no: 0,
     date: "",
     weather: "",
     imageFile: "",
     content: "",
     thema: "",
     emotion: "",
-    gift: "",
-    music: "",
+
+    // 글꼴
+    font: "",
   }),
   methods: {
     editClick() {
@@ -156,23 +161,29 @@ export default {
         }
       });
     },
+    autoResizeTextarea(obj) {
+      obj.style.height = 'auto';
+      let height = obj.scrollHeight; // 높이
+      obj.style.height = `${height}px`;
+    }
   },
   async created() {
     this.no = this.$route.params.no;
-    const res = await diaryDetailView(this.no);
-    this.date = res.diaryDate;
-    this.weather = res.weather;
-    this.imageFile = res.diaryImg;
-    this.content = res.diaryContent;
-    this.thema = res.diaryThema;
-    this.emotion = res.emotion;
-    // this.gift=res.giftNo;
-    // this.music=res.musicNo;
+    await diaryDetailView(this.no).then((res) => {
+      this.date = res.diaryDate;
+      this.weather = res.weather;
+      this.imageFile = res.diaryImg;
+      this.content = res.diaryContent;
+      this.thema = res.diaryThema;
+      this.emotion = res.emotion;
+    });
+    this.font = "KyoboHandwriting2019"
+    this.autoResizeTextarea(this.$refs.textarea);
   },
 };
 </script>
 
-<style scoped>
+<style scoped src="@/styles/diary/DiaryStyle.css">
 .outDiv {
   background-color: rgba(255, 255, 255, 0.7);
   border: 1px solid black;
