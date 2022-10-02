@@ -367,6 +367,12 @@ export default {
       console.log(this.userEmail);
       if (this.emailValidation) {
         var user_email = this.userEmail;
+        Swal.fire({
+          text: "이메일로 인증 번호를 보냈습니다.",
+          icon: "success",
+          confirmButtonColor: "#666666",
+          confirmButtonText: "확인",
+        });
 
         const params = {
           email: user_email,
@@ -376,12 +382,6 @@ export default {
             console.log(res);
             this.emailDuplicated = true;
             this.finalValidSignup();
-            Swal.fire({
-              text: "이메일로 인증 번호를 보냈습니다.",
-              icon: "success",
-              confirmButtonColor: "#666666",
-              confirmButtonText: "확인",
-            });
           })
           .catch((err) => {
             console.log(err);

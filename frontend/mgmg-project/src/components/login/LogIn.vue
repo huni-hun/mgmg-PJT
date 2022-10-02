@@ -1,23 +1,24 @@
 <template>
   <div>
     <v-container>
-      <v-row>
-        <v-col>
-          <label for="idLoginInput" class="noDrag" id="idLoginLabel"
-            >아이디</label
-          ></v-col
-        >
-        <v-col>
+      <div class="loginTitleLableArea">
+        <label for="">로그인</label>
+      </div>
+
+      <div class="loginBodyLine">
+        <div class="loginBodyLabel">
+          <label for="idLoginInput" class="noDrag" id="idLoginLabel">아이디</label>
+        </div>
+        <div class="loginBodyInput">
           <CustomInput v-model="idLoginInput" />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel"
-            >비밀번호</label
-          >
-        </v-col>
-        <v-col>
+        </div>
+      </div>
+
+      <div class="loginBodyLine">
+        <div class="loginBodyLabel">
+          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel">비밀번호</label>
+        </div>
+        <div class="loginBodyInput">
           <div class="inputStyle">
             <v-text-field
               :rules="[pwRequired]"
@@ -33,19 +34,16 @@
               @keyup.enter="login"
             ></v-text-field>
           </div>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-checkbox
-            v-model="loginNext"
-            :label="`로그인 상태 유지하기`"
-          ></v-checkbox>
-        </v-col>
-        <v-col>
-          <CustomButton @click="login" btnText="로그인" />
-        </v-col>
-      </v-row>
+        </div>
+      </div>
+      <div class="loginButtonLine">
+        <div class="loginCheckBox">
+          <v-checkbox v-model="loginNext" :label="`로그인 상태 유지하기`"></v-checkbox>
+        </div>
+        <div class="loginButton">
+          <CustomButton class="loginButtonText" @click="login" btnText="로그인" />
+        </div>
+      </div>
     </v-container>
   </div>
 </template>
@@ -80,7 +78,6 @@ export default {
     },
     // 쿠키 사용 참고링크 https://kyounghwan01.github.io/Vue/vue/vue-cookies/
     async autoLogin() {
-      // const request =
       //쿠키 있는지 확인
       if (this.$cookies.isKey("autoLoginCookie")) {
         //자동로그인 액시오스 실행
@@ -130,8 +127,7 @@ export default {
           //자동 로그인 선택한 경우
           if (autoflag) {
             this.loginAuto(res, request);
-            this.$store.state.userStore.userId =
-              this.$cookies.get("userIdCookie");
+            this.$store.state.userStore.userId = this.$cookies.get("userIdCookie");
           } else {
             //자동 로그인 선택 안한 경우
             this.loginNotAuto(res);
@@ -235,6 +231,39 @@ export default {
 </script>
 
 <style scoped>
+.loginTitleLableArea {
+  margin: 3% 3% 5% 3%;
+  font-size: clamp(1.5rem, 2.5vw, 1.8rem);
+}
+.loginBodyLine {
+  display: flex;
+  flex-direction: row;
+}
+.loginButtonLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.loginBodyLabel {
+  padding-top: 1%;
+  padding-left: 5%;
+  width: 30%;
+  font-size: clamp(1.1rem, 2vw, 1.2rem);
+}
+.loginBodyInput {
+  padding-right: 5%;
+  width: 70%;
+}
+.loginCheckBox {
+  padding-left: 5%;
+}
+.loginButton {
+  padding-right: 5%;
+}
+.loginButtonText {
+  font-size: clamp(0.8rem, 2vw, 1rem);
+}
 .inputStyle:deep(fieldset) {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
@@ -246,5 +275,34 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+@media (max-width: 375px) {
+  .loginCheckBox {
+    padding-left: 3%;
+  }
+  .loginButton {
+    padding-right: 3%;
+  }
+  .loginButtonText {
+    padding: 0.4rem 0.7rem 0.4rem 0.7rem;
+  }
+}
+@media (max-width: 300px) {
+  .loginCheckBox {
+    padding-left: 1%;
+  }
+  .loginButton {
+    padding-right: 1%;
+  }
+  .loginBodyLabel {
+    padding-left: 1%;
+  }
+  .loginBodyInput {
+    padding-right: 1%;
+  }
+  .loginButtonText {
+    padding: 0.4rem 0.5rem 0.4rem 0.5rem;
+  }
 }
 </style>

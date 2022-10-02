@@ -1,49 +1,47 @@
 <template>
-  <div>
-    <img class="titleLogoMG" src="../../src/assets/logo/logo_mg.png" alt="" />
-    <img class="titleLogoText" src="../../src/assets/logo/logo_only_text.png" alt="" />
+  <div class="loginTotalBody">
+    <div class="titleBody" v-if="loginOrder == 1">
+      <div class="titleLogoMGArea">
+        <img class="titleLogoMG" src="../../src/assets/logo/logo_mg.png" alt="" />
+      </div>
+      <div class="titleLogoTextArea">
+        <img class="titleLogoText" src="../../src/assets/logo/logo_only_text.png" alt="" />
+      </div>
+    </div>
+    <div class="dummyTitleMargin" v-if="loginOrder != 1"></div>
 
-    <router-view></router-view>
-    <!-- <LogIn v-if="loginOrder == 1" />
-    <IdFind v-if="loginOrder == 2" />
-    <PasswordFind v-if="loginOrder == 3" /> -->
-    <v-container>
-      <v-row>
-        <div v-if="loginOrder != 1" @click="moveToLogIn">
-          <router-link to="/login" class="noDrag">
-            <div><label for="">로그인</label></div>
-          </router-link>
-        </div>
+    <div class="loginBody">
+      <router-view></router-view>
+    </div>
+    <div class="loginFooterArea">
+      <!-- <v-row> -->
+      <div class="footerLabel" v-if="loginOrder != 1" @click="moveToLogIn">
+        <router-link to="/login" class="noDrag footerLabelDecoration">
+          <div><label for="">로그인</label></div>
+        </router-link>
+      </div>
 
-        <div v-if="loginOrder != 2" @click="moveToIdFind">
-          <router-link to="/login/findid" class="noDrag">
-            <div><label for="">아이디 찾기</label></div>
-          </router-link>
-        </div>
+      <div class="footerLabel" v-if="loginOrder != 2" @click="moveToIdFind">
+        <router-link to="/login/findid" class="noDrag footerLabelDecoration">
+          <div><label for="">아이디 찾기</label></div>
+        </router-link>
+      </div>
 
-        <div v-if="loginOrder != 3" @click="moveToPasswordFind">
-          <router-link to="/login/findpw" class="noDrag">
-            <div><label for="">비밀번호 찾기</label></div>
-          </router-link>
-        </div>
+      <div class="footerLabel" v-if="loginOrder != 3" @click="moveToPasswordFind">
+        <router-link to="/login/findpw" class="noDrag footerLabelDecoration">
+          <div><label for="">비밀번호 찾기</label></div>
+        </router-link>
+      </div>
 
+      <div class="footerLabel">
         <label for="signup" class="noDrag" @click="moveToSignupPage">회원가입</label>
-
-        <!-- <div class="verticalLine" v-if="loginOrder != 1"></div>
-        <label for="findId" class="noDrag" @click="moveToIdFind" v-if="loginOrder != 2">아이디 찾기</label>
-        <div class="verticalLine" v-if="loginOrder != 2"></div>
-        <label for="findPw" class="noDrag" @click="moveToPasswordFind" v-if="loginOrder != 3">비밀번호 찾기</label>
-        <div class="verticalLine" v-if="loginOrder != 3"></div> -->
-      </v-row>
-    </v-container>
+      </div>
+      <!-- </v-row> -->
+    </div>
   </div>
 </template>
 
 <script>
-// import LogIn from "@/components/login/LogIn.vue";
-// import IdFind from "@/components/login/IdFind.vue";
-// import PasswordFind from "@/components/login/PasswordFind.vue";
-
 export default {
   // components: { LogIn, IdFind, PasswordFind },
   data() {
@@ -70,11 +68,59 @@ export default {
 </script>
 
 <style scoped>
+.loginTotalBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loginBody {
+  /* height: 45vh; */
+  background-color: white;
+  width: 40%;
+  /* margin-top: 10vh; */
+}
+.dummyTitleMargin {
+  height: 20vh;
+}
+.titleBody {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10vh;
+  margin-bottom: 1%;
+  width: 100%;
+}
+.titleLogoMGArea {
+  width: 7%;
+}
 .titleLogoMG {
-  width: 7vw;
+  width: 100%;
+}
+.titleLogoTextArea {
+  width: 15%;
 }
 .titleLogoText {
-  width: 18vw;
+  width: 100%;
+}
+.loginFooterArea {
+  width: 100%;
+  /* margin-top: 3%; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.footerLabel {
+  display: block;
+  margin-top: 1%;
+  width: 10%;
+  text-align: center;
+}
+.footerLabelDecoration {
+  color: black;
+  text-decoration: none;
 }
 .noDrag {
   -webkit-user-select: none;
@@ -87,5 +133,51 @@ export default {
   /* border: 5px solid black; */
   width: 0.1rem;
   height: 2em;
+}
+@media (max-width: 991px) {
+  .dummyTitleMargin {
+    height: 15vh;
+  }
+  .loginBody {
+    width: 80%;
+  }
+  .footerLabel {
+    width: 13%;
+  }
+  .titleLogoMGArea {
+    width: 8%;
+  }
+  .titleLogoTextArea {
+    width: 18%;
+  }
+}
+@media (max-width: 767px) {
+  .loginBody {
+    width: 80%;
+  }
+  .footerLabel {
+    width: 16%;
+  }
+  .titleLogoMGArea {
+    width: 10%;
+  }
+  .titleLogoTextArea {
+    width: 20%;
+  }
+}
+
+@media (max-width: 575px) {
+  .loginBody {
+    width: 100%;
+  }
+  .footerLabel {
+    width: 30%;
+  }
+  .titleLogoMGArea {
+    width: 20%;
+  }
+  .titleLogoTextArea {
+    width: 40%;
+  }
 }
 </style>
