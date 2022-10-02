@@ -4,82 +4,37 @@
       <v-row class="musicSurveyTitle">음악 장르 (1/2)</v-row>
       <v-row>감정별로 선호하는 음악 장르를 선택하세요.</v-row>
       <v-row><hr class="hrStyle" /></v-row>
-      <v-row class="pcView">
-        <v-col
-          class="genreCheckLst"
+      <div class="genreCheckList">
+        <div
+          class="genreCheckItem"
           v-for="(emotion, index) in emotionLst1"
           :key="index"
         >
-          <v-container>
-            <v-row class="justify_content_center">
-              <img
-                class="emoticonImg"
-                :src="
-                  require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)
-                "
-                alt=""
-              />
-            </v-row>
-            <v-row class="justify_content_center">
-              <div class="justify_content_center emotionName">
-                {{ emotion }}
-              </div>
-            </v-row>
-            <v-row>
-              <v-col class="genresMargin">
-                <v-checkbox
-                  hide-details
-                  class="genreCheckBox"
-                  v-for="(genre, index) in genreLst1"
-                  :key="index"
-                  :label="genreLst1[index]"
-                  :value="genre"
-                  v-model="musicTaste1[emotion][index]"
-                ></v-checkbox>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-col>
-      </v-row>
-      <v-row
-        class="phoneView"
-        v-for="(emotion, index) in emotionLst1"
-        :key="index"
-      >
-        <v-col class="genreCheckLst">
-          <v-container>
-            <v-row class="justify_content_center">
-              <img
-                class="emoticonImg"
-                :src="
-                  require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)
-                "
-                alt=""
-              />
-            </v-row>
-            <v-row class="justify_content_center">
-              <div class="justify_content_center emotionName">
-                {{ emotion }}
-              </div>
-            </v-row>
-            <v-row class="paddingLeft">
-              <div>
-                <v-col class="genresMargin">
-                  <v-checkbox
-                    hide-details
-                    class="genreCheckBox"
-                    v-for="(genre, index) in genreLst1"
-                    :key="index"
-                    :label="genreLst1[index]"
-                    :value="genre"
-                    v-model="musicTaste1[emotion][index]"
-                  ></v-checkbox>
-                </v-col>
-              </div>
-            </v-row>
-          </v-container>
-        </v-col>
-      </v-row>
+          <div class="justify_content_center label">
+            <img
+              class="emoticonImg"
+              :src="
+                require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)
+              "
+              alt=""
+            />
+            <div class="justify_content_center emotionName">
+              {{ emotion }}
+            </div>
+          </div>
+          <div class="genre">
+            <v-checkbox
+              hide-details
+              class="genreCheckBox"
+              v-for="(genre, index) in genreLst1"
+              :key="index"
+              :label="genreLst1[index]"
+              :value="genre"
+              v-model="musicTaste1[emotion][index]"
+            ></v-checkbox>
+          </div>
+        </div>
+      </div>
     </v-container>
   </div>
 </template>
@@ -116,6 +71,7 @@ export default {
 }
 .hrStyle {
   width: 100%;
+  margin-bottom: 2%;
 }
 .musicLstBox {
   -webkit-user-select: none;
@@ -128,7 +84,13 @@ export default {
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25),
     inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
-.genreCheckLst {
+.genreCheckList {
+  display: flex;
+  flex-direction: row;
+}
+.genreCheckItem {
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
 .emoticonImg {
@@ -136,14 +98,11 @@ export default {
   margin: 4% 0;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
-.genresMargin {
-  margin: 5%;
-}
+
 .genreCheckBox {
   margin: 0;
 }
 .emotionName {
-  display: block;
   margin: 1% 0;
   width: 55%;
   background: #ffe4c4;
@@ -154,51 +113,44 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.phoneView {
-  display: none;
+.genre {
+  flex: 1;
+  margin: 5%;
+  display: flex;
+  flex-direction: column;
+}
+.label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+::v-deep .genreCheckBox .v-label {
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
 }
 @media (max-width: 767px) {
-  .paddingLeft {
-    padding-left: 40%;
+  .genreCheckList {
+    flex-direction: column;
   }
-  .pcView {
-    display: none;
-  }
-  .phoneView {
-    display: inline-block;
+  .genreCheckItem {
+    flex-direction: row;
   }
   .emotionName {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: 1% 0 3% 0;
-    width: 20%;
+    width: 80%;
     background: #ffe4c4;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-size: clamp(1rem, 2.5vw, 2rem);
   }
   .emoticonImg {
-    width: 20%;
+    width: 80%;
   }
-}
-@media (max-width: 575px) {
-  .paddingLeft {
-    padding-left: 30%;
-  }
-  .genreCheckLst {
-    width: 100%;
-  }
-  .emotionName {
-    width: 30%;
-  }
-  .emoticonImg {
-    width: 30%;
+  .genre {
+    border-left-style: dashed;
+    border-left-width: 1px;
+    padding-left: 2px;
   }
 }
 
-/* .container {
-  padding: 0;
-} */
 .col-xl,
 .col-xl-auto,
 .col-xl-12,
