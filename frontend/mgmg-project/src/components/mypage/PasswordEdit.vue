@@ -203,10 +203,10 @@ export default {
   margin-bottom: 2%;
 }
 .passwordEditBodyLabel {
-  width: 25%;
+  width: 30%;
 }
 .passwordEditBodyContent {
-  width: 75%;
+  width: 70%;
 }
 .passwordEditButtonLine {
   width: 100%;
