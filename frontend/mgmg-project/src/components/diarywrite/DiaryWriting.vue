@@ -1,6 +1,9 @@
 <template>
   <div class="outDiv">
-    <div class="diaryTop" :style="{
+    <div v-if="isLoading">
+      <LodingView :view="lodingValue" />
+    </div>
+    <div class="diaryWriteTop" :style="{
       backgroundImage: 'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
     }">
       <div class="flexTop" :style="{fontFamily:`${font}`}">
@@ -31,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="diarymiddle" v-show="uploadImageSrc" :style="{
+    <div class="diarymiddleImg" v-show="uploadImageSrc" :style="{
       backgroundImage: 'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
     }">
       <div class="selectImg">
@@ -62,9 +65,6 @@
         <v-icon v-if="onRec">mdi-microphone</v-icon>
         <v-icon large v-else>mdi-stop</v-icon>
       </button>
-    </div>
-    <div v-if="isLoading" class="loading-container">
-      <LodingView />
     </div>
   </div>
 </template>
@@ -110,13 +110,20 @@ export default {
 
       // 수정 여부
       isEdit: this.$route.query.no,
+
+      // 로딩 여부
       isLoading: false,
+      lodingValue: "",
     };
   },
   methods: {
     // ...mapActions("diaryStore", ["fetchDiary"]),
     onRecAudio() {
+      this.lodingValue = "recording";
+      this.isLoading = true;
+
       this.onRec = !this.onRec;
+
       // 음원 정보를 담은 노드를 생성하거나 음원을 실행 또는 디코딩 시키는일을 한다.
       this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       // 자바스크립트를 통해 음원의 진행상태에 직접 접근에 사용된다.
@@ -134,11 +141,14 @@ export default {
       });
     },
     offRecAudio() {
+      this.lodingValue = "convert";
+      this.isLoading = true;
+
       var mp3Blob = this.media.upload();
       var form = new FormData();
       form.append("file", mp3Blob);
+
       // 음성 전송
-      this.isLoading = true;
       sttWrite(form).then((res) => {
         this.isLoading = false;
         console.log("전송된 음성입니다", res);
@@ -161,29 +171,6 @@ export default {
       this.analyser.disconnect();
       this.source.disconnect();
     },
-    async writingCompletion() {
-      const userDiary = {
-        user_id: store.state.userId,
-        diary_content: this.diary,
-      }
-      this.isLoading = true;
-
-      await axios.post(`${process.env.VUE_APP_EMOTION_API_URL}/predict/diary`, userDiary, {
-      }).then(async (res) => {
-        // console.log("감정분석 결과", res);
-        let statusCode = res.data.statusCode;
-
-        if (statusCode == 401) {
-          alert(res.data.message)
-        }
-        else {
-          this.emotion = res.data.emotion;
-          this.musicNo = res.data.music_no;
-          this.dataSend();
-        }
-        this.isLoading = false;
-      })
-    },
     selectFile() {
       this.uploadReady = true;
       let fileInputElement = this.$refs.file;
@@ -204,14 +191,47 @@ export default {
     },
     async isEditView() {
       if (this.$route.query.no !== undefined) {
-        const res = await diaryDetailView(this.no);
-        console.log("수정눌러서 들어왔을 떄 데이터", res);
-        this.weather = res.weather;
-        this.uploadImageSrc = res.diaryImg;
-        this.imageFile = res.diaryImg;
-        this.diary = res.diaryContent;
-        this.thema = res.diaryThema;
+        await diaryDetailView(this.no).then((res) => {
+          console.log("수정눌러서 들어왔을 떄 데이터", res);
+          this.weather = res.weather;
+          this.uploadImageSrc = res.diaryImg;
+          this.imageFile = res.diaryImg;
+          this.diary = res.diaryContent;
+          this.thema = res.diaryThema;
+        });
       }
+      this.autoResizeTextarea(this.$refs.textarea);
+    },
+    async writingCompletion() {
+      if (this.diary.length < 50) {
+        console.log("글자수 : ", this.diary.length)
+      }
+      // 감정 분석
+      console.log("id", store.state.userId);
+      const userDiary = {
+        user_id: store.state.userId,
+        diary_content: this.diary,
+      }
+
+      this.lodingValue = "predict";
+      this.isLoading = true;
+
+      await axios.post(`${process.env.VUE_APP_EMOTION_API_URL}/predict/diary`, userDiary, {
+      }).then(async (res) => {
+        // console.log("감정분석 결과", res);
+        let statusCode = res.data.statusCode;
+
+        if (statusCode == 401) {
+          console.log("전송실패", res);
+          alert(res.data.message)
+        }
+        else {
+          this.emotion = res.data.emotion;
+          this.musicNo = res.data.music_no;
+          this.dataSend();
+        }
+        this.isLoading = false;
+      })
     },
     async dataSend() {
       const diaryData = {
