@@ -66,6 +66,15 @@
         <v-icon large v-else>mdi-stop</v-icon>
       </button>
     </div>
+    <v-snackbar v-model="snackbar" :timeout="timeout" absolute centered rounded="xl" color="blue darken-1"
+      elevation="24">
+      {{ text }}
+      <!-- <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template> -->
+    </v-snackbar>
   </div>
 </template>
 
@@ -97,6 +106,11 @@ export default {
       emotion: "기쁨",
       musicNo: 1,
       giftNo: 1,
+
+      // 스낵바
+      snackbar: false,
+      text: '50자 이상 일기를 작성하세요.',
+      timeout: 2500,
 
       // 오디오 스트림
       stream: null,
@@ -192,7 +206,7 @@ export default {
     async isEditView() {
       if (this.$route.query.no !== undefined) {
         await diaryDetailView(this.no).then((res) => {
-          console.log("수정눌러서 들어왔을 떄 데이터", res);
+          console.log("수정눌러서 들어왔을 때 데이터", res);
           this.weather = res.weather;
           this.uploadImageSrc = res.diaryImg;
           this.imageFile = res.diaryImg;
@@ -205,6 +219,8 @@ export default {
     async writingCompletion() {
       if (this.diary.length < 50) {
         console.log("글자수 : ", this.diary.length)
+        this.snackbar = true;
+        return 0;
       }
       // 감정 분석
       console.log("id", store.state.userId);
