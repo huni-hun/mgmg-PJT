@@ -4,9 +4,8 @@
       <v-sheet color="rgba(255, 255, 255, 0.3)">
         <v-container fluid>
           <v-row class="five-cols">
-            <v-col v-for="(badge, index) in item" :key="index">
-              <dumpBadge v-if="badge.badgeName == '없음'" :badge="badge" />
-              <achieveBadge v-else :badge="badge" :isMobile="isMobile" />
+            <v-col class="badge-list-col" v-for="(badge, index) in item" :key="index">
+              <achieveBadge :badge="badge" :isMobile="isMobile" :index="index" />
             </v-col>
           </v-row>
         </v-container>
@@ -18,7 +17,6 @@
 <script>
 import { mapState } from "vuex";
 import AchieveBadge from "./AchieveBadge.vue";
-import DumpBadge from "./DumpBadge.vue";
 import { achieve_get_list } from "@/store/modules/etcStore";
 
 export default {
@@ -82,14 +80,13 @@ export default {
       return this.badgeList;
     },
   },
-  components: { AchieveBadge, DumpBadge },
+  components: { AchieveBadge },
 };
 </script>
 
 <style scoped>
-.custom {
-  background: rgba(0, 0, 0, 0.35);
-  position: relative;
+.badge-list-col {
+  padding: 0;
 }
 /* grid 5개로 나누는 css */
 .five-cols {

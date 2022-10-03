@@ -1,15 +1,15 @@
 <template>
   <v-carousel hide-delimiters height="100%">
     <v-carousel-item v-for="(item, i) in badgeList" :key="i">
-      <v-sheet color="rgba(255, 255, 255, 0.3)">
+      <v-sheet class="achieve-list-sheet" color="rgba(255, 255, 255, 0.3)">
         <v-container fluid>
           <v-row align-content="space-around" class="five-cols">
-            <v-col v-for="badge in item" :key="badge.badgeNo">
-              <dumpBadge v-if="badge.badgeName == '없음'" :badge="badge" />
-              <achieveBadge v-else :badge="badge" :isMobile="isMobile" />
+            <v-col class="badge-list-col" v-for="badge in item" :key="badge.badgeNo">
+              <achieveBadge :badge="badge" :isMobile="isMobile" />
             </v-col>
           </v-row>
         </v-container>
+        <div class="achieve-list-bottom"></div>
       </v-sheet>
     </v-carousel-item>
   </v-carousel>
@@ -18,7 +18,6 @@
 <script>
 import { mapState } from "vuex";
 import AchieveBadge from "./AchieveBadge.vue";
-import DumpBadge from "./DumpBadge.vue";
 import { achieve_list } from "@/store/modules/etcStore";
 
 export default {
@@ -62,7 +61,7 @@ export default {
       return this.badgeList;
     },
   },
-  components: { AchieveBadge, DumpBadge },
+  components: { AchieveBadge },
 };
 </script>
 
@@ -72,13 +71,26 @@ export default {
   position: relative;
 }
 
-/* .abbb {
-  max-width: 1080px;
-} */
-/* grid 5개로 나누는 css */
+.achieve-list-sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-list-col {
+  padding: 0;
+}
+
 .five-cols {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+}
+
+.achieve-list-bottom {
+  height: 2vh;
+  width: auto;
+  box-shadow: 1rem 1rem 5px #9797979d;
 }
 
 /* Desktop First */

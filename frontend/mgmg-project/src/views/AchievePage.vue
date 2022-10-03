@@ -13,7 +13,7 @@
           <router-link v-if="isAchieve" to="/achieve">전체 업적 확인</router-link>
         </v-btn>
       </v-row>
-      <v-row>
+      <v-row class="achieve-list-frame">
         <router-view></router-view>
       </v-row>
     </v-container>
@@ -49,6 +49,10 @@ export default {
   text-align: right;
 
   color: aliceblue;
+}
+
+.achieve-list-frame {
+  margin-top: 1vh;
 }
 
 /* 반응형 */
