@@ -128,7 +128,6 @@ export default {
             Swal.fire({
               text: "비밀번호가 정상적으로 변경되었습니다.",
               icon: "success",
-              // iconColor: "#000000",
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
             });

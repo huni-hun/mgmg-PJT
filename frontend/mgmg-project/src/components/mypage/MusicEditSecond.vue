@@ -5,20 +5,10 @@
       <v-row>감정별로 선호하는 음악 장르를 선택하세요.</v-row>
       <v-row><hr class="hrStyle" /></v-row>
       <v-row>
-        <v-col
-          class="genreCheckLst"
-          v-for="(emotion, index) in emotionLst2"
-          :key="index"
-        >
+        <v-col class="genreCheckLst" v-for="(emotion, index) in emotionLst2" :key="index">
           <v-container>
             <v-row>
-              <img
-                :src="
-                  require(`@/assets/emoticon/${emotionEnglishLst2[index]}.png`)
-                "
-                alt=""
-                class="emoticonImg"
-              />
+              <img :src="require(`@/assets/emoticon/${emotionEnglishLst2[index]}.png`)" alt="" class="emoticonImg" />
             </v-row>
             <v-row>
               <div>{{ emotion }}</div>
@@ -39,16 +29,13 @@
           </v-container>
         </v-col>
       </v-row>
-      <v-row
-        ><CustomButton btnText="이전" @click="musicEditBefore1Page"
-      /></v-row>
+      <v-row><CustomButton btnText="이전" @click="musicEditBefore1Page" /></v-row>
       <v-row><CustomButton btnText="완료" @click="musicEditFinish" /></v-row>
     </v-container>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
 import CustomButton from "../common/CustomButton.vue";
 import Swal from "sweetalert2";
 // import { showInterestMusic } from "@/api/userApi.js";
@@ -61,16 +48,7 @@ export default {
       // genreLst2: [],
       emotionLst2: ["기대", "슬픔", "창피", "화", "공포"],
       emotionEnglishLst2: ["expect", "sad", "shame", "angry", "fear"],
-      genreLst2: [
-        "R&B/Soul",
-        "댄스",
-        "랩/힙합dd",
-        "록/메탈",
-        "발라드",
-        "인디음악",
-        "트로트",
-        "포크/블루스",
-      ],
+      genreLst2: ["R&B/Soul", "댄스", "랩/힙합dd", "록/메탈", "발라드", "인디음악", "트로트", "포크/블루스"],
 
       musicTaste: {
         피곤: [],
@@ -86,13 +64,7 @@ export default {
       },
     };
   },
-  computed: {
-    ...mapState("userStore", ["accessToken"]),
-  },
   methods: {
-    // setgenreLst2() {
-    //   this.genreLst2 = [...this.genreLst1];
-    // },
     musicEditBefore1Page() {
       this.interestMusicPage--;
     },
@@ -104,10 +76,7 @@ export default {
       for (rep = 0; rep < 5; rep++) {
         console.log(this.emotionLst1[rep]);
         console.log(this.musicTaste[this.emotionLst1[rep]]);
-        if (
-          typeof this.musicTaste[this.emotionLst1[rep]] == "undefined" ||
-          this.musicTaste[this.emotionLst1[rep]].length == 0
-        ) {
+        if (typeof this.musicTaste[this.emotionLst1[rep]] == "undefined" || this.musicTaste[this.emotionLst1[rep]].length == 0) {
           isAllChecked = false;
         }
       }
@@ -130,10 +99,7 @@ export default {
       for (rep = 0; rep < 5; rep++) {
         console.log(this.emotionLst2[rep]);
         console.log(this.musicTaste[this.emotionLst2[rep]]);
-        if (
-          typeof this.musicTaste[this.emotionLst2[rep]] == "undefined" ||
-          this.musicTaste[this.emotionLst2[rep]].length == 0
-        ) {
+        if (typeof this.musicTaste[this.emotionLst2[rep]] == "undefined" || this.musicTaste[this.emotionLst2[rep]].length == 0) {
           isAllChecked = false;
         }
       }
@@ -167,7 +133,7 @@ export default {
         musicTaste: this.musicTaste,
       };
 
-      await changeInterestMusic(this.accessToken, request)
+      await changeInterestMusic(request)
         .then((res) => {
           console.log(res);
           Swal.fire({
@@ -206,8 +172,7 @@ export default {
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
 }
 .selected {
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25),
-    inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
 .genreCheckLst {
   width: 20%;

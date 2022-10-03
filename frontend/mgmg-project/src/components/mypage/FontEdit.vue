@@ -70,37 +70,6 @@ export default {
       });
       // this.$router.push("/main");
     },
-
-    // userChangeFont() {
-    //   axios
-    //     .put(api_url.accounts.font_edit(), {
-    //       headers: {
-    //         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-    //         Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-    //       },
-    //       diaryFont: this.selectedFontNum,
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //       Swal.fire({
-    //         text: "폰트가 정상적으로 변경되었습니다.",
-    //         icon: "success",
-    //         // iconColor: "#000000",
-    //         confirmButtonColor: "#666666",
-    //         confirmButtonText: "확인",
-    //       });
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       Swal.fire({
-    //         text: "폰트 변경에 실패했습니다.",
-    //         icon: "warning",
-    //         // iconColor: "#000000",
-    //         confirmButtonColor: "#666666",
-    //         confirmButtonText: "확인",
-    //       });
-    //     });
-    // },
   },
   components: { CustomButton },
 };

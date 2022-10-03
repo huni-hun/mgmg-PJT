@@ -103,18 +103,6 @@ export default {
 
       giftLst: ["패션의류", "패션잡화", "화장품/미용", "디지털/가전", "가구/인테리어", "출산/육아", "식품", "스포츠/레저", "생활/건강", "여가/생활편의"],
       selectedGift: ["패션의류"],
-      // this.$store.state.userStore.interestGiftLstSignup,
-
-      // priceUnder: {
-      //   labelText: "하한가",
-      //   rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
-      //   id: "priceUnder",
-      // },
-      // priceUpper: {
-      //   labelText: "상한가",
-      //   rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
-      //   id: "priceUpper",
-      // },
     };
   },
   methods: {

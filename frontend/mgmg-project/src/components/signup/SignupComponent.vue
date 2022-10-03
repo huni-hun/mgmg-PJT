@@ -596,12 +596,6 @@ export default {
   width: inherit;
   height: inherit;
 }
-/* .signupInputCommon {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  height: 10%;
-} */
 .signupLabel {
   display: block;
   width: 30%;
@@ -679,14 +673,6 @@ export default {
   }
 }
 
-/* .inputStyle:deep(v-input__slot) {
-  min-height: 10%;
-} */
-/* .v-text-field--filled > .v-input__control > .v-input__slot,
-.v-text-field--full-width > .v-input__control > .v-input__slot,
-.v-text-field--outlined > .v-input__control > .v-input__slot {
-  min-height: 10px;
-} */
 .inputStyle:deep(fieldset) {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);

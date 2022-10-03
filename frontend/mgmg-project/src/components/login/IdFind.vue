@@ -75,7 +75,6 @@ export default {
           Swal.fire({
             text: "가입하신 아이디는\n" + res.userId + "입니다.",
             icon: "success",
-            // iconColor: "#000000",
             confirmButtonColor: "#666666",
             confirmButtonText: "확인",
             // },
@@ -87,7 +86,6 @@ export default {
             Swal.fire({
               text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
               icon: "warning",
-              // iconColor: "#000000",
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
               // },
@@ -95,62 +93,6 @@ export default {
           }
         });
     },
-    // findId() {
-    //   const userName = document.getElementById("nameIdFindInput").value;
-    //   const userEmail = document.getElementById("emailIdFindInput").value;
-    //   // const userId = "iddesu";
-
-    //   // var findidLst = { userName: userName, email: userEmail };
-    //   // console.log(findidLst);
-    //   // this.$store.dispatch("find_id", userName, userEmail);
-    //   console.log(userName, userEmail);
-    //   axios
-    //     .get(api_url.accounts.find_id(), {
-    //       params: {
-    //         userName: userName,
-    //         email: userEmail,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       if (response.data.statusCode == 200) {
-    //         this.getUserId = response.data.userId;
-    //         Swal.fire({
-    //           // toast: true,
-    //           // title: "ID 누락",
-    //           text: "가입하신 아이디는\n" + response.data.userId + "입니다.",
-    //           icon: "success",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //           // },
-    //         });
-    //       } else if (response.data.statusCode == 401) {
-    //         Swal.fire({
-    //           // toast: true,
-    //           // title: "ID 누락",
-    //           text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-    //           icon: "warning",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //           // },
-    //         });
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       Swal.fire({
-    //         // toast: true,
-    //         // title: "ID 누락",
-    //         text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
-    //         icon: "warning",
-    //         // iconColor: "#000000",
-    //         confirmButtonColor: "#666666",
-    //         confirmButtonText: "확인",
-    //         // },
-    //       });
-    //     });
-    // },
   },
 };
 </script>
