@@ -1,7 +1,7 @@
 <template>
   <div class="outDiv">
     <div class="title">
-      <span class=" title">이 날의 추천 음악</span>
+      <span>이 날의 추천 음악</span>
     </div>
     <div class="gridDiv">
       <div class="video-container">
@@ -10,7 +10,8 @@
       </div>
       <div class='v-line'></div>
       <div class="contentDiv">
-        <v-img class="musicIcon" src="@/assets/diary/musicIcon.png" />
+        <!-- <v-img class="musicIcon" src="@/assets/diary/musicIcon.png" /> -->
+        <v-img class="musicIcon" :src="this.musicAlbumImg" />
 
         <div class="musicInfo">
           <span>{{musicTitle}}</span>
@@ -46,6 +47,7 @@ export default {
 
       playCode: "",
 
+      musicAlbumImg: "",
       musicTitle: "수고했어, 오늘도",
       musicArtist: "옥상 달빛",
       musicYear: 2019,
@@ -121,7 +123,8 @@ export default {
     await detailMusic(this.diaryNo).then((res) => {
       console.log(res);
       this.radioCheck = res.checkMusic;
-      this.beforeRadioCheck = res.checkMusic
+      this.beforeRadioCheck = res.checkMusic;
+      this.musicAlbumImg = res.music.albumArt;
       this.musicTitle = res.music.musicName;
       this.musicArtist = res.music.artist;
       this.musicYear = res.music.releaseDate;
