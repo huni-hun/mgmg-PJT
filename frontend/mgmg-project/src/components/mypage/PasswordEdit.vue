@@ -132,7 +132,7 @@ export default {
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
             });
-            this.$router.push("/mypage/myinfo");
+            // this.$router.push("/mypage/myinfo");
           })
           .catch((err) => {
             console.log(err);
