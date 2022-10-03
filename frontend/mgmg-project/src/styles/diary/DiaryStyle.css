@@ -1,7 +1,5 @@
 .outDiv {
   background-color: rgba(255, 255, 255, 0.7);
-  /* border: 1px solid black; */
-  /* padding: 2px 2px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,18 +12,32 @@
 }
 
 .diaryDetailTop {
+  display: flex;
   background-size: 100% 100%;
   height: 100%;
-  font-size: clamp(0.8rem, 5vw, 2rem);
+  flex-basis: 30vh;
+  font-size: clamp(0.5rem, 3vw, 2.2rem);
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+hr {
+  width: 80%;
+  height: 1.5px;
+  border: 0;
+  background-color: rgb(56, 56, 56);
 }
 
 .topOutDiv {
-  width: 100%;
+  width: 80%;
+  height: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   place-items: center;
   align-items: end;
+  justify-items: center;
 }
 
 .flexTop {
@@ -54,7 +66,7 @@
 
 .weatherDetailDiv {
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 
 .selectWeather {
@@ -75,20 +87,24 @@
 }
 
 .box {
-  height: 22vh;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: center;
+  width: 70%;
+  height: 72%;
+  justify-content: center;
 }
 
 .box > img {
-  width: 80%;
-  max-width: 200px;
+  max-width: 190px;
+  width: 100%;
+  height: auto;
 }
 
-.textGrid {
-  display: grid;
-  grid-template-rows: repeat(3, minmax(50px, auto));
+.textFlex {
+  display: flex;
+  height: 72%;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .diarymiddle {
@@ -169,18 +185,28 @@
 .diarybottom {
   background-size: 100% 100%;
   height: 100%;
-  flex-basis: 11vh;
+  flex-basis: 14vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .btn_image {
   width: 40%;
+  margin-bottom: 30px;
 }
 
-.diarybottom > .customButton {
-  margin-bottom: 12px;
+.diarybottom > div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 34px; */
+}
+
+.customButton {
+  height: 38%;
+  margin-bottom: 20px;
 }
 
 .microButton {
@@ -218,6 +244,16 @@
     width: 50px;
     height: 50px;
   }
+  .diaryDetailTop {
+    display: flex;
+    background-size: 100% 100%;
+    height: 100%;
+    flex-basis: 27vh;
+    font-size: clamp(0.5rem, 3vw, 2.2rem);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
   .diarymiddle {
     flex-basis: 45.2vh;
     position: relative;
@@ -229,6 +265,15 @@
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
+  }
+  .diarybottom {
+    background-size: 100% 100%;
+    height: 100%;
+    flex-basis: 13vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
   }
 }
 
@@ -243,6 +288,16 @@
     width: 50px;
     height: 50px;
   }
+  .diaryDetailTop {
+    display: flex;
+    background-size: 100% 100%;
+    height: 100%;
+    flex-basis: 24vh;
+    font-size: clamp(0.5rem, 3vw, 2.2rem);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
   .diarymiddle {
     flex-basis: 45.4vh;
     position: relative;
@@ -254,6 +309,15 @@
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
+  }
+  .diarybottom {
+    background-size: 100% 100%;
+    height: 100%;
+    flex-basis: 12vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
   }
 }
 
@@ -268,6 +332,16 @@
     width: 50px;
     height: 50px;
   }
+  .diaryDetailTop {
+    display: flex;
+    background-size: 100% 100%;
+    height: 100%;
+    flex-basis: 21vh;
+    font-size: clamp(0.5rem, 3vw, 2.2rem);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
   .diarymiddle {
     flex-basis: 45.7vh;
     position: relative;
@@ -279,6 +353,15 @@
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
+  }
+  .diarybottom {
+    background-size: 100% 100%;
+    height: 100%;
+    flex-basis: 11vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
   }
 }
 
@@ -292,6 +375,16 @@
     width: 50px;
     height: 50px;
   }
+  .diaryDetailTop {
+    display: flex;
+    background-size: 100% 100%;
+    height: 100%;
+    flex-basis: 18vh;
+    font-size: clamp(0.5rem, 3vw, 2.2rem);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
   .diarymiddle {
     flex-basis: 46vh;
     position: relative;
@@ -303,5 +396,20 @@
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
+  }
+  .btn_image {
+    width: 22%;
+  }
+  .customButton {
+    margin-bottom: 20px;
+  }
+  .diarybottom {
+    background-size: 100% 100%;
+    height: 100%;
+    flex-basis: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
   }
 }
