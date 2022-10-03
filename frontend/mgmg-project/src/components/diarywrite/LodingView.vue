@@ -8,11 +8,12 @@
                 <h3>
                     <p>{{this.title[ this.views.indexOf(this.view, 0)]}}</p>
                 </h3>
-
                 <p>{{this.subTitle[ this.views.indexOf(this.view, 0)]}}</p>
+                <div class="progress">
+                    <v-progress-linear :color=this.colors[this.views.indexOf(this.view,0)] height="8" indeterminate
+                        rounded striped bottom />
+                </div>
             </div>
-            <v-progress-linear class="progress" :color=this.colors[this.views.indexOf(this.view,0)] height="8"
-                indeterminate rounded striped bottom />
         </div>
     </div>
 </template>
@@ -33,58 +34,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.loading {
-    position: relative;
-    z-index: 1;
-    margin: 0 auto;
-    text-align: center;
-    box-shadow: rgba(0, 0, 0, 0.4) 0 0 0 9999px;
-}
+<style scoped src="@/styles/diary/LodingView.css">
 
-.backImg {
-    position: absolute;
-    max-width: 500px;
-    width: 88vw;
-    z-index: 2;
-    left: 50%;
-    transform: translate(-50%, 0%);
-}
-
-.inDiv {
-    position: absolute;
-    z-index: 3;
-    width: 100%;
-    height: 50%;
-    left: 40%;
-    transform: translate(-50%, 0%);
-    margin: 0 auto;
-}
-
-.context {
-    position: relative;
-    width: 50%;
-    height: 50%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    top: 70px;
-    left: 70%;
-    transform: translate(-70%, 0%);
-}
-
-.emoticonImg {
-    min-width: 140px;
-    width: 40%;
-    margin: 30px 0px 10px 0px;
-}
-
-.progress {
-    position: absolute;
-    max-width: 450px;
-    width: 50%;
-    top: 50%;
-    left: 60%;
-    transform: translate(-50%, 50%);
-}
 </style>

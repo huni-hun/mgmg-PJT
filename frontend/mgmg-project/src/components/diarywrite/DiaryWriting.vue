@@ -1,15 +1,13 @@
 <template>
   <div class="outDiv">
+    <!-- <LodingView view="recording" /> -->
     <div v-if="isLoading">
       <LodingView :view="lodingValue" />
     </div>
-    <div
-      class="diaryWriteTop"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
-      }"
-    >
+    <div class="diaryWriteTop" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
+    }">
       <div class="flexTop" :style="{ fontFamily: `${font}` }">
         <div class="flexLeft">
           <div>
@@ -17,42 +15,21 @@
           </div>
           <div class="weatherDiv">
             <span>날씨 :</span>
-            <v-select
-              class="selectWeather"
-              :items="weatherImg"
-              :value="weather"
-              flat
-              solo
-              dense
-              background-color="transparent"
-              :menu-props="{ maxHeight: '80%', overflowX: true }"
-              hide-details
-            >
+            <v-select class="selectWeather" :items="weatherImg" :value="weather" flat solo dense
+              background-color="transparent" :menu-props="{ maxHeight: '80%', overflowX: true }" hide-details>
               <template v-slot:selection="{ item }">
-                <v-img
-                  class="weatherImg"
-                  :src="require(`@/assets/diary/weather/${item}.png`)"
-                />
+                <v-img class="weatherImg" :src="require(`@/assets/diary/weather/${item}.png`)" />
               </template>
               <template v-slot:item="{ item }">
-                <v-img
-                  class="weatherImg"
-                  :src="require(`@/assets/diary/weather/${item}.png`)"
-                  @click="weather = item"
-                />
+                <v-img class="weatherImg" :src="require(`@/assets/diary/weather/${item}.png`)"
+                  @click="weather = item" />
               </template>
             </v-select>
           </div>
         </div>
         <div>
-          <input
-            v-if="uploadReady"
-            ref="file"
-            type="file"
-            accept="image/gif,image/jpeg,image/jpg,image/png"
-            hidden
-            @change="readFile($event)"
-          />
+          <input v-if="uploadReady" ref="file" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" hidden
+            @change="readFile($event)" />
           <v-btn icon small>
             <v-icon color="blue lighten-3" @click="selectFile()" large>
               mdi-image-outline
@@ -61,14 +38,10 @@
         </div>
       </div>
     </div>
-    <div
-      class="diarymiddleImg"
-      v-show="uploadImageSrc"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
-      }"
-    >
+    <div class="diarymiddleImg" v-show="uploadImageSrc" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+    }">
       <div class="selectImg">
         <img v-if="uploadImageSrc" :src="uploadImageSrc" />
         <v-icon large color="grey darken-2" @click="cancelImage">
@@ -76,75 +49,37 @@
         </v-icon>
       </div>
     </div>
-    <div
-      class="diarymiddle"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
-        fontFamily: `${font}`,
-      }"
-    >
+    <div class="diarymiddle" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+      fontFamily: `${font}`,
+    }">
       <div class="textWriteDiv">
-        <textarea
-          class="textWrite"
-          ref="textarea"
-          minlength="50"
-          maxlength="500"
-          v-model="diary"
-          placeholder="일기를 써보자"
-          spellcheck="false"
-          @input="autoResizeTextarea($event.target)"
-        ></textarea>
+        <textarea class="textWrite" ref="textarea" minlength="50" maxlength="500" v-model="diary" placeholder="일기를 써보자"
+          spellcheck="false" @input="autoResizeTextarea($event.target)"></textarea>
       </div>
       <div class="textLength">
         <sup>(<span id="nowByte">0</span>/500text)</sup>
       </div>
     </div>
-    <div
-      class="diarybottom"
-      :style="{
-        backgroundImage:
-          'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
-      }"
-    >
-      <custom-button
-        v-if="isEdit"
-        class="customButton"
-        btnText="수정완료"
-        @click="writingCompletion"
-      />
-      <custom-button
-        v-else
-        class="customButton"
-        btnText="작성완료"
-        @click="writingCompletion"
-      />
+    <div class="diarybottom" :style="{
+      backgroundImage:
+        'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
+    }">
+      <div>
+        <custom-button v-if="isEdit" class="customButton" btnText="수정완료" @click="writingCompletion" />
+        <custom-button v-else class="customButton" btnText="작성완료" @click="writingCompletion" />
+      </div>
     </div>
-    <div class="microButton">
-      <button
-        :class="[onRec ? `onMike` : `offMike`]"
-        fab
-        @click="onRec ? onRecAudio() : offRecAudio()"
-      >
+    <div class="microButton" id="microButton">
+      <button :class="[onRec ? `onMike` : `offMike`]" fab @click="onRec ? onRecAudio() : offRecAudio()">
         <v-icon v-if="onRec">mdi-microphone</v-icon>
         <v-icon large v-else>mdi-stop</v-icon>
       </button>
     </div>
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      absolute
-      centered
-      rounded="xl"
-      color="blue darken-1"
-      elevation="24"
-    >
+    <v-snackbar v-model="snackbar" :timeout="timeout" absolute centered rounded="xl" color="blue darken-1"
+      elevation="24">
       {{ text }}
-      <!-- <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template> -->
     </v-snackbar>
   </div>
 </template>
@@ -179,7 +114,6 @@ export default {
         "mild",
       ],
       uploadReady: true,
-      // userId: "",
       date: "",
       weather: "sunny",
       uploadImageSrc: "",
@@ -225,6 +159,7 @@ export default {
     onRecAudio() {
       this.lodingValue = "recording";
       this.isLoading = true;
+      document.getElementById("microButton").style.zIndex = "99";
 
       this.onRec = !this.onRec;
 
@@ -247,6 +182,7 @@ export default {
     offRecAudio() {
       this.lodingValue = "convert";
       this.isLoading = true;
+      document.getElementById("microButton").style.zIndex = "0";
 
       var mp3Blob = this.media.upload();
       var form = new FormData();
@@ -415,8 +351,11 @@ export default {
     this.no = this.$route.query.no;
     this.font = "KyoboHandwriting2019";
     this.isEditView();
+    console.log("마이크 스타일", this.$refs.microButton);
   },
 };
 </script>
 
-<style scoped src="@/styles/diary/DiaryStyle.css"></style>
+<style scoped src="@/styles/diary/DiaryStyle.css">
+
+</style>
