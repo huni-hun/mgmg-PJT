@@ -45,13 +45,18 @@
       </div>
 
       <div class="myInfoButtonLine">
-        <CustomButton class="myInfoButton" btnText="수정하기" @click="gotoInfoEdit" />
+        <CustomButton
+          class="myInfoButton"
+          btnText="수정하기"
+          @click="gotoInfoEdit"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { showUserInfo } from "@/api/userApi.js";
 export default {
   data() {
@@ -64,13 +69,16 @@ export default {
     };
   },
   async created() {
-    let response = await showUserInfo();
+    let response = await showUserInfo(this.accessToken);
     console.log(response);
     this.userBirth = response.birth;
     this.userEmail = response.email;
     this.userGender = response.gender;
     this.userId = response.userId;
     this.userName = response.userName;
+  },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
   },
   methods: {
     gotoInfoEdit() {
