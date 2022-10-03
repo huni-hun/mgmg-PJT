@@ -109,6 +109,7 @@ export default {
     return {
       nameValidation: false,
       userName: "",
+      userId: "",
       // emailValidation: false,
       userEmail: "",
       userBirth: "",
