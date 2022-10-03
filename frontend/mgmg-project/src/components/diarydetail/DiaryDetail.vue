@@ -66,7 +66,6 @@ import Swal from "sweetalert2";
 
 export default {
   data: () => ({
-    // DB저장된 string 감정
     emotions: [
       "화",
       "짜증",
@@ -104,7 +103,6 @@ export default {
       "mild",
     ],
 
-    // 일기 내용
     no: 0,
     date: "",
     weather: "",
@@ -113,7 +111,6 @@ export default {
     thema: "",
     emotion: "",
 
-    // 글꼴
     font: "",
   }),
   computed: {
@@ -168,7 +165,7 @@ export default {
     },
     autoResizeTextarea(obj) {
       obj.style.height = "auto";
-      let height = obj.scrollHeight; // 높이
+      let height = obj.scrollHeight;
       obj.style.height = `${height}px`;
     },
   },
@@ -189,91 +186,5 @@ export default {
 </script>
 
 <style scoped src="@/styles/diary/DiaryStyle.css">
-.outDiv {
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 1px solid black;
-  padding: 2px 2px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 
-.diaryTop {
-  background-size: 100% 100%;
-  height: 100%;
-  flex-basis: 2vh;
-}
-
-.topOutDiv {
-  width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  place-items: center;
-  align-items: center;
-}
-
-.box {
-  height: 100%;
-  margin: 10px 20px;
-}
-
-.box img {
-  width: 100%;
-  max-width: 200px;
-}
-
-.diarymiddle {
-  background-size: 100% 100%;
-  height: 100%;
-  flex-basis: 70vh;
-}
-
-.diaryImg {
-  background-size: 100% 100%;
-  height: 100%;
-  /* max-height: 40vh; */
-  flex-basis: 40vh;
-}
-
-.diaryImg>.selectImg {
-  position: relative;
-  height: 100%;
-}
-
-.selectImg>img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 70%;
-  max-height: 80%;
-}
-
-.btn_image {
-  width: 40%;
-}
-
-@import url("@/assets/font/font.css");
-
-.v-text-field {
-  width: 81%;
-  height: 100%;
-  margin: 0 auto;
-  font-family: "KyoboHandwriting2019";
-  font-size: xx-large;
-}
-
-.v-text-field:deep(fieldset) {
-  border: none;
-}
-
-.diarybottom {
-  background-size: 100% 100%;
-  height: 100%;
-  flex-basis: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 </style>
