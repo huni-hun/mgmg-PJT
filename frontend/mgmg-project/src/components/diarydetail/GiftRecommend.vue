@@ -1,22 +1,24 @@
 <template>
   <div class="outDiv">
-    <p>이 날의 추천 선물</p>
+    <div class="title">
+      <span>이 날의 추천 선물</span>
+    </div>
     <div v-if="!isClick" class="giftBoxDiv">
       <img loading="lazy" alt="giftbox" src="@/assets/diary/giftbox.png" @click="giftView" />
     </div>
     <div class="gridDiv" v-else>
-
-      <v-img alt="선물 이미지" :src=giftImg />
-
-      <div>
-        <p>상품명: {{giftName}}</p>
-        <p>가 격: {{giftPrice}}</p>
-        <p>
-          <button @click="clickLink()">
-            구매하러가기 <v-icon small> mdi-open-in-new </v-icon>
-          </button>
-        </p>
-
+      <v-img class="productImg" alt="선물 이미지" :src=giftImg />
+      <div class='v-line'></div>
+      <div class="outFlexDiv">
+        <div class="giftInfo">
+          <p>상품명: {{giftName}}</p>
+          <p>가 격: {{giftPrice}}원</p>
+          <p>
+            <button @click="clickLink()">
+              구매하러가기 <v-icon> mdi-open-in-new </v-icon>
+            </button>
+          </p>
+        </div>
         <label class="ridioButton">
           <input type="checkbox" name="gift" v-model="interestGift">
           <span class="btnText">관심 선물 추가</span>
@@ -89,63 +91,13 @@ export default {
         this.giftPrice = res.gift.giftPrice;
         this.giftLink = res.gift.giftUrl;
       }
+    }).catch((err) => {
+      console.log(err);
     });
   }
 };
 </script>
 
-<style scoped>
-.outDiv {
-  border: 1px solid black;
-  margin: 10px 0px;
-  padding: 10px;
-}
+<style scoped src="@/styles/diary/GiftRecommend.css">
 
-.giftBoxDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.giftBoxDiv>img {
-  width: 12%;
-}
-
-.gridDiv {
-  width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
-  place-items: center;
-  align-items: center;
-}
-
-.ridioButton input[type="checkbox"] {
-  display: none;
-}
-
-.ridioButton input[type="checkbox"]+span {
-  display: inline-block;
-  padding: 10px 10px;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-  width: 50%-10px;
-  margin: 0px 5px;
-  color: #000000;
-}
-
-.ridioButton input[type="checkbox"]:checked+span {
-  background-color: #ebb8cd;
-  color: white;
-  border: none;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.ridioButton span {
-  font-size: clamp(0.5rem, 1.2vw, 1rem);
-}
 </style>

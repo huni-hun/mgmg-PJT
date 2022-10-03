@@ -1,0 +1,148 @@
+.outDiv {
+  background-color: rgba(255, 255, 255, 0.7);
+  margin: 10px 0px;
+  padding: 30px;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.title > span {
+  font-size: clamp(1.3rem, 3vw, 1.8rem) !important;
+  font-weight: bolder;
+  color: #2278dd;
+}
+
+.giftBoxDiv {
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.giftBoxDiv > img {
+  width: 10vw;
+}
+
+.gridDiv {
+  width: 100%;
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: 1fr 0.1fr 1fr;
+  place-items: center;
+  align-items: center;
+}
+
+.productImg {
+  width: 80%;
+  max-width: 500px;
+  max-height: 400px;
+}
+
+.v-line {
+  border-left: 1.5px solid rgb(107, 107, 107);
+  height: 100%;
+}
+
+.outFlexDiv {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+
+.giftInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 10px 0px;
+  font-size: clamp(1rem, 2vw, 1.8rem) !important;
+}
+
+.ridioButton {
+  font-size: none;
+  margin: 0px 10px;
+}
+
+.ridioButton input[type="checkbox"] {
+  display: none;
+}
+
+.ridioButton input[type="checkbox"] + span {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  margin: 0px 5px;
+  color: #000000;
+}
+
+.ridioButton input[type="checkbox"]:checked + span {
+  background-color: #ebb8cd;
+  color: white;
+  border: none;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 970px) {
+  .outDiv {
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 10px 0px;
+    padding: 15px;
+  }
+
+  .title {
+    margin-bottom: 10px;
+  }
+
+  .giftBoxDiv {
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .giftBoxDiv > img {
+    width: 20%;
+  }
+
+  .gridDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .v-line {
+    display: none;
+  }
+
+  .outFlexDiv {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .contentDiv {
+    height: 100%;
+    align-items: center;
+    justify-items: center;
+    margin-top: 10px;
+  }
+
+  .giftInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 10px 0px;
+    font-size: clamp(1rem, 2vw, 1.8rem) !important;
+  }
+}
