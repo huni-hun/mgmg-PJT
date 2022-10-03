@@ -1,5 +1,6 @@
 <template>
   <div class="text-center">
+    <!-- 빈공간을 채워주는 뱃지 반드시 있어야함 -->
     <div class="badge"></div>
   </div>
 </template>

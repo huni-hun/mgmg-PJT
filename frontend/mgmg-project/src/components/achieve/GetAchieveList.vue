@@ -6,7 +6,7 @@
           <v-row class="five-cols">
             <v-col v-for="(badge, index) in item" :key="index">
               <dumpBadge v-if="badge.badgeName == '없음'" :badge="badge" />
-              <achieveBadge v-else :badge="badge" />
+              <achieveBadge v-else :badge="badge" :isMobile="isMobile" />
             </v-col>
           </v-row>
         </v-container>
@@ -26,6 +26,7 @@ export default {
   props: { isAchieve: Boolean },
   data() {
     return {
+      isMobile: false,
       badgeStart: 0,
       badgeEnd: 15,
       // Axios 통신하면서 바로 데이터를 저장하는 방식으로 구현하자.
@@ -73,7 +74,7 @@ export default {
       this.badgeList.push(this.badgeList2);
       this.badgeList.push(this.badgeList3);
     }
-    console.log(this.badgeList);
+    this.isMobile = window.matchMedia("(max-width: 639.5px)").matches; // 가로 크기 확인
   },
   computed: {
     ...mapState("userStore", ["accessToken"]),

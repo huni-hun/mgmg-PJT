@@ -6,7 +6,7 @@
           <v-row align-content="space-around" class="five-cols">
             <v-col v-for="badge in item" :key="badge.badgeNo">
               <dumpBadge v-if="badge.badgeName == '없음'" :badge="badge" />
-              <achieveBadge v-else :badge="badge" />
+              <achieveBadge v-else :badge="badge" :isMobile="isMobile" />
             </v-col>
           </v-row>
         </v-container>
@@ -28,6 +28,7 @@ export default {
     return {
       badgeStart: 0,
       badgeEnd: 15,
+      isMobile: Boolean,
       // Axios 통신하면서 바로 데이터를 저장하는 방식으로 구현하자.
       badges: [],
       badgeList: [],
@@ -47,6 +48,12 @@ export default {
     this.badgeList.push(this.badgeList3);
     for (var i = 38; i < 46; i++) {
       this.badgeList3.push({ badgeNo: i, badgeName: "없음" });
+    }
+    const mq = window.matchMedia("(max-width: 639.5px)"); // 가로 크기 확인
+    if (mq.matches === true) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
     }
   },
   computed: {

@@ -6,8 +6,8 @@
         <img v-if="!badge.achievedBadgeFlag" v-bind="attrs" v-on="on" class="badge" :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)" alt="" loading="lazy" />
       </template>
       <!-- 모달 컴포넌트 -->
-      <attainModal v-if="badge.achievedBadgeFlag" :badge="badge" @set-dialog="isDialog" />
-      <noAttainModal v-if="!badge.achievedBadgeFlag" :badge="badge" @set-dialog="isDialog" />
+      <attainModal v-if="badge.achievedBadgeFlag" :badge="badge" :isMobile="isMobile" @set-dialog="isDialog" />
+      <noAttainModal v-if="!badge.achievedBadgeFlag" :badge="badge" :isMobile="isMobile" @set-dialog="isDialog" />
     </v-dialog>
   </div>
 </template>
@@ -18,7 +18,7 @@ import NoAttainModal from "./NoAttainModal.vue";
 
 export default {
   name: "AchieveBadge",
-  props: { badge: Object },
+  props: { badge: Object, isMobile: Boolean },
 
   data: () => ({ dialog: false }),
 

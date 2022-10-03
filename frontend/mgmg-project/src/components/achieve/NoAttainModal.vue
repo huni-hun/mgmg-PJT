@@ -1,6 +1,21 @@
 <template>
   <div>
-    <v-img :src="require('@/assets/achieve/noattaionmodal.png')">
+    <v-img v-if="isMobile" :src="require('@/assets/achieve/mobilenoattaionmodal.png')">
+      <v-card class="mobile-badge-card">
+        <img class="mobile-badge" :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)" alt="" />
+        <v-card-text class="mobile-badge-text">
+          <p class="mobile-badge-name text-h5 text--primary">{{ badge.badgeName }}</p>
+          <p class="mobile-badge-content text-h6 text--primary">{{ badgeDetail.badgeContent }}</p>
+          <div class="mobile-card-date">
+            {{ badgeDetail.badgeCodition }}<br />
+            {{ badgeDetail.achievedBadgeDate }}
+          </div>
+        </v-card-text>
+        <v-btn class="mobile-badge-btn" @click="setDialog"> 확인 </v-btn>
+      </v-card>
+    </v-img>
+    <!-- pc -->
+    <v-img v-else :src="require('@/assets/achieve/noattaionmodal.png')">
       <v-card class="badge-card">
         <img
           class="badge"
@@ -26,7 +41,7 @@ import { mapState } from "vuex";
 import { achieve_detail } from "@/store/modules/etcStore";
 export default {
   name: "AchieveBadge",
-  props: { badge: Object },
+  props: { badge: Object, isMobile: Boolean },
 
   data: () => ({ dialog: false, badgeDetail: Object }),
   methods: {
@@ -80,5 +95,47 @@ export default {
   padding: 0.5rem;
   margin: auto;
   border-radius: 12px;
+}
+
+/* 여기서 부터 모바일  */
+@media (max-width: 639px) {
+  .mobile-badge-card {
+    border: none;
+    background: none;
+    height: 100%;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .mobile-badge {
+    height: 28vh;
+  }
+
+  .mobile-badge-text {
+    text-align: center;
+  }
+
+  .mobile-badge-name {
+    font-size: 2em;
+  }
+
+  .mobile-badge-content {
+    font-size: 1em;
+  }
+
+  .mobile-badge-btn {
+    border-radius: 12px;
+  }
+
+  .mobile-card-date {
+    background-color: rgb(241, 244, 255);
+    width: 60%;
+    padding: 0.5rem;
+    margin: auto;
+    border-radius: 12px;
+    font-size: 1em;
+  }
 }
 </style>

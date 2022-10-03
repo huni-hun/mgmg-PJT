@@ -1,6 +1,22 @@
 <template>
   <div>
-    <v-img :src="require('@/assets/achieve/attaionmodal.png')">
+    <!-- mobile -->
+    <v-img v-if="isMobile" :src="require('@/assets/achieve/mobileattaionmodal.png')">
+      <v-card class="mobile-badge-card">
+        <img class="mobile-badge" :src="require(`@/assets/badge/a${badge.badgeNo}.png`)" alt="" />
+        <v-card-text class="mobile-badge-text">
+          <p class="mobile-badge-name">{{ badge.badgeName }}</p>
+          <p class="mobile-badge-content">{{ badgeDetail.badgeContent }}</p>
+          <div class="mobile-card-date">
+            획득날짜<br />
+            {{ badgeDetail.achievedBadgeDate }}
+          </div>
+        </v-card-text>
+        <v-btn class="mobile-badge-btn" width="10%" @click="setDialog"> 확인 </v-btn>
+      </v-card>
+    </v-img>
+    <!-- pc -->
+    <v-img v-else :src="require('@/assets/achieve/attaionmodal.png')">
       <v-card class="badge-card">
         <img
           class="badge"
@@ -26,7 +42,7 @@ import { mapState } from "vuex";
 import { achieve_detail } from "@/store/modules/etcStore";
 export default {
   name: "AchieveBadge",
-  props: { badge: Object },
+  props: { badge: Object, isMobile: Boolean },
 
   data: () => ({ dialog: false, badgeDetail: Object }),
   computed: {
@@ -91,82 +107,45 @@ export default {
   border-radius: 12px;
   font-size: 1em;
 }
-
-@media (max-width: 500px) {
-  .badge-text {
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
-  }
-  .badge-name {
+/* 여기서 부터 모바일  */
+@media (max-width: 639px) {
+  .mobile-badge-card {
+    border: none;
+    background: none;
+    height: 100%;
     font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .mobile-badge {
+    height: 28vh;
   }
 
-  .badge-content {
-    font-size: 12px;
+  .mobile-badge-text {
+    text-align: center;
   }
 
-  .badge-btn {
-    position: absolute;
-    top: 78%;
-    left: 44%;
-    font-size: 12px;
-    border-radius: 8px;
-  }
-  .card-date {
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 400px) {
-  .badge-text {
-    margin: 0;
-    padding: 0;
-  }
-  .badge-name {
-    font-size: 12px;
-    font-weight: bold;
+  .mobile-badge-name {
+    font-size: 2em;
   }
 
-  .badge-content {
-    font-size: 8px;
+  .mobile-badge-content {
+    font-size: 1em;
   }
 
-  .badge-btn {
-    position: absolute;
-    top: 78%;
-    left: 44%;
-    font-size: 8px;
-    border-radius: 4px;
-  }
-  .card-date {
-    font-size: 8px;
-  }
-}
-
-@media (max-width: 300px) {
-  .badge-text {
-    margin: 0;
-    padding: 0;
-  }
-  .badge-name {
-    font-size: 8px;
-    font-weight: bold;
+  .mobile-badge-btn {
+    border-radius: 12px;
   }
 
-  .badge-content {
-    font-size: 4px;
-  }
-
-  .badge-btn {
-    position: absolute;
-    top: 78%;
-    left: 44%;
-    font-size: 4px;
-    border-radius: 0;
-  }
-  .card-date {
-    font-size: 4px;
+  .mobile-card-date {
+    background-color: rgb(255, 242, 208);
+    width: 60%;
+    padding: 0.5rem;
+    margin: auto;
+    border-radius: 12px;
+    font-size: 1em;
   }
 }
 </style>
