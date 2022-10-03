@@ -35,8 +35,8 @@ export default {
           console.log(res);
           this.$cookies.remove("autoLoginCookie");
           this.$cookies.remove("userIdCookie");
-          this.$store.state.userStore.accessToken = "";
-
+          sessionStorage.clear();
+          
           Swal.fire({
             text: "회원 탈퇴가 정상적으로 처리되었습니다.",
             icon: "success",
