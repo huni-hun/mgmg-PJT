@@ -9,12 +9,15 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
+
     @Autowired
     User user;
+
     boolean accountNonExpired;
     boolean accountNonLocked;
     boolean credentialNonExpired;
     boolean enabled = false;
+
     List<GrantedAuthority> roles = new ArrayList<>();
 
     public UserDetails(User user) {

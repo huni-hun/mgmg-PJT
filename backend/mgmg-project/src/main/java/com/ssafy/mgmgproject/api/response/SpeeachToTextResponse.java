@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @ApiModel("SpeeachToTextResponse")
 public class SpeeachToTextResponse extends BaseResponseBody {
+
     @ApiModelProperty(name = "변환된 텍스트")
     String text;
 

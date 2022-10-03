@@ -27,6 +27,6 @@ public class MusicGenre {
     @Column(name = "music_genre_name", length = 10)
     private String musicGenreName;
 
-    @Column(name="emotion_name", length = 3, nullable = false)
+    @Column(name = "emotion_name", length = 3, nullable = false)
     private String emotionName;
 }

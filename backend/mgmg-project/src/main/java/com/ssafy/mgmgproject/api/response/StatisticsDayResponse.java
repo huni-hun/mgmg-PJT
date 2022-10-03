@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("StatisticsDayResponse")
-public class StatisticsDayResponse extends BaseResponseBody{
+public class StatisticsDayResponse extends BaseResponseBody {
 
     @ApiModelProperty(name = "선택한 요일")
     String day;

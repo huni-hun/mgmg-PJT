@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ApiModel("DiaryResponse")
+@ApiModel("DiaryListResponse")
 public class DiaryListResponse extends BaseResponseBody {
 
     @ApiModelProperty(name = "공지사항 목록")

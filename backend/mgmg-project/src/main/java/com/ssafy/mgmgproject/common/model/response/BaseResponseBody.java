@@ -5,11 +5,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @ApiModel("BaseResponseBody")
 public class BaseResponseBody {
+
     @ApiModelProperty(name = "응답 메시지", example = "응답 메시지")
     String message = null;
 

@@ -1,4 +1,5 @@
 package com.ssafy.mgmgproject.db.entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
@@ -6,7 +7,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -35,7 +35,7 @@ public class InterestGift {
     private String registDate;
 
     @PrePersist
-    public void onPrePersist(){
+    public void onPrePersist() {
         this.registDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 }

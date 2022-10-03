@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public HttpFirewall defaultHttpFirwall(){
+    public HttpFirewall defaultHttpFirwall() {
         return new DefaultHttpFirewall();
     }
 

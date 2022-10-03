@@ -48,15 +48,14 @@ dependencies {
     implementation("io.springfox:springfox-bean-validators:3.0.0")
     implementation("io.springfox:springfox-boot-starter:3.0.0")
 
-    //querydsl
-    //IntelliJ에서는 하기 annotationProcessor를 쓰면 별도의 querydsl 플러그인 및 플러그인 설정이 불필요.
+    // querydsl
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor(
             "javax.persistence:javax.persistence-api",
             "javax.annotation:javax.annotation-api",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
 
-    // 구글 구아바(Google Guava) 자바용 공통 라이브러리 오픈소스
+    // Google Guava
     implementation("com.google.guava:guava:29.0-jre")
     annotationProcessor("com.google.guava:guava:29.0-jre")
 

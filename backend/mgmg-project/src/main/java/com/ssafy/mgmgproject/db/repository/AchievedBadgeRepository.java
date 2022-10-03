@@ -11,6 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface AchievedBadgeRepository extends JpaRepository<AchievedBadge, Long> {
+
     List<AchievedBadge> findByUserOrderByBadgeAsc(User user);
+
     Optional<AchievedBadge> findByUserAndBadge(User user, Badge badge);
+    
 }

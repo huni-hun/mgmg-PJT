@@ -43,4 +43,5 @@ public interface DiaryService {
     String checkMusic(Long userNo, Long musicNo);
 
     String checkGift(Long userNo, Long giftNo);
+
 }

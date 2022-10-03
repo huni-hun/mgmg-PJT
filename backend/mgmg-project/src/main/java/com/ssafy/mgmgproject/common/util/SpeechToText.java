@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class SpeechToText {
 
@@ -35,17 +34,17 @@ public class SpeechToText {
     private static String INVOKE_URL;
 
     @Value("${Naver.STT-Secret}")
-    private void setSECRET(String secretKey){
-        this.SECRET=secretKey;
+    private void setSECRET(String secretKey) {
+        this.SECRET = secretKey;
     }
 
     @Value("${Naver.STT-INVOKEURL}")
-    private void setInvokeUrl(String url){
-        this.INVOKE_URL=url;
+    private void setInvokeUrl(String url) {
+        this.INVOKE_URL = url;
     }
 
-    private Header[] HEADERS = new Header[] {
-            new BasicHeader("Accept","application/json"),
+    private Header[] HEADERS = new Header[]{
+            new BasicHeader("Accept", "application/json"),
             new BasicHeader("X-CLOVASPEECH-API-KEY", SECRET),
     };
 
@@ -93,17 +92,12 @@ public class SpeechToText {
 
     public static class NestRequestEntity {
         private String language = "ko-KR";
-        //completion optional, sync/async
         private String completion = "sync";
-        //optional, used to receive the analyzed results
         private String callback;
-        //optional, any data
         private Map<String, Object> userdata;
         private Boolean wordAlignment = Boolean.TRUE;
         private Boolean fullText = Boolean.TRUE;
-        //boosting object array
         private List<Boosting> boostings;
-        //comma separated words
         private String forbiddens;
         private Diarization diarization;
 
@@ -183,7 +177,6 @@ public class SpeechToText {
     public String upload(File file, NestRequestEntity nestRequestEntity) {
         HttpPost httpPost = new HttpPost(INVOKE_URL + "/recognizer/upload");
         httpPost.setHeaders(HEADERS);
-
         HttpEntity httpEntity = MultipartEntityBuilder.create()
                 .addTextBody("params", gson.toJson(nestRequestEntity), ContentType.APPLICATION_JSON)
                 .addBinaryBody("media", file, ContentType.MULTIPART_FORM_DATA, file.getName())
@@ -206,18 +199,15 @@ public class SpeechToText {
         NestRequestEntity requestEntity = new NestRequestEntity();
         final String result =
                 clovaSpeechClient.upload(file, requestEntity);
-
         JSONParser parser = new JSONParser();
         Object obj = null;
         try {
             obj = parser.parse(result);
-        }catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
-
         JSONObject jsonObj = (JSONObject) obj;
         String parseData = (String) jsonObj.get("text");
-
         return parseData;
     }
 }

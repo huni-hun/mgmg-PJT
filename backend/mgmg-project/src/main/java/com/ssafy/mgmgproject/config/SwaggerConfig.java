@@ -1,4 +1,5 @@
 package com.ssafy.mgmgproject.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,8 +34,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.ant("/api/**"))
                 .build()
                 .securityContexts(newArrayList(securityContext()))
-                .securitySchemes(newArrayList(apiKey()))
-                ;
+                .securitySchemes(newArrayList(apiKey()));
     }
 
     private ApiKey apiKey() {
@@ -61,8 +61,6 @@ public class SwaggerConfig {
     @Bean
     UiConfiguration uiConfig() {
         return UiConfigurationBuilder.builder()
-//                .supportedSubmitMethods(newArrayList("get").toArray(new String[0])) // try it 기능 활성화 범위
-//                .operationsSorter(METHOD)
                 .build();
     }
 }

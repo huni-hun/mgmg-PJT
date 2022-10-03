@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class InterestServiceImpl implements InterestService{
+public class InterestServiceImpl implements InterestService {
 
     @Autowired
     InterestMusicRepository interestMusicRepository;

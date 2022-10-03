@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     final String[] emotionList = {"공포", "기대", "기쁨", "사랑", "슬픔", "짜증", "창피", "평온", "피곤", "화"};
 
@@ -56,10 +56,8 @@ public class UserServiceImpl implements UserService{
                 .highPrice(userRegistInfo.getHighPrice())
                 .build();
         userRepository.save(user);
-
-
-        Map<String,List<String>> musicTasteMap = userRegistInfo.getMusicTaste();
-        for(String emotion: emotionList){
+        Map<String, List<String>> musicTasteMap = userRegistInfo.getMusicTaste();
+        for (String emotion : emotionList) {
             List<String> musicGenreList = musicTasteMap.get(emotion);
             for (String musicGenre : musicGenreList) {
                 MusicGenre musicTaste = MusicGenre.builder()
@@ -70,12 +68,11 @@ public class UserServiceImpl implements UserService{
                 musicGenreRepository.save(musicTaste);
             }
         }
-
         for (String taste : userRegistInfo.getGiftTaste()) {
             GiftCategory giftCategory = GiftCategory.builder()
-                            .user(user)
-                            .giftCategoryName(taste)
-                            .build();
+                    .user(user)
+                    .giftCategoryName(taste)
+                    .build();
             giftCategoryRepository.save(giftCategory);
         }
     }
@@ -129,19 +126,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Map<String,List<String>> searchMusicGenre(User user) {
-
-        Map<String,List<String>> musicTaste= new HashMap<>();
+    public Map<String, List<String>> searchMusicGenre(User user) {
+        Map<String, List<String>> musicTaste = new HashMap<>();
         List<MusicGenre> musicGenres = musicGenreRepository.findByUser(user);
-
-        for(String emotion: emotionList){
-            musicTaste.put(emotion,new ArrayList<>());
+        for (String emotion : emotionList) {
+            musicTaste.put(emotion, new ArrayList<>());
         }
-
-        for(MusicGenre musicGenre: musicGenres){
+        for (MusicGenre musicGenre : musicGenres) {
             musicTaste.get(musicGenre.getEmotionName()).add(musicGenre.getMusicGenreName());
         }
-
         return musicTaste;
     }
 
@@ -149,7 +142,7 @@ public class UserServiceImpl implements UserService{
     public List<String> searchGiftCategory(User user) {
         List<GiftCategory> gitCategories = giftCategoryRepository.findByUser(user);
         List<String> list = new ArrayList<>();
-        for(GiftCategory giftCategory : gitCategories){
+        for (GiftCategory giftCategory : gitCategories) {
             list.add(giftCategory.getGiftCategoryName());
         }
         return list;
@@ -159,10 +152,8 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public void changeMusicGenre(User user, UserChangeMusicPutRequest userChangeMusicPutRequest) {
         musicGenreRepositorySupport.deleteByUser(user);
-
-        Map<String,List<String>> musicTasteMap = userChangeMusicPutRequest.getMusicTaste();
-
-        for(String emotion: emotionList){
+        Map<String, List<String>> musicTasteMap = userChangeMusicPutRequest.getMusicTaste();
+        for (String emotion : emotionList) {
             List<String> musicGenreList = musicTasteMap.get(emotion);
             for (String musicGenre : musicGenreList) {
                 MusicGenre musicTaste = MusicGenre.builder()
@@ -180,15 +171,13 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public void changeGiftCategory(User user, UserChangeGiftPutRequest userChangeGiftPutRequest) {
         giftCategoryRepository.deleteByUser(user);
-
-        for (String taste :userChangeGiftPutRequest.getGiftTaste()) {
+        for (String taste : userChangeGiftPutRequest.getGiftTaste()) {
             GiftCategory giftCategory = GiftCategory.builder()
                     .user(user)
                     .giftCategoryName(taste)
                     .build();
             giftCategoryRepository.save(giftCategory);
         }
-
         user.updateUserPrice(userChangeGiftPutRequest.getLowPrice(), userChangeGiftPutRequest.getHighPrice());
     }
 

@@ -8,6 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface BadMusicRepository extends JpaRepository<BadMusic, Long> {
+
     Optional<BadMusic> findByUser_UserNoAndMusic_MusicNo(Long userNo, Long musicNo);
+    
 }
 

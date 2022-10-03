@@ -5,16 +5,23 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @Setter
 @ApiModel("UserLoginRequest")
 public class UserLoginPostRequest {
-	@ApiModelProperty(name = "회원 아이디", example = "user_id")
-	String userId;
 
-	@ApiModelProperty(name = "회원 비밀번호", example = "user_password")
-	String password;
+    @NotEmpty
+    @ApiModelProperty(name = "회원 아이디", example = "user_id")
+    String userId;
 
-	@ApiModelProperty(name = "회원 자동로그인 여부", example = "user_auto_flag")
-	boolean autoFlag;
+    @NotEmpty
+    @ApiModelProperty(name = "회원 비밀번호", example = "user_password")
+    String password;
+
+    @NotEmpty
+    @ApiModelProperty(name = "회원 자동로그인 여부", example = "user_auto_flag")
+    boolean autoFlag;
+
 }

@@ -6,14 +6,12 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.*;
 import com.ssafy.mgmgproject.api.service.RedisService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-
 
 @Component
 @RequiredArgsConstructor
@@ -22,12 +20,12 @@ public class JwtTokenUtil {
     private static String secretKey;
 
     @Value("${jwt.secret}")
-    private void setSecretKey(String secretKey){
-        this.secretKey=secretKey;
+    private void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 
-    private static long expirationAccessTime=24 * 60 * 60 * 1000L;
-    private static long expirationRefreshTime=30 * 24 * 60 * 60 * 1000L;
+    private static long expirationAccessTime = 24 * 60 * 60 * 1000L;
+    private static long expirationRefreshTime = 30 * 24 * 60 * 60 * 1000L;
     private final RedisService redisService;
 
     public static final String TOKEN_PREFIX = "Bearer ";
@@ -41,9 +39,9 @@ public class JwtTokenUtil {
                 .build();
     }
 
-    public boolean checkRefreshToken(String userId, String refreshToken){
+    public boolean checkRefreshToken(String userId, String refreshToken) {
         String redisData = redisService.getData(refreshToken);
-        if(redisData!=null && redisData.equals(userId)){
+        if (redisData != null && redisData.equals(userId)) {
             redisService.deleteData(userId);
             return true;
         }

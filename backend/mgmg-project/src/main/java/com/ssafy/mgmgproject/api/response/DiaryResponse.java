@@ -2,8 +2,6 @@ package com.ssafy.mgmgproject.api.response;
 
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.db.entity.Diary;
-import com.ssafy.mgmgproject.db.entity.Gift;
-import com.ssafy.mgmgproject.db.entity.Music;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -42,7 +40,6 @@ public class DiaryResponse extends BaseResponseBody {
 
     @ApiModelProperty(name = "감정")
     String emotion;
-
 
     public static DiaryResponse of(Diary diary, Integer statusCode, String message) {
         DiaryResponse res = new DiaryResponse();

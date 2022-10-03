@@ -41,7 +41,7 @@ public class UserRegistPostRequest {
     String gender;
 
     @NotEmpty
-    Map<String,List<String>> musicTaste;
+    Map<String, List<String>> musicTaste;
 
     @NotEmpty
     List<String> giftTaste;

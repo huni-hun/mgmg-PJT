@@ -5,18 +5,23 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Getter
 @Setter
 @ApiModel("UserChangeGiftPutRequest")
 public class UserChangeGiftPutRequest {
+
+    @NotEmpty
     @ApiModelProperty(name = "선물 취향", example = "악세사리")
     List<String> giftTaste;
 
+    @NotEmpty
     @ApiModelProperty(name = "최저가", example = "10000")
     Long lowPrice;
 
+    @NotEmpty
     @ApiModelProperty(name = "최고가", example = "50000")
     Long highPrice;
 }

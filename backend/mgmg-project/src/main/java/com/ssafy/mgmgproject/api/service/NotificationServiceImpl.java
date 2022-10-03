@@ -10,14 +10,14 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class NotificationServiceImpl implements NotificationService{
+public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     NotificationRepository notificationRepository;
 
     @Override
-    public boolean checkNewNotification(User user){
-        return 0<notificationRepository.countByUser(user);
+    public boolean checkNewNotification(User user) {
+        return 0 < notificationRepository.countByUser(user);
     }
 
     @Override

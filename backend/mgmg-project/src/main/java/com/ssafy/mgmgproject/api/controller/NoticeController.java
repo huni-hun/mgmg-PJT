@@ -9,6 +9,7 @@ import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.db.entity.Notice;
 import com.ssafy.mgmgproject.db.entity.User;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -25,6 +26,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 import java.util.Map;
 
+@Api(value = "공지사항 API")
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/notice")
@@ -43,20 +45,18 @@ public class NoticeController {
             @ApiResponse(code = 401, message = "공지사항 작성 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> writeNotice(@ApiIgnore Authentication authentication, @RequestBody NoticeRequest noticeRequest) throws Exception{
+    public ResponseEntity<? extends BaseResponseBody> writeNotice(@ApiIgnore Authentication authentication, @RequestBody NoticeRequest noticeRequest) throws Exception {
         try {
-            UserDetails userDetails = (UserDetails)authentication.getDetails();
+            UserDetails userDetails = (UserDetails) authentication.getDetails();
             String userId = userDetails.getUsername();
             User user = userService.getByUserId(userId);
-
-            if(!user.isAdmin()){
+            if (!user.isAdmin()) {
                 return ResponseEntity.status(403).body(BaseResponseBody.of(403, "관리자만 접근 가능합니다."));
             }
-
             Notice notice = noticeService.writeNotice(noticeRequest);
-            if(notice!=null) {
+            if (notice != null) {
                 return ResponseEntity.status(200).body(NoticeResponse.of(notice, 200, "공지사항이 등록되었습니다."));
-            }else{
+            } else {
                 return ResponseEntity.status(401).body(BaseResponseBody.of(401, "공지사항 작성에 실패하셨습니다."));
             }
         } catch (Exception e) {
@@ -71,14 +71,13 @@ public class NoticeController {
             @ApiResponse(code = 401, message = "공지사항 목록 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> listNotice(
-            @RequestParam(required = false) String keyword,
-            @PageableDefault(sort = "noticeDate",  direction = Sort.Direction.DESC) Pageable pageable){
-        Map<String,Object> result = noticeService.selectNoticeList(keyword,pageable);
-        if(result==null){
+    public ResponseEntity<? extends BaseResponseBody> listNotice(@RequestParam(required = false) String keyword,
+                                                                 @PageableDefault(sort = "noticeDate", direction = Sort.Direction.DESC) Pageable pageable) {
+        Map<String, Object> result = noticeService.selectNoticeList(keyword, pageable);
+        if (result == null) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(402, "공지사항 목록이 없습니다."));
-        }else{
-            return ResponseEntity.status(200).body(NoticeListResponse.of((List<NoticeListMapping>)result.get("page"),(int)result.get("totalPage"),(int)result.get("currentPage"),200, "공지사항 목록조회를 성공하였습니다."));
+        } else {
+            return ResponseEntity.status(200).body(NoticeListResponse.of((List<NoticeListMapping>) result.get("page"), (int) result.get("totalPage"), (int) result.get("currentPage"), 200, "공지사항 목록조회를 성공하였습니다."));
         }
     }
 
@@ -89,11 +88,12 @@ public class NoticeController {
             @ApiResponse(code = 401, message = "공지사항 상세정보 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 402, message = "해당 공지 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
-    public ResponseEntity<? extends BaseResponseBody> detailNotice(@PathVariable long noticeNo){
+    public ResponseEntity<? extends BaseResponseBody> detailNotice(@PathVariable long noticeNo) {
         Notice notice = noticeService.getByNoticeNo(noticeNo);
-        if (notice == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
+        if (notice == null) {
+            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
+        }
         return ResponseEntity.status(200).body(NoticeResponse.of(notice, 200, "공지사항 상세조회를 성공하였습니다."));
-
     }
 
     @PutMapping("/{noticeNo}")
@@ -104,19 +104,19 @@ public class NoticeController {
             @ApiResponse(code = 402, message = "해당 공지 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> updateNotice(@ApiIgnore Authentication authentication, @PathVariable long noticeNo, @RequestBody NoticeRequest noticeRequest) throws Exception{
-        UserDetails userDetails = (UserDetails)authentication.getDetails();
+    public ResponseEntity<? extends BaseResponseBody> updateNotice(@ApiIgnore Authentication authentication,
+                                                                   @PathVariable long noticeNo, @RequestBody NoticeRequest noticeRequest) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
-
-        if(!user.isAdmin()){
+        if (!user.isAdmin()) {
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "관리자만 접근 가능합니다."));
         }
         try {
-            Notice notice = noticeService.updateNotice(noticeNo,noticeRequest);
-            if(notice!=null) {
+            Notice notice = noticeService.updateNotice(noticeNo, noticeRequest);
+            if (notice != null) {
                 return ResponseEntity.status(200).body(NoticeResponse.of(notice, 200, "공지사항이 수정되었습니다."));
-            }else{
+            } else {
                 return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
             }
         } catch (Exception e) {
@@ -132,20 +132,19 @@ public class NoticeController {
             @ApiResponse(code = 402, message = "해당 공지 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> deleteNotice(@ApiIgnore Authentication authentication, @PathVariable long noticeNo) throws Exception{
-        UserDetails userDetails = (UserDetails)authentication.getDetails();
+    public ResponseEntity<? extends BaseResponseBody> deleteNotice(@ApiIgnore Authentication authentication, @PathVariable long noticeNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
-
-        if(!user.isAdmin()){
+        if (!user.isAdmin()) {
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "관리자만 접근 가능합니다."));
         }
         boolean result;
         try {
             result = noticeService.deleteNotice(noticeNo);
-            if(result){
+            if (result) {
                 return ResponseEntity.status(200).body(BaseResponseBody.of(200, "공지사항이 삭제되었습니다."));
-            }else{
+            } else {
                 return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
             }
         } catch (Exception e) {

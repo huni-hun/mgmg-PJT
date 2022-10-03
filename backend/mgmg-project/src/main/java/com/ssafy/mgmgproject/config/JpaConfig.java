@@ -26,6 +26,7 @@ import java.time.format.DateTimeFormatter;
  */
 @Configuration
 public class JpaConfig {
+
     @PersistenceContext
     EntityManager entityManager;
 
@@ -34,24 +35,18 @@ public class JpaConfig {
         return new JPAQueryFactory(entityManager);
     }
 
-
     @Bean
     @Primary
     public ObjectMapper objectMapper() {
         JavaTimeModule timeModule = new JavaTimeModule();
-
         timeModule.addDeserializer(LocalDate.class,
                 new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-
         timeModule.addDeserializer(LocalDateTime.class,
                 new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")));
-
         timeModule.addSerializer(LocalDate.class,
                 new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-
         timeModule.addSerializer(LocalDateTime.class,
                 new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")));
-
         return new ObjectMapper()
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)

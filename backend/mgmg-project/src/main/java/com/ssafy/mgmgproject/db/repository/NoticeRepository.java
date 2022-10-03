@@ -10,7 +10,11 @@ import java.util.List;
 
 @Repository
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
+
     List<NoticeListMapping> findByFixedFlagTrueOrderByNoticeNoDesc();
+
     List<NoticeListMapping> findByNoticeTitleContainingAndFixedFlagFalseOrNoticeContentContainingAndFixedFlagFalseOrderByNoticeNoDesc(String titleKeyword, String contentKeyword, Pageable pageable);
+
     Integer countByNoticeTitleContainingAndFixedFlagFalseOrNoticeContentContainingAndFixedFlagFalse(String titleKeyword, String contentKeyword);
+
 }

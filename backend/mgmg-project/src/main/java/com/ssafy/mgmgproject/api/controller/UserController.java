@@ -11,7 +11,6 @@ import com.ssafy.mgmgproject.common.util.JwtTokenUtil;
 import com.ssafy.mgmgproject.db.entity.User;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,8 +27,8 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
-@Slf4j
 public class UserController {
+
     @Autowired
     UserService userService;
 
@@ -53,10 +52,11 @@ public class UserController {
         String userId = loginInfo.getUserId();
         String password = loginInfo.getPassword();
         User user = userService.getByUserId(userId);
-
-        if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
+        if (user == null) {
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
+        }
         if (passwordEncoder.matches(password, user.getPassword())) {
-            return ResponseEntity.status(200).body(UserLoginResponse.of(user, 200, "로그인에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId),loginInfo.isAutoFlag()?jwtTokenUtil.createRefreshToken(userId):null));
+            return ResponseEntity.status(200).body(UserLoginResponse.of(user, 200, "로그인에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId), loginInfo.isAutoFlag() ? jwtTokenUtil.createRefreshToken(userId) : null));
         }
         return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
     }
@@ -72,11 +72,11 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> autologin(@RequestBody @ApiParam(value = "로그인 상태 유지 정보", required = true) UserAutoLoginPostRequest loginInfo) {
         String userId = loginInfo.getUserId();
         User user = userService.getByUserId(userId);
-
-        if (user == null) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
-
+        if (user == null) {
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Registered"));
+        }
         if (jwtTokenUtil.checkRefreshToken(userId, loginInfo.getRefreshToken())) {
-            return ResponseEntity.status(200).body(UserLoginResponse.of(user, 200, "로그인 상태 유지에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId),jwtTokenUtil.createRefreshToken(userId)));
+            return ResponseEntity.status(200).body(UserLoginResponse.of(user, 200, "로그인 상태 유지에 성공하였습니다.", jwtTokenUtil.createAccessToken(userId), jwtTokenUtil.createRefreshToken(userId)));
         }
         return ResponseEntity.status(401).body(BaseResponseBody.of(401, "로그인 상태 유지에 실패했습니다. 로그인을 진행해주세요."));
     }
@@ -88,15 +88,14 @@ public class UserController {
             @ApiResponse(code = 401, message = "임시 비밀번호 발급 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> findPw(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email, @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) {
+    public ResponseEntity<? extends BaseResponseBody> findPw(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email,
+                                                             @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) {
         User user = userService.getByUserIdAndEmail(userId, email);
-        if(user == null) return ResponseEntity.status(401).body(UserFindPwResponse.of(401, "입력한 정보를 다시 확인해주세요.", null));
-        else{
-            // 랜덤 임시 비밀번호 생성
+        if (user == null) {
+            return ResponseEntity.status(401).body(UserFindPwResponse.of(401, "입력한 정보를 다시 확인해주세요.", null));
+        } else {
             String tmpPw = mailService.getTmpPassword();
-            // 비밀번호 값 변경
             userService.updatePassword(user, tmpPw);
-            // 메일 생성 & 전송
             Mail mail = mailService.createTempPwMail(tmpPw, user.getEmail());
             mailService.sendMail(mail);
             return ResponseEntity.status(200).body(UserFindPwGetResponse.of(200, "이메일 발송 성공", passwordEncoder.encode(user.getPassword())));
@@ -110,11 +109,14 @@ public class UserController {
             @ApiResponse(code = 401, message = "아이디 찾기 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String email) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName,
+                                                             @RequestParam @ApiParam(value = "회원 이메일", required = true) String email) throws Exception {
         User user = userService.getByUserNameAndEmail(userName, email);
-        if (user == null)
+        if (user == null) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "고객님의 정보와 일치하는 아이디가 없습니다."));
-        else return ResponseEntity.status(200).body(UserFindIdGetResponse.of(200, "아이디 찾기 성공", user.getUserId()));
+        } else {
+            return ResponseEntity.status(200).body(UserFindIdGetResponse.of(200, "아이디 찾기 성공", user.getUserId()));
+        }
     }
 
     @GetMapping("/idcheck")
@@ -126,8 +128,11 @@ public class UserController {
     })
     public ResponseEntity<? extends BaseResponseBody> checkId(@RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
         User user = userService.getByUserId(userId);
-        if (user == null) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 아이디입니다."));
-        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 아이디입니다."));
+        if (user == null) {
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 아이디입니다."));
+        } else {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 아이디입니다."));
+        }
     }
 
     @PostMapping("/email")
@@ -140,8 +145,9 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> authEmail(@RequestBody @ApiParam(value = "이메일 중복검사, 인증번호 발송", required = true) UserEmailPostRequest userEmailPostRequest) throws Exception {
         String email = userEmailPostRequest.getEmail();
         User user = userService.getByEmail(email);
-        if(user != null) return  ResponseEntity.status(401).body(BaseResponseBody.of(401, "이메일 중복"));
-
+        if (user != null) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "이메일 중복"));
+        }
         Mail mail = mailService.createAuthMail(email);
         mailService.sendMail(mail);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "인증번호 발송 성공"));
@@ -154,11 +160,12 @@ public class UserController {
             @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> checkAuthKey(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email, @RequestParam @ApiParam(value = "인증번호", required = true) String emailNum) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> checkAuthKey(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email,
+                                                                   @RequestParam @ApiParam(value = "인증번호", required = true) String emailNum) throws Exception {
         String checkEmail = mailService.checkAuthKey(emailNum);
-        if (checkEmail == null || !checkEmail.equals(email))
+        if (checkEmail == null || !checkEmail.equals(email)) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증번호가 올바르지 않습니다."));
-        else {
+        } else {
             mailService.deleteAuthKey(emailNum);
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "인증 성공"));
         }
@@ -166,28 +173,18 @@ public class UserController {
 
     @PostMapping("/regist")
     @ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.")
-    /*
-    @ApiOperation
-    한 개의 Operation을 선언한다.
-    - value: API에 대한 요약을 작성한다.
-    - notes : API에 대한 자세한 설명을 작성한다.
-     */
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> register(@RequestBody @ApiParam(value = "회원가입 정보", required = true) @Valid UserRegistPostRequest userRegistPostRequest) {
-/*
-		@ApiParam : Api에서 사용할 파라미터를 표시
-		 */
-        //임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
         try {
             userService.createUser(userRegistPostRequest);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원가입에 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원가입에 성공하였습니다.")); // 응답 코드와 함께 응답 메시지 return
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원가입에 성공하였습니다."));
     }
 
     @PostMapping("/pwcheck")
@@ -197,11 +194,14 @@ public class UserController {
             @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> myPage(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회원가입 정보", required = true) @Valid UserPwCheckPostRequest userPwCheckPostRequest) {
+    public ResponseEntity<? extends BaseResponseBody> myPage(@ApiIgnore Authentication authentication,
+                                                             @RequestBody @ApiParam(value = "회원가입 정보", required = true) @Valid UserPwCheckPostRequest userPwCheckPostRequest) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
-        if (passwordEncoder.matches(userPwCheckPostRequest.getPassword(), userDetails.getPassword()))
+        if (passwordEncoder.matches(userPwCheckPostRequest.getPassword(), userDetails.getPassword())) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호 인증 성공"));
-        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
+        } else {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
+        }
     }
 
     @GetMapping("/mypage")
@@ -211,10 +211,6 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<UserMyPageResponse> getUserInfo(@ApiIgnore Authentication authentication) throws Exception {
-        /**
-         * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
-         * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
-         */
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
@@ -228,12 +224,15 @@ public class UserController {
             @ApiResponse(code = 401, message = "회원 정보 수정 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회원정보", required = true) @Valid UserUpdatePutRequest userUpdatePutRequest) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> updateUser(@ApiIgnore Authentication authentication,
+                                                                 @RequestBody @ApiParam(value = "회원정보", required = true) @Valid UserUpdatePutRequest userUpdatePutRequest) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
         int result = userService.updateUser(user, userUpdatePutRequest);
-        if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원정보 수정에 실패하였습니다."));
+        if (result == 0) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원정보 수정에 실패하였습니다."));
+        }
         User updatedUser = userService.getByUserId(userId);
         return ResponseEntity.status(200).body(UserMyPageResponse.of(updatedUser, 200, "회원정보가 수정되었습니다."));
     }
@@ -245,14 +244,13 @@ public class UserController {
             @ApiResponse(code = 401, message = "비밀번호 변경 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> updatePw(Authentication authentication, @RequestBody @ApiParam(value = "비밀번호 변경 정보", required = true) UserUpdatePwPutRequest userUpdatePwPutRequest) {
+    public ResponseEntity<? extends BaseResponseBody> updatePw(@ApiIgnore Authentication authentication,
+                                                               @RequestBody @ApiParam(value = "비밀번호 변경 정보", required = true) UserUpdatePwPutRequest userUpdatePwPutRequest) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         userService.updatePassword(user, userUpdatePwPutRequest.getNewPassword());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호가 변경되었습니다."));
-
     }
 
     @PutMapping("/mypage/diaryfont")
@@ -261,17 +259,16 @@ public class UserController {
             @ApiResponse(code = 200, message = "폰트 수정 성공", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> updateFont(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "폰트수정", required = true) @Valid UserUpdateFontPutRequest userUpdateFontPutRequest) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> updateFont(@ApiIgnore Authentication authentication,
+                                                                 @RequestBody @ApiParam(value = "폰트수정", required = true) @Valid UserUpdateFontPutRequest userUpdateFontPutRequest) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         try {
             userService.updateDiaryFont(user, userUpdateFontPutRequest.getDiaryFont());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "오류 발생."));
         }
-
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "폰트가 수정되었습니다."));
     }
 
@@ -286,7 +283,6 @@ public class UserController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         userService.deleteUser(user);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
     }
@@ -301,8 +297,7 @@ public class UserController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
-        Map<String,List<String>> musicTaste = userService.searchMusicGenre(user);
+        Map<String, List<String>> musicTaste = userService.searchMusicGenre(user);
         return ResponseEntity.status(200).body(SearchMusicGenreGetResponse.of(musicTaste, 200, "음악 취향이 조사되었습니다."));
     }
 
@@ -316,9 +311,8 @@ public class UserController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         List<String> giftCategories = userService.searchGiftCategory(user);
-        return ResponseEntity.status(200).body(SearchGiftCategoryGetResponse.of(giftCategories,user, 200, "선물 취향이 조회되었습니다."));
+        return ResponseEntity.status(200).body(SearchGiftCategoryGetResponse.of(giftCategories, user, 200, "선물 취향이 조회되었습니다."));
     }
 
     @PutMapping("/mypage/musicchange")
@@ -327,11 +321,11 @@ public class UserController {
             @ApiResponse(code = 200, message = "취향 변경 성공", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> ChangeMusicGenre(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경할 음악 취향", required = true) @Valid UserChangeMusicPutRequest userChangeMusicPutRequest) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> ChangeMusicGenre(@ApiIgnore Authentication authentication,
+                                                                       @RequestBody @ApiParam(value = "변경할 음악 취향", required = true) @Valid UserChangeMusicPutRequest userChangeMusicPutRequest) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         userService.changeMusicGenre(user, userChangeMusicPutRequest);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "음악 취향이 변경되었습니다."));
     }
@@ -342,11 +336,11 @@ public class UserController {
             @ApiResponse(code = 200, message = "취향 변경 성공", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> ChangeGiftCategory(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경할 선물 취향", required = true) @Valid UserChangeGiftPutRequest userChangeGiftPutRequest) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> ChangeGiftCategory(@ApiIgnore Authentication authentication,
+                                                                         @RequestBody @ApiParam(value = "변경할 선물 취향", required = true) @Valid UserChangeGiftPutRequest userChangeGiftPutRequest) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         userService.changeGiftCategory(user, userChangeGiftPutRequest);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "선물 취향이 변경되었습니다."));
     }

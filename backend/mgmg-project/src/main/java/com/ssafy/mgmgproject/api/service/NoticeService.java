@@ -9,9 +9,13 @@ import java.util.Map;
 public interface NoticeService {
 
     Notice writeNotice(NoticeRequest noticeRequest);
-    Map<String,Object> selectNoticeList(String keyword, Pageable pageable);
+
+    Map<String, Object> selectNoticeList(String keyword, Pageable pageable);
+
     Notice getByNoticeNo(Long NoticeNo);
+
     Notice updateNotice(Long NoticeNo, NoticeRequest noticeRequest);
+
     boolean deleteNotice(Long NoticeNo);
 
 }

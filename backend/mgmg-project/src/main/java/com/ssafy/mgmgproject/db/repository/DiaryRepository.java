@@ -13,21 +13,22 @@ import java.util.Optional;
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
-    Optional<Diary> findByUser_UserNoAndDiaryNo(Long userNo,Long diaryNo);
+    Optional<Diary> findByUser_UserNoAndDiaryNo(Long userNo, Long diaryNo);
 
     @Transactional
     Optional<Diary> deleteByDiaryNo(Long diaryNo);
 
-    long countByUser_UserNoAndDiaryDateBetween(Long userNo,Date startDate, Date endDate);
+    long countByUser_UserNoAndDiaryDateBetween(Long userNo, Date startDate, Date endDate);
 
-    long countByUser_UserNoAndDay(Long userNo,String day);
+    long countByUser_UserNoAndDay(Long userNo, String day);
 
-    List<DiaryListMapping> findByUser_UserNoAndDiaryDateBetween(Long userNo,Date startDate, Date endDate);
+    List<DiaryListMapping> findByUser_UserNoAndDiaryDateBetween(Long userNo, Date startDate, Date endDate);
 
     long countByUser_UserNo(Long userNo);
 
     long countByUser_UserNoAndEmotion(Long userNo, String emotion);
 
-    Optional<Diary> findByUser_UserNoAndDiaryDate(Long userNo,Date diaryDate);
+    Optional<Diary> findByUser_UserNoAndDiaryDate(Long userNo, Date diaryDate);
+
 }
 

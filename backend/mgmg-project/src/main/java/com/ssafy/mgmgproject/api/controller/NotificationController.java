@@ -5,6 +5,7 @@ import com.ssafy.mgmgproject.api.service.NotificationService;
 import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.db.entity.User;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -17,6 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
+@Api(value = "알림 API")
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/notification")
@@ -35,17 +37,14 @@ public class NotificationController {
             @ApiResponse(code = 401, message = "신규 알림 여부 확인 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> checkNewNotification(
-            @ApiIgnore Authentication authentication) throws Exception{
-
-        UserDetails userDetails = (UserDetails)authentication.getDetails();
+    public ResponseEntity<? extends BaseResponseBody> checkNewNotification(@ApiIgnore Authentication authentication) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         try {
             User user = userService.getByUserId(userId);
             boolean result = notificationService.checkNewNotification(user);
-            return ResponseEntity.status(200).body(NewNotificationResponse.of(result,200, "신규 알림 여부 확인을 성공하였습니다."));
-        }
-        catch (Exception e){
+            return ResponseEntity.status(200).body(NewNotificationResponse.of(result, 200, "신규 알림 여부 확인을 성공하였습니다."));
+        } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "신규 알림 여부 확인을 실패하였습니다."));
         }
     }
@@ -57,17 +56,14 @@ public class NotificationController {
             @ApiResponse(code = 401, message = "알림 목록 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> listNotification(
-            @ApiIgnore Authentication authentication) throws Exception{
-
-        UserDetails userDetails = (UserDetails)authentication.getDetails();
+    public ResponseEntity<? extends BaseResponseBody> listNotification(@ApiIgnore Authentication authentication) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         try {
             User user = userService.getByUserId(userId);
             List<NotificationListMapping> notifications = notificationService.selectAndDeleteNotificationList(user);
-            return ResponseEntity.status(200).body(NotificationListResponse.of(notifications,200, "알림 목록 조회를 성공하였습니다."));
-        }
-        catch (Exception e){
+            return ResponseEntity.status(200).body(NotificationListResponse.of(notifications, 200, "알림 목록 조회를 성공하였습니다."));
+        } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "알림 목록 조회에 실패하였습니다."));
         }
     }

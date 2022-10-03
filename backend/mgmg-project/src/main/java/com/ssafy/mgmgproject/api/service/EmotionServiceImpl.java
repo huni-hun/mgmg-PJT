@@ -1,6 +1,5 @@
 package com.ssafy.mgmgproject.api.service;
 
-
 import com.ssafy.mgmgproject.db.entity.Emotion;
 import com.ssafy.mgmgproject.db.repository.EmotionRepository;
 import org.springframework.beans.factory.annotation.Autowired;

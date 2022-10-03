@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @ApiModel("UserFindPwResponse")
 public class UserFindPwResponse extends BaseResponseBody {
+    
     @ApiModelProperty(name = "User PW")
     String userPw;
 

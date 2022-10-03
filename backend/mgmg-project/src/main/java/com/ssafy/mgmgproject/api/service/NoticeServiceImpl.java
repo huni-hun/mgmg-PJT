@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class NoticeServiceImpl implements NoticeService{
+public class NoticeServiceImpl implements NoticeService {
 
     @Autowired
     NoticeRepository noticeRepository;
@@ -35,37 +35,35 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public Map<String,Object> selectNoticeList(String keyword, Pageable pageable) {
-        if(keyword==null){
-            keyword="";
+    public Map<String, Object> selectNoticeList(String keyword, Pageable pageable) {
+        if (keyword == null) {
+            keyword = "";
         }
         List<NoticeListMapping> page = noticeRepository.findByFixedFlagTrueOrderByNoticeNoDesc();
-
         int rest = pageable.getPageSize() - page.size();
-        int totalPage = noticeRepository.countByNoticeTitleContainingAndFixedFlagFalseOrNoticeContentContainingAndFixedFlagFalse(keyword,keyword);
-
-        if(0<totalPage){
-            if(0<totalPage%rest) totalPage=(totalPage/rest)+1;
-            else totalPage=totalPage/rest;
-
-            if(pageable.getPageNumber()<0 || totalPage<pageable.getPageNumber()+1){
+        int totalPage = noticeRepository.countByNoticeTitleContainingAndFixedFlagFalseOrNoticeContentContainingAndFixedFlagFalse(keyword, keyword);
+        if (0 < totalPage) {
+            if (0 < totalPage % rest) {
+                totalPage = (totalPage / rest) + 1;
+            } else {
+                totalPage = totalPage / rest;
+            }
+            if (pageable.getPageNumber() < 0 || totalPage < pageable.getPageNumber() + 1) {
                 return null;
             }
-
-            Pageable paging = PageRequest.of(pageable.getPageNumber(),rest, Sort.Direction.DESC,"noticeDate");
-            List<NoticeListMapping> notices = noticeRepository.findByNoticeTitleContainingAndFixedFlagFalseOrNoticeContentContainingAndFixedFlagFalseOrderByNoticeNoDesc(keyword,keyword,paging);
+            Pageable paging = PageRequest.of(pageable.getPageNumber(), rest, Sort.Direction.DESC, "noticeDate");
+            List<NoticeListMapping> notices = noticeRepository.findByNoticeTitleContainingAndFixedFlagFalseOrNoticeContentContainingAndFixedFlagFalseOrderByNoticeNoDesc(keyword, keyword, paging);
             page.addAll(notices);
-        }else{
-            totalPage=1;
+        } else {
+            totalPage = 1;
         }
-
-        if(page==null || page.size()==0){
+        if (page == null || page.size() == 0) {
             return null;
         }
-        Map<String,Object> result = new HashMap<>();
-        result.put("page",page);
-        result.put("totalPage",totalPage);
-        result.put("currentPage",pageable.getPageNumber()+1);
+        Map<String, Object> result = new HashMap<>();
+        result.put("page", page);
+        result.put("totalPage", totalPage);
+        result.put("currentPage", pageable.getPageNumber() + 1);
         return result;
     }
 
@@ -78,7 +76,7 @@ public class NoticeServiceImpl implements NoticeService{
     @Transactional
     public Notice updateNotice(Long NoticeNo, NoticeRequest noticeRequest) {
         Notice notice = getByNoticeNo(NoticeNo);
-        if(notice==null){
+        if (notice == null) {
             return null;
         }
         notice.updateNotice(noticeRequest.getNoticeTitle(), noticeRequest.getNoticeContent(), noticeRequest.isFixedFlag());
@@ -89,8 +87,8 @@ public class NoticeServiceImpl implements NoticeService{
     @Transactional
     public boolean deleteNotice(Long NoticeNo) {
         Optional<Notice> result = noticeRepository.findById(NoticeNo);
-        if(!result.isPresent()){
-            return  false;
+        if (!result.isPresent()) {
+            return false;
         }
         result.ifPresent(notice -> {
             noticeRepository.delete(notice);

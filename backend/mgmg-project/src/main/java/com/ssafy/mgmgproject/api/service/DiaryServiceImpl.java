@@ -13,14 +13,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.ion.IonException;
 
 import java.text.DateFormat;
-import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,13 +61,12 @@ public class DiaryServiceImpl implements DiaryService {
         User user = userRepository.findByUserNo(userNo).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryRequest.getGiftNo()).orElse(null);
-
         Diary alreadyDiary = diaryRepository.findByUser_UserNoAndDiaryDate(userNo, diaryRequest.getDiaryDate()).orElse(null);
-        if(alreadyDiary != null) return null;
-
+        if (alreadyDiary != null) {
+            return null;
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         DayOfWeek dayOfWeek = LocalDate.parse(formatter.format(diaryRequest.getDiaryDate())).getDayOfWeek();
-
         Diary diary = Diary.builder()
                 .user(user)
                 .diaryContent(diaryRequest.getDiaryContent())
@@ -83,7 +79,9 @@ public class DiaryServiceImpl implements DiaryService {
                 .gift(gift)
                 .openGift(false)
                 .build();
-        if (multipartFile != null) uploadImg(diary, multipartFile);
+        if (multipartFile != null) {
+            uploadImg(diary, multipartFile);
+        }
         diaryRepository.save(diary);
         return diary;
     }
@@ -91,10 +89,12 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     @Transactional
     public Diary updateDiary(Long userNo, Long diaryNo, MultipartFile multipartFile, DiaryUpdateRequest diaryUpdateRequest) {
-        Diary diary = diaryRepository.findByUser_UserNoAndDiaryNo(userNo,diaryNo).orElse(null);
+        Diary diary = diaryRepository.findByUser_UserNoAndDiaryNo(userNo, diaryNo).orElse(null);
         Music music = musicRepository.findByMusicNo(diaryUpdateRequest.getMusicNo()).orElse(null);
         Gift gift = giftRepository.findByGiftNo(diaryUpdateRequest.getGiftNo()).orElse(null);
-        if (diary.getGift() != gift) diary.closeGift();
+        if (diary.getGift() != gift) {
+            diary.closeGift();
+        }
         if (diary != null) {
             diary.updateDiary(
                     diaryUpdateRequest.getDiaryContent(),
@@ -104,7 +104,6 @@ public class DiaryServiceImpl implements DiaryService {
                     music,
                     gift
             );
-
             if (multipartFile != null) {
                 uploadImg(diary, multipartFile);
             } else if (diary.getDiaryImg() != null) {
@@ -120,18 +119,16 @@ public class DiaryServiceImpl implements DiaryService {
         Calendar cal = Calendar.getInstance();
         String year = date.split("-")[0];
         String month = date.split("-")[1];
-        cal.set(Integer.parseInt(year),Integer.parseInt(month)-1,1);
-
-        String startDateStr = year+"-"+month+"-01";
-        String endDateStr = year+"-"+month+"-"+Integer.toString(cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-
+        cal.set(Integer.parseInt(year), Integer.parseInt(month) - 1, 1);
+        String startDateStr = year + "-" + month + "-01";
+        String endDateStr = year + "-" + month + "-" + Integer.toString(cal.getActualMaximum(Calendar.DAY_OF_MONTH));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = formatter.parse(startDateStr);
         Date endDate = formatter.parse(endDateStr);
-
         List<DiaryListMapping> diaries = diaryRepository.findByUser_UserNoAndDiaryDateBetween(userNo, startDate, endDate);
-        if(diaries != null) return diaries;
-        else return null;
+        if (diaries != null) {
+            return diaries;
+        } else return null;
     }
 
     @Override
@@ -183,37 +180,29 @@ public class DiaryServiceImpl implements DiaryService {
     public String getUserInfo(Date birth, String gender, List<String> giftCategories, Long lowPrice, Long highPrice) {
         DateFormat dataFormat = new SimpleDateFormat("yyyy-mm-dd");
         String year = dataFormat.format(birth);
-
         Calendar now = Calendar.getInstance();
         Integer currentYear = now.get(Calendar.YEAR);
-
         Integer birthYear = Integer.parseInt(year.substring(0, 4));
-
         String age = (currentYear - birthYear + 1) + "";
-
         Character c = age.charAt(0);
-
         String generation = "";
-        if(c.equals('1')){
+        if (c.equals('1')) {
             generation = "10대";
-        }else if(c.equals('2')){
+        } else if (c.equals('2')) {
             generation = "20대";
-        }else if(c.equals('3')){
+        } else if (c.equals('3')) {
             generation = "30대";
-        }else if(c.equals('4')){
+        } else if (c.equals('4')) {
             generation = "40대";
-        }else if(c.equals('5')){
+        } else if (c.equals('5')) {
             generation = "50대";
-        }else if(c.equals('6')){
+        } else if (c.equals('6')) {
             generation = "60대";
         }
-
         String low = lowPrice + "원";
         String high = highPrice + "원";
-
         Random random = new Random();
         String randomCategory = giftCategories.get(random.nextInt(giftCategories.size()));
-
         String userInfo = generation + " " + gender + " " + low + "~" + high + " " + randomCategory;
         return userInfo;
     }
@@ -221,8 +210,9 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public Gift writeRecommendGift(SearchItemRequest searchItemRequest, Long diaryNo, User user) {
         Diary diary = diaryRepository.findByUser_UserNoAndDiaryNo(user.getUserNo(), diaryNo).orElse(null);
-        if(diary == null) return null;
-
+        if (diary == null) {
+            return null;
+        }
         openGift(diary, user);
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("<b>", ""));
         searchItemRequest.setTitle(searchItemRequest.getTitle().replace("</b>", ""));
@@ -241,23 +231,20 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     @Transactional
     public void openGift(Diary diary, User user) {
-            diary.openGift();
+        diary.openGift();
     }
 
     @Override
     public int uploadImg(Diary diary, MultipartFile multipartFile) {
-
         try {
             if (diary.getDiaryImg() != null) {
                 deleteS3Img(diary);
             }
             String filename = fileNameFilter(multipartFile.getOriginalFilename());
             String s3FileName = UUID.randomUUID() + "-" + filename;
-
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(multipartFile.getInputStream().available());
             amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objectMetadata);
-
             String fileUrl = amazonS3.getUrl(bucket, s3FileName).toString();
             diary.updateImg(fileUrl);
         } catch (Exception e) {
@@ -270,7 +257,6 @@ public class DiaryServiceImpl implements DiaryService {
         try {
             String filename = diary.getDiaryImg().substring(diary.getDiaryImg().lastIndexOf("/") + 1);
             filename = URLDecoder.decode(filename, "UTF-8");
-            System.out.println(filename);
             amazonS3.deleteObject(bucket, filename);
         } catch (Exception e) {
             return 0;
@@ -285,11 +271,11 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     @Transactional
     public BadMusic addBadMusic(Long userNo, Long musicNo) {
-        InterestMusic interestMusic = interestMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo,musicNo).orElse(null);
-        if(interestMusic==null){
+        InterestMusic interestMusic = interestMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo, musicNo).orElse(null);
+        if (interestMusic == null) {
             User user = userRepository.findById(userNo).orElse(null);
             Music music = musicRepository.findById(musicNo).orElse(null);
-            if(user!=null && music!=null){
+            if (user != null && music != null) {
                 BadMusic badMusic = BadMusic.builder()
                         .user(user)
                         .music(music)
@@ -303,9 +289,9 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     @Transactional
-    public int deleteBadMusic(Long userNo, Long musicNo){
-        BadMusic badMusic = badMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo,musicNo).orElse(null);
-        if(badMusic!=null){
+    public int deleteBadMusic(Long userNo, Long musicNo) {
+        BadMusic badMusic = badMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo, musicNo).orElse(null);
+        if (badMusic != null) {
             badMusicRepository.deleteById(badMusic.getBadMusicNo());
             return 1;
         }
@@ -313,22 +299,22 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public String checkMusic(Long userNo, Long musicNo){
-        InterestMusic interestMusic = interestMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo,musicNo).orElse(null);
-        if(interestMusic!=null){
+    public String checkMusic(Long userNo, Long musicNo) {
+        InterestMusic interestMusic = interestMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo, musicNo).orElse(null);
+        if (interestMusic != null) {
             return "good";
         }
-        BadMusic badMusic = badMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo,musicNo).orElse(null);
-        if(badMusic!=null){
+        BadMusic badMusic = badMusicRepository.findByUser_UserNoAndMusic_MusicNo(userNo, musicNo).orElse(null);
+        if (badMusic != null) {
             return "bad";
         }
         return "none";
     }
 
     @Override
-    public String checkGift(Long userNo, Long giftNo){
-        InterestGift interestGift = interestGiftRepository.findByUser_UserNoAndGift_GiftNo(userNo,giftNo).orElse(null);
-        if(interestGift!=null){
+    public String checkGift(Long userNo, Long giftNo) {
+        InterestGift interestGift = interestGiftRepository.findByUser_UserNoAndGift_GiftNo(userNo, giftNo).orElse(null);
+        if (interestGift != null) {
             return "good";
         }
         return "none";

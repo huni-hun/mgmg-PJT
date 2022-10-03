@@ -1,13 +1,11 @@
 package com.ssafy.mgmgproject.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -66,11 +64,12 @@ public class Diary {
     private boolean openGift;
 
     @PrePersist
-    public void onPrePersist(){
+    public void onPrePersist() {
         this.writeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
     }
+
     @PreUpdate
-    public void onPreUpdate(){
+    public void onPreUpdate() {
         this.writeDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
     }
 
@@ -95,7 +94,7 @@ public class Diary {
         this.openGift = false;
     }
 
-    public void updateImg(String fileUrl){
+    public void updateImg(String fileUrl) {
         this.diaryImg = fileUrl;
     }
 }

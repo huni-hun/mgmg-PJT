@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserService {
+
     User getByUserId(String userId);
 
     void createUser(UserRegistPostRequest userRegistInfo);
@@ -28,11 +29,12 @@ public interface UserService {
 
     void deleteUser(User user);
 
-    Map<String,List<String>> searchMusicGenre(User user);
+    Map<String, List<String>> searchMusicGenre(User user);
 
     List<String> searchGiftCategory(User user);
 
     void changeMusicGenre(User user, UserChangeMusicPutRequest userChangeMusicPutRequest);
 
     void changeGiftCategory(User user, UserChangeGiftPutRequest userChangeGiftPutRequest);
+
 }

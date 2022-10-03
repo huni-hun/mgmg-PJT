@@ -8,5 +8,7 @@ import java.util.List;
 public interface NotificationService {
 
     boolean checkNewNotification(User user);
+
     List<NotificationListMapping> selectAndDeleteNotificationList(User user);
+
 }

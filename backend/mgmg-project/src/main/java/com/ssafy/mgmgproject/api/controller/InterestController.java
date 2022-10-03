@@ -4,10 +4,7 @@ import com.ssafy.mgmgproject.api.request.InterestGiftDeleteRequest;
 import com.ssafy.mgmgproject.api.request.InterestMusicDeleteRequest;
 import com.ssafy.mgmgproject.api.response.InterestGiftResponse;
 import com.ssafy.mgmgproject.api.response.InterestMusicResponse;
-import com.ssafy.mgmgproject.api.response.SearchGiftCategoryGetResponse;
-import com.ssafy.mgmgproject.api.response.SearchMusicGenreGetResponse;
 import com.ssafy.mgmgproject.api.service.InterestService;
-import com.ssafy.mgmgproject.api.service.InterestServiceImpl;
 import com.ssafy.mgmgproject.api.service.UserService;
 import com.ssafy.mgmgproject.common.auth.UserDetails;
 import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
@@ -47,7 +44,6 @@ public class InterestController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         List<InterestMusic> interestMusics = interestService.searchInterestMusic(user);
         return ResponseEntity.status(200).body(InterestMusicResponse.of(interestMusics, 200, "관심 음악이 조회되었습니다."));
     }
@@ -62,7 +58,6 @@ public class InterestController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         List<InterestGift> interestGifts = interestService.searchInterestGift(user);
         return ResponseEntity.status(200).body(InterestGiftResponse.of(interestGifts, 200, "관심 선물이 조회되었습니다."));
     }
@@ -73,11 +68,11 @@ public class InterestController {
             @ApiResponse(code = 200, message = "관심음악 삭제 성공", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> DeleteInterestGift(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "음악 삭제", required = true)InterestMusicDeleteRequest interestMusicDeleteRequest) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> DeleteInterestGift(@ApiIgnore Authentication authentication,
+                                                                         @RequestBody @ApiParam(value = "음악 삭제", required = true) InterestMusicDeleteRequest interestMusicDeleteRequest) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         interestService.deleteInterestMusic(user, interestMusicDeleteRequest.getMusicNo());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 음악이 삭제되었습니다."));
     }
@@ -88,11 +83,11 @@ public class InterestController {
             @ApiResponse(code = 200, message = "관심선물 삭제 성공", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> DeleteInterestGift(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "선물 삭제", required = true) InterestGiftDeleteRequest interestGiftDeleteRequest) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> DeleteInterestGift(@ApiIgnore Authentication authentication,
+                                                                         @RequestBody @ApiParam(value = "선물 삭제", required = true) InterestGiftDeleteRequest interestGiftDeleteRequest) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUser().getUserId();
         User user = userService.getByUserId(userId);
-
         interestService.deleteInterestGift(user, interestGiftDeleteRequest.getGiftNo());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 선물이 삭제되었습니다."));
     }

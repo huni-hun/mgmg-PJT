@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @ApiModel("NotificationListResponse")
-public class NotificationListResponse extends BaseResponseBody{
+public class NotificationListResponse extends BaseResponseBody {
 
     @ApiModelProperty(name = "알림 목록")
     List<NotificationListMapping> notifications;

@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @ApiModel("SearchGiftCategoryGetResponse")
 public class SearchGiftCategoryGetResponse extends BaseResponseBody {
+
     @ApiModelProperty(name = "giftCategory")
     List<String> giftCategories;
 

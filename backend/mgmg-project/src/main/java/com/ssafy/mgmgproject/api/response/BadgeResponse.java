@@ -11,8 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("BadgeResponse")
-public class BadgeResponse extends BaseResponseBody{
-
+public class BadgeResponse extends BaseResponseBody {
 
     @ApiModelProperty(name = "업적 이름")
     String badgeName;
@@ -30,16 +29,14 @@ public class BadgeResponse extends BaseResponseBody{
     boolean achievedBadgeFlag;
 
     public static BadgeResponse of(Badge badge, AchievedBadge achievedBadge, Integer statusCode, String message) {
-
         BadgeResponse res = new BadgeResponse();
         res.setBadgeName(badge.getBadgeName());
         res.setBadgeContent(badge.getBadgeContent());
         res.setBadgeCodition(badge.getBadgeCondition());
-        res.setAchievedBadgeDate(achievedBadge==null? null : achievedBadge.getAchievedBadgeDate().toString());
-        res.setAchievedBadgeFlag(achievedBadge!=null);
+        res.setAchievedBadgeDate(achievedBadge == null ? null : achievedBadge.getAchievedBadgeDate().toString());
+        res.setAchievedBadgeFlag(achievedBadge != null);
         res.setStatusCode(statusCode);
         res.setMessage(message);
-
         return res;
     }
 }

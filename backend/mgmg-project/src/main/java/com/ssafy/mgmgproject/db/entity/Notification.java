@@ -22,13 +22,13 @@ public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="notification_no")
+    @Column(name = "notification_no")
     private Long notificationNo;
 
-    @Column(name="notification_content", length = 30, nullable = false)
+    @Column(name = "notification_content", length = 30, nullable = false)
     private String notificationContent;
 
-    @Column(name="notification_date", updatable = false, length = 16)
+    @Column(name = "notification_date", updatable = false, length = 16)
     @CreatedDate
     private String notificationDate;
 
@@ -36,12 +36,12 @@ public class Notification {
     @JoinColumn(name = "user_no")
     private User user;
 
-    public void createNotification(User user){
+    public void createNotification(User user) {
         this.user = user;
     }
 
     @PrePersist
-    public void onPrePersist(){
+    public void onPrePersist() {
         this.notificationDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
     }
 

@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @ApiModel("UserFindIdGetResponse")
 public class UserFindIdGetResponse extends BaseResponseBody {
+
     @ApiModelProperty(name = "User ID")
     String userId;
 

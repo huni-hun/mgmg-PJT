@@ -13,6 +13,7 @@ import java.util.Date;
 @Setter
 @ApiModel("UserResponse")
 public class UserMyPageResponse extends BaseResponseBody {
+    
     @ApiModelProperty(name = "User ID")
     String userId;
 

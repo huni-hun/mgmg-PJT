@@ -8,6 +8,7 @@ import com.ssafy.mgmgproject.common.model.response.BaseResponseBody;
 import com.ssafy.mgmgproject.db.entity.AchievedBadge;
 import com.ssafy.mgmgproject.db.entity.Badge;
 import com.ssafy.mgmgproject.db.entity.User;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -21,6 +22,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 import java.util.Map;
 
+@Api(value = "업적 API")
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/badge")
@@ -39,19 +41,15 @@ public class BadgeController {
             @ApiResponse(code = 401, message = "업적 목록 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> listBadge(
-            @ApiIgnore Authentication authentication){
-
-        UserDetails userDetails = (UserDetails)authentication.getDetails();
+    public ResponseEntity<? extends BaseResponseBody> listBadge(@ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
-
-        List<Map<String,Object>> badgeListDtos = badgeService.selectBadgeList(user);
-
-        if(badgeListDtos==null){
+        List<Map<String, Object>> badgeListDtos = badgeService.selectBadgeList(user);
+        if (badgeListDtos == null) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "업적 목록 조회에 실패했습니다."));
-        }else{
-            return ResponseEntity.status(200).body(BadgeListResponse.of(badgeListDtos,200, "업적 목록 조회를 성공하였습니다."));
+        } else {
+            return ResponseEntity.status(200).body(BadgeListResponse.of(badgeListDtos, 200, "업적 목록 조회를 성공하였습니다."));
         }
     }
 
@@ -62,19 +60,15 @@ public class BadgeController {
             @ApiResponse(code = 401, message = "획득한 업적 목록 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> listAchievedBadge(
-            @ApiIgnore Authentication authentication){
-
-        UserDetails userDetails = (UserDetails)authentication.getDetails();
+    public ResponseEntity<? extends BaseResponseBody> listAchievedBadge(@ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
-
-        List<Map<String,Object>> badgeListDtos = badgeService.selectAchievedBadgeList(user);
-
-        if(badgeListDtos==null){
+        List<Map<String, Object>> badgeListDtos = badgeService.selectAchievedBadgeList(user);
+        if (badgeListDtos == null) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "획득한 업적 목록 조회에 실패했습니다."));
-        }else{
-            return ResponseEntity.status(200).body(BadgeListResponse.of(badgeListDtos,200, "획득한 업적 목록 조회를 성공하였습니다."));
+        } else {
+            return ResponseEntity.status(200).body(BadgeListResponse.of(badgeListDtos, 200, "획득한 업적 목록 조회를 성공하였습니다."));
         }
     }
 
@@ -85,21 +79,16 @@ public class BadgeController {
             @ApiResponse(code = 401, message = "업적 상세 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> detailBadge(
-            @ApiIgnore Authentication authentication, @PathVariable long badgeNo){
-
-        UserDetails userDetails = (UserDetails)authentication.getDetails();
+    public ResponseEntity<? extends BaseResponseBody> detailBadge(@ApiIgnore Authentication authentication, @PathVariable long badgeNo) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
-
-        AchievedBadge achievedBadge = badgeService.getByUserAndBadgeNo(user,badgeNo);
+        AchievedBadge achievedBadge = badgeService.getByUserAndBadgeNo(user, badgeNo);
         Badge badge = badgeService.getByBadgeNo(badgeNo);
-        if(badge==null){
+        if (badge == null) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "업적 상세 조회에 실패했습니다."));
         }
-        return ResponseEntity.status(200).body(BadgeResponse.of(badge,achievedBadge,200, "업적 상세 조회를 성공하였습니다."));
-
-
+        return ResponseEntity.status(200).body(BadgeResponse.of(badge, achievedBadge, 200, "업적 상세 조회를 성공하였습니다."));
     }
 
 }

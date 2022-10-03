@@ -12,6 +12,8 @@ import java.util.Map;
 @Setter
 @ApiModel("UserChangeMusicPutRequest")
 public class UserChangeMusicPutRequest {
+
     @NotEmpty
-    Map<String,List<String>> musicTaste;
+    Map<String, List<String>> musicTaste;
+
 }

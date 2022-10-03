@@ -62,7 +62,7 @@ public class User {
     @JsonIgnore
     @Builder.Default
     @OneToMany(mappedBy = "user")
-    private List<InterestGift> interestGifts= new ArrayList<>();
+    private List<InterestGift> interestGifts = new ArrayList<>();
 
     @JsonIgnore
     @Builder.Default
@@ -91,17 +91,17 @@ public class User {
     }
 
     public void updateDiaryContinue(int diaryContinue) {
-        if(diaryContinue<Integer.MAX_VALUE){
-            this.diaryContinue=diaryContinue;
+        if (diaryContinue < Integer.MAX_VALUE) {
+            this.diaryContinue = diaryContinue;
         }
     }
 
-    public void updateUserPrice(Long lowPrice, Long highPrice){
+    public void updateUserPrice(Long lowPrice, Long highPrice) {
         this.lowPrice = lowPrice;
         this.highPrice = highPrice;
     }
 
-    public void updateFont(int diaryFont){
+    public void updateFont(int diaryFont) {
         this.diaryFont = diaryFont;
     }
 

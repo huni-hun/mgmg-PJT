@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
+
     private UserService userService;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService) {
@@ -31,12 +32,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String header = request.getHeader(JwtTokenUtil.HEADER_STRING);
-
         if (header == null || !header.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
             filterChain.doFilter(request, response);
             return;
         }
-
         try {
             Authentication authentication = getAuthentication(request);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -44,7 +43,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             ResponseBodyWriteUtil.sendError(request, response, ex);
             return;
         }
-
         filterChain.doFilter(request, response);
     }
 
@@ -58,7 +56,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             String userId = decodedJWT.getSubject();
             if (userId != null) {
                 User user = userService.getByUserId(userId);
-                if(user != null) {
+                if (user != null) {
                     UserDetails userDetails = new UserDetails(user);
                     UsernamePasswordAuthenticationToken jwtAuthentication = new UsernamePasswordAuthenticationToken(userId,
                             null, userDetails.getAuthorities());

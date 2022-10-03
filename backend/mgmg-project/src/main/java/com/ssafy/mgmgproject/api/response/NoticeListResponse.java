@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @ApiModel("NoticeListResponse")
-public class NoticeListResponse extends BaseResponseBody{
+public class NoticeListResponse extends BaseResponseBody {
 
     @ApiModelProperty(name = "공지사항 목록")
     List<NoticeListMapping> page;

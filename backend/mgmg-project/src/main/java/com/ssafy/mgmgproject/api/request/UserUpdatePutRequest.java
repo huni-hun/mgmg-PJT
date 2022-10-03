@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-@ApiModel("UserUpatePutRequest")
+@ApiModel("UserUpdatePutRequest")
 public class UserUpdatePutRequest {
 
     @NotEmpty
@@ -29,4 +29,5 @@ public class UserUpdatePutRequest {
     @NotEmpty
     @ApiModelProperty(name = "회원 성별", example = "남자")
     String gender;
+
 }
