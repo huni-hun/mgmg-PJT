@@ -1,7 +1,8 @@
 <template>
   <v-container class="mypageTotalBody">
     <div class="mypageBody">
-      <div class="mypageBanner">
+      <!-- 웹화면 -->
+      <div class="mypageBanner pcView">
         <div class="bannerTitleLabel">
           <label for="">마이페이지</label>
         </div>
@@ -41,6 +42,47 @@
           <div class="bannerMenuLabel"><label for="">회원 탈퇴</label></div>
         </router-link>
         <hr class="hrStyle" />
+      </div>
+
+      <!-- 모바일화면 -->
+      <div class="phoneView">
+        <div class="banner">
+          <div class="bannerMenuList">
+            <router-link class="bannerLabelDecoration" to="/my/myinfo">
+              <div class="bannerMenuLabel"><label for="">내 정보 확인</label></div>
+            </router-link>
+          </div>
+          <!-- <router-link class="bannerLabelDecoration" to="/my/infoedit">
+          <div class="bannerMenuLabel"><label for="">회원 정보 변경</label></div>
+        </router-link>
+        <hr class="hrStyle" /> -->
+
+          <div class="bannerMenuList">
+            <router-link class="bannerLabelDecoration" to="/my/passwordedit">
+              <div class="bannerMenuLabel"><label for="">비밀번호 수정</label></div>
+            </router-link>
+          </div>
+          <div class="bannerMenuList">
+            <router-link class="bannerLabelDecoration" to="/my/musicedit">
+              <div class="bannerMenuLabel"><label for="">음악 장르 변경</label></div>
+            </router-link>
+          </div>
+          <div class="bannerMenuList">
+            <router-link class="bannerLabelDecoration" to="/my/giftedit">
+              <div class="bannerMenuLabel"><label for="">선물 종류 변경</label></div>
+            </router-link>
+          </div>
+          <div class="bannerMenuList">
+            <router-link class="bannerLabelDecoration" to="/my/fontedit">
+              <div class="bannerMenuLabel"><label for="">글꼴 변경</label></div>
+            </router-link>
+          </div>
+          <div class="bannerMenuList">
+            <router-link class="bannerLabelDecoration" to="/my/userdelete">
+              <div class="bannerMenuLabel"><label for="">회원 탈퇴</label></div>
+            </router-link>
+          </div>
+        </div>
       </div>
 
       <div class="mypageView">
@@ -91,7 +133,7 @@ export default {
   padding: 1% 5% 1% 1%;
 }
 .bannerTitleLabel {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
   margin: 5% 0;
   padding-left: 5%;
 }
@@ -118,5 +160,45 @@ export default {
 }
 .nowMenu {
   background-color: aquamarine;
+}
+
+/* 모바일에만 보이는 클래스 */
+.bannerMenuList {
+  width: 33%;
+}
+.phoneView {
+  display: none;
+}
+@media (max-width: 1199px) {
+  .mypageTotalBody {
+    width: 90%;
+  }
+}
+@media (max-width: 991px) {
+  .mypageTotalBody {
+    width: 100%;
+  }
+}
+@media (max-width: 639px) {
+  .pcView {
+    display: none;
+  }
+  .phoneView {
+    display: inline-block;
+  }
+  .mypageBody {
+    flex-direction: column;
+  }
+  .mypageView {
+    width: 100%;
+    padding: 1%;
+  }
+  .banner {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
 }
 </style>
