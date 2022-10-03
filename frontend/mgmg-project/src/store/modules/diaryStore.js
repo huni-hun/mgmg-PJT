@@ -31,8 +31,8 @@ export const diaryStore = {
     },
   },
   actions: {
-    async fetchDiary({ commit }, diaryData, no) {
-      await diaryWrite(diaryData)
+    async fetchDiary({ rootGetters, commit }, diaryData, no) {
+      await diaryWrite(rootGetters.accessToken, diaryData)
         .then((res) => {
           console.log("vuex success", res.data);
           commit("setDiary", res.data);

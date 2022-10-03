@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import { deleteUser } from "@/api/userApi.js";
 
@@ -27,7 +28,7 @@ export default {
   methods: {
     async userDelete() {
       console.log("회원탈퇴");
-      await deleteUser()
+      await deleteUser(this.accessToken)
         .then((res) => {
           console.log(res);
           this.$cookies.remove("autoLoginCookie");
@@ -53,7 +54,9 @@ export default {
         });
     },
   },
-
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   // userDelete() {
   //   axios
   //     .delete(api_url.accounts.mypage_show_edit_delete(), {

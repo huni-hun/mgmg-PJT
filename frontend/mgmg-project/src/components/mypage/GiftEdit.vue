@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import { showInterestGift } from "@/api/userApi.js";
 import { changeInterestGift } from "@/api/userApi.js";
@@ -114,6 +115,9 @@ export default {
       //   id: "priceUpper",
       // },
     };
+  },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
   },
   mounted() {
     this.showaInterestGift();
@@ -164,7 +168,7 @@ export default {
     },
     // 선물 리스트 조회
     async showaInterestGift() {
-      await showInterestGift().then((res) => {
+      await showInterestGift(this.accessToken).then((res) => {
         this.selectedGift = res.giftCategories;
         this.underPrice = res.lowPrice;
         this.upperPrice = res.highPrice;
@@ -178,7 +182,7 @@ export default {
         highPrice: this.upperPrice,
       };
 
-      await changeInterestGift(request)
+      await changeInterestGift(this.accessToken, request)
         .then((res) => {
           console.log(res);
           Swal.fire({

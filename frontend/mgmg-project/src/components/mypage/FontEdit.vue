@@ -4,8 +4,19 @@
     <v-row><label for="">선택하신 글꼴은 모든 일기에 적용됩니다.</label></v-row>
     <v-row><hr class="hrStyle" /></v-row>
     <v-row>
-      <div class="col-4" v-for="font in fontLst" :key="font.Num" name="fontSelect" @click="changeFont(font)">
-        <div class="fontLstBox" :class="{ selected: font.name == selectedFont }">{{ font.name }}</div>
+      <div
+        class="col-4"
+        v-for="font in fontLst"
+        :key="font.Num"
+        name="fontSelect"
+        @click="changeFont(font)"
+      >
+        <div
+          class="fontLstBox"
+          :class="{ selected: font.name == selectedFont }"
+        >
+          {{ font.name }}
+        </div>
       </div>
     </v-row>
     <v-row>
@@ -15,6 +26,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CustomButton from "../common/CustomButton.vue";
 import Swal from "sweetalert2";
 import { changeFont } from "@/api/userApi.js";
@@ -39,6 +51,9 @@ export default {
       selectedFontNum: 0,
     };
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     // 폰트 선택할 때
     changeFont(new_font) {
@@ -51,7 +66,7 @@ export default {
       var request = {
         diaryFont: this.selectedFontNum,
       };
-      let response = await changeFont(request);
+      let response = await changeFont(this.accessToken, request);
       console.log(request);
       console.log("응답 데이터", response);
 
@@ -113,6 +128,7 @@ export default {
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
 }
 .selected {
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25),
+    inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
 </style>

@@ -7,7 +7,9 @@
 
       <div class="loginBodyLine">
         <div class="loginBodyLabel">
-          <label for="idLoginInput" class="noDrag" id="idLoginLabel">아이디</label>
+          <label for="idLoginInput" class="noDrag" id="idLoginLabel"
+            >아이디</label
+          >
         </div>
         <div class="loginBodyInput">
           <CustomInput v-model="idLoginInput" />
@@ -16,7 +18,9 @@
 
       <div class="loginBodyLine">
         <div class="loginBodyLabel">
-          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel">비밀번호</label>
+          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel"
+            >비밀번호</label
+          >
         </div>
         <div class="loginBodyInput">
           <div class="inputStyle">
@@ -38,10 +42,17 @@
       </div>
       <div class="loginButtonLine">
         <div class="loginCheckBox">
-          <v-checkbox v-model="loginNext" :label="`로그인 상태 유지하기`"></v-checkbox>
+          <v-checkbox
+            v-model="loginNext"
+            :label="`로그인 상태 유지하기`"
+          ></v-checkbox>
         </div>
         <div class="loginButton">
-          <CustomButton class="loginButtonText" @click="login" btnText="로그인" />
+          <CustomButton
+            class="loginButtonText"
+            @click="login"
+            btnText="로그인"
+          />
         </div>
       </div>
     </v-container>
@@ -49,6 +60,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { autoLogin } from "@/api/userApi.js";
 import { logIn } from "@/api/userApi.js";
 import Swal from "sweetalert2";
@@ -73,6 +85,7 @@ export default {
     this.autoLogin();
   },
   methods: {
+    ...mapActions("userStore", ["setUserInfoAuto", "setUserInfoNotAuto"]),
     test() {
       console.log(this.loginNext);
     },
@@ -91,20 +104,20 @@ export default {
         console.log("자동로그인 실행");
 
         await autoLogin(request).then((res) => {
-          this.loginAuto(res, request);
+          this.loginAuto(res);
           this.$router.push("/main");
         });
       }
       //그 외는 아무것도 안함.
     },
     //자동로그인 선택 하고, 안하고 상태관리
-    loginAuto(response, request) {
-      this.$store.commit("SET_USER_INFO_AUTO", response);
+    loginAuto(response) {
+      this.setUserInfoAuto(response);
       this.$cookies.set("autoLoginCookie", response.refreshToken);
-      this.$cookies.set("userIdCookie", request.userId);
+      this.$cookies.set("userIdCookie", response.userId);
     },
     loginNotAuto(response) {
-      this.$store.commit("SET_USER_INFO_NOT_AUTO", response);
+      this.setUserInfoNotAuto(response);
       this.$cookies.remove("autoLoginCookie");
       this.$cookies.remove("userIdCookie");
       // this.$cookies.set("autoLoginCookie", "");
@@ -124,14 +137,16 @@ export default {
 
       await logIn(request)
         .then((res) => {
+          res.userId = userId;
           //자동 로그인 선택한 경우
           if (autoflag) {
-            this.loginAuto(res, request);
-            this.$store.state.userStore.userId = this.$cookies.get("userIdCookie");
+            this.loginAuto(res);
+            // this.$store.state.userStore.userId =
+            //   this.$cookies.get("userIdCookie");
           } else {
             //자동 로그인 선택 안한 경우
             this.loginNotAuto(res);
-            this.$store.state.userStore.userId = userId;
+            // this.$store.state.userStore.userId = userId;
           }
           this.$router.push("/main");
         })

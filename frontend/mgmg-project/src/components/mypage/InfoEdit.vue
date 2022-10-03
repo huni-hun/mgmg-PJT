@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { showUserInfo } from "@/api/userApi.js";
 import { editUserInfo } from "@/api/userApi.js";
 import Swal from "sweetalert2";
@@ -138,6 +139,9 @@ export default {
   //     }
   //   },
   // },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   mounted() {
     // this.test();
     this.firstProcess();
@@ -222,7 +226,7 @@ export default {
           gender: user_gender,
         };
 
-        await editUserInfo(request)
+        await editUserInfo(this.accessToken, request)
           .then((res) => {
             console.log(res);
             Swal.fire({

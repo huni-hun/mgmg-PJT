@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { myCheck } from "@/api/userApi.js";
 import Swal from "sweetalert2";
 export default {
@@ -48,10 +49,13 @@ export default {
       pwMyCheckRequired: (v) => !!v || "인증번호는 필수값입니다. ",
     };
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     test() {
       // console.log(this.$store.state.userStore.userId);
-      console.log(this.$store.state.userStore.accessToken);
+      // console.log(this.$store.state.userStore.accessToken);
     },
     async myCheck() {
       var check_pw = document.getElementById("pwMyCheckInput").value;
@@ -59,7 +63,7 @@ export default {
       const request = {
         password: check_pw,
       };
-      await myCheck(request)
+      await myCheck(this.accessToken, request)
         .then((res) => {
           console.log(res);
           this.$router.push("/my/myinfo");

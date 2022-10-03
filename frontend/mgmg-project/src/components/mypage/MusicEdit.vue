@@ -89,9 +89,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CustomButton from "../common/CustomButton.vue";
 import Swal from "sweetalert2";
-import store from "@/store/modules/userStore";
 import axios from "axios";
 import { changeInterestMusic } from "@/api/userApi.js";
 
@@ -158,12 +158,15 @@ export default {
   created() {
     this.check();
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     check() {
       axios({
         url: process.env.VUE_APP_API_URL + "/api/user/mypage/music",
         method: "get",
-        headers: { Authorization: `Bearer ${store.state.accessToken}` },
+        headers: { Authorization: `Bearer ${this.accessToken}` },
       })
         .then(({ data }) => {
           let list = {
@@ -297,7 +300,7 @@ export default {
         musicTaste: this.musicTaste,
       };
 
-      await changeInterestMusic(request)
+      await changeInterestMusic(this.accessToken, request)
         .then((res) => {
           console.log(res);
           Swal.fire({

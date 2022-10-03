@@ -3,71 +3,142 @@
     <div v-if="isLoading">
       <LodingView :view="lodingValue" />
     </div>
-    <div class="diaryWriteTop" :style="{
-      backgroundImage: 'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
-    }">
-      <div class="flexTop" :style="{fontFamily:`${font}`}">
+    <div
+      class="diaryWriteTop"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/writingtop/${thema}.png`) + ')',
+      }"
+    >
+      <div class="flexTop" :style="{ fontFamily: `${font}` }">
         <div class="flexLeft">
           <div>
             <span>날짜 : {{ date }}</span>
           </div>
           <div class="weatherDiv">
             <span>날씨 :</span>
-            <v-select class="selectWeather" :items="weatherImg" :value="weather" flat solo dense
-              background-color="transparent" :menu-props="{ maxHeight: '80%', overflowX: true }" hide-details>
+            <v-select
+              class="selectWeather"
+              :items="weatherImg"
+              :value="weather"
+              flat
+              solo
+              dense
+              background-color="transparent"
+              :menu-props="{ maxHeight: '80%', overflowX: true }"
+              hide-details
+            >
               <template v-slot:selection="{ item }">
-                <v-img class="weatherImg" :src="require(`@/assets/diary/weather/${item}.png`)" />
+                <v-img
+                  class="weatherImg"
+                  :src="require(`@/assets/diary/weather/${item}.png`)"
+                />
               </template>
               <template v-slot:item="{ item }">
-                <v-img class="weatherImg" :src="require(`@/assets/diary/weather/${item}.png`)"
-                  @click="weather = item" />
+                <v-img
+                  class="weatherImg"
+                  :src="require(`@/assets/diary/weather/${item}.png`)"
+                  @click="weather = item"
+                />
               </template>
             </v-select>
           </div>
         </div>
         <div>
-          <input v-if="uploadReady" ref="file" type="file" accept="image/gif,image/jpeg,image/jpg,image/png" hidden
-            @change="readFile($event)" />
+          <input
+            v-if="uploadReady"
+            ref="file"
+            type="file"
+            accept="image/gif,image/jpeg,image/jpg,image/png"
+            hidden
+            @change="readFile($event)"
+          />
           <v-btn icon small>
-            <v-icon color="blue lighten-3" @click="selectFile()" large> mdi-image-outline </v-icon>
+            <v-icon color="blue lighten-3" @click="selectFile()" large>
+              mdi-image-outline
+            </v-icon>
           </v-btn>
         </div>
       </div>
     </div>
-    <div class="diarymiddleImg" v-show="uploadImageSrc" :style="{
-      backgroundImage: 'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
-    }">
+    <div
+      class="diarymiddleImg"
+      v-show="uploadImageSrc"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+      }"
+    >
       <div class="selectImg">
         <img v-if="uploadImageSrc" :src="uploadImageSrc" />
-        <v-icon large color="grey darken-2" @click="cancelImage"> mdi-close </v-icon>
+        <v-icon large color="grey darken-2" @click="cancelImage">
+          mdi-close
+        </v-icon>
       </div>
     </div>
-    <div class="diarymiddle" :style="{
-      backgroundImage: 'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
-      fontFamily:`${font}`,
-    }">
+    <div
+      class="diarymiddle"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+        fontFamily: `${font}`,
+      }"
+    >
       <div class="textWriteDiv">
-        <textarea class="textWrite" ref="textarea" minlength="50" maxlength="500" v-model="diary" placeholder="일기를 써보자"
-          spellcheck="false" @input="autoResizeTextarea($event.target)"></textarea>
+        <textarea
+          class="textWrite"
+          ref="textarea"
+          minlength="50"
+          maxlength="500"
+          v-model="diary"
+          placeholder="일기를 써보자"
+          spellcheck="false"
+          @input="autoResizeTextarea($event.target)"
+        ></textarea>
       </div>
       <div class="textLength">
         <sup>(<span id="nowByte">0</span>/500text)</sup>
       </div>
     </div>
-    <div class="diarybottom" :style="{
-      backgroundImage: 'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
-    }">
-      <custom-button v-if="isEdit" class="customButton" btnText="수정완료" @click="writingCompletion" />
-      <custom-button v-else class="customButton" btnText="작성완료" @click="writingCompletion" />
+    <div
+      class="diarybottom"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
+      }"
+    >
+      <custom-button
+        v-if="isEdit"
+        class="customButton"
+        btnText="수정완료"
+        @click="writingCompletion"
+      />
+      <custom-button
+        v-else
+        class="customButton"
+        btnText="작성완료"
+        @click="writingCompletion"
+      />
     </div>
     <div class="microButton">
-      <button :class="[onRec? `onMike` : `offMike` ]" fab @click="onRec ? onRecAudio() : offRecAudio()">
+      <button
+        :class="[onRec ? `onMike` : `offMike`]"
+        fab
+        @click="onRec ? onRecAudio() : offRecAudio()"
+      >
         <v-icon v-if="onRec">mdi-microphone</v-icon>
         <v-icon large v-else>mdi-stop</v-icon>
       </button>
     </div>
-    <v-snackbar v-model="snackbar" :timeout="timeout" absolute centered rounded="xl" color="blue darken-1"
-      elevation="24">
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+      centered
+      rounded="xl"
+      color="blue darken-1"
+      elevation="24"
+    >
       {{ text }}
       <!-- <template v-slot:action="{ attrs }">
         <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
@@ -79,21 +150,36 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import eventBus from "./eventBus.js";
-import { diaryDetailView, diaryEdit, diaryWrite, sttWrite } from "@/api/diary.js";
+import {
+  diaryDetailView,
+  diaryEdit,
+  diaryWrite,
+  sttWrite,
+} from "@/api/diary.js";
 import { notification_check } from "@/store/modules/etcStore";
 import { HZRecorder } from "@/components/diarywrite/HZRecorder.js";
 import LodingView from "./LodingView.vue";
-import axios from 'axios';
-import store from "@/store/modules/userStore";
+import axios from "axios";
+// import store from "@/store/modules/userStore";
 
 export default {
   components: { LodingView },
   data: function () {
     return {
-      weatherImg: ["sunny", "overcast", "cloudy", "windy", "rain", "snow", "lightning", "mild"],
+      weatherImg: [
+        "sunny",
+        "overcast",
+        "cloudy",
+        "windy",
+        "rain",
+        "snow",
+        "lightning",
+        "mild",
+      ],
       uploadReady: true,
-      userId: "",
+      // userId: "",
       date: "",
       weather: "sunny",
       uploadImageSrc: "",
@@ -109,7 +195,7 @@ export default {
 
       // 스낵바
       snackbar: false,
-      text: '50자 이상 일기를 작성하세요.',
+      text: "50자 이상 일기를 작성하세요.",
       timeout: 2500,
 
       // 오디오 스트림
@@ -130,7 +216,11 @@ export default {
       lodingValue: "",
     };
   },
+  computed: {
+    ...mapState("userStore", ["accessToken", "userId"]),
+  },
   methods: {
+    ...mapActions("userStore", ["setIsInf"]),
     // ...mapActions("diaryStore", ["fetchDiary"]),
     onRecAudio() {
       this.lodingValue = "recording";
@@ -163,17 +253,19 @@ export default {
       form.append("file", mp3Blob);
 
       // 음성 전송
-      sttWrite(form).then((res) => {
-        this.isLoading = false;
-        console.log("전송된 음성입니다", res);
-        this.diary += res.text;
-        if (500 < this.diary.length)
-          this.diary = this.diary.substring(0, 500);
-        this.autoResizeTextarea(this.$refs.textarea);
-      }).catch((err) => {
-        this.isLoading = false;
-        console.log(err);
-      });
+      sttWrite(this.accessToken, form)
+        .then((res) => {
+          this.isLoading = false;
+          console.log("전송된 음성입니다", res);
+          this.diary += res.text;
+          if (500 < this.diary.length)
+            this.diary = this.diary.substring(0, 500);
+          this.autoResizeTextarea(this.$refs.textarea);
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          console.log(err);
+        });
       this.onRec = !this.onRec;
       // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
       this.stream.getAudioTracks().forEach(function (track) {
@@ -205,7 +297,7 @@ export default {
     },
     async isEditView() {
       if (this.$route.query.no !== undefined) {
-        await diaryDetailView(this.no).then((res) => {
+        await diaryDetailView(this.accessToken, this.no).then((res) => {
           console.log("수정눌러서 들어왔을 때 데이터", res);
           this.weather = res.weather;
           this.uploadImageSrc = res.diaryImg;
@@ -218,36 +310,40 @@ export default {
     },
     async writingCompletion() {
       if (this.diary.length < 50) {
-        console.log("글자수 : ", this.diary.length)
+        console.log("글자수 : ", this.diary.length);
         this.snackbar = true;
         return 0;
       }
       // 감정 분석
-      console.log("id", store.state.userId);
+      console.log("id", this.userId);
       const userDiary = {
-        user_id: store.state.userId,
+        user_id: this.userId,
         diary_content: this.diary,
-      }
+      };
 
       this.lodingValue = "predict";
       this.isLoading = true;
 
-      await axios.post(`${process.env.VUE_APP_EMOTION_API_URL}/predict/diary`, userDiary, {
-      }).then(async (res) => {
-        // console.log("감정분석 결과", res);
-        let statusCode = res.data.statusCode;
+      await axios
+        .post(
+          `${process.env.VUE_APP_EMOTION_API_URL}/predict/diary`,
+          userDiary,
+          {}
+        )
+        .then(async (res) => {
+          // console.log("감정분석 결과", res);
+          let statusCode = res.data.statusCode;
 
-        if (statusCode == 401) {
-          console.log("전송실패", res);
-          alert(res.data.message)
-        }
-        else {
-          this.emotion = res.data.emotion;
-          this.musicNo = res.data.music_no;
-          this.dataSend();
-        }
-        this.isLoading = false;
-      })
+          if (statusCode == 401) {
+            console.log("전송실패", res);
+            alert(res.data.message);
+          } else {
+            this.emotion = res.data.emotion;
+            this.musicNo = res.data.music_no;
+            this.dataSend();
+          }
+          this.isLoading = false;
+        });
     },
     async dataSend() {
       const diaryData = {
@@ -263,9 +359,12 @@ export default {
       form.append("multipartFile", this.imageFile);
       if (this.no === undefined) {
         // 일반 작성 create
-        form.append("diaryRequest", new Blob([JSON.stringify(diaryData)], { type: "application/json" }));
+        form.append(
+          "diaryRequest",
+          new Blob([JSON.stringify(diaryData)], { type: "application/json" })
+        );
 
-        await diaryWrite(form).then((res) => {
+        await diaryWrite(this.accessToken, form).then((res) => {
           this.isLoading = false;
           console.log("writing success", res);
           this.$router.push({
@@ -273,13 +372,16 @@ export default {
             params: { no: res.diaryNo },
           });
         });
-        this.isCheck = await notification_check();
-        this.$store.commit("IS_INF", this.isCheck.notificationFlag);
-      }
-      else {
+        this.isCheck = await notification_check(this.accessToken);
+        this.setIsInf(this.isCheck.notificationFlag);
+        // this.$store.commit("IS_INF", this.isCheck.notificationFlag);
+      } else {
         // 일기 수정 update
-        form.append("diaryUpdateRequest", new Blob([JSON.stringify(diaryData)], { type: "application/json" }));
-        await diaryEdit(this.no, form).then((res) => {
+        form.append(
+          "diaryUpdateRequest",
+          new Blob([JSON.stringify(diaryData)], { type: "application/json" })
+        );
+        await diaryEdit(this.accessToken, this.no, form).then((res) => {
           console.log("edit success", res);
           this.$router.push({
             name: "diarydetail",
@@ -291,7 +393,7 @@ export default {
     autoResizeTextarea(obj) {
       const text_len = this.diary.length; //입력한 문자수
 
-      obj.style.height = 'auto';
+      obj.style.height = "auto";
       let height = obj.scrollHeight; // 높이
       obj.style.height = `${height}px`;
 
@@ -302,21 +404,19 @@ export default {
         document.getElementById("nowByte").innerText = text_len;
         document.getElementById("nowByte").style.color = "blue";
       }
-    }
+    },
   },
   created() {
-    this.userId = store.state.userId;
+    // this.userId = store.state.userId;
     eventBus.$on("backImgChoice", (props) => {
       this.thema = props;
     });
     this.date = this.$route.params.date;
     this.no = this.$route.query.no;
-    this.font = "KyoboHandwriting2019"
+    this.font = "KyoboHandwriting2019";
     this.isEditView();
   },
 };
 </script>
 
-<style scoped src="@/styles/diary/DiaryStyle.css">
-
-</style>
+<style scoped src="@/styles/diary/DiaryStyle.css"></style>

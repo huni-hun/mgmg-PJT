@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CustomButton from "../common/CustomButton.vue";
 import Swal from "sweetalert2";
 // import { showInterestMusic } from "@/api/userApi.js";
@@ -85,9 +86,9 @@ export default {
       },
     };
   },
-  // mounted() {
-  //   this.setgenreLst2();
-  // },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     // setgenreLst2() {
     //   this.genreLst2 = [...this.genreLst1];
@@ -166,7 +167,7 @@ export default {
         musicTaste: this.musicTaste,
       };
 
-      await changeInterestMusic(request)
+      await changeInterestMusic(this.accessToken, request)
         .then((res) => {
           console.log(res);
           Swal.fire({

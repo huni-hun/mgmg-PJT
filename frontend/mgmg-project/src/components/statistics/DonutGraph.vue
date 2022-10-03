@@ -10,6 +10,7 @@
 </template>
 
 <script>
+  import { mapState } from "vuex";
 import Chart from "chart.js";
 import { statistics_percent } from "@/store/modules/etcStore";
 import moment from "moment";
@@ -70,6 +71,7 @@ export default {
     };
   },
   computed:{
+    ...mapState("userStore", ["accessToken"]),
     watchDate: function(){
       return [this.startDate, this.endDate]
     }
@@ -84,7 +86,7 @@ export default {
   methods: {
     async resetDonut() {
       var nullCheck = false
-      await statistics_percent({
+      await statistics_percent(this.accessToken,{
         startDate: this.startDate,
         endDate: this.endDate,
       })

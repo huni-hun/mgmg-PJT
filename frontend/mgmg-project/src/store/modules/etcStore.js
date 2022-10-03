@@ -1,57 +1,54 @@
-// import api_url from "@/api/index.js";
-// import axios from 'axios';
 import { API } from "@/store";
-import store from "@/store/modules/userStore";
 
-async function achieve_list() {
+async function achieve_list(accessToken) {
   const response = await API.get("/badge", {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function achieve_detail(bid) {
+async function achieve_detail(accessToken, bid) {
   const response = await API.get(`/badge/${bid}`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function achieve_get_list() {
+async function achieve_get_list(accessToken) {
   const response = await API.get(`/badge/achieve`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function statistics_day() {
+async function statistics_day(accessToken) {
   const response = await API.get(`/statistics/day`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function statistics_day_detail(day) {
+async function statistics_day_detail(accessToken, day) {
   const response = await API.get(`/statistics/day/${day}`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function statistics_percent(params) {
+async function statistics_percent(accessToken, params) {
   const response = await API.get(`/statistics/percent`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     params: {
       startDate: params.startDate,
@@ -61,11 +58,11 @@ async function statistics_percent(params) {
   return response.data;
 }
 
-async function notice_get(params) {
+async function notice_get(accessToken, params) {
   // 공지사항 조회
   const response = await API.get(`/notice`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     params: {
       page: params.page,
@@ -75,61 +72,61 @@ async function notice_get(params) {
   return response.data;
 }
 
-async function notice_post(request) {
+async function notice_post(accessToken, request) {
   // 공지사항 작성
   const response = await API.post(`/notice`, request, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function notice_detail_get(pid) {
+async function notice_detail_get(accessToken, pid) {
   // 공지사항 페이지 읽기
   const response = await API.get(`/notice/${pid}`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function notice_detail_put(pid, request) {
+async function notice_detail_put(accessToken, pid, request) {
   // 공지사항 수정
   const response = await API.put(`/notice/${pid}`, request, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function notice_detail_delete(pid) {
+async function notice_detail_delete(accessToken, pid) {
   // 공지사항 삭제
   const response = await API.delete(`/notice/${pid}`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function notification_list() {
+async function notification_list(accessToken) {
   // 알림 리스트
   const response = await API.get(`/notification`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;
 }
 
-async function notification_check() {
+async function notification_check(accessToken) {
   // 알림 체크 true & false
   const response = await API.get(`/notification/check`, {
     headers: {
-      Authorization: `Bearer ${store.state.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;

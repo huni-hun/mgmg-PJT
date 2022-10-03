@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { getInterestGift, deleteInterestGift } from "@/api/userApi.js";
 import Swal from "sweetalert2";
 
@@ -38,8 +39,11 @@ export default {
       giftLst: [],
     };
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   async created() {
-    await getInterestGift()
+    await getInterestGift(this.accessToken)
       .then((res) => {
         this.giftLst = res.gifts;
       })
@@ -52,7 +56,7 @@ export default {
       window.open(link);
     },
     async deleteGift(index, gift) {
-      await deleteInterestGift(gift.gift.giftNo)
+      await deleteInterestGift(this.accessToken, gift.gift.giftNo)
         .then((res) => {
           console.log(res);
           this.giftLst.splice(index, 1);

@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { notice_detail_put, notice_detail_get } from "@/store/modules/etcStore";
 export default {
   data() {
@@ -107,14 +108,20 @@ export default {
     };
   },
   async created() {
-    this.noticeData = await notice_detail_get(this.$route.params.pid);
+    this.noticeData = await notice_detail_get(
+      this.accessToken,
+      this.$route.params.pid
+    );
     this.title = this.noticeData.noticeTitle;
     this.content = this.noticeData.noticeContent;
     this.checkbox = this.noticeData.fixedFlag;
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     sendPost() {
-      notice_detail_put(this.$route.params.pid, {
+      notice_detail_put(this.accessToken, this.$route.params.pid, {
         noticeTitle: this.title,
         noticeContent: this.content,
         fixedFlag: this.checkbox,

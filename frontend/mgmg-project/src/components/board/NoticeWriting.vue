@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { notice_post } from "@/store/modules/etcStore";
 export default {
   data() {
@@ -109,9 +110,12 @@ export default {
       checkbox: true,
     };
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     sendPost() {
-      notice_post({
+      notice_post(this.accessToken, {
         noticeTitle: this.title,
         noticeContent: this.content,
         fixedFlag: this.checkbox,

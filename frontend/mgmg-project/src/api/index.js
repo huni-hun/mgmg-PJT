@@ -1,5 +1,4 @@
 import axios from "axios";
-// import store from "@/store/modules/userStore";
 
 const HOST = process.env.VUE_APP_API_URL + "/api";
 
@@ -16,7 +15,6 @@ function createApi() {
     baseURL: HOST,
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
-      // Authorization: "Bearer " + store.state.accessToken,
     },
   });
 }

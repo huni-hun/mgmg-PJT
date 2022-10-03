@@ -45,7 +45,7 @@ import PageNotFound from "../components/common/PageNotFound.vue";
 //컴포넌트 보는 용도 (추후 삭제예정)
 import SinupMusic from "../components/signup/MusicSurvey.vue";
 
-import store from "../store/modules/userStore";
+// import store from "../store/modules/userStore";
 
 Vue.use(VueRouter);
 
@@ -194,11 +194,14 @@ const router = new VueRouter({
 
 // 로우터 가드
 router.beforeEach((to, from, next) => {
-  const token = store.state.accessToken;
-  const admin = store.state.admin;
+  const storageData = JSON.parse(sessionStorage.getItem("vuex"));
 
   if (to.name === "noticewriting" || to.name === "noticeedit") {
-    if (token && admin) {
+    if (
+      storageData &&
+      storageData.userStore.accessToken &&
+      storageData.userStore.admin
+    ) {
       next();
     }
   } else if (
@@ -208,16 +211,16 @@ router.beforeEach((to, from, next) => {
     to.name === "findid" ||
     to.name === "findpw"
   ) {
-    if (token) {
+    if (storageData && storageData.userStore.accessToken) {
       next({ name: "main" });
     } else {
       next();
     }
   } else {
-    if (!token) {
-      next({ name: "landing" });
-    } else {
+    if (storageData && storageData.userStore.accessToken) {
       next();
+    } else {
+      next({ name: "landing" });
     }
   }
 });

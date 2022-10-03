@@ -4,15 +4,20 @@
       <span>이 날의 추천 선물</span>
     </div>
     <div v-if="!isClick" class="giftBoxDiv">
-      <img loading="lazy" alt="giftbox" src="@/assets/diary/giftbox.png" @click="giftView" />
+      <img
+        loading="lazy"
+        alt="giftbox"
+        src="@/assets/diary/giftbox.png"
+        @click="giftView"
+      />
     </div>
     <div class="gridDiv" v-else>
-      <v-img class="productImg" alt="선물 이미지" :src=giftImg />
-      <div class='v-line'></div>
+      <v-img class="productImg" alt="선물 이미지" :src="giftImg" />
+      <div class="v-line"></div>
       <div class="outFlexDiv">
         <div class="giftInfo">
-          <p>상품명: {{giftName}}</p>
-          <p>가 격: {{giftPrice}}원</p>
+          <p>상품명: {{ giftName }}</p>
+          <p>가 격: {{ giftPrice }}원</p>
           <p>
             <button @click="clickLink()">
               구매하러가기 <v-icon> mdi-open-in-new </v-icon>
@@ -20,7 +25,7 @@
           </p>
         </div>
         <label class="ridioButton">
-          <input type="checkbox" name="gift" v-model="interestGift">
+          <input type="checkbox" name="gift" v-model="interestGift" />
           <span class="btnText">관심 선물 추가</span>
         </label>
       </div>
@@ -29,6 +34,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { giftOpen, giftInterest, detailGift, cancleGift } from "@/api/diary.js";
 //detailGift
 export default {
@@ -45,21 +51,26 @@ export default {
       giftName: "",
       giftPrice: "",
       giftLink: "1",
-    }
+    };
+  },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
   },
   methods: {
     async giftView() {
       this.isClick = true;
-      await giftOpen(this.diaryNo).then((res) => {
-        console.log("gift success", res);
-        this.giftNo = res.giftNo;
-        this.giftImg = res.giftImg;
-        this.giftName = res.giftName;
-        this.giftPrice = res.giftPrice;
-        this.giftLink = res.giftUrl;
-      }).catch((error) => {
-        console.log("gift error", error);
-      })
+      await giftOpen(this.accessToken, this.diaryNo)
+        .then((res) => {
+          console.log("gift success", res);
+          this.giftNo = res.giftNo;
+          this.giftImg = res.giftImg;
+          this.giftName = res.giftName;
+          this.giftPrice = res.giftPrice;
+          this.giftLink = res.giftUrl;
+        })
+        .catch((error) => {
+          console.log("gift error", error);
+        });
     },
     clickLink() {
       window.open(this.giftLink);
@@ -71,33 +82,32 @@ export default {
 
     if (this.interestGift) {
       // console.log("none->관심 선물 추가")
-      await giftInterest(this.giftNo);
-    }
-    else {
+      await giftInterest(this.accessToken, this.giftNo);
+    } else {
       // console.log("관심 선물 추가 -> none")
-      await cancleGift(this.giftNo);
+      await cancleGift(this.accessToken, this.giftNo);
     }
   },
   async created() {
-    await detailGift(this.diaryNo).then((res) => {
-      console.log(res);
-      this.isClick = res.openGift;
-      if (this.isClick) {
-        this.interestGift = (res.checkGift === "good") ? true : false;
-        this.beforeGiftCheck = this.interestGift;
-        this.giftNo = res.gift.giftNo;
-        this.giftImg = res.gift.giftImg;
-        this.giftName = res.gift.giftName;
-        this.giftPrice = res.gift.giftPrice;
-        this.giftLink = res.gift.giftUrl;
-      }
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
+    await detailGift(this.accessToken, this.diaryNo)
+      .then((res) => {
+        console.log(res);
+        this.isClick = res.openGift;
+        if (this.isClick) {
+          this.interestGift = res.checkGift === "good" ? true : false;
+          this.beforeGiftCheck = this.interestGift;
+          this.giftNo = res.gift.giftNo;
+          this.giftImg = res.gift.giftImg;
+          this.giftName = res.gift.giftName;
+          this.giftPrice = res.gift.giftPrice;
+          this.giftLink = res.gift.giftUrl;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 </script>
 
-<style scoped src="@/styles/diary/GiftRecommend.css">
-
-</style>
+<style scoped src="@/styles/diary/GiftRecommend.css"></style>

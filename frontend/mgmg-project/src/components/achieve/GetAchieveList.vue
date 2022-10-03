@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import AchieveBadge from "./AchieveBadge.vue";
 import DumpBadge from "./DumpBadge.vue";
 import { achieve_get_list } from "@/store/modules/etcStore";
@@ -37,7 +38,7 @@ export default {
   },
   methods: {},
   async created() {
-    this.badges = await achieve_get_list();
+    this.badges = await achieve_get_list(this.accessToken);
     const badgeLen = this.badges.badges.length;
     // 1페이지만 생기는 경우
     if (badgeLen < 16) {
@@ -75,6 +76,7 @@ export default {
     console.log(this.badgeList);
   },
   computed: {
+    ...mapState("userStore", ["accessToken"]),
     badgesList() {
       return this.badgeList;
     },

@@ -1,14 +1,11 @@
 import { API } from "@/store";
-import store from "@/store/modules/userStore";
+// import store from "@/store/modules/userStore";
 
 const ACCOUNT = "/user";
 
 //아이디 중복 검사
 async function idDoubleCheck(params) {
   let response = await API.get(`${ACCOUNT}` + "/idcheck", {
-    headers: {
-      Authorization: "Bearer " + store.state.accessToken,
-    },
     params: {
       userId: params.userId,
     },
@@ -17,19 +14,12 @@ async function idDoubleCheck(params) {
 }
 //이메일 중복 검사
 async function emailDoubleCheck(request) {
-  let response = await API.post(`${ACCOUNT}` + "/email", request, {
-    headers: {
-      Authorization: "Bearer " + store.state.accessToken,
-    },
-  });
+  let response = await API.post(`${ACCOUNT}` + "/email", request);
   return response.data;
 }
 //이메일 인증번호 검사
 async function emailNumCheck(params) {
   let response = await API.get(`${ACCOUNT}` + "/emailcheck", {
-    headers: {
-      Authorization: "Bearer " + store.state.accessToken,
-    },
     params: {
       email: params.user_email,
       emailNum: params.user_emailNum,
@@ -39,56 +29,52 @@ async function emailNumCheck(params) {
 }
 //회원가입
 async function signUp(request) {
-  let response = await API.post(`${ACCOUNT}` + "/regist", request, {
-    headers: {
-      Authorization: "Bearer " + store.state.accessToken,
-    },
-  });
+  let response = await API.post(`${ACCOUNT}` + "/regist", request);
   return response.data;
 }
 
 //마이페이지 본인인증
-async function myCheck(request) {
+async function myCheck(accessToken, request) {
   let response = await API.post(`${ACCOUNT}` + "/pwcheck", request, {
     headers: {
       // "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //마이페이지 내 정보 확인
-async function showUserInfo() {
+async function showUserInfo(accessToken) {
   let response = await API.get(`${ACCOUNT}` + "/mypage", {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //마이페이지 회원 정보 수정
-async function editUserInfo(request) {
+async function editUserInfo(accessToken, request) {
   let response = await API.put(`${ACCOUNT}` + "/mypage", request, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //마이페이지 비밀번호 수정
-async function editPasswordInfo(request) {
+async function editPasswordInfo(accessToken, request) {
   let response = await API.put(`${ACCOUNT}` + "/mypage/password", request, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //마이페이지 회원 탈퇴
-async function deleteUser() {
+async function deleteUser(accessToken) {
   let response = await API.delete(`${ACCOUNT}` + "/mypage", {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
@@ -124,75 +110,75 @@ async function findpw(params) {
   return response.data;
 }
 //글꼴 수정
-async function changeFont(request) {
+async function changeFont(accessToken, request) {
   let response = await API.put(`${ACCOUNT}` + "/mypage/diaryfont", request, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //선물 취향 조회 - 목록조회
-async function showInterestGift() {
+async function showInterestGift(accessToken) {
   let response = await API.get(`${ACCOUNT}` + "/mypage/gift", {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //음악 취향 변경 - 마이페이지
-async function changeInterestMusic(request) {
+async function changeInterestMusic(accessToken, request) {
   let response = await API.put(`${ACCOUNT}` + "/mypage/musicchange", request, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //선물 취향 변경 - 마이페이지
-async function changeInterestGift(request) {
+async function changeInterestGift(accessToken, request) {
   let response = await API.put(`${ACCOUNT}` + "/mypage/giftchange", request, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //관심 음악 삭제 - 목록조회
-async function deleteInterestMusic(musicNo) {
+async function deleteInterestMusic(accessToken, musicNo) {
   let response = await API.delete("/interest/music", {
     data: { musicNo: musicNo },
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //관심 음악 조회 - 목록조회
-async function getInterestMusic() {
+async function getInterestMusic(accessToken) {
   let response = await API.get("/interest/music", {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //관심 선물 삭제 - 목록조회
-async function deleteInterestGift(giftNo) {
+async function deleteInterestGift(accessToken, giftNo) {
   let response = await API.delete("/interest/gift", {
     data: { giftNo: giftNo },
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 //관심 선물 조회 - 목록조회
-async function getInterestGift() {
+async function getInterestGift(accessToken) {
   let response = await API.get("/interest/gift", {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;

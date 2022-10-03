@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import { mapState } from "vuex";
 import Chart from "chart.js";
 
 import {
@@ -57,7 +58,7 @@ export default {
     };
   },
   async created() {
-    this.dayData = await statistics_day();
+    this.dayData = await statistics_day(this.accessToken);
     this.statistics = this.dayData.statistics;
     this.chartData.datasets = [
       {
@@ -300,7 +301,7 @@ export default {
           day = "Sun";
           break;
       }
-      let result = await statistics_day_detail(day);
+      let result = await statistics_day_detail(this.accessToken, day);
       const element = document.getElementById("check");
       element.innerHTML =
       label + "요일에는 " + result.statistics + " 감정이 가장 많아요!";
@@ -308,6 +309,7 @@ export default {
     },
   },
   computed:{
+    ...mapState("userStore", ["accessToken"]),
     x(){
       return this.realw * 0.8
     },

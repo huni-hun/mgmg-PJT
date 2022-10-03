@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar v-if="istoken" color="rgba(243, 245, 254, .1)">
+    <v-app-bar v-if="accessToken" color="rgba(243, 245, 254, .1)">
       <router-link class="logo" to="/main">
         <img class="logo" :src="img" alt="" />
       </router-link>
@@ -16,7 +16,9 @@
         <router-link class="desk-nav-bar" to="/achieve">나의업적</router-link>
       </p>
       <p>
-        <router-link class="desk-nav-bar" to="/statistics">감정통계</router-link>
+        <router-link class="desk-nav-bar" to="/statistics"
+          >감정통계</router-link
+        >
       </p>
       <p>
         <router-link class="desk-nav-bar" to="/notice">공지사항</router-link>
@@ -35,7 +37,9 @@
         </template>
         <v-list>
           <v-list-item v-for="(inf, index) in infList" :key="index">
-            <v-list-item-title> {{ inf.notificationContent }} | {{ inf.notificationDate }} </v-list-item-title>
+            <v-list-item-title>
+              {{ inf.notificationContent }} | {{ inf.notificationDate }}
+            </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -43,7 +47,9 @@
       <v-menu class="desk-nav-bar" offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-app-bar-nav-icon class="desk-nav-bar" v-bind="attrs" v-on="on"
-            ><h5 class="user-name" v-bind="attrs" v-on="on">{{ isUserName }}님</h5>
+            ><h5 class="user-name" v-bind="attrs" v-on="on">
+              {{ userName }}님
+            </h5>
             <v-icon large>mdi-menu-down</v-icon></v-app-bar-nav-icon
           >
           <!-- <v-btn color="primary" dark v-bind="attrs" v-on="on"> Dropdown </v-btn> -->
@@ -60,7 +66,11 @@
       <!-- 모바일 메뉴바 -->
       <v-menu class="mobile-nav-bar" offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-app-bar-nav-icon class="mobile-nav-bar" v-bind="attrs" v-on="on"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon
+            class="mobile-nav-bar"
+            v-bind="attrs"
+            v-on="on"
+          ></v-app-bar-nav-icon>
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in moLtems" :key="index">
@@ -88,8 +98,13 @@
 </template>
 
 <script>
-import store from "@/store/modules/userStore";
-import { notification_list, notification_check } from "@/store/modules/etcStore";
+import { mapState, mapActions } from "vuex";
+// import store from "@/store/modules/userStore";
+import {
+  notification_list,
+  notification_check,
+} from "@/store/modules/etcStore";
+
 export default {
   name: "CustomHeader",
 
@@ -112,26 +127,31 @@ export default {
     infList: [],
     img: require("@/assets/emoticon/calm.png"),
     isCheck: Boolean, //  <- 체크 알림 변수
-    userName: "손님",
+    // userName: "손님",
+    isLogin: false,
   }),
   methods: {
+    ...mapActions("userStore", ["setIsInf"]),
     async inf_list() {
-      this.notification = await notification_list();
+      this.notification = await notification_list(this.accessToken);
       this.infList = this.notification.notifications;
       if (!this.infList.length) {
-        this.infList.push({ notificationContent: "알림이 없습니다.", notificationDate: "20xx-xx-xx" });
+        this.infList.push({
+          notificationContent: "알림이 없습니다.",
+          notificationDate: "20xx-xx-xx",
+        });
       }
-      this.$store.commit("IS_INF", false);
+      this.setIsInf(false);
     },
     async logout() {
       this.$cookies.set("autoLoginCookie", "");
       this.$cookies.set("userIdCookie", "");
-      this.$store.state.userStore.accessToken = "";
+      sessionStorage.clear();
     },
     async checkNotification() {
       // 체크 확인 변수
-      this.isCheck = await notification_check();
-      this.$store.commit("IS_INF", this.isCheck.notificationFlag);
+      this.isCheck = await notification_check(this.accessToken);
+      this.setIsInf(this.isCheck.notificationFlag);
     },
     menusMetod(menulink) {
       if (menulink == "/login") {
@@ -142,15 +162,7 @@ export default {
     },
   },
   computed: {
-    istoken() {
-      return store.state.accessToken;
-    },
-    isInf() {
-      return store.state.isInf;
-    },
-    isUserName() {
-      return store.state.userName;
-    },
+    ...mapState("userStore", ["accessToken", "isInf", "userName"]),
   },
   comments: {},
 };

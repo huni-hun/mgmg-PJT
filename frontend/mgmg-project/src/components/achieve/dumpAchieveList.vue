@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import AchieveBadge from "./AchieveBadge.vue";
 import { achieve_get_list } from "@/store/modules/etcStore";
 
@@ -40,22 +41,29 @@ export default {
         // 0 이 아니면,(좌측)
         this.badgeStart -= 15;
         this.badgeEnd -= 15;
-        this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
+        this.badgeList = this.badges.badges.slice(
+          this.badgeStart,
+          this.badgeEnd
+        );
       }
     },
     turnRight() {
       if (this.badgeEnd < this.badgeList.length) {
         this.badgeStart += 15;
         this.badgeEnd += 15;
-        this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
+        this.badgeList = this.badges.badges.slice(
+          this.badgeStart,
+          this.badgeEnd
+        );
       }
     },
   },
   async created() {
-    this.badges = await achieve_get_list();
+    this.badges = await achieve_get_list(this.accessToken);
     this.badgeList = this.badges.badges.slice(this.badgeStart, this.badgeEnd);
   },
   computed: {
+    ...mapState("userStore", ["accessToken"]),
     badgesList() {
       return this.badgeList;
     },

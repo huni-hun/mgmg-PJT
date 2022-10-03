@@ -9,36 +9,72 @@
         <v-row>
           <v-col class="leftAlign">
             <!-- <div @click="beforeMonth()" class="leftAlign">이전달</div> -->
-            <v-icon @click="beforeMonth()" class="leftAlign">mdi-menu-left</v-icon>
+            <v-icon @click="beforeMonth()" class="leftAlign"
+              >mdi-menu-left</v-icon
+            >
           </v-col>
           <v-col class="centerYearMonth">
             <!-- <v-container> -->
             <!-- <v-row class="yearMonth"> -->
-            <input class="inputLabel" type="number" id="showYear" name="showYear" :value="showYear"
-              @input="getInputYearMonth()" />
+            <input
+              class="inputLabel"
+              type="number"
+              id="showYear"
+              name="showYear"
+              :value="showYear"
+              @input="getInputYearMonth()"
+            />
             <div class="inputDotLabel">.</div>
-            <input class="inputLabel" type="number" id="showMonth" name="showMonth" :value="showMonth"
-              @input="getInputYearMonth()" />
+            <input
+              class="inputLabel"
+              type="number"
+              id="showMonth"
+              name="showMonth"
+              :value="showMonth"
+              @input="getInputYearMonth()"
+            />
             <!-- </v-row> -->
             <!-- </v-container> -->
           </v-col>
           <v-col class="rightAlign">
             <!-- <div @click="afterMonth()" class="rightAlign">다음달</div> -->
-            <v-icon @click="afterMonth()" class="rightAlign">mdi-menu-right</v-icon>
+            <v-icon @click="afterMonth()" class="rightAlign"
+              >mdi-menu-right</v-icon
+            >
           </v-col>
         </v-row>
         <v-row class="dateTable">
-          <div v-for="day in days" :key="day.idx" class="dayContainer" @click="updateEmotionLst()">
+          <div
+            v-for="day in days"
+            :key="day.idx"
+            class="dayContainer"
+            @click="updateEmotionLst()"
+          >
             <v-col>
               <div class="dayName">{{ day.dayName }}</div>
             </v-col>
           </div>
         </v-row>
-        <v-row class="dateTable" v-for="(week, index1) in monthLst" :key="index1">
-          <div v-for="(week0, index2) in week" :key="index2" class="dayContainer">
+        <v-row
+          class="dateTable"
+          v-for="(week, index1) in monthLst"
+          :key="index1"
+        >
+          <div
+            v-for="(week0, index2) in week"
+            :key="index2"
+            class="dayContainer"
+          >
             <v-col>
-              <emotionImage v-if="week0 != 0" :showYear="showYear" :showMonth="showMonth" :dateNum="week0"
-                :emotionImg="emotionsLst[index1][index2]" :diaryNumber="diaryNum[index1][index2]" name="emotionImg" />
+              <emotionImage
+                v-if="week0 != 0"
+                :showYear="showYear"
+                :showMonth="showMonth"
+                :dateNum="week0"
+                :emotionImg="emotionsLst[index1][index2]"
+                :diaryNumber="diaryNum[index1][index2]"
+                name="emotionImg"
+              />
             </v-col>
           </div>
         </v-row>
@@ -48,6 +84,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { monthlyDiaryList } from "@/api/diary.js";
 import EmotionImage from "@/components/common/CustomCalendarImage.vue";
 
@@ -125,6 +162,9 @@ export default {
       height: 0,
     };
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   mounted() {
     this.setTodayYearMonth();
   },
@@ -157,7 +197,7 @@ export default {
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
       ];
-      let response = await monthlyDiaryList(monthInput);
+      let response = await monthlyDiaryList(this.accessToken, monthInput);
 
       var diaryDirectionLst = [];
 
@@ -381,11 +421,17 @@ export default {
     },
     backSize() {
       let box = this.$refs.backYellow;
-      box.style.width = 'auto';
-      box.style.height = 'auto';
-      box.style.width = `${(this.$refs.calendar.scrollWidth) * (100 / document.documentElement.clientWidth)}vw`;
-      box.style.height = `${(this.$refs.calendar.scrollHeight) * (100 / document.documentElement.clientHeight)}vh`;
-    }
+      box.style.width = "auto";
+      box.style.height = "auto";
+      box.style.width = `${
+        this.$refs.calendar.scrollWidth *
+        (100 / document.documentElement.clientWidth)
+      }vw`;
+      box.style.height = `${
+        this.$refs.calendar.scrollHeight *
+        (100 / document.documentElement.clientHeight)
+      }vh`;
+    },
   },
 };
 </script>
@@ -398,8 +444,8 @@ export default {
   z-index: 1;
 }
 
-.backBox>div {
-  background-color: #E5D7CA;
+.backBox > div {
+  background-color: #e5d7ca;
   transform: rotate(2.5deg);
 }
 

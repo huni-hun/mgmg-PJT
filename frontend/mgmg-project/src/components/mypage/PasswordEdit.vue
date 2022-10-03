@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import { editPasswordInfo } from "@/api/userApi.js";
 
@@ -106,6 +107,9 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     async userPasswordEdit() {
       console.log(this.userPw);
@@ -115,7 +119,7 @@ export default {
         const request = {
           newPassword: new_password,
         };
-        await editPasswordInfo(request)
+        await editPasswordInfo(this.accessToken, request)
           .then((res) => {
             console.log(res);
             Swal.fire({

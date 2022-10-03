@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import AchieveBadge from "./AchieveBadge.vue";
 import DumpBadge from "./DumpBadge.vue";
 import { achieve_list } from "@/store/modules/etcStore";
@@ -37,7 +38,7 @@ export default {
   },
   methods: {},
   async created() {
-    this.badges = await achieve_list();
+    this.badges = await achieve_list(this.accessToken);
     this.badgeList1 = this.badges.badges.slice(0, 15);
     this.badgeList2 = this.badges.badges.slice(15, 30);
     this.badgeList3 = this.badges.badges.slice(30, this.badges.badges.length);
@@ -49,6 +50,7 @@ export default {
     }
   },
   computed: {
+    ...mapState("userStore", ["accessToken"]),
     badgesList() {
       return this.badgeList;
     },

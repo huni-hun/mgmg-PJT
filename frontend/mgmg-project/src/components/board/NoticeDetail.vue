@@ -49,7 +49,7 @@
           ></router-link
         >
       </v-col>
-      <v-col v-if="isAdmin" style="display: flex; width: 30%; float: right">
+      <v-col v-if="admin" style="display: flex; width: 30%; float: right">
         <v-btn @click="emendNotice"> 수정 </v-btn>
         <v-btn @click="delNotice"> 삭제</v-btn>
       </v-col>
@@ -58,11 +58,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import {
   notice_detail_get,
   notice_detail_delete,
 } from "@/store/modules/etcStore";
-import store from "@/store/modules/userStore";
+// import store from "@/store/modules/userStore";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default {
@@ -73,16 +74,22 @@ export default {
     noticeDate: String,
     noticeData: Object,
     fixedFlag: false,
-    isAdmin: store.state.admin,
+    // isAdmin: store.state.admin,
   }),
   async created() {
-    this.noticeData = await notice_detail_get(this.$route.params.pid);
+    this.noticeData = await notice_detail_get(
+      this.accessToken,
+      this.$route.params.pid
+    );
     console.log(this.noticeData);
     this.noticeNo = this.noticeData.noticeNo;
     this.noticeTitle = this.noticeData.noticeTitle;
     this.noticeContent = this.noticeData.noticeContent;
     this.noticeDate = this.noticeData.noticeDate;
     this.fixedFlag = this.noticeData.fixedFlag;
+  },
+  computed: {
+    ...mapState("userStore", ["accessToken", "admin"]),
   },
   methods: {
     delNotice() {
@@ -98,14 +105,16 @@ export default {
         confirmButtonText: "삭제",
       }).then((result) => {
         if (result.isConfirmed) {
-          notice_detail_delete(this.$route.params.pid).then(() => {
-            this.$router.replace("/notice");
-            Swal.fire(
-              "삭제 성공",
-              "공지사항 게시글이 성공적으로 삭제되었습니다.",
-              "success"
-            );
-          });
+          notice_detail_delete(this.accessToken, this.$route.params.pid).then(
+            () => {
+              this.$router.replace("/notice");
+              Swal.fire(
+                "삭제 성공",
+                "공지사항 게시글이 성공적으로 삭제되었습니다.",
+                "success"
+              );
+            }
+          );
         }
       });
     },

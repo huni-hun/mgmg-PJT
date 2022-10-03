@@ -1,67 +1,67 @@
 //import axios from "axios";
 import { API } from "@/store";
-import store from "@/store/modules/userStore";
+// import store from "@/store/modules/userStore";
 
 const DIARY = "/diary";
 
-async function diaryWrite(userData) {
+async function diaryWrite(accessToken, userData) {
   let response = await API.post(`${DIARY}`, userData, {
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function monthlyDiaryList(pid) {
+async function monthlyDiaryList(accessToken, pid) {
   let response = await API.get(`${DIARY}/month/${pid}`, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function diaryDetailView(pid) {
+async function diaryDetailView(accessToken, pid) {
   let response = await API.get(`${DIARY}/detail/${pid}`, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function diaryEdit(pid, userData) {
+async function diaryEdit(accessToken, pid, userData) {
   let response = await API.put(`${DIARY}/${pid}`, userData, {
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
   return response.data;
 }
 
-async function diaryDelete(pid) {
+async function diaryDelete(accessToken, pid) {
   let response = await API.delete(`${DIARY}/${pid}`, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function musicInterest(pid) {
+async function musicInterest(accessToken, pid) {
   let response = await API.post(
     `${DIARY}/interestmusic/${pid}`,
     {},
     {
       headers: {
-        Authorization: "Bearer " + store.state.accessToken,
+        Authorization: "Bearer " + accessToken,
       },
     }
   );
@@ -69,13 +69,13 @@ async function musicInterest(pid) {
   return response.data;
 }
 
-async function musicBad(pid) {
+async function musicBad(accessToken, pid) {
   let response = await API.post(
     `${DIARY}/badmusic/${pid}`,
     {},
     {
       headers: {
-        Authorization: "Bearer " + store.state.accessToken,
+        Authorization: "Bearer " + accessToken,
       },
     }
   );
@@ -83,13 +83,13 @@ async function musicBad(pid) {
   return response.data;
 }
 
-async function giftInterest(pid) {
+async function giftInterest(accessToken, pid) {
   let response = await API.post(
     `${DIARY}/interestgift/${pid}`,
     {},
     {
       headers: {
-        Authorization: "Bearer " + store.state.accessToken,
+        Authorization: "Bearer " + accessToken,
       },
     }
   );
@@ -97,73 +97,73 @@ async function giftInterest(pid) {
   return response.data;
 }
 
-async function giftOpen(pid) {
+async function giftOpen(accessToken, pid) {
   let response = await API.get(`${DIARY}/gift/${pid}`, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function detailMusic(pid) {
+async function detailMusic(accessToken, pid) {
   let response = await API.get(`${DIARY}/detail/${pid}/music`, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function detailGift(pid) {
+async function detailGift(accessToken, pid) {
   let response = await API.get(`${DIARY}/detail/${pid}/gift`, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function cancleGift(no) {
+async function cancleGift(accessToken, no) {
   let response = await API.delete(`interest/gift`, {
     data: { giftNo: no },
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function cancleGoodMusic(no) {
+async function cancleGoodMusic(accessToken, no) {
   let response = await API.delete(`interest/music`, {
     data: { musicNo: no },
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function cancleBadMusic(pid) {
+async function cancleBadMusic(accessToken, pid) {
   let response = await API.delete(`${DIARY}/badmusic/${pid}`, {
     headers: {
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 
   return response.data;
 }
 
-async function sttWrite(formData) {
+async function sttWrite(accessToken, formData) {
   let response = await API.post(`${DIARY}/speech`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + store.state.accessToken,
+      Authorization: "Bearer " + accessToken,
     },
   });
 

@@ -2,7 +2,11 @@
   <div>
     <v-img :src="require('@/assets/achieve/attaionmodal.png')">
       <v-card class="badge-card">
-        <img class="badge" :src="require(`@/assets/badge/a${badge.badgeNo}.png`)" alt="" />
+        <img
+          class="badge"
+          :src="require(`@/assets/badge/a${badge.badgeNo}.png`)"
+          alt=""
+        />
         <v-card-text class="badge-text">
           <p class="badge-name">{{ badge.badgeName }}</p>
           <p class="badge-content">{{ badgeDetail.badgeContent }}</p>
@@ -18,19 +22,26 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { achieve_detail } from "@/store/modules/etcStore";
 export default {
   name: "AchieveBadge",
   props: { badge: Object },
 
   data: () => ({ dialog: false, badgeDetail: Object }),
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     setDialog() {
       this.$emit("set-dialog");
     },
   },
   async created() {
-    this.badgeDetail = await achieve_detail(this.badge.badgeNo);
+    this.badgeDetail = await achieve_detail(
+      this.accessToken,
+      this.badge.badgeNo
+    );
   },
 };
 </script>

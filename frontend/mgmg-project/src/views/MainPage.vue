@@ -2,17 +2,28 @@
   <v-container>
     <div class="mainpageBody">
       <div>
-        <label class="mainpageTitle">" 날짜를 클릭해서 일기를 써보세요! "</label>
+        <label class="mainpageTitle"
+          >" 날짜를 클릭해서 일기를 써보세요! "</label
+        >
       </div>
       <Calendar class="mainpageCalendar" />
     </div>
-    <v-btn class="iconDisplay" fab dark large color="indigo darken-1" v-if="todayDiary" @click="diaryWrite">
+    <v-btn
+      class="iconDisplay"
+      fab
+      dark
+      large
+      color="indigo darken-1"
+      v-if="todayDiary"
+      @click="diaryWrite"
+    >
       <v-icon class="pencilIcon"> mdi-pencil</v-icon>
     </v-btn>
   </v-container>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { monthlyDiaryList } from "@/api/diary.js";
 import Calendar from "@/components/common/CustomCalendar.vue";
 export default {
@@ -27,6 +38,9 @@ export default {
   mounted() {
     this.todayDiaryCheck();
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     diaryWrite() {
       var now = new Date();
@@ -36,7 +50,9 @@ export default {
       //일기작성
       this.$router.push({
         name: "diarywriting",
-        params: { date: this.changeDateFormat(todayYear, todayMonth, todayDate) },
+        params: {
+          date: this.changeDateFormat(todayYear, todayMonth, todayDate),
+        },
       });
     },
     async monthlyDiaryList(monthInput) {
@@ -46,7 +62,7 @@ export default {
       var todayDate = now.getDate();
       var dateNum = this.changeDateFormat(todayYear, todayMonth, todayDate);
 
-      let response = await monthlyDiaryList(monthInput);
+      let response = await monthlyDiaryList(this.accessToken, monthInput);
       if (response.statusCode == 200) {
         this.diaryLst = response.diaries;
         console.log(response);

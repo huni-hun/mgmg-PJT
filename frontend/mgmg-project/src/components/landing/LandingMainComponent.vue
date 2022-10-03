@@ -35,8 +35,36 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { autoLogin } from "@/api/userApi.js";
+
 export default {
+  mounted() {
+    this.autoLogin();
+  },
   methods: {
+    ...mapActions("userStore", ["setUserInfoAuto"]),
+    async autoLogin() {
+      if (this.$cookies.isKey("autoLoginCookie")) {
+        var refreshToken = this.$cookies.get("autoLoginCookie");
+        var userId = this.$cookies.get("userIdCookie");
+
+        const request = {
+          refreshToken: refreshToken,
+          userId: userId,
+        };
+
+        await autoLogin(request).then((res) => {
+          this.loginAuto(res);
+          this.$router.push("/main");
+        });
+      }
+    },
+    loginAuto(response) {
+      this.setUserInfoAuto(response);
+      this.$cookies.set("autoLoginCookie", response.refreshToken);
+      this.$cookies.set("userIdCookie", response.userId);
+    },
     pageLink(to) {
       if (to == "login") this.$router.push({ path: "login" });
       else this.$router.push({ path: "signup" });

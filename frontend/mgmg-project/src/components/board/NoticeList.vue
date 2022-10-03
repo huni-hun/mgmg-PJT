@@ -11,7 +11,11 @@
             to="/notice/writing"
             style="text-decoration-line: none; float: right; padding-top: 8px"
           >
-            <v-btn class="white--text" style="background-color: #51516e">
+            <v-btn
+              v-if="admin"
+              class="white--text"
+              style="background-color: #51516e"
+            >
               글쓰기
             </v-btn>
           </router-link>
@@ -98,8 +102,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { notice_get } from "@/store/modules/etcStore";
-import store from "@/store/modules/userStore";
+// import store from "@/store/modules/userStore";
 
 export default {
   name: "NoticePage",
@@ -112,9 +117,12 @@ export default {
       dataList: [],
       tatalPage: 0,
       data: Object,
-      isAdmin: store.state.admin,
+      // isAdmin: store.state.admin,
       currentPage: 1,
     };
+  },
+  computed: {
+    ...mapState("userStore", ["accessToken", "admin"]),
   },
   methods: {
     openDetails(val) {
@@ -126,7 +134,7 @@ export default {
     },
 
     async getPage(pid) {
-      this.data = await notice_get({
+      this.data = await notice_get(this.accessToken, {
         page: pid,
       });
       this.dataList = this.data.page;
@@ -140,7 +148,7 @@ export default {
     },
 
     async getKeywordPage(pid, keyword) {
-      this.data = await notice_get({
+      this.data = await notice_get(this.accessToken, {
         page: pid,
         keyword: keyword,
       });
@@ -177,7 +185,7 @@ export default {
 
     async goSearch(pid) {
       console.log(`====실행=== :pid ${pid}`);
-      this.data = await notice_get({
+      this.data = await notice_get(this.accessToken, {
         page: pid,
         keyword: this.search,
       });
