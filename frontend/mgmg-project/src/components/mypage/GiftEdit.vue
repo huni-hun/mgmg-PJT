@@ -85,7 +85,7 @@
     </div>
 
     <div class="giftEditButtonLine">
-      <CustomButton btnText="확인" @click="mypageGiftEdit" />
+      <CustomButton class="giftButton" btnText="확인" @click="mypageGiftEdit" />
     </div>
   </div>
 </template>
@@ -105,18 +105,6 @@ export default {
 
       giftLst: ["패션의류", "패션잡화", "화장품/미용", "디지털/가전", "가구/인테리어", "출산/육아", "식품", "스포츠/레저", "생활/건강", "여가/생활편의"],
       selectedGift: ["패션의류"],
-      // this.$store.state.userStore.interestGiftLstSignup,
-
-      // priceUnder: {
-      //   labelText: "하한가",
-      //   rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
-      //   id: "priceUnder",
-      // },
-      // priceUpper: {
-      //   labelText: "상한가",
-      //   rules: [(v) => /[^0-9.]/.test(v) || "숫자를 입력하세요."],
-      //   id: "priceUpper",
-      // },
     };
   },
   computed: {
@@ -218,6 +206,8 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
 .gift5list {
   width: 100%;
@@ -231,6 +221,10 @@ export default {
   flex-direction: row;
   justify-content: center;
   margin-top: 3%;
+  width: 100%;
+}
+.giftButton {
+  width: 50%;
 }
 .giftEditTitle {
   padding: 0 5% 2% 5%;

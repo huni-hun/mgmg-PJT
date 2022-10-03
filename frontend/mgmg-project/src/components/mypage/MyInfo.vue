@@ -72,26 +72,9 @@ export default {
     this.userId = response.userId;
     this.userName = response.userName;
   },
-  // getUserInfo() {
-  //   axios
-  //     .get(api_url.accounts.mypage_show_edit_delete(), {
-  //       headers: {
-  //         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-  //         Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-  //       },
-  //     })
-  //     .get((response) => {
-  //       console.log(response.data);
-  //       this.userBirth = response.data.birth;
-  //       this.userEmail = response.data.email;
-  //       this.userGender = response.data.gender;
-  //       this.userId = response.data.userId;
-  //       this.userName = response.data.name;
-  //     });
-  // },
   methods: {
     gotoInfoEdit() {
-      this.$router.push("/my/infoedit");
+      this.$router.push("/mypage/infoedit");
     },
   },
 };
@@ -100,10 +83,13 @@ export default {
 <style scoped>
 .myInfoTotalBody {
   width: 100%;
+  margin-top: 5vh;
   padding: 7% 10%;
   display: flex;
   flex-direction: column;
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
 
 .titleLabel {
@@ -120,10 +106,10 @@ export default {
   margin-bottom: 2%;
 }
 .myInfoBodyLabel {
-  width: 20%;
+  width: 25%;
 }
 .myInfoBodyContent {
-  width: 80%;
+  width: 75%;
 }
 .myInfoButtonLine {
   width: 100%;
@@ -136,7 +122,7 @@ export default {
 }
 
 .hrStyle {
-  border: 0.01rem solid #000000;
+  width: 100%;
 }
 
 .inputStyle:deep(fieldset) {
@@ -144,5 +130,17 @@ export default {
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
   padding: 0;
+}
+
+@media (max-width: 639px) {
+  .myInfoBodyLabel {
+    width: 30%;
+  }
+  .myInfoBodyContent {
+    width: 70%;
+  }
+  .myInfoTotalBody {
+    margin-top: 0;
+  }
 }
 </style>

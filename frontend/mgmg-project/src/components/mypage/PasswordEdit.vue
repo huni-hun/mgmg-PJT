@@ -132,7 +132,7 @@ export default {
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
             });
-            this.$router.push("/my/myinfo");
+            this.$router.push("/mypage/myinfo");
           })
           .catch((err) => {
             console.log(err);
@@ -145,37 +145,6 @@ export default {
           });
       }
     },
-    // userPasswordEdit() {
-    //   console.log(this.pwValidation, this.pwCheckValidation, this.userPw);
-    //   if (this.pwValidation && this.pwCheckValidation) {
-    //     axios
-    //       .put(api_url.accounts.password_edit(), {
-    //         headers: {
-    //           //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-    //           Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-    //         }, //@@@@@@@@@@@@@@@@@@ 기존 pw는 왜 받지?
-    //         newPassword: this.userPw,
-    //       })
-    //       .then((response) => {
-    //         console.log(response);
-    //         Swal.fire({
-    //           text: "비밀번호가 정상적으로 변경되었습니다.",
-    //           icon: "success",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //         });
-    //       });
-    //   } else {
-    //     Swal.fire({
-    //       text: "입력한 정보를 다시 확인해주세요.",
-    //       icon: "warning",
-    //       // iconColor: "#000000",
-    //       confirmButtonColor: "#666666",
-    //       confirmButtonText: "확인",
-    //     });
-    //   }
-    // },
   },
 };
 </script>
@@ -183,10 +152,13 @@ export default {
 <style scoped>
 .passwordEditTotalBody {
   width: 100%;
+  margin-top: 5vh;
   padding: 7% 10%;
   display: flex;
   flex-direction: column;
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
 
 .titleLabel {
@@ -233,6 +205,21 @@ export default {
   padding: 0;
 }
 .hrStyle {
-  border: 0.01rem solid #000000;
+  width: 100%;
+}
+@media (max-width: 639px) {
+  .passwordEditBodyLabel {
+    width: 100%;
+  }
+  .passwordEditBodyContent {
+    width: 100%;
+  }
+  .passwordEditLine {
+    display: flex;
+    flex-direction: column;
+  }
+  .passwordEditTotalBody {
+    margin-top: 0;
+  }
 }
 </style>

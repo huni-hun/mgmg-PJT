@@ -6,7 +6,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
-  background-image: url("@/assets/background.png");
+  /* 배경화면 변경해주세요 */
+  background-image: url("@/assets/landing/landing_topBackground.png");
+  /* background-image: url("@/assets/landing/landing_nightsky.png"); */
+  /* background-color: #ffe9f1; */
   background-size: cover;
 }
 

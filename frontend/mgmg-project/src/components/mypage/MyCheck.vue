@@ -1,42 +1,50 @@
 <template>
-  <v-container>
-    <v-row>
+  <div class="myCheckBody">
+    <div class="titleLabel">
       <label for="" @click="test">본인 인증</label>
-    </v-row>
-    <v-row>
+    </div>
+
+    <div>
       <hr class="hrStyle" />
-    </v-row>
-    <v-row>
-      <label for="">비밀번호 재확인</label>
-    </v-row>
-    <v-row>
-      <label for="">회원 정보 보호를 위해 비밀번호를 다시 확인합니다.</label>
-    </v-row>
-    <v-row>
+    </div>
+
+    <div class="myCheckMiddle">
+      <div class="myCheckMiddleTitle">
+        <label for="">비밀번호 재확인</label>
+      </div>
+
+      <div>
+        <label for="">회원 정보 보호를 위해 비밀번호를 다시 확인합니다.</label>
+      </div>
+    </div>
+
+    <div>
       <hr class="hrStyle" />
-    </v-row>
-    <v-row>
-      <v-col>
+    </div>
+
+    <div class="myCheckInputLine">
+      <div class="myCheckPwLabel">
         <label for="">비밀번호</label>
-        <div class="inputStyle">
-          <v-text-field
-            :rules="[pwMyCheckRequired]"
-            :type="'password'"
-            label="비밀번호를 입력하세요."
-            name="input-10-2"
-            hint="비밀번호를 입력하세요."
-            value=""
-            single-line
-            outlined
-            id="pwMyCheckInput"
-          ></v-text-field>
-        </div>
-      </v-col>
-    </v-row>
-    <v-row>
-      <CustomButton btnText="확인" @click="myCheck" />
-    </v-row>
-  </v-container>
+      </div>
+
+      <div class="inputStyle myCheckPwInput">
+        <v-text-field
+          :rules="[pwMyCheckRequired]"
+          :type="'password'"
+          label="비밀번호를 입력하세요."
+          name="input-10-2"
+          hint="비밀번호를 입력하세요."
+          value=""
+          single-line
+          outlined
+          id="pwMyCheckInput"
+        ></v-text-field>
+      </div>
+    </div>
+    <div class="myCheckButtonLine">
+      <CustomButton class="myCheckButton" btnText="확인" @click="myCheck" />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -66,7 +74,7 @@ export default {
       await myCheck(this.accessToken, request)
         .then((res) => {
           console.log(res);
-          this.$router.push("/my/myinfo");
+          this.$router.push("/mypage/myinfo");
         })
         .catch((err) => {
           console.log(err);
@@ -87,14 +95,99 @@ export default {
 </script>
 
 <style scoped>
+.myCheckBody {
+  width: 70%;
+  margin-right: 15%;
+  margin-left: 15%;
+  margin-top: 5vh;
+  padding: 4% 8%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
+}
+.titleLabel {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  margin: 3% 0% 0.5% 0%;
+}
+.myCheckMiddle {
+  margin: 10%;
+}
+.myCheckMiddleTitle {
+  margin-bottom: 3%;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.myCheckInputLine {
+  margin-top: 3%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+.myCheckPwLabel {
+  width: 30%;
+  padding-left: 10%;
+}
+.myCheckPwInput {
+  width: 70%;
+  padding: 0 10%;
+}
+
+.myCheckButtonLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 3%;
+}
+.myCheckButton {
+  width: 30%;
+}
+
 .hrStyle {
-  border: 0.01rem solid #000000;
-  width: 80rem;
+  width: 100%;
 }
 .inputStyle:deep(fieldset) {
   /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
   padding: 0;
+}
+
+@media (max-width: 1199px) {
+  .myCheckBody {
+    width: 90%;
+    margin-right: 0%;
+    margin-left: 0%;
+  }
+}
+@media (max-width: 991px) {
+  .myCheckBody {
+    width: 100%;
+  }
+}
+@media (max-width: 639px) {
+  .myCheckBody {
+    width: 100%;
+  }
+  .myCheckMiddle {
+    margin: 10% 0;
+  }
+  .myCheckPwLabel {
+    width: 100%;
+    padding-left: 0%;
+    margin: 2% 0;
+  }
+  .myCheckPwInput {
+    width: 100%;
+    padding: 0;
+  }
+  .myCheckInputLine {
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 }
 </style>

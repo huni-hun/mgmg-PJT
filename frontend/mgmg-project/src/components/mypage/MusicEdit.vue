@@ -171,7 +171,6 @@ export default {
         Swal.fire({
           text: "감정별로 음악 장르를 1개 이상 선택해야 합니다.",
           icon: "warning",
-          // iconColor: "#000000",
           confirmButtonColor: "#666666",
           confirmButtonText: "확인",
         });
@@ -206,7 +205,6 @@ export default {
         Swal.fire({
           text: "감정별로 음악 장르를 1개 이상 선택해야 합니다.",
           icon: "warning",
-          // iconColor: "#000000",
           confirmButtonColor: "#666666",
           confirmButtonText: "확인",
         });
@@ -244,7 +242,7 @@ export default {
             confirmButtonText: "확인",
           });
 
-          this.$router.push("/my/myinfo");
+          this.$router.push("/mypage/myinfo");
         })
         .catch((err) => {
           console.log(err);
@@ -262,29 +260,6 @@ export default {
 </script>
 
 <style scoped>
-/* .hrStyle {
-  border: 0.01rem solid #000000;
-  width: 80rem;
-}
-.musicLstBox {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
-}
-.selected {
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
-}
-.genreCheckLst {
-  width: 20%;
-}
-.emoticonImg {
-  width: 50%;
-}
-.genreCheckBox {
-  margin: 0;
-} */
 .musicEditBody {
   width: 100%;
   padding: 5% 0 5% 0;
@@ -292,6 +267,8 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
 .musicEditTitle {
   padding: 0 5% 2% 5%;

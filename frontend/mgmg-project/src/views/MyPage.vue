@@ -8,37 +8,37 @@
         </div>
         <hr class="hrStyle" />
 
-        <router-link class="bannerLabelDecoration" to="/my/myinfo">
+        <router-link class="bannerLabelDecoration" to="/mypage/myinfo">
           <div class="bannerMenuLabel"><label for="">내 정보 확인</label></div>
         </router-link>
         <hr class="hrStyle" />
 
-        <!-- <router-link class="bannerLabelDecoration" to="/my/infoedit">
+        <!-- <router-link class="bannerLabelDecoration" to="/mypage/infoedit">
           <div class="bannerMenuLabel"><label for="">회원 정보 변경</label></div>
         </router-link>
         <hr class="hrStyle" /> -->
 
-        <router-link class="bannerLabelDecoration" to="/my/passwordedit">
+        <router-link class="bannerLabelDecoration" to="/mypage/passwordedit">
           <div class="bannerMenuLabel"><label for="">비밀번호 수정</label></div>
         </router-link>
         <hr class="hrStyle" />
 
-        <router-link class="bannerLabelDecoration" to="/my/musicedit">
+        <router-link class="bannerLabelDecoration" to="/mypage/musicedit">
           <div class="bannerMenuLabel"><label for="">음악 장르 변경</label></div>
         </router-link>
         <hr class="hrStyle" />
 
-        <router-link class="bannerLabelDecoration" to="/my/giftedit">
+        <router-link class="bannerLabelDecoration" to="/mypage/giftedit">
           <div class="bannerMenuLabel"><label for="">선물 종류 변경</label></div>
         </router-link>
         <hr class="hrStyle" />
 
-        <router-link class="bannerLabelDecoration" to="/my/fontedit">
+        <router-link class="bannerLabelDecoration" to="/mypage/fontedit">
           <div class="bannerMenuLabel"><label for="">글꼴 변경</label></div>
         </router-link>
         <hr class="hrStyle" />
 
-        <router-link class="bannerLabelDecoration" to="/my/userdelete">
+        <router-link class="bannerLabelDecoration" to="/mypage/userdelete">
           <div class="bannerMenuLabel"><label for="">회원 탈퇴</label></div>
         </router-link>
         <hr class="hrStyle" />
@@ -47,38 +47,42 @@
       <!-- 모바일화면 -->
       <div class="phoneView">
         <div class="banner">
-          <div class="bannerMenuList">
-            <router-link class="bannerLabelDecoration" to="/my/myinfo">
+          <div class="bannerMenuList menuBorderRight menuBorderBottom menuBorderTop">
+            <router-link class="bannerLabelDecoration" to="/mypage/myinfo">
               <div class="bannerMenuLabel"><label for="">내 정보 확인</label></div>
             </router-link>
           </div>
-          <!-- <router-link class="bannerLabelDecoration" to="/my/infoedit">
-          <div class="bannerMenuLabel"><label for="">회원 정보 변경</label></div>
-        </router-link>
-        <hr class="hrStyle" /> -->
 
-          <div class="bannerMenuList">
-            <router-link class="bannerLabelDecoration" to="/my/passwordedit">
-              <div class="bannerMenuLabel"><label for="">비밀번호 수정</label></div>
-            </router-link>
-          </div>
-          <div class="bannerMenuList">
-            <router-link class="bannerLabelDecoration" to="/my/musicedit">
+          <div class="bannerMenuList menuBorderRight menuBorderBottom menuBorderTop">
+            <router-link class="bannerLabelDecoration" to="/mypage/musicedit">
               <div class="bannerMenuLabel"><label for="">음악 장르 변경</label></div>
             </router-link>
           </div>
-          <div class="bannerMenuList">
-            <router-link class="bannerLabelDecoration" to="/my/giftedit">
-              <div class="bannerMenuLabel"><label for="">선물 종류 변경</label></div>
-            </router-link>
-          </div>
-          <div class="bannerMenuList">
-            <router-link class="bannerLabelDecoration" to="/my/fontedit">
+
+          <div class="bannerMenuList menuBorderBottom menuBorderTop">
+            <router-link class="bannerLabelDecoration" to="/mypage/fontedit">
               <div class="bannerMenuLabel"><label for="">글꼴 변경</label></div>
             </router-link>
           </div>
-          <div class="bannerMenuList">
-            <router-link class="bannerLabelDecoration" to="/my/userdelete">
+          <!-- <router-link class="bannerLabelDecoration" to="/mypage/infoedit">
+          <div class="bannerMenuLabel"><label for="">회원 정보 변경</label></div>
+          </router-link>
+          <hr class="hrStyle" /> -->
+
+          <div class="bannerMenuList menuBorderRight menuBorderBottom">
+            <router-link class="bannerLabelDecoration" to="/mypage/passwordedit">
+              <div class="bannerMenuLabel"><label for="">비밀번호 수정</label></div>
+            </router-link>
+          </div>
+
+          <div class="bannerMenuList menuBorderRight menuBorderBottom">
+            <router-link class="bannerLabelDecoration" to="/mypage/giftedit">
+              <div class="bannerMenuLabel"><label for="">선물 종류 변경</label></div>
+            </router-link>
+          </div>
+
+          <div class="bannerMenuList menuBorderBottom">
+            <router-link class="bannerLabelDecoration" to="/mypage/userdelete">
               <div class="bannerMenuLabel"><label for="">회원 탈퇴</label></div>
             </router-link>
           </div>
@@ -133,17 +137,21 @@ export default {
   padding: 1% 5% 1% 1%;
 }
 .bannerTitleLabel {
+  color: white;
   font-size: clamp(1.2rem, 2.5vw, 1.7rem);
   margin: 5% 0;
   padding-left: 5%;
 }
 .bannerMenuLabel {
-  margin: 3% 0;
+  margin: 5% 0;
   padding-left: 5%;
+  width: 100%;
+  color: white;
 }
 .bannerLabelDecoration {
   color: black;
   text-decoration: none;
+  width: 100%;
 }
 
 .mypageView {
@@ -152,7 +160,6 @@ export default {
 }
 
 .hrStyle {
-  border: 0.01rem solid #000000;
   width: 100%;
 }
 .menuLstBox {
@@ -163,9 +170,30 @@ export default {
 }
 
 /* 모바일에만 보이는 클래스 */
+.banner {
+  margin-bottom: 8%;
+  margin-right: -6%;
+  margin-left: -6%;
+  margin-top: -6%;
+}
 .bannerMenuList {
   width: 33%;
+  height: 6vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+.menuBorderRight {
+  border-right: 1px solid #ffffff;
+}
+.menuBorderTop {
+  border-top: 1px solid #ffffff;
+}
+.menuBorderBottom {
+  border-bottom: 1px solid #ffffff;
+}
+
 .phoneView {
   display: none;
 }
@@ -199,6 +227,11 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+  }
+  .bannerMenuLabel {
+    margin: 0;
+    padding-left: 0;
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
   }
 }
 </style>

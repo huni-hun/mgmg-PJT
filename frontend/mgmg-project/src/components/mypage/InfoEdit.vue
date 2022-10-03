@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import { showUserInfo } from "@/api/userApi.js";
 import { editUserInfo } from "@/api/userApi.js";
 import Swal from "sweetalert2";
@@ -101,37 +100,7 @@ export default {
         id: "nameInfoEditInput",
         input: "",
       },
-      // 이메일 커스텀 인풋
-      // emailInfoEditInput: {
-      //   labelText: "이메일을 입력하세요.",
-      //   rules: [(v) => !!v || "이메일은 필수값입니다.", (v) => this.emailValidationCheck(v) || "이메일 형식을 확인해주세요."],
-      //   hint: "이메일을 입력하세요.",
-      //   id: "emailInfoEditInput",
-      //   input: "",
-      // },
     };
-  },
-  // async created() {
-  //   let response = await showUserInfo();
-  //   console.log(response);
-  //   this.date = response.birth;
-  //   this.userBirth = response.birth;
-  //   this.userEmail = response.email;
-  //   this.userGender = response.gender;
-  //   this.userId = response.userId;
-  //   this.userName = response.userName;
-  // },
-  // mounted: {
-  //   defGenderNum() {
-  //     if (this.userGender == "여자") {
-  //       this.userGenderNum = 2;
-  //     } else if (this.userGender == "남자") {
-  //       this.userGenderNum = 1;
-  //     }
-  //   },
-  // },
-  computed: {
-    ...mapState("userStore", ["accessToken"]),
   },
   mounted() {
     // this.test();
@@ -223,7 +192,7 @@ export default {
           gender: user_gender,
         };
 
-        await editUserInfo(this.accessToken, request)
+        await editUserInfo(request)
           .then((res) => {
             console.log(res);
             Swal.fire({
@@ -233,7 +202,7 @@ export default {
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
             });
-            this.$router.push("/my/infoEdit");
+            this.$router.push("/mypage/myinfo");
           })
           .catch((err) => {
             console.log(err);
@@ -246,52 +215,6 @@ export default {
           });
       }
     },
-    // // 버튼 누르면, 이름 이메일 값 확인해서 axios 실행
-    // userInfoEdit() {
-    //   if (this.nameValidation && this.emailValidation) {
-    //     console.log("valid");
-    //     console.log(this.userName, this.userEmail, this.date, this.userGender);
-    //     axios
-    //       .put(api_url.accounts.mypage_show_edit_delete(), {
-    //         headers: {
-    //           //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-    //           Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-    //         },
-    //         email: this.userEmail,
-    //         birth: this.date,
-    //         name: this.userName,
-    //         gender: this.userGender,
-    //       })
-    //       .then((response) => {
-    //         console.log(response);
-    //         Swal.fire({
-    //           text: "회원 정보가 정상적으로 변경되었습니다.",
-    //           icon: "success",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //         });
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //         Swal.fire({
-    //           text: "회원 정보 변경에 실패했습니다.",
-    //           icon: "warning",
-    //           // iconColor: "#000000",
-    //           confirmButtonColor: "#666666",
-    //           confirmButtonText: "확인",
-    //         });
-    //       });
-    //   } else {
-    //     Swal.fire({
-    //       text: "입력한 정보를 다시 확인해주세요.",
-    //       icon: "warning",
-    //       // iconColor: "#000000",
-    //       confirmButtonColor: "#666666",
-    //       confirmButtonText: "확인",
-    //     });
-    //   }
-    // },
   },
 };
 </script>
@@ -299,10 +222,13 @@ export default {
 <style scoped>
 .infoEditTotalBody {
   width: 100%;
+  margin-top: 3vh;
   padding: 7% 10%;
   display: flex;
   flex-direction: column;
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
 
 .titleLabel {
@@ -354,5 +280,10 @@ export default {
 .selectedGender {
   background-color: rgb(189, 181, 199);
   color: white;
+}
+@media (max-width: 639px) {
+  .infoEditTotalBody {
+    margin-top: 0;
+  }
 }
 </style>

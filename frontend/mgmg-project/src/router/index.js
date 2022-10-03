@@ -10,6 +10,7 @@ import Login from "../components/login/LogIn.vue";
 import FindId from "../components/login/IdFind.vue";
 import FindPw from "../components/login/PasswordFind.vue";
 import SignupPage from "../views/SignupPage.vue";
+import MyPageFirst from "../views/MyPageFirst.vue";
 import MyPage from "../views/MyPage.vue"; // 부모
 import MyCheck from "../components/mypage/MyCheck.vue";
 import MyInfo from "../components/mypage/MyInfo.vue";
@@ -45,7 +46,7 @@ import PageNotFound from "../components/common/PageNotFound.vue";
 //컴포넌트 보는 용도 (추후 삭제예정)
 import SinupMusic from "../components/signup/MusicSurvey.vue";
 
-// import store from "../store/modules/userStore";
+import store from "../store/modules/userStore";
 
 Vue.use(VueRouter);
 
@@ -75,8 +76,9 @@ const routes = [
     name: "signup",
     component: SignupPage,
   },
+  { path: "/my", name: "mypagecheck", component: MyPageFirst },
   {
-    path: "/my",
+    path: "/mypage",
     // name: "my",
     component: MyPage,
     children: [
@@ -194,33 +196,24 @@ const router = new VueRouter({
 
 // 로우터 가드
 router.beforeEach((to, from, next) => {
-  const storageData = JSON.parse(sessionStorage.getItem("vuex"));
+  const token = store.state.accessToken;
+  const admin = store.state.admin;
 
   if (to.name === "noticewriting" || to.name === "noticeedit") {
-    if (
-      storageData &&
-      storageData.userStore.accessToken &&
-      storageData.userStore.admin
-    ) {
+    if (token && admin) {
       next();
     }
-  } else if (
-    to.name === "landing" ||
-    to.name === "login" ||
-    to.name === "signup" ||
-    to.name === "findid" ||
-    to.name === "findpw"
-  ) {
-    if (storageData && storageData.userStore.accessToken) {
+  } else if (to.name === "landing" || to.name === "login" || to.name === "signup" || to.name === "findid" || to.name === "findpw") {
+    if (token) {
       next({ name: "main" });
     } else {
       next();
     }
   } else {
-    if (storageData && storageData.userStore.accessToken) {
-      next();
-    } else {
+    if (!token) {
       next({ name: "landing" });
+    } else {
+      next();
     }
   }
 });

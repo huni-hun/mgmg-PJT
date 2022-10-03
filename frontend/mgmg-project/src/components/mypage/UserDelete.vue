@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import { deleteUser } from "@/api/userApi.js";
 
@@ -31,7 +30,7 @@ export default {
   methods: {
     async userDelete() {
       console.log("회원탈퇴");
-      await deleteUser(this.accessToken)
+      await deleteUser()
         .then((res) => {
           console.log(res);
           this.$cookies.remove("autoLoginCookie");
@@ -57,48 +56,19 @@ export default {
         });
     },
   },
-  computed: {
-    ...mapState("userStore", ["accessToken"]),
-  },
-  // userDelete() {
-  //   axios
-  //     .delete(api_url.accounts.mypage_show_edit_delete(), {
-  //       headers: {
-  //         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 헤더에 토큰
-  //         Authorization: `Bearer ${this.$store.state.userStore.accessToken}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //       Swal.fire({
-  //         text: "정상적으로 탈퇴 처리 되었습니다.",
-  //         icon: "success",
-  //         // iconColor: "#000000",
-  //         confirmButtonColor: "#666666",
-  //         confirmButtonText: "확인",
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       Swal.fire({
-  //         text: "데이터 전송에 실패했습니다.",
-  //         icon: "warning",
-  //         // iconColor: "#000000",
-  //         confirmButtonColor: "#666666",
-  //         confirmButtonText: "확인",
-  //       });
-  //     });
-  // },
 };
 </script>
 
 <style scoped>
 .userDeleteTotalBody {
   width: 100%;
+  margin-top: 10vh;
   padding: 7% 10%;
   display: flex;
   flex-direction: column;
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
 .userDeleteTitle {
   width: 100%;
