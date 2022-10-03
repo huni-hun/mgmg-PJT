@@ -35,6 +35,7 @@ export default {
           console.log(res);
           this.$cookies.remove("autoLoginCookie");
           this.$cookies.remove("userIdCookie");
+          this.$store.state.userStore.accessToken = "";
 
           Swal.fire({
             text: "회원 탈퇴가 정상적으로 처리되었습니다.",
@@ -43,7 +44,7 @@ export default {
             confirmButtonColor: "#666666",
             confirmButtonText: "확인",
           });
-          this.$router.push("/main");
+          this.$router.push("/login");
         })
         .catch((err) => {
           console.log(err);
