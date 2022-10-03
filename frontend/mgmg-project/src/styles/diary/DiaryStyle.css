@@ -7,10 +7,25 @@
   justify-content: center;
 }
 
-.diaryTop {
+.diaryWriteTop {
   background-size: 100% 100%;
   height: 100%;
   flex-basis: 12vh;
+}
+
+.diaryDetailTop {
+  background-size: 100% 100%;
+  height: 100%;
+  font-size: clamp(0.8rem, 5vw, 2rem);
+}
+
+.topOutDiv {
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  align-items: end;
 }
 
 .flexTop {
@@ -28,19 +43,23 @@
   margin: 0 auto;
   display: flex;
   align-items: flex-end;
-  font-size: clamp(0.8rem, 2vw, 1.7rem);
+  font-size: clamp(0.7rem, 2vw, 1.7rem);
 }
 
 .weatherDiv {
   margin-left: 2vw;
   display: flex;
-  align-items: center;
   align-items: flex-end;
+}
+
+.weatherDetailDiv {
+  display: flex;
+  align-items: baseline;
 }
 
 .selectWeather {
   max-width: 100px;
-  font-size: clamp(0.8rem, 2vw, 1.7rem);
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
 }
 
 .v-select {
@@ -49,12 +68,45 @@
 }
 
 .weatherImg {
+  margin-left: 10px;
+  min-width: 20px;
   width: 3vw;
   max-width: 40px;
 }
 
+.box {
+  height: 22vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.box > img {
+  width: 80%;
+  max-width: 200px;
+}
+
+.textGrid {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(50px, auto));
+}
+
 .diarymiddle {
   flex-basis: 45vh;
+  position: relative;
+  background-repeat: repeat-y;
+  background-size: contain;
+}
+
+.diaryDitailmiddle {
+  flex-basis: 40vh;
+  position: relative;
+  background-repeat: repeat-y;
+  background-size: contain;
+}
+
+.diarymiddleImg {
+  flex-basis: 43vh;
   position: relative;
   background-repeat: repeat-y;
   background-size: contain;
@@ -96,7 +148,7 @@
   min-height: 100%;
   border: none;
   resize: none;
-  font-size: clamp(1.2rem, 3vw, 2.5rem);
+  font-size: clamp(1.2rem, 2.6vw, 2.5rem);
   line-height: 1.5;
   -ms-overflow-style: none;
 }
@@ -121,6 +173,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn_image {
+  width: 40%;
 }
 
 .diarybottom > .customButton {
@@ -154,20 +210,6 @@
   background-color: rgb(236, 72, 72);
 }
 
-.loading {
-  z-index: 2;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
-}
-
-.loading > * {
-  z-index: 2;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 9999px;
-}
-
 @media (max-width: 1199px) {
   .microButton {
     position: fixed;
@@ -178,6 +220,12 @@
   }
   .diarymiddle {
     flex-basis: 45.2vh;
+    position: relative;
+    background-repeat: repeat-y;
+    background-size: contain;
+  }
+  .diarymiddleImg {
+    flex-basis: 40vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
@@ -201,6 +249,12 @@
     background-repeat: repeat-y;
     background-size: contain;
   }
+  .diarymiddleImg {
+    flex-basis: 35vh;
+    position: relative;
+    background-repeat: repeat-y;
+    background-size: contain;
+  }
 }
 
 @media (max-width: 767px) {
@@ -220,6 +274,12 @@
     background-repeat: repeat-y;
     background-size: contain;
   }
+  .diarymiddleImg {
+    flex-basis: 30vh;
+    position: relative;
+    background-repeat: repeat-y;
+    background-size: contain;
+  }
 }
 
 @media (max-width: 575px) {
@@ -234,6 +294,12 @@
   }
   .diarymiddle {
     flex-basis: 46vh;
+    position: relative;
+    background-repeat: repeat-y;
+    background-size: contain;
+  }
+  .diarymiddleImg {
+    flex-basis: 27vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
