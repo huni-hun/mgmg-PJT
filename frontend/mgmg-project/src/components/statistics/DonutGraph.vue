@@ -109,7 +109,6 @@ export default {
       }
       this.dater = this.periodData.statistics;
       // 데이터 리셋
-      console.log(this.dater)
       this.chartData.labels = [];
       this.chartData.datasets[0].backgroundColor = [];
       this.chartData.datasets[0].data = [];

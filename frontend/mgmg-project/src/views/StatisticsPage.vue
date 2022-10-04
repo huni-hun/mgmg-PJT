@@ -32,7 +32,6 @@ export default {
   },
   computed: {
     btn1() {
-      console.log(this.toggle_exclusive);
       return this.colors[this.toggle_exclusive];
     },
     btn2() {

@@ -41,7 +41,6 @@ export default {
     const badgeLen = this.badges.badges.length;
     // 1페이지만 생기는 경우
     if (badgeLen < 16) {
-      console.log("1페이지만 생기는 경우");
       this.badgeList1 = this.badges.badges.slice(0, badgeLen);
 
       for (var i = badgeLen; i < 15; i++) {
@@ -50,7 +49,6 @@ export default {
       this.badgeList.push(this.badgeList1);
       // 2페이지 생기는 경우
     } else if (badgeLen < 31 && 15 < badgeLen) {
-      console.log("2페이지만 생기는 경우");
       this.badgeList1 = this.badges.badges.slice(0, 15);
       this.badgeList2 = this.badges.badges.slice(15, badgeLen);
 
@@ -61,7 +59,6 @@ export default {
       this.badgeList.push(this.badgeList2);
       // 3페이지 생기는 경우
     } else if (badgeLen < 45 && 30 < badgeLen) {
-      console.log("3페이지만 생기는 경우");
       this.badgeList1 = this.badges.badges.slice(0, 15);
       this.badgeList2 = this.badges.badges.slice(15, 30);
       this.badgeList3 = this.badges.badges.slice(30, badgeLen);
