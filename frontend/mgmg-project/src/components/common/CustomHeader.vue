@@ -67,28 +67,7 @@
           <v-app-bar-nav-icon class="mobile-nav-bar" v-bind="attrs" v-on="on" />
         </template>
         <v-list>
-          <v-list-item v-for="(inf, index) in infList" :key="index">
-            <v-list-item-title v-if="inf.notificationDate == ''">
-              {{ inf.notificationContent }}
-            </v-list-item-title>
-            <v-list-item-title v-else @click="clickAlarm()">
-              {{ inf.notificationContent }} | {{ inf.notificationDate }}
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-
-      <v-menu class="desk-nav-bar user-nav" offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-app-bar-nav-icon class="desk-nav-bar" v-bind="attrs" v-on="on">
-            <div class="user-name" v-bind="attrs" v-on="on">
-              {{ userName }}님
-            </div>
-            <v-icon large>mdi-menu-down</v-icon>
-          </v-app-bar-nav-icon>
-        </template>
-        <v-list>
-          <v-list-item v-for="(item, index) in items" :key="index">
+          <v-list-item v-for="(item, index) in moLtems" :key="index">
             <v-list-item-title @click="menusMetod(item.link)">
               {{ item.title }}
             </v-list-item-title>
@@ -96,6 +75,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
+
     <v-app-bar v-else color="rgba(243, 245, 254, .1)">
       <div class="appBar">
         <div class="webLogo">
@@ -109,6 +89,7 @@
     </v-app-bar>
   </div>
 </template>
+
 
 <script>
 import { mapState, mapActions } from "vuex";
