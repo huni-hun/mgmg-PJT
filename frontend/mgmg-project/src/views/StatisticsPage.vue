@@ -3,7 +3,7 @@
     <v-container class="justify-center">
       <v-row>
         <v-spacer></v-spacer>
-        <v-btn-toggle class="btns" background-color="#FFF" v-model="toggle_exclusive" rounded>
+        <v-btn-toggle class="btns" background-color="#FFF" rounded>
           <v-btn @click="getPeriod" :color="btn1"> 기간별 통계 </v-btn>
           <v-btn @click="getDays" :color="btn2"> 요일별 통계 </v-btn>
         </v-btn-toggle>
@@ -24,9 +24,11 @@ export default {
   }),
   methods: {
     getPeriod() {
+      this.toggle_exclusive = 0;
       this.$router.push({ path: "/statistics" });
     },
     getDays() {
+      this.toggle_exclusive = 1;
       this.$router.push({ path: "/statistics/day" });
     },
   },
