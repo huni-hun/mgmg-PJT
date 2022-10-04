@@ -1,4 +1,4 @@
-const CACHE_NAME = "version-1";
+const CACHE_NAME = "version-2";
 
 // cache 목록 (자신이 캐싱할 목록을 설정합니다.)
 const urlsToCache = [
@@ -16,6 +16,13 @@ const urlsToCache = [
   "/img/icons/apple-touch-icon-120x120.png",
   "/img/icons/apple-touch-icon-152x152.png",
   "/img/icons/apple-touch-icon-180x180.png",
+  "../src/styles/App.css",
+  "../src/styles/diary/BackgroundChoice.css",
+  "../src/styles/diary/DiaryStyle.css",
+  "../src/styles/diary/DiaryWritingPage.css",
+  "../src/styles/diary/GiftRecommend.css",
+  "../src/styles/diary/LodingView.css",
+  "../src/styles/diary/MusicRecommend.css",
 ];
 
 // cache 목록 등록 및 install 시 cache 목록이 다운
