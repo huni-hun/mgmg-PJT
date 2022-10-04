@@ -1,4 +1,6 @@
 const CACHE_NAME = "version-2";
+const EX_CACHE_NAME1 = "version-1";
+// const EX_CACHE_NAME2 = "version-2";
 
 // cache 목록 (자신이 캐싱할 목록을 설정합니다.)
 const urlsToCache = [
@@ -53,12 +55,23 @@ self.addEventListener("activate", function (event) {
   cacheWhitelist.push(CACHE_NAME);
   event.waitUntil(
     caches.keys().then((cacheNames) => {
+      // return Promise.all(
+      //   cacheNames
+      //     .filter((key) => {
+      //       return key === EX_CACHE_NAME1 || key === EX_CACHE_NAME2;
+      //     })
+      //     .map((key) => {
+      //       return caches.delete(key);
+      //     })
+      // );
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName);
-          }
-        })
+        cacheNames
+          .filter((key) => {
+            return key === EX_CACHE_NAME1;
+          })
+          .map((key) => {
+            return caches.delete(key);
+          })
       );
     })
   );
