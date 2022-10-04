@@ -1,14 +1,21 @@
 <template>
   <div>
-    <v-img v-if="isMobile" :src="require('@/assets/achieve/mobilenoattaionmodal.png')">
+    <v-img
+      v-if="isMobile"
+      :src="require('@/assets/achieve/mobilenoattaionmodal.png')"
+    >
       <v-card class="mobile-badge-card">
-        <img class="mobile-badge" :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)" alt="" />
+        <img
+          class="mobile-badge"
+          :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)"
+          alt=""
+        />
         <v-card-text class="mobile-badge-text">
           <p class="mobile-badge-name">{{ badge.badgeName }}</p>
           <p class="mobile-badge-content">{{ badgeDetail.badgeContent }}</p>
           <div class="mobile-card-date">
-            {{ badgeDetail.badgeCodition }}<br />
-            {{ badgeDetail.achievedBadgeDate }}
+            획득조건<br />
+            {{ badgeDetail.badgeCodition }}
           </div>
         </v-card-text>
         <v-btn class="mobile-badge-btn" @click="setDialog"> 확인 </v-btn>
@@ -17,13 +24,17 @@
     <!-- pc -->
     <v-img v-else :src="require('@/assets/achieve/noattaionmodal.png')">
       <v-card class="badge-card">
-        <img class="badge" :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)" alt="" />
+        <img
+          class="badge"
+          :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)"
+          alt=""
+        />
         <v-card-text class="badge-text">
           <p class="badge-name">{{ badge.badgeName }}</p>
           <p class="badge-content">{{ badgeDetail.badgeContent }}</p>
           <div class="card-date">
-            {{ badgeDetail.badgeCodition }}<br />
-            {{ badgeDetail.achievedBadgeDate }}
+            획득조건<br />
+            {{ badgeDetail.badgeCodition }}
           </div>
         </v-card-text>
         <v-btn class="badge-btn" @click="setDialog"> 확인 </v-btn>
@@ -49,7 +60,10 @@ export default {
     ...mapState("userStore", ["accessToken"]),
   },
   async created() {
-    this.badgeDetail = await achieve_detail(this.accessToken, this.badge.badgeNo);
+    this.badgeDetail = await achieve_detail(
+      this.accessToken,
+      this.badge.badgeNo
+    );
   },
 };
 </script>
@@ -93,7 +107,7 @@ export default {
 
 .card-date {
   background-color: rgb(241, 244, 255);
-  width: 40%;
+  width: 60%;
   padding: 0.5rem;
   margin: auto;
   border-radius: 12px;
