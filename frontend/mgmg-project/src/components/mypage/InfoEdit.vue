@@ -33,19 +33,14 @@
       <div class="infoEditLine">
         <div class="infoEditBodyLabel"><label for="">생년월일</label></div>
         <div class="infoEditBodyContent">
-          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
+          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
+            offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
+              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly
+                v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
             </template>
-            <v-date-picker
-              :weekday-format="getDay"
-              :month-format="getMonth"
-              :title-date-format="getMonth"
-              :header-date-format="getHeaderTitleMonth"
-              v-model="date"
-              no-title
-              @input="menu2 = false"
-            ></v-date-picker>
+            <v-date-picker :weekday-format="getDay" :month-format="getMonth" :title-date-format="getMonth"
+              :header-date-format="getHeaderTitleMonth" v-model="date" no-title @input="menu2 = false"></v-date-picker>
           </v-menu>
         </div>
       </div>
@@ -55,8 +50,10 @@
           <label for="" id="genderInfoEditLabel">성별</label>
         </div>
         <div class="infoEditGenderContent">
-          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
-          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
+          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)"
+            btnText="남자" />
+          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)"
+            btnText="여자" />
         </div>
       </div>
 
@@ -78,7 +75,6 @@ export default {
       nameValidation: false,
       userName: "",
       userId: "",
-      // emailValidation: false,
       userEmail: "",
       userBirth: "",
       userGender: "",
@@ -128,7 +124,6 @@ export default {
     test() {
       this.nameInfoEditInput.input = "kimminyoung";
       this.userEmail = "min4849@naver.com";
-      // this.emailInfoEditInput.input = "min4849@com";
       this.date = "1222-02-22";
       this.userName = "민영김";
       this.changeGender(1);
@@ -197,7 +192,6 @@ export default {
             Swal.fire({
               text: "회원 정보가 정상적으로 변경되었습니다.",
               icon: "success",
-              // iconColor: "#000000",
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
             });
@@ -238,48 +232,58 @@ export default {
 .infoEditBody {
   padding: 5% 5% 0% 5%;
 }
+
 .infoEditLine {
   display: flex;
   flex-direction: row;
   margin-bottom: 2%;
 }
+
 .infoEditBodyLabel {
   width: 20%;
 }
+
 .infoEditBodyContent {
   width: 80%;
 }
+
 .infoEditButtonLine {
   width: 100%;
   margin-top: 10%;
   display: flex;
   justify-content: center;
 }
+
 .infoEditButton {
   width: 50%;
 }
+
 .infoEditGenderContent {
   width: 80%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .genderButton {
   width: 49%;
 }
+
 .hrStyle {
   border: 0.01rem solid #000000;
 }
+
 .inputStyle:deep(fieldset) {
-  /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
   padding: 0;
 }
+
 .selectedGender {
   background-color: rgb(189, 181, 199);
   color: white;
 }
+
 @media (max-width: 639px) {
   .infoEditTotalBody {
     margin-top: 0;

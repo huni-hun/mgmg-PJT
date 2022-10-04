@@ -67,14 +67,10 @@ export default {
         .then((res) => {
           console.log(res);
           Swal.fire({
-            // toast: true,
-            // title: "ID 누락",
             text: "이메일로 임시 비밀번호를 보냈습니다.",
             icon: "success",
-            // iconColor: "#000000",
             confirmButtonColor: "#666666",
             confirmButtonText: "확인",
-            // },
           });
         })
         .catch((err) => {
@@ -96,23 +92,28 @@ export default {
   margin: 3% 3% 5% 3%;
   font-size: clamp(1.5rem, 2.5vw, 1.8rem);
 }
+
 .loginBodyLine {
   display: flex;
   flex-direction: row;
 }
+
 .loginBodyLabel {
   padding-top: 1%;
   padding-left: 5%;
   width: 30%;
   font-size: clamp(1.1rem, 2vw, 1.2rem);
 }
+
 .loginBodyInput {
   padding-right: 5%;
   width: 70%;
 }
+
 .loginCheckBox {
   padding-left: 5%;
 }
+
 .loginButtonLine {
   display: flex;
   flex-direction: row;
@@ -121,9 +122,11 @@ export default {
   margin-bottom: 6%;
   width: 100%;
 }
+
 .loginButton {
   width: 80%;
 }
+
 .loginButtonText {
   font-size: clamp(0.8rem, 2vw, 1rem);
   width: 100%;

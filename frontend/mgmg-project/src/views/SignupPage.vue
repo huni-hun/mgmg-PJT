@@ -3,20 +3,14 @@
   <div class="signupTotal">
     <div class="signupTitle"><label for="">회원가입</label></div>
     <div class="signupBody noScrollBox">
-      <SignUp
-        v-if="signupOrder == 1"
-        @useridSignup="setUserid"
-        @userpasswordSignup="setUserpassword"
-        @useremailSignup="setUseremail"
-        @usernameSignup="setUserName"
-        @userbirthSignup="setUserBirth"
-        @usergenderSignup="setUserGender"
-        @ruleCheckSignup="setRuleCheck"
-        @finalValidSignup="finalValidCheck"
-      />
+      <SignUp v-if="signupOrder == 1" @useridSignup="setUserid" @userpasswordSignup="setUserpassword"
+        @useremailSignup="setUseremail" @usernameSignup="setUserName" @userbirthSignup="setUserBirth"
+        @usergenderSignup="setUserGender" @ruleCheckSignup="setRuleCheck" @finalValidSignup="finalValidCheck" />
       <MusicSurvey v-if="signupOrder == 2" :selectMusic="selectMusic" @updateMusic="setMusic1" />
-      <MusicSurveySecond v-if="signupOrder == 3" :selectMusicSecond="selectMusicSecond" @updateMusicSecond="setMusic2" />
-      <GiftSurvey v-if="signupOrder == 4" @selectGifts="setGift" @upperPriceSignup="setUpperPrice" @underPriceSignup="setUnderPrice" />
+      <MusicSurveySecond v-if="signupOrder == 3" :selectMusicSecond="selectMusicSecond"
+        @updateMusicSecond="setMusic2" />
+      <GiftSurvey v-if="signupOrder == 4" @selectGifts="setGift" @upperPriceSignup="setUpperPrice"
+        @underPriceSignup="setUnderPrice" />
 
       <div class="signupButton1Page" v-if="signupOrder == 1">
         <customButton class="signupButton" btnText="다음" id="page1Next" @click="signupNext1page"></customButton>
@@ -173,7 +167,6 @@ export default {
         Swal.fire({
           text: "감정별로 음악 장르를 1개 이상 선택해야 합니다.",
           icon: "warning",
-          // iconColor: "#000000",
           confirmButtonColor: "#666666",
           confirmButtonText: "확인",
         });
@@ -293,11 +286,13 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .signupTitle {
   font-size: clamp(1.8rem, 2.5vw, 2.1rem);
   margin: 1% 0;
   color: white;
 }
+
 .signupBody {
   width: 100%;
   background-color: white;
@@ -306,41 +301,50 @@ export default {
   /* 내부 스크롤 */
   overflow: auto;
 }
+
 .signupButton1Page {
   display: flex;
   justify-content: center;
   margin-top: 3%;
 }
+
 .signupButton2Page {
   display: flex;
   justify-content: center;
   margin-top: 3%;
 }
+
 .signupButton3Page {
   display: flex;
   justify-content: center;
   margin-top: 3%;
 }
+
 .signupButton4Page {
   display: flex;
   justify-content: center;
   margin-top: 3%;
 }
+
 .signupButton {
   width: 20%;
   margin: 0 2% 3% 2%;
 }
+
 .justify_content_center {
   display: flex;
   justify-content: center;
 }
+
 .noScrollBox {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
+
 .noScrollBox::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
+  display: none;
 }
+
 @media (max-width: 575px) {
   .signupBody {
     background-color: white;
@@ -352,6 +356,7 @@ export default {
     padding: 1% 0;
   }
 }
+
 @media (max-width: 330px) {
   .signupBody {
     padding: 5% 2%;

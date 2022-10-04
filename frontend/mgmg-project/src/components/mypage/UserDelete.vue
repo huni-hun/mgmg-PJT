@@ -4,9 +4,6 @@
       <div class="titleLabel">
         <label for="">회원 탈퇴</label>
       </div>
-      <!-- <div>
-        <img class="titleImg" src="../../assets/emoticon/sad.png" alt="" />
-      </div> -->
     </div>
     <div class="userDeleteBody">
       <div class="userDeleteWarning">
@@ -73,6 +70,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
+
 .userDeleteTitle {
   width: 100%;
   display: flex;
@@ -80,12 +78,12 @@ export default {
   justify-content: left;
   align-items: center;
 }
+
 .titleLabel {
   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
   margin: 3% 0% 0.5% 0%;
-  /* width: 70%; */
-  /* display: block; */
 }
+
 .titleImg {
   width: 5%;
 }
@@ -93,6 +91,7 @@ export default {
 .userDeleteBody {
   margin-top: 5%;
 }
+
 .userDeleteWarning {
   margin-bottom: 2%;
 }
@@ -103,10 +102,12 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .userDeleteButton {
   width: 50%;
   background-color: #fa5f72;
 }
+
 .userDeleteButton:hover {
   background-color: #ac424f;
 }

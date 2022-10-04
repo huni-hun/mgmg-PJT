@@ -5,7 +5,9 @@
         <v-row class="giftSurveyTitle">관심 선물</v-row>
         <v-row>좋아하는 선물 종류를 선택하세요.</v-row>
         <v-row>최소 1개, 최대 5개까지 선택할 수 있습니다.</v-row>
-        <v-row><hr class="hrStyle" /></v-row>
+        <v-row>
+          <hr class="hrStyle" />
+        </v-row>
       </div>
     </v-container>
 
@@ -14,7 +16,8 @@
       <div class="giftBodyFirstLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(0, 5)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
+              :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -22,7 +25,8 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(5, 10)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 5]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
+              :src="require(`../../assets/giftlist/${giftImgName[index + 5]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -34,7 +38,8 @@
       <div class="giftBodyFirstLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(0, 2)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
+              :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -42,7 +47,8 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(2, 4)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 2]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
+              :src="require(`../../assets/giftlist/${giftImgName[index + 2]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -50,7 +56,8 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(4, 6)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 4]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
+              :src="require(`../../assets/giftlist/${giftImgName[index + 4]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -58,7 +65,8 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(6, 8)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 6]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
+              :src="require(`../../assets/giftlist/${giftImgName[index + 6]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -66,7 +74,8 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(8, 10)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 8]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
+              :src="require(`../../assets/giftlist/${giftImgName[index + 8]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -77,11 +86,13 @@
       <div class="priceTitle">
         <label for="">가격대</label>
       </div>
-      <input class="priceFontSize" type="number" id="underPrice" name="underPrice" :value="underPrice" step="1000" min="10000" :max="upperPrice - 1000" @change="changeUnder()" />
+      <input class="priceFontSize" type="number" id="underPrice" name="underPrice" :value="underPrice" step="1000"
+        min="10000" :max="upperPrice - 1000" @change="changeUnder()" />
       <div class="priceTitle">
         <label for="">~</label>
       </div>
-      <input class="priceFontSize" type="number" id="upperPrice" name="upperPrice" :value="upperPrice" step="1000" :min="underPrice" max="1000000" @change="changeUpper()" />
+      <input class="priceFontSize" type="number" id="upperPrice" name="upperPrice" :value="upperPrice" step="1000"
+        :min="underPrice" max="1000000" @change="changeUpper()" />
     </div>
 
     <div class="giftEditButtonLine">
@@ -203,6 +214,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
+
 .gift5list {
   width: 100%;
   display: flex;
@@ -210,6 +222,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .giftEditButtonLine {
   display: flex;
   flex-direction: row;
@@ -217,12 +230,15 @@ export default {
   margin-top: 3%;
   width: 100%;
 }
+
 .giftButton {
   width: 50%;
 }
+
 .giftEditTitle {
   padding: 0 5% 2% 5%;
 }
+
 .myInfoTotalBody {
   width: 100%;
   padding: 7% 10%;
@@ -230,15 +246,19 @@ export default {
   flex-direction: column;
   background-color: white;
 }
+
 .hrStyle {
   width: 100%;
 }
+
 .giftSurveyTitle {
   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
 }
+
 .giftBody {
   margin: 1% 3% 2% 3%;
 }
+
 .giftBodyFirstLine {
   display: flex;
   flex-direction: row;
@@ -246,6 +266,7 @@ export default {
   align-items: center;
   margin-top: 2%;
 }
+
 .giftBodySecondLine {
   display: flex;
   flex-direction: row;
@@ -253,14 +274,17 @@ export default {
   align-items: center;
   margin-top: 2%;
 }
+
 .giftImgBox {
   width: 15%;
 }
+
 .giftName {
   text-align: center;
   font-size: clamp(0.6rem, 2.5vw, 0.8rem);
   margin-top: 10%;
 }
+
 .giftLstBox {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -268,60 +292,67 @@ export default {
   user-select: none;
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
 }
+
 .selected {
   box-shadow: 0px 0px 7px 7px rgba(54, 54, 54, 0.532), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
+
 .circle {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   background-color: rgb(156, 156, 156);
 }
+
 .priceBody {
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-top: 3%;
 }
+
 .priceTitle {
   margin: 0 3%;
   display: block;
-  /* font-size: clamp(1rem, 2vw, 1.5rem); */
 }
+
 .priceFontSize {
-  /* font-size: clamp(0.6rem, 2.5vw, 0.8rem); */
   width: 20%;
   text-align: center;
 }
+
 .phoneView {
   display: none;
 }
+
 @media (max-width: 724px) {
   .giftImgBox {
     width: 18%;
   }
 }
+
 @media (max-width: 639px) {
   .giftBody {
     margin: 10% auto;
   }
+
   .giftImgBox {
     width: 40%;
   }
+
   /* 2열 배치 */
   .pcView {
     display: none;
   }
+
   .phoneView {
     display: inline-block;
   }
+
   .giftBodySecondLine {
-    /* display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center; */
     margin-top: 10%;
   }
+
   .giftBody {
     margin: 1% 7% 2% 7%;
   }
@@ -399,6 +430,7 @@ export default {
 .col-1 {
   padding: 0;
 }
+
 /* .hrStyle {
   border: 0.01rem solid #000000;
   width: 100%;

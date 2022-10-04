@@ -7,9 +7,7 @@
 
       <div class="loginBodyLine">
         <div class="loginBodyLabel">
-          <label for="idLoginInput" class="noDrag" id="idLoginLabel"
-            >아이디</label
-          >
+          <label for="idLoginInput" class="noDrag" id="idLoginLabel">아이디</label>
         </div>
         <div class="loginBodyInput">
           <CustomInput v-model="idLoginInput" />
@@ -18,41 +16,22 @@
 
       <div class="loginBodyLine">
         <div class="loginBodyLabel">
-          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel"
-            >비밀번호</label
-          >
+          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel">비밀번호</label>
         </div>
         <div class="loginBodyInput">
           <div class="inputStyle">
-            <v-text-field
-              :rules="[pwRequired]"
-              :type="password"
-              label="비밀번호를 입력하세요."
-              name="input-10-2"
-              hint="비밀번호를 입력하세요."
-              value=""
-              class="input-group--focused"
-              single-line
-              outlined
-              id="pwLoginInput"
-              @keyup.enter="login"
-            ></v-text-field>
+            <v-text-field :rules="[pwRequired]" :type="password" label="비밀번호를 입력하세요." name="input-10-2"
+              hint="비밀번호를 입력하세요." value="" class="input-group--focused" single-line outlined id="pwLoginInput"
+              @keyup.enter="login"></v-text-field>
           </div>
         </div>
       </div>
       <div class="loginButtonLine">
         <div class="loginCheckBox">
-          <v-checkbox
-            v-model="loginNext"
-            :label="`로그인 상태 유지하기`"
-          ></v-checkbox>
+          <v-checkbox v-model="loginNext" :label="`로그인 상태 유지하기`"></v-checkbox>
         </div>
         <div class="loginButton">
-          <CustomButton
-            class="loginButtonText"
-            @click="login"
-            btnText="로그인"
-          />
+          <CustomButton class="loginButtonText" @click="login" btnText="로그인" />
         </div>
       </div>
     </v-container>
@@ -89,11 +68,10 @@ export default {
     test() {
       console.log(this.loginNext);
     },
-    // 쿠키 사용 참고링크 https://kyounghwan01.github.io/Vue/vue/vue-cookies/
+
     async autoLogin() {
       //쿠키 있는지 확인
       if (this.$cookies.isKey("autoLoginCookie")) {
-        //자동로그인 액시오스 실행
         var refreshToken = this.$cookies.get("autoLoginCookie");
         var userId = this.$cookies.get("userIdCookie");
 
@@ -108,7 +86,6 @@ export default {
           this.$router.push("/main");
         });
       }
-      //그 외는 아무것도 안함.
     },
     //자동로그인 선택 하고, 안하고 상태관리
     loginAuto(response) {
@@ -120,7 +97,6 @@ export default {
       this.setUserInfoNotAuto(response);
       this.$cookies.remove("autoLoginCookie");
       this.$cookies.remove("userIdCookie");
-      // this.$cookies.set("autoLoginCookie", "");
     },
 
     //로그인
@@ -141,12 +117,9 @@ export default {
           //자동 로그인 선택한 경우
           if (autoflag) {
             this.loginAuto(res);
-            // this.$store.state.userStore.userId =
-            //   this.$cookies.get("userIdCookie");
           } else {
             //자동 로그인 선택 안한 경우
             this.loginNotAuto(res);
-            // this.$store.state.userStore.userId = userId;
           }
           this.$router.push("/main");
         })
@@ -170,37 +143,44 @@ export default {
   margin: 3% 3% 5% 3%;
   font-size: clamp(1.5rem, 2.5vw, 1.8rem);
 }
+
 .loginBodyLine {
   display: flex;
   flex-direction: row;
 }
+
 .loginButtonLine {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+
 .loginBodyLabel {
   padding-top: 1%;
   padding-left: 5%;
   width: 30%;
   font-size: clamp(1.1rem, 2vw, 1.2rem);
 }
+
 .loginBodyInput {
   padding-right: 5%;
   width: 70%;
 }
+
 .loginCheckBox {
   padding-left: 5%;
 }
+
 .loginButton {
   padding-right: 5%;
 }
+
 .loginButtonText {
   font-size: clamp(0.8rem, 2vw, 1rem);
 }
+
 .inputStyle:deep(fieldset) {
-  /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   padding: 0;
 }
@@ -216,26 +196,33 @@ export default {
   .loginCheckBox {
     padding-left: 3%;
   }
+
   .loginButton {
     padding-right: 3%;
   }
+
   .loginButtonText {
     padding: 0.4rem 0.7rem 0.4rem 0.7rem;
   }
 }
+
 @media (max-width: 300px) {
   .loginCheckBox {
     padding-left: 1%;
   }
+
   .loginButton {
     padding-right: 1%;
   }
+
   .loginBodyLabel {
     padding-left: 1%;
   }
+
   .loginBodyInput {
     padding-right: 1%;
   }
+
   .loginButtonText {
     padding: 0.4rem 0.5rem 0.4rem 0.5rem;
   }

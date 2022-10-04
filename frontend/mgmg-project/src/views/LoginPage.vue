@@ -14,7 +14,6 @@
       <router-view></router-view>
     </div>
     <div class="loginFooterArea">
-      <!-- <v-row> -->
       <div class="footerLabel" v-if="loginOrder != 1" @click="moveToLogIn">
         <router-link to="/login" class="noDrag footerLabelDecoration">
           <div><label for="">로그인</label></div>
@@ -36,14 +35,12 @@
       <div class="footerLabel">
         <label for="signup" class="noDrag" @click="moveToSignupPage">회원가입</label>
       </div>
-      <!-- </v-row> -->
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  // components: { LogIn, IdFind, PasswordFind },
   data() {
     return {
       loginOrder: 1,
@@ -74,15 +71,16 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .loginBody {
-  /* height: 45vh; */
   background-color: white;
   width: 40%;
-  /* margin-top: 10vh; */
 }
+
 .dummyTitleMargin {
   height: 20vh;
 }
+
 .titleBody {
   display: flex;
   flex-direction: row;
@@ -92,75 +90,91 @@ export default {
   margin-bottom: 1%;
   width: 100%;
 }
+
 .titleLogoMGArea {
   width: 7%;
 }
+
 .titleLogoMG {
   width: 100%;
 }
+
 .titleLogoTextArea {
   width: 15%;
 }
+
 .titleLogoText {
   width: 100%;
 }
+
 .loginFooterArea {
   width: 100%;
-  /* margin-top: 3%; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
+
 .footerLabel {
   display: block;
   margin-top: 1%;
   width: 10%;
   text-align: center;
 }
+
 .footerLabelDecoration {
   color: black;
   text-decoration: none;
 }
+
 .noDrag {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
+
 .verticalLine {
   background-color: black;
-  /* border: 5px solid black; */
   width: 0.1rem;
   height: 2em;
 }
+
 @media (max-width: 991px) {
   .dummyTitleMargin {
     height: 15vh;
   }
+
   .loginBody {
     width: 80%;
   }
+
   .footerLabel {
     width: 13%;
   }
+
   .titleLogoMGArea {
     width: 8%;
   }
+
   .titleLogoTextArea {
     width: 18%;
   }
 }
+
 @media (max-width: 767px) {
   .loginBody {
     width: 80%;
   }
+
   .footerLabel {
     width: 16%;
   }
+
   .titleLogoMGArea {
     width: 10%;
   }
+
   .titleLogoTextArea {
     width: 20%;
   }
@@ -170,12 +184,15 @@ export default {
   .loginBody {
     width: 100%;
   }
+
   .footerLabel {
     width: 30%;
   }
+
   .titleLogoMGArea {
     width: 20%;
   }
+
   .titleLogoTextArea {
     width: 40%;
   }

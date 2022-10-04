@@ -29,8 +29,6 @@ button {
   color: white;
   border-radius: 5px;
 
-  /* filter: drop-shadow(1px 1px 1px 2px #707070); */
-
   cursor: pointer;
 
   transition: 0.2s;

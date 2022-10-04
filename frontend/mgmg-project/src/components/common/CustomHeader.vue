@@ -10,19 +10,13 @@
 
       <v-spacer class="desk-nav-bar"></v-spacer>
       <p>
-        <router-link class="desk-nav-bar router-link-active" to="/achieve"
-          >나의업적</router-link
-        >
+        <router-link class="desk-nav-bar router-link-active" to="/achieve">나의업적</router-link>
       </p>
       <p>
-        <router-link class="desk-nav-bar router-link-active" to="/statistics"
-          >감정통계</router-link
-        >
+        <router-link class="desk-nav-bar router-link-active" to="/statistics">감정통계</router-link>
       </p>
       <p>
-        <router-link class="desk-nav-bar router-link-active" to="/notice"
-          >공지사항</router-link
-        >
+        <router-link class="desk-nav-bar router-link-active" to="/notice">공지사항</router-link>
       </p>
       <v-spacer></v-spacer>
 
@@ -49,13 +43,13 @@
 
       <v-menu class="desk-nav-bar user-nav" offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-app-bar-nav-icon class="desk-nav-bar" v-bind="attrs" v-on="on"
-            ><div class="user-name" v-bind="attrs" v-on="on">
+          <v-app-bar-nav-icon class="desk-nav-bar" v-bind="attrs" v-on="on">
+            <div class="user-name" v-bind="attrs" v-on="on">
               {{ userName }}님
             </div>
-            <v-icon large>mdi-menu-down</v-icon></v-app-bar-nav-icon
-          >
-          <!-- <v-btn color="primary" dark v-bind="attrs" v-on="on"> Dropdown </v-btn> -->
+            <v-icon large>mdi-menu-down</v-icon>
+          </v-app-bar-nav-icon>
+
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in items" :key="index">
@@ -69,11 +63,7 @@
       <!-- 모바일 메뉴바 -->
       <v-menu class="mobile-nav-bar" offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-app-bar-nav-icon
-            class="mobile-nav-bar"
-            v-bind="attrs"
-            v-on="on"
-          ></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon class="mobile-nav-bar" v-bind="attrs" v-on="on"></v-app-bar-nav-icon>
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in moLtems" :key="index">
@@ -102,7 +92,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-// import store from "@/store/modules/userStore";
+
 import {
   notification_list,
   notification_check,
@@ -174,11 +164,13 @@ export default {
 .mobile-nav-bar {
   display: none;
 }
+
 p {
   margin-left: 4vw;
   margin-right: 4vw;
   padding-top: 1vh;
 }
+
 /* 라우터 링크 CSS 효과 */
 .router-link-active {
   text-decoration: none;
@@ -193,26 +185,34 @@ p {
 .logo {
   height: 100%;
 }
+
 .logo-text {
   height: 100%;
 }
+
 .user-nav {
   margin-left: 3%;
 }
+
 .notifi {
   height: 100%;
 }
+
 @media (max-width: 639px) {
+
   /* 헤더 형태 변환은 display: none; 을 통해 이뤄짐. */
   .desk-nav-bar {
     display: none;
   }
+
   .user-name {
     display: none;
   }
+
   .mobile-nav-bar {
     display: inline-block;
   }
+
   /* 로고 가운데로 */
   .logo {
     height: 80%;

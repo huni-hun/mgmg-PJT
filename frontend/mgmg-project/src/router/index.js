@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import store from "@/store/modules/userStore";
+
 // 메인
 import LandingPage from "../views/LandingPage.vue";
 import MainPage from "../views/MainPage.vue";
@@ -63,7 +63,6 @@ const routes = [
   },
   {
     path: "/login",
-    // name: "login",
     component: LoginPage,
     children: [
       { path: "", name: "login", component: Login },
@@ -79,7 +78,6 @@ const routes = [
   { path: "/my", name: "mypagecheck", component: MyPageFirst },
   {
     path: "/mypage",
-    // name: "my",
     component: MyPage,
     children: [
       { path: "", name: "myCheck", component: MyCheck },
@@ -104,7 +102,6 @@ const routes = [
   },
   {
     path: "/achieve",
-    // name: "achieve",
     component: AchievePage,
     children: [
       {
@@ -121,7 +118,6 @@ const routes = [
   },
   {
     path: "/interestlist",
-    // name: "interestlist",
     component: InterestListPage,
     children: [
       { path: "music", name: "interestmusic", component: InterestMusic },
@@ -130,7 +126,6 @@ const routes = [
   },
   {
     path: "/statistics",
-    // name: "statistics",
     component: StatisticsPage,
     children: [
       {
@@ -147,7 +142,6 @@ const routes = [
   },
   {
     path: "/notice",
-    // name: "notice",
     component: NoticePage,
     children: [
       {

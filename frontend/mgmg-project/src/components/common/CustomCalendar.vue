@@ -8,73 +8,31 @@
       <div class="calendar">
         <v-row>
           <v-col class="leftAlign">
-            <!-- <div @click="beforeMonth()" class="leftAlign">이전달</div> -->
-            <v-icon @click="beforeMonth()" class="leftAlign"
-              >mdi-menu-left</v-icon
-            >
+            <v-icon @click="beforeMonth()" class="leftAlign">mdi-menu-left</v-icon>
           </v-col>
           <v-col class="centerYearMonth">
-            <!-- <v-container> -->
-            <!-- <v-row class="yearMonth"> -->
-            <input
-              class="inputLabel"
-              type="number"
-              id="showYear"
-              name="showYear"
-              :value="showYear"
-              @input="getInputYearMonth()"
-            />
+            <input class="inputLabel" type="number" id="showYear" name="showYear" :value="showYear"
+              @input="getInputYearMonth()" />
             <div class="inputDotLabel">.</div>
-            <input
-              class="inputLabel"
-              type="number"
-              id="showMonth"
-              name="showMonth"
-              :value="showMonth"
-              @input="getInputYearMonth()"
-            />
-            <!-- </v-row> -->
-            <!-- </v-container> -->
+            <input class="inputLabel" type="number" id="showMonth" name="showMonth" :value="showMonth"
+              @input="getInputYearMonth()" />
           </v-col>
           <v-col class="rightAlign">
-            <!-- <div @click="afterMonth()" class="rightAlign">다음달</div> -->
-            <v-icon @click="afterMonth()" class="rightAlign"
-              >mdi-menu-right</v-icon
-            >
+            <v-icon @click="afterMonth()" class="rightAlign">mdi-menu-right</v-icon>
           </v-col>
         </v-row>
         <v-row class="dateTable">
-          <div
-            v-for="day in days"
-            :key="day.idx"
-            class="dayContainer"
-            @click="updateEmotionLst()"
-          >
+          <div v-for="day in days" :key="day.idx" class="dayContainer" @click="updateEmotionLst()">
             <v-col>
               <div class="dayName">{{ day.dayName }}</div>
             </v-col>
           </div>
         </v-row>
-        <v-row
-          class="dateTable"
-          v-for="(week, index1) in monthLst"
-          :key="index1"
-        >
-          <div
-            v-for="(week0, index2) in week"
-            :key="index2"
-            class="dayContainer"
-          >
+        <v-row class="dateTable" v-for="(week, index1) in monthLst" :key="index1">
+          <div v-for="(week0, index2) in week" :key="index2" class="dayContainer">
             <v-col>
-              <emotionImage
-                v-if="week0 != 0"
-                :showYear="showYear"
-                :showMonth="showMonth"
-                :dateNum="week0"
-                :emotionImg="emotionsLst[index1][index2]"
-                :diaryNumber="diaryNum[index1][index2]"
-                name="emotionImg"
-              />
+              <emotionImage v-if="week0 != 0" :showYear="showYear" :showMonth="showMonth" :dateNum="week0"
+                :emotionImg="emotionsLst[index1][index2]" :diaryNumber="diaryNum[index1][index2]" name="emotionImg" />
             </v-col>
           </div>
         </v-row>
@@ -202,9 +160,7 @@ export default {
       var diaryDirectionLst = [];
 
       if (response.statusCode == 200) {
-        // console.log(response);
         this.diaryLst = response.diaries;
-        // var diaryDirection;
         if (this.diaryLst.length > 0) {
           var weeks;
           for (weeks = 0; weeks < this.monthLst.length; weeks++) {
@@ -319,10 +275,8 @@ export default {
     //연, 월 숫자 받아서 202201 꼴 string으로 바꿔주기
     changeToAxiosShape(year, month) {
       if (month < 10) {
-        // console.log(String(year) + "-0" + String(month));
         return String(year) + "-0" + String(month);
       } else {
-        // console.log(String(year) + "-" + String(month));
         return String(year) + "-" + String(month);
       }
     },
@@ -374,7 +328,6 @@ export default {
           this.lastday = 30;
         }
       }
-      // console.log("마지막날", this.lastday, "시작요일", this.repeatDay);
     },
 
     // 달력에 표시할 날짜 리스트 만들기
@@ -410,7 +363,6 @@ export default {
 
     //이전달
     beforeMonth() {
-      // this.showMonth--;
       document.getElementById("showMonth").value = Number(this.showMonth) - 1;
       this.getInputYearMonth();
     },
@@ -423,14 +375,12 @@ export default {
       let box = this.$refs.backYellow;
       box.style.width = "auto";
       box.style.height = "auto";
-      box.style.width = `${
-        this.$refs.calendar.scrollWidth *
+      box.style.width = `${this.$refs.calendar.scrollWidth *
         (100 / document.documentElement.clientWidth)
-      }vw`;
-      box.style.height = `${
-        this.$refs.calendar.scrollHeight *
+        }vw`;
+      box.style.height = `${this.$refs.calendar.scrollHeight *
         (100 / document.documentElement.clientHeight)
-      }vh`;
+        }vh`;
     },
   },
 };
@@ -444,7 +394,7 @@ export default {
   z-index: 1;
 }
 
-.backBox > div {
+.backBox>div {
   background-color: #e5d7ca;
   transform: rotate(2.5deg);
 }
@@ -454,7 +404,6 @@ export default {
   min-width: 160px;
   width: 12%;
   max-width: 260px;
-  /* top: 100%; */
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
@@ -464,16 +413,9 @@ export default {
   position: relative;
   padding-top: 30px;
   padding-bottom: 30px;
-  /* width: 80vw; */
-  /* border: 2px solid black; */
   background-color: white;
   z-index: 2;
 }
-
-/* .calendar {
-  margin: 2rem;
-  border: 2px solid black;
-} */
 
 .leftArrow {
   width: 10%;
@@ -493,7 +435,6 @@ export default {
 
 .yearMonth {
   margin-top: 0.5%;
-  /* margin-bottom: 1%; */
   text-align: center;
   display: flex;
   justify-content: center;
@@ -502,13 +443,10 @@ export default {
 .leftAlign {
   font-size: 3rem;
   text-align: right;
-  /* margin-left: 5%; */
 }
 
 .rightAlign {
   font-size: 3rem;
-  /* text-align: right; */
-  /* margin-right: 5%; */
 }
 
 .dateTable {

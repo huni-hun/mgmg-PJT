@@ -4,28 +4,17 @@
       <v-col class="col-5">
         <v-list>
           <v-list-item-group v-model="model" mandatory color="indigo">
-            <v-list-item
-              v-for="(music, index) in musicLst"
-              :key="music.title"
-              @click="checkMusic(music)"
-            >
+            <v-list-item v-for="(music, index) in musicLst" :key="music.title" @click="checkMusic(music)">
               <v-row class="mt-1 mb-1">
                 <v-col class="col-3">
-                  <v-img
-                    :src="music.music.albumArt"
-                    alt="앨범아트"
-                    height="100"
-                    width="100"
-                  />
+                  <v-img :src="music.music.albumArt" alt="앨범아트" height="100" width="100" />
                 </v-col>
                 <v-col class="col-9">
                   <div>제목: {{ music.music.musicName }}</div>
                   <div>가수: {{ music.music.artist }}</div>
                   <div>작성 일기 날짜: {{ music.registDate }}</div>
                   <div>
-                    <v-btn @click="deleteMusic(index, music)"
-                      >삭제 아이콘</v-btn
-                    >
+                    <v-btn @click="deleteMusic(index, music)">삭제 아이콘</v-btn>
                   </div>
                 </v-col>
               </v-row>
@@ -35,13 +24,9 @@
       </v-col>
       <v-col class="col-7">
         <div class="video-container">
-          <iframe
-            class="player"
-            :src="`https://www.youtube.com/embed/${playCode}`"
-            title="YouTube video player"
+          <iframe class="player" :src="`https://www.youtube.com/embed/${playCode}`" title="YouTube video player"
             frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          ></iframe>
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
         </div>
         <div v-if="picked != null" class="mt-3">
           <div>제목: {{ picked.music.musicName }}</div>
@@ -116,7 +101,7 @@ export default {
     },
     checkMusic(music) {
       this.picked = music;
-      // this.getYoutubeList(music.music.musicName + " " + music.music.artist);
+      this.getYoutubeList(music.music.musicName + " " + music.music.artist);
     },
     async getYoutubeList(searchContent) {
       const config = {

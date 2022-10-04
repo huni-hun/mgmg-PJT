@@ -1,8 +1,6 @@
 <template>
   <div id="signupComponentApp">
-    <!-- <div></div> -->
     <v-container class="signupContainer" id="signupContainer">
-      <!-- <v-col> -->
       <v-row class="signupInputCommon">
         <label class="signupNoDrag signupLabel" for="idSignupInput" id="idSignupLabel">아이디</label>
         <div class="signupInput">
@@ -15,40 +13,20 @@
       <v-row>
         <label class="signupNoDrag signupLabel" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
         <div class="inputStyle signupInput">
-          <v-text-field
-            :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.pwRequired]"
-            :type="showPw ? 'text' : 'password'"
-            label="비밀번호를 입력하세요."
-            name="input-10-2"
-            hint="비밀번호를 입력하세요."
-            value=""
-            class="input-group--focused"
-            @click:append="showPw = !showPw"
-            single-line
-            outlined
-            id="pwSignupInput"
-          ></v-text-field>
+          <v-text-field :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.pwRequired]"
+            :type="showPw ? 'text' : 'password'" label="비밀번호를 입력하세요." name="input-10-2" hint="비밀번호를 입력하세요." value=""
+            class="input-group--focused" @click:append="showPw = !showPw" single-line outlined id="pwSignupInput">
+          </v-text-field>
         </div>
         <div class="col-4"></div>
       </v-row>
       <v-row>
         <label class="signupNoDrag signupLabel" for="pwCheckSignupInput" id="pwCheckSignupLabel">비밀번호 확인</label>
         <div class="inputStyle signupInput">
-          <v-text-field
-            :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.pwCheckRequired]"
-            :type="showPwCheck ? 'text' : 'password'"
-            label="비밀번호를 다시 입력하세요."
-            name="input-10-2"
-            hint="비밀번호를 다시 입력하세요."
-            value=""
-            class="input-group--focused"
-            @click:append="showPwCheck = !showPwCheck"
-            single-line
-            outlined
-            id="pwCheckSignupInput"
-          ></v-text-field>
+          <v-text-field :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.pwCheckRequired]"
+            :type="showPwCheck ? 'text' : 'password'" label="비밀번호를 다시 입력하세요." name="input-10-2" hint="비밀번호를 다시 입력하세요."
+            value="" class="input-group--focused" @click:append="showPwCheck = !showPwCheck" single-line outlined
+            id="pwCheckSignupInput"></v-text-field>
         </div>
         <div class="col-4"></div>
       </v-row>
@@ -80,30 +58,15 @@
       <v-row>
         <label class="signupNoDrag signupLabel" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
         <div class="signupInput">
-          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
+          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
+            offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                single-line
-                outlined
-                v-model="date"
-                class="inputStyle"
-                append-icon="mdi-calendar"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-                id="birthSignupInput"
-                :change="birthCheck()"
-              ></v-text-field>
+              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly
+                v-bind="attrs" v-on="on" id="birthSignupInput" :change="birthCheck()"></v-text-field>
             </template>
-            <v-date-picker
-              v-model="date"
-              no-title
-              @input="menu2 = false"
-              :weekday-format="getDay"
-              :month-format="getMonth"
-              :title-date-format="getMonth"
-              :header-date-format="getHeaderTitleMonth"
-            ></v-date-picker>
+            <v-date-picker v-model="date" no-title @input="menu2 = false" :weekday-format="getDay"
+              :month-format="getMonth" :title-date-format="getMonth" :header-date-format="getHeaderTitleMonth">
+            </v-date-picker>
           </v-menu>
         </div>
         <div class="col-4"></div>
@@ -111,8 +74,10 @@
       <v-row>
         <label class="signupNoDrag signupGenderLabel" for="" id="genderSignupLabel">성별</label>
         <div class="genderInputLine">
-          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
-          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
+          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 1 }"
+            @click="changeGender(1)" btnText="남자" />
+          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 2 }"
+            @click="changeGender(2)" btnText="여자" />
         </div>
         <div class="col-4"></div>
       </v-row>
@@ -132,8 +97,7 @@
         <label for=""> ③ 동의거부관리</label>
         <label for="">
           - 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하여 동의를 거부하실 권리가 있습니다. 다만, 귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우에 서비스 이용이 불가능할 수 있음을
-          알려드립니다.</label
-        >
+          알려드립니다.</label>
         <label for=""> ④회사의 상호, 주소 및 연락처는 다음과 같습니다.</label>
         <label for=""> 상호: MONGLE-MONGLE</label>
         <br />
@@ -141,7 +105,8 @@
         <br />
         <label for=""> 전화번호: 010-2812-0890</label>
         <br />
-        <label for=""> ⑤회사는 다음과 같이 개인정보 관리책임자를 지정하여 이용자들이 서비스 이용과정에서 발생한 민원사항 처리를 비롯하여 개인정보주체의 권리 보호를 위해 힘쓰고 있습니다. </label>
+        <label for=""> ⑤회사는 다음과 같이 개인정보 관리책임자를 지정하여 이용자들이 서비스 이용과정에서 발생한 민원사항 처리를 비롯하여 개인정보주체의 권리 보호를 위해 힘쓰고 있습니다.
+        </label>
         <label for="">위치정보 관리책임자 : 김태훈 BE (개인정보 보호책임자 겸직)</label>
         <label for="">메일 : mgmgPJT@gmail.com</label>
       </v-row>
@@ -394,7 +359,7 @@ export default {
       }
     },
 
-    // 인증번호 일치여부 확인- api 가져오기 (확인 되면 emailValidation true로 변경) 일치하지 않으면 정규식 사용해서 인증번호가 일치하지 않습니다(가능하면)
+    // 인증번호 일치여부 확인
     async emailNumCheck() {
       if (this.emailValidation && this.emailDuplicated) {
         var user_email = this.userEmail;
@@ -412,7 +377,6 @@ export default {
             Swal.fire({
               text: "인증번호가 확인되었습니다.",
               icon: "success",
-              // iconColor: "#000000",
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
             });
@@ -422,10 +386,8 @@ export default {
             Swal.fire({
               text: "인증번호가 틀렸습니다.",
               icon: "warning",
-              // iconColor: "#000000",
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
-              // },
             });
             this.emailAuthentication = false;
             this.finalValidSignup();
@@ -463,46 +425,57 @@ export default {
   width: inherit;
   height: inherit;
 }
+
 .signupLabel {
   display: block;
   width: 30%;
   padding-left: 10%;
 }
+
 .genderInputLine {
   width: 70%;
 }
+
 .signupGenderLabel {
   display: block;
   width: 25%;
   padding-left: 10%;
 }
+
 .signupInput {
   width: 40%;
 }
+
 .signupButton {
   width: 30%;
   padding-left: 3%;
 }
+
 .signupBtnWidth {
   width: 50%;
 }
+
 .signupGenderButton {
   width: 33%;
   margin-left: 1%;
   margin-right: 1%;
 }
+
 /* 약관동의 */
 .ruleCheckTitle {
   margin-top: 5%;
   margin-bottom: 1%;
 }
+
 .ruleCheckTitleLabel {
   font-size: 1.5rem;
 }
+
 .ruleCheckBox {
   display: flex;
   justify-content: flex-end;
 }
+
 .ruleCheckBody {
   display: flex;
   flex-direction: column;
@@ -514,31 +487,38 @@ export default {
     margin-top: 8%;
   }
 }
+
 @media (max-width: 767px) {
   .signupLabel {
     width: 100%;
     padding-left: 0%;
   }
+
   .signupGenderLabel {
     width: 100%;
     padding-left: 0%;
   }
+
   /* .signupInput {
     width: 80%;
   } */
   .signupInput {
     width: 80%;
   }
+
   .signupButton {
     width: 20%;
     padding-left: 0%;
   }
+
   .genderInputLine {
     width: 100%;
   }
+
   .signupBtnWidth {
     width: 100%;
   }
+
   .signupGenderButton {
     width: 45%;
     margin-left: 1%;
@@ -550,22 +530,27 @@ export default {
   border-radius: 0px;
   padding: 0;
 }
+
 .selectedGender {
   background-color: black;
   color: white;
 }
+
 .v-date-picker-header {
   display: none;
 }
+
 .v-picker__title {
   display: none;
 }
+
 .signupNoDrag {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
+
 .col-xl,
 .col-xl-auto,
 .col-xl-12,

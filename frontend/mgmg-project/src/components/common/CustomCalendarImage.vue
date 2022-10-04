@@ -56,7 +56,6 @@ export default {
 
       var todayNumber = this.changeDateFormatNoDash(todayYear, todayMonth, todayDate);
       var showNumber = this.changeDateFormatNoDash(this.showYear, this.showMonth, this.dateNum);
-      // console.log(todayNumber, showNumber);
       //오늘이면
       if (todayNumber == showNumber) {
         return 1;
@@ -69,7 +68,6 @@ export default {
     },
     test(year, month, date, diarynum) {
       //다이어리 넘버 0일떄랑 숫자일 때 구분
-
       var now = new Date();
       var todayYear = now.getFullYear();
       var todayMonth = now.getMonth() + 1;
@@ -137,7 +135,6 @@ export default {
   text-align: center;
   justify-content: center;
   align-content: center;
-  /* padding: 1rem; */
 }
 
 .dateNum {
@@ -149,7 +146,6 @@ export default {
 
 .emoticonImg {
   width: 60%;
-  /* height: 5rem; */
   margin: 0 auto;
 }
 
@@ -173,18 +169,6 @@ export default {
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
 }
 
-/* @media (max-width: 1100px) {
-  .emoticonImg {
-    width: 60%;
-    margin-top: 5%;
-  }
-  .dateNum {
-    position: absolute;
-    margin-top: 8px;
-    margin-left: 8px;
-    margin-bottom: 5px;
-  }
-} */
 @media (max-width: 767px) {
   .emoticonImg {
     /* margin-top: 5%; */
