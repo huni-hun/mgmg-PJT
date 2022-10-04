@@ -108,10 +108,8 @@ export function HZRecorder(stream, config) {
           data.setInt8(offset, val, true);
         }
       } else {
-        // eslint-disable-next-line no-redeclare
-        for (var i = 0; i < bytes.length; i++, offset += 2) {
-          // eslint-disable-next-line no-redeclare
-          var s = Math.max(-1, Math.min(1, bytes[i]));
+        for (let i = 0; i < bytes.length; i++, offset += 2) {
+          let s = Math.max(-1, Math.min(1, bytes[i]));
           data.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
         }
       }
@@ -135,9 +133,6 @@ export function HZRecorder(stream, config) {
   };
 
   this.play = function (audio) {
-    // eslint-disable-next-line no-unused-vars
-    var blob = this.getBlob();
-
     audio.src = window.URL.createObjectURL(this.getBlob());
   };
 

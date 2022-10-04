@@ -4,12 +4,7 @@
       <span>이 날의 추천 선물</span>
     </div>
     <div v-if="!isClick" class="giftBoxDiv">
-      <img
-        loading="lazy"
-        alt="giftbox"
-        src="@/assets/diary/giftbox.png"
-        @click="giftView"
-      />
+      <img loading="lazy" alt="giftbox" src="@/assets/diary/giftbox.png" @click="giftView" />
     </div>
     <div class="gridDiv" v-else>
       <v-img class="productImg" alt="선물 이미지" :src="giftImg" />
@@ -61,7 +56,6 @@ export default {
       this.isClick = true;
       await giftOpen(this.accessToken, this.diaryNo)
         .then((res) => {
-          console.log("gift success", res);
           this.giftNo = res.giftNo;
           this.giftImg = res.giftImg;
           this.giftName = res.giftName;
@@ -76,22 +70,21 @@ export default {
       window.open(this.giftLink);
     },
   },
-  // eslint-disable-next-line vue/no-deprecated-destroyed-lifecycle
+
   async beforeDestroy() {
     if (this.beforeGiftCheck == this.interestGift) return;
 
     if (this.interestGift) {
-      // console.log("none->관심 선물 추가")
+      // "none->관심 선물 추가"
       await giftInterest(this.accessToken, this.giftNo);
     } else {
-      // console.log("관심 선물 추가 -> none")
+      // "관심 선물 추가 -> none"
       await cancleGift(this.accessToken, this.giftNo);
     }
   },
   async created() {
     await detailGift(this.accessToken, this.diaryNo)
       .then((res) => {
-        console.log(res);
         this.isClick = res.openGift;
         if (this.isClick) {
           this.interestGift = res.checkGift === "good" ? true : false;
@@ -104,10 +97,12 @@ export default {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log("선물 데이터 실패", err);
       });
   },
 };
 </script>
 
-<style scoped src="@/styles/diary/GiftRecommend.css"></style>
+<style scoped src="@/styles/diary/GiftRecommend.css">
+
+</style>

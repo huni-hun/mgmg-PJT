@@ -34,6 +34,5 @@ export default {
 }
 </script>
 
-<style scoped src="@/styles/diary/LodingView.css">
 
-</style>
+<style scoped src="@/styles/diary/LodingView.css"/>

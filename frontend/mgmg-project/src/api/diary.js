@@ -1,6 +1,4 @@
-//import axios from "axios";
 import { API } from "@/store";
-// import store from "@/store/modules/userStore";
 
 const DIARY = "/diary";
 

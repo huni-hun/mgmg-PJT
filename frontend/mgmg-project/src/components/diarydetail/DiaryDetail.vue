@@ -1,9 +1,7 @@
 <template>
   <div class="outDiv">
-    <div class="diaryDetailTop" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/detailtop/${thema}.png`) + ')',
-    }">
+    <div class="diaryDetailTop"
+      :style="{backgroundImage:'url(' + require(`@/assets/diary/detailtop/${thema}.png`) + ')' }">
       <div class="topOutDiv">
         <div class="box">
           <img alt="감정티콘" :src="
@@ -25,27 +23,22 @@
       </div>
       <hr />
     </div>
-    <div class="diarymiddleImg" v-show="imageFile" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
-    }">
+
+    <div class="diarymiddleImg" v-show="imageFile"
+      :style="{backgroundImage:'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')'}">
       <div class="selectImg">
         <img v-if="imageFile" :src="imageFile" />
       </div>
     </div>
-    <div class="diaryDitailmiddle" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
-      fontFamily: `${font}`,
-    }">
+
+    <div class="diaryDitailmiddle"
+      :style="{backgroundImage: 'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')', fontFamily: `${font}`}">
       <div class="textWriteDiv">
         <textarea class="textWrite" ref="textarea" readonly v-model="content"></textarea>
       </div>
     </div>
-    <div class="diarybottom" :style="{
-      backgroundImage:
-        'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
-    }">
+
+    <div class="diarybottom" :style="{backgroundImage:'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')'}">
       <hr />
       <div>
         <button type="button">
@@ -56,6 +49,7 @@
         </button>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -137,6 +131,7 @@ export default {
         }
       });
     },
+
     deleteClick() {
       Swal.fire({
         title: "정말로 삭제하나요?",
@@ -163,12 +158,14 @@ export default {
         }
       });
     },
+
     autoResizeTextarea(obj) {
       obj.style.height = "auto";
       let height = obj.scrollHeight;
       obj.style.height = `${height}px`;
     },
   },
+
   async created() {
     this.no = this.$route.params.no;
     await diaryDetailView(this.accessToken, this.no).then((res) => {
@@ -185,6 +182,5 @@ export default {
 };
 </script>
 
-<style scoped src="@/styles/diary/DiaryStyle.css">
 
-</style>
+<style scoped src="@/styles/diary/DiaryStyle.css"/>
