@@ -114,7 +114,7 @@ export default {
 
 <style scoped>
 .mypageTotalBody {
-  margin-top: 2vw;
+  margin-top: 4vw;
   width: 80%;
 }
 .mypageBody {

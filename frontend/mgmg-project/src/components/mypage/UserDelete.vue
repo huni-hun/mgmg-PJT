@@ -62,7 +62,7 @@ export default {
 <style scoped>
 .userDeleteTotalBody {
   width: 100%;
-  margin-top: 10vh;
+  /* margin-top: 10vh; */
   padding: 7% 10%;
   display: flex;
   flex-direction: column;

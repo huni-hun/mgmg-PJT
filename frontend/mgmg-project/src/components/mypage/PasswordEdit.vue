@@ -16,10 +16,20 @@
 
         <div class="passwordEditBodyContent">
           <div class="inputStyle">
-            <v-text-field :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.pwRequired]"
-              :type="showPw ? 'text' : 'password'" label="비밀번호를 입력하세요." name="input-10-2" hint="비밀번호를 입력하세요." value=""
-              class="input-group--focused" @click:append="showPw = !showPw" single-line outlined
-              id="pwPasswordEditInput"></v-text-field>
+            <v-text-field
+              :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.pwRequired]"
+              :type="showPw ? 'text' : 'password'"
+              label="비밀번호를 입력하세요."
+              name="input-10-2"
+              hint="비밀번호를 입력하세요."
+              value=""
+              class="input-group--focused"
+              @click:append="showPw = !showPw"
+              single-line
+              outlined
+              id="pwPasswordEditInput"
+            ></v-text-field>
           </div>
         </div>
       </div>
@@ -34,10 +44,20 @@
 
         <div class="passwordEditBodyContent">
           <div class="inputStyle">
-            <v-text-field :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.pwCheckRequired]"
-              :type="showPwCheck ? 'text' : 'password'" label="비밀번호를 다시 입력하세요." name="input-10-2" hint="비밀번호를 다시 입력하세요."
-              value="" class="input-group--focused" @click:append="showPwCheck = !showPwCheck" single-line outlined
-              id="pwCheckPasswordEditInput"></v-text-field>
+            <v-text-field
+              :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.pwCheckRequired]"
+              :type="showPwCheck ? 'text' : 'password'"
+              label="비밀번호를 다시 입력하세요."
+              name="input-10-2"
+              hint="비밀번호를 다시 입력하세요."
+              value=""
+              class="input-group--focused"
+              @click:append="showPwCheck = !showPwCheck"
+              single-line
+              outlined
+              id="pwCheckPasswordEditInput"
+            ></v-text-field>
           </div>
         </div>
       </div>
@@ -129,7 +149,7 @@ export default {
 <style scoped>
 .passwordEditTotalBody {
   width: 100%;
-  margin-top: 5vh;
+  /* margin-top: 5vh; */
   padding: 7% 10%;
   display: flex;
   flex-direction: column;

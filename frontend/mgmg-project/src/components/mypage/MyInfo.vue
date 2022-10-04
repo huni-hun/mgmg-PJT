@@ -87,7 +87,7 @@ export default {
 <style scoped>
 .myInfoTotalBody {
   width: 100%;
-  margin-top: 5vh;
+  /* margin-top: 5vh; */
   padding: 7% 10%;
   display: flex;
   flex-direction: column;

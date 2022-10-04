@@ -86,7 +86,7 @@ export default {
 <style scoped>
 .fontEditBody {
   width: 100%;
-  margin-top: 5vh;
+  /* margin-top: 5vh; */
   padding: 5% 0 5% 0;
   display: flex;
   flex-direction: column;

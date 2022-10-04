@@ -75,6 +75,8 @@ export default {
 .loginBody {
   background-color: white;
   width: 40%;
+  box-shadow: 0px 0px 20px 20px rgba(23, 50, 97, 0.2);
+  border-radius: 15px;
 }
 
 .dummyTitleMargin {
@@ -117,8 +119,7 @@ export default {
 
 .footerLabel {
   display: block;
-  margin-top: 1%;
-  width: 10%;
+  margin: 1% 1% 1% 0;
   text-align: center;
 }
 

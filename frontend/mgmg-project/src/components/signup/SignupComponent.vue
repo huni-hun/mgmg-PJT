@@ -13,9 +13,20 @@
       <v-row>
         <label class="signupNoDrag signupLabel" for="pwSignupInput" id="pwSignupLabel">비밀번호</label>
         <div class="inputStyle signupInput">
-          <v-text-field :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.pwRequired]"
-            :type="showPw ? 'text' : 'password'" label="비밀번호를 입력하세요." name="input-10-2" hint="비밀번호를 입력하세요." value=""
-            class="input-group--focused" @click:append="showPw = !showPw" single-line outlined id="pwSignupInput">
+          <v-text-field
+            :append-icon="showPw ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.pwRequired]"
+            :type="showPw ? 'text' : 'password'"
+            label="비밀번호를 입력하세요."
+            name="input-10-2"
+            hint="비밀번호를 입력하세요."
+            value=""
+            class="input-group--focused"
+            @click:append="showPw = !showPw"
+            single-line
+            outlined
+            id="pwSignupInput"
+          >
           </v-text-field>
         </div>
         <div class="col-4"></div>
@@ -23,10 +34,20 @@
       <v-row>
         <label class="signupNoDrag signupLabel" for="pwCheckSignupInput" id="pwCheckSignupLabel">비밀번호 확인</label>
         <div class="inputStyle signupInput">
-          <v-text-field :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.pwCheckRequired]"
-            :type="showPwCheck ? 'text' : 'password'" label="비밀번호를 다시 입력하세요." name="input-10-2" hint="비밀번호를 다시 입력하세요."
-            value="" class="input-group--focused" @click:append="showPwCheck = !showPwCheck" single-line outlined
-            id="pwCheckSignupInput"></v-text-field>
+          <v-text-field
+            :append-icon="showPwCheck ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.pwCheckRequired]"
+            :type="showPwCheck ? 'text' : 'password'"
+            label="비밀번호를 다시 입력하세요."
+            name="input-10-2"
+            hint="비밀번호를 다시 입력하세요."
+            value=""
+            class="input-group--focused"
+            @click:append="showPwCheck = !showPwCheck"
+            single-line
+            outlined
+            id="pwCheckSignupInput"
+          ></v-text-field>
         </div>
         <div class="col-4"></div>
       </v-row>
@@ -58,14 +79,22 @@
       <v-row>
         <label class="signupNoDrag signupLabel" for="birthSignupInput" id="birthSignupLabel">생년월일</label>
         <div class="signupInput">
-          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
-            offset-y min-width="auto">
+          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly
-                v-bind="attrs" v-on="on" id="birthSignupInput" :change="birthCheck()"></v-text-field>
+              <v-text-field
+                single-line
+                outlined
+                v-model="date"
+                class="inputStyle"
+                append-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                id="birthSignupInput"
+                :change="birthCheck()"
+              ></v-text-field>
             </template>
-            <v-date-picker v-model="date" no-title @input="menu2 = false" :weekday-format="getDay"
-              :month-format="getMonth" :title-date-format="getMonth" :header-date-format="getHeaderTitleMonth">
+            <v-date-picker v-model="date" no-title @input="menu2 = false" :weekday-format="getDay" :month-format="getMonth" :title-date-format="getMonth" :header-date-format="getHeaderTitleMonth">
             </v-date-picker>
           </v-menu>
         </div>
@@ -74,10 +103,8 @@
       <v-row>
         <label class="signupNoDrag signupGenderLabel" for="" id="genderSignupLabel">성별</label>
         <div class="genderInputLine">
-          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 1 }"
-            @click="changeGender(1)" btnText="남자" />
-          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 2 }"
-            @click="changeGender(2)" btnText="여자" />
+          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
+          <CustomButton class="signupGenderButton" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
         </div>
         <div class="col-4"></div>
       </v-row>
@@ -85,30 +112,32 @@
         <label for="" class="signupNoDrag ruleCheckTitleLabel">약관 동의</label>
       </v-row>
       <v-row class="ruleCheckBody">
-        <label for="">개인정보의 수집 및 이용 동의 </label>
-        <label for=""> - 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용하며, 하기 목적 이외의 용도로는 사용되지 않습니다. </label>
-        <label for="">① 개인정보 수집 항목 및 수집·이용 목적</label>
-        <label for=""> 가) 수집 항목 (필수항목)</label>
-        <label for="">- 성명(국문), 생년월일, 성별, 이메일</label>
-        <label for=""> 나) 수집 및 이용 목적</label>
-        <label for=""> - 서비스 내 기능의 정확도를 높이기 위해 수집하며, 목적 외의 용도로는 사용하지 않습니다.</label>
-        <label for=""> ② 개인정보 보유 및 이용기간</label>
-        <label for=""> - 수집·이용 동의일로부터 개인정보의 수집·이용목적을 달성할 때까지</label>
-        <label for=""> ③ 동의거부관리</label>
-        <label for="">
-          - 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하여 동의를 거부하실 권리가 있습니다. 다만, 귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우에 서비스 이용이 불가능할 수 있음을
-          알려드립니다.</label>
-        <label for=""> ④회사의 상호, 주소 및 연락처는 다음과 같습니다.</label>
-        <label for=""> 상호: MONGLE-MONGLE</label>
-        <br />
-        <label for=""> 주소: 대전 특별 광역시 유성구 덕명동 삼성화재연수원 </label>
-        <br />
-        <label for=""> 전화번호: 010-2812-0890</label>
-        <br />
-        <label for=""> ⑤회사는 다음과 같이 개인정보 관리책임자를 지정하여 이용자들이 서비스 이용과정에서 발생한 민원사항 처리를 비롯하여 개인정보주체의 권리 보호를 위해 힘쓰고 있습니다.
-        </label>
-        <label for="">위치정보 관리책임자 : 김태훈 BE (개인정보 보호책임자 겸직)</label>
-        <label for="">메일 : mgmgPJT@gmail.com</label>
+        <div class="ruleCheckScroll">
+          <div>개인정보의 수집 및 이용 동의</div>
+          <div>- 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용하며, 하기 목적 이외의 용도로는 사용되지 않습니다.</div>
+          <div>① 개인정보 수집 항목 및 수집·이용 목적</div>
+          <div>가) 수집 항목 (필수항목)</div>
+          <div>- 성명(국문), 생년월일, 성별, 이메일</div>
+          <div>나) 수집 및 이용 목적</div>
+          <div>- 서비스 내 기능의 정확도를 높이기 위해 수집하며, 목적 외의 용도로는 사용하지 않습니다.</div>
+          <div>② 개인정보 보유 및 이용기간</div>
+          <div>- 수집·이용 동의일로부터 개인정보의 수집·이용목적을 달성할 때까지</div>
+          <div>③ 동의거부관리</div>
+          <div>
+            - 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하여 동의를 거부하실 권리가 있습니다. 다만, 귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우에 서비스 이용이 불가능할 수 있음을
+            알려드립니다.
+          </div>
+          <div>④ 회사의 상호, 주소 및 연락처는 다음과 같습니다.</div>
+          <div>상호: MONGLE-MONGLE</div>
+          <br />
+          <div>주소: 대전 특별 광역시 유성구 덕명동 삼성화재연수원</div>
+          <br />
+          <div>전화번호: 010-2812-0890</div>
+          <br />
+          <div>⑤ 회사는 다음과 같이 개인정보 관리책임자를 지정하여 이용자들이 서비스 이용과정에서 발생한 민원사항 처리를 비롯하여 개인정보주체의 권리 보호를 위해 힘쓰고 있습니다.</div>
+          <div>위치정보 관리책임자 : 김태훈 BE (개인정보 보호책임자 겸직)</div>
+          <div>메일 : mgmgPJT@gmail.com</div>
+        </div>
       </v-row>
       <v-row class="ruleCheckBox">
         <v-checkbox hide-details v-model="ruleCheck" :label="`약관 내용에 동의합니다.`" @click="ruleApproveCheck"></v-checkbox>
@@ -228,7 +257,7 @@ export default {
     },
     // 아이디 정규식 검사
     idValidationCheck(user_id) {
-      const regId = /^[A-Za-z](?=.*?[A-Za-z])(?=.*?[0-9])[a-zA-Z0-9]{5,15}$/;
+      const regId = /^[A-Za-z](?=.*?[0-9])[a-zA-Z0-9]{5,15}$/;
       if (regId.test(user_id)) {
         this.userId = user_id;
         this.$emit("useridSignup", user_id);
@@ -480,6 +509,15 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  border: 1px solid #d4d4d4;
+  padding: 1% 3%;
+}
+.ruleCheckScroll {
+  height: 30vh;
+  overflow: auto;
+}
+.ruleCheckScroll::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 1199px) {

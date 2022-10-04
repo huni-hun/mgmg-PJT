@@ -3,14 +3,20 @@
   <div class="signupTotal">
     <div class="signupTitle"><label for="">회원가입</label></div>
     <div class="signupBody noScrollBox">
-      <SignUp v-if="signupOrder == 1" @useridSignup="setUserid" @userpasswordSignup="setUserpassword"
-        @useremailSignup="setUseremail" @usernameSignup="setUserName" @userbirthSignup="setUserBirth"
-        @usergenderSignup="setUserGender" @ruleCheckSignup="setRuleCheck" @finalValidSignup="finalValidCheck" />
+      <SignUp
+        v-if="signupOrder == 1"
+        @useridSignup="setUserid"
+        @userpasswordSignup="setUserpassword"
+        @useremailSignup="setUseremail"
+        @usernameSignup="setUserName"
+        @userbirthSignup="setUserBirth"
+        @usergenderSignup="setUserGender"
+        @ruleCheckSignup="setRuleCheck"
+        @finalValidSignup="finalValidCheck"
+      />
       <MusicSurvey v-if="signupOrder == 2" :selectMusic="selectMusic" @updateMusic="setMusic1" />
-      <MusicSurveySecond v-if="signupOrder == 3" :selectMusicSecond="selectMusicSecond"
-        @updateMusicSecond="setMusic2" />
-      <GiftSurvey v-if="signupOrder == 4" @selectGifts="setGift" @upperPriceSignup="setUpperPrice"
-        @underPriceSignup="setUnderPrice" />
+      <MusicSurveySecond v-if="signupOrder == 3" :selectMusicSecond="selectMusicSecond" @updateMusicSecond="setMusic2" />
+      <GiftSurvey v-if="signupOrder == 4" @selectGifts="setGift" @upperPriceSignup="setUpperPrice" @underPriceSignup="setUnderPrice" />
 
       <div class="signupButton1Page" v-if="signupOrder == 1">
         <customButton class="signupButton" btnText="다음" id="page1Next" @click="signupNext1page"></customButton>
@@ -294,6 +300,8 @@ export default {
 }
 
 .signupBody {
+  box-shadow: 0px 0px 20px 20px rgba(23, 50, 97, 0.2);
+  border-radius: 15px;
   width: 100%;
   background-color: white;
   padding: 5% 10%;
