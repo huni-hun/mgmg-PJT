@@ -4,28 +4,29 @@
       <router-link class="logo" to="/main">
         <img class="logo" :src="img" alt="" />
       </router-link>
-      <router-link class="desk-nav-bar" to="/main">
-        <v-toolbar-title>몽글몽글</v-toolbar-title>
+      <router-link class="desk-nav-bar logo-text" to="/main">
+        <img class="logo-text" src="@/assets/logo/logo_only_text.png" alt="" />
       </router-link>
 
       <v-spacer class="desk-nav-bar"></v-spacer>
       <p>
-        <router-link class="desk-nav-bar" to="/">랜딩페이지</router-link>
+        <router-link class="desk-nav-bar router-link-active" to="/achieve"
+          >나의업적</router-link
+        >
       </p>
       <p>
-        <router-link class="desk-nav-bar" to="/achieve">나의업적</router-link>
-      </p>
-      <p>
-        <router-link class="desk-nav-bar" to="/statistics"
+        <router-link class="desk-nav-bar router-link-active" to="/statistics"
           >감정통계</router-link
         >
       </p>
       <p>
-        <router-link class="desk-nav-bar" to="/notice">공지사항</router-link>
+        <router-link class="desk-nav-bar router-link-active" to="/notice"
+          >공지사항</router-link
+        >
       </p>
       <v-spacer></v-spacer>
 
-      <v-menu offset-y>
+      <v-menu class="notifi" offset-y left transition="slide-y-transition">
         <template v-slot:activator="{ on, attrs }">
           <v-btn @click="inf_list" v-bind="attrs" v-on="on" icon>
             <v-badge v-if="isInf" bordered dot overlap color="red">
@@ -33,23 +34,25 @@
             </v-badge>
             <v-icon v-if="!isInf">mdi-bell-outline</v-icon>
           </v-btn>
-          <!-- <v-btn color="primary" dark v-bind="attrs" v-on="on"> Dropdown </v-btn> -->
         </template>
         <v-list>
           <v-list-item v-for="(inf, index) in infList" :key="index">
-            <v-list-item-title>
+            <v-list-item-title v-if="inf.notificationDate == ''">
+              {{ inf.notificationContent }}
+            </v-list-item-title>
+            <v-list-item-title v-else @click="clickAlarm()">
               {{ inf.notificationContent }} | {{ inf.notificationDate }}
             </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
 
-      <v-menu class="desk-nav-bar" offset-y>
+      <v-menu class="desk-nav-bar user-nav" offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-app-bar-nav-icon class="desk-nav-bar" v-bind="attrs" v-on="on"
-            ><h5 class="user-name" v-bind="attrs" v-on="on">
+            ><div class="user-name" v-bind="attrs" v-on="on">
               {{ userName }}님
-            </h5>
+            </div>
             <v-icon large>mdi-menu-down</v-icon></v-app-bar-nav-icon
           >
           <!-- <v-btn color="primary" dark v-bind="attrs" v-on="on"> Dropdown </v-btn> -->
@@ -74,7 +77,7 @@
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in moLtems" :key="index">
-            <v-list-item-title @click="menusMetod(item.link)">
+            <v-list-item-title @click="item.link;">
               {{ item.title }}
             </v-list-item-title>
           </v-list-item>
@@ -110,24 +113,22 @@ export default {
 
   data: () => ({
     items: [
-      { title: "메인페이지", link: "/main" },
       { title: "나의정보", link: "/my" },
       { title: "관심목록", link: "/interestlist" },
-      { title: "로그아웃", link: "/login" }, //그냥 로그아웃하면 됨???
+      { title: "로그아웃", link: "/login" },
     ],
     moLtems: [
-      { title: "나의 업적", link: "/achieve" },
-      { title: "감정 통계", link: "/statistics" },
+      { title: "나의업적", link: "/achieve" },
+      { title: "감정통계", link: "/statistics" },
       { title: "공지사항", link: "/notice" },
       { title: "나의정보", link: "/my" },
       { title: "관심목록", link: "/interestlist" },
-      { title: "로그아웃", link: "/login" }, //그냥 로그아웃하면 됨???
+      { title: "로그아웃", link: "/login" },
     ],
     notification: Object,
     infList: [],
     img: require("@/assets/emoticon/calm.png"),
-    isCheck: Boolean, //  <- 체크 알림 변수
-    // userName: "손님",
+    isCheck: Boolean,
     isLogin: false,
   }),
   methods: {
@@ -138,7 +139,7 @@ export default {
       if (!this.infList.length) {
         this.infList.push({
           notificationContent: "알림이 없습니다.",
-          notificationDate: "20xx-xx-xx",
+          notificationDate: "",
         });
       }
       this.setIsInf(false);
@@ -149,16 +150,17 @@ export default {
       sessionStorage.clear();
     },
     async checkNotification() {
-      // 체크 확인 변수
       this.isCheck = await notification_check(this.accessToken);
       this.setIsInf(this.isCheck.notificationFlag);
     },
     menusMetod(menulink) {
       if (menulink == "/login") {
-        // 로그아웃
         this.logout();
       }
       this.$router.push({ path: menulink });
+    },
+    clickAlarm() {
+      this.$router.push("/achieve");
     },
   },
   computed: {
@@ -178,10 +180,11 @@ p {
   padding-top: 1vh;
 }
 /* 라우터 링크 CSS 효과 */
-/* .router-link-active {
+.router-link-active {
   text-decoration: none;
   color: white;
-} */
+  font-size: clamp(1rem, 1.5vw, 1.8rem);
+}
 
 .user-name {
   color: aliceblue;
@@ -190,7 +193,15 @@ p {
 .logo {
   height: 100%;
 }
-
+.logo-text {
+  height: 100%;
+}
+.user-nav {
+  margin-left: 3%;
+}
+.notifi {
+  height: 100%;
+}
 @media (max-width: 639px) {
   /* 헤더 형태 변환은 display: none; 을 통해 이뤄짐. */
   .desk-nav-bar {
