@@ -33,6 +33,10 @@ export const userStore = {
       state.admin = data.admin;
     },
     IS_INF: (state, isInf) => (state.isInf = isInf),
+    SET_FONT: (state, fontNum) => {
+      state.diaryFont = fontNum;
+      console.log("폰트 저장됨", fontNum);
+    },
   },
   actions: {
     setUserInfoAuto({ commit }, data) {
@@ -43,6 +47,9 @@ export const userStore = {
     },
     setIsInf({ commit }, isInf) {
       commit("IS_INF", isInf);
+    },
+    setFont({ commit }, fontNum) {
+      commit("SET_FONT", fontNum);
     },
   },
 };

@@ -72,7 +72,6 @@ export default {
       "슬픔",
       "창피",
     ],
-
     emoImgs: [
       "angry",
       "annoyed",
@@ -85,16 +84,16 @@ export default {
       "sad",
       "shame",
     ],
-
-    weatherImg: [
-      "sunny",
-      "overcast",
-      "cloudy",
-      "windy",
-      "rain",
-      "snow",
-      "lightning",
-      "mild",
+    fontNames: [
+      "KyoboHandwriting2019",
+      "Misaeng",
+      "BoksungaTint",
+      "Onipgeul",
+      "KoteuraHuimang",
+      "Cafe24Oneprettynight",
+      "RidiBatang",
+      "YutoimgGodik",
+      "mabiyet",
     ],
 
     no: 0,
@@ -108,7 +107,7 @@ export default {
     font: "",
   }),
   computed: {
-    ...mapState("userStore", ["accessToken"]),
+    ...mapState("userStore", ["accessToken", "diaryFont"]),
   },
   methods: {
     editClick() {
@@ -176,11 +175,19 @@ export default {
       this.thema = res.diaryThema;
       this.emotion = res.emotion;
     });
-    this.font = "KyoboHandwriting2019";
+    this.font = this.fontNames[this.diaryFont];
     this.autoResizeTextarea(this.$refs.textarea);
   },
 };
 </script>
+
+
+
+
+
+
+
+
 
 
 <style scoped src="@/styles/diary/DiaryStyle.css"/>

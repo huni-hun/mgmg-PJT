@@ -1,18 +1,46 @@
 @font-face {
   font-family: "KyoboHandwriting2019";
-  src: url("KyoboHandwriting2019.ttf") format("truetype");
+  src: url("@/assets/font/myfont/KyoboHandwriting2019.ttf") format("truetype");
   font-weight: 100;
 }
-
+@font-face {
+  font-family: "Misaeng";
+  src: url("@/assets/font/myfont/Misaeng.ttf") format("truetype");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "BoksungaTint";
+  src: url("@/assets/font/myfont/BoksungaTint.ttf") format("truetype");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Onipgeul";
+  src: url("@/assets/font/myfont/Onipgeul.ttf") format("truetype");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "KoteuraHuimang";
+  src: url("@/assets/font/myfont/KoteuraHuimang.ttf") format("truetype");
+  font-weight: 100;
+}
 @font-face {
   font-family: "Cafe24Oneprettynight";
-  src: url("@/assets/font/Cafe24Oneprettynight.ttf");
+  src: url("@/assets/font/myfont/Cafe24Oneprettynight.ttf");
 }
-
 @font-face {
-  font-family: "강원교육모두";
-  src: url("강원교육모두Bold.otf");
-  font-weight: 600;
+  font-family: "RidiBatang";
+  src: url("@/assets/font/myfont/RidiBatang.otf");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "YutoimgGodik";
+  src: url("@/assets/font/myfont/YutoimgGodik.ttf");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "mabiyet";
+  src: url("@/assets/font/myfont/mabiyet.ttf");
+  font-weight: 100;
 }
 
 @font-face {

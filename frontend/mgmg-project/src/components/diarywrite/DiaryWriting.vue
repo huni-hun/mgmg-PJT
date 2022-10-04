@@ -83,7 +83,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import eventBus from "./eventBus.js";
-import { diaryDetailView, diaryEdit, diaryWrite, sttWrite, } from "@/api/diary.js";
+import { diaryDetailView, diaryEdit, diaryWrite, sttWrite } from "@/api/diary.js";
 import { notification_check } from "@/store/modules/etcStore";
 import { HZRecorder } from "@/components/diarywrite/HZRecorder.js";
 import LodingView from "./LodingView.vue";
@@ -102,6 +102,17 @@ export default {
         "snow",
         "lightning",
         "mild",
+      ],
+      fontNames: [
+        "KyoboHandwriting2019",
+        "Misaeng",
+        "BoksungaTint",
+        "Onipgeul",
+        "KoteuraHuimang",
+        "Cafe24Oneprettynight",
+        "RidiBatang",
+        "YutoimgGodik",
+        "mabiyet",
       ],
       uploadReady: true,
       date: "",
@@ -141,7 +152,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("userStore", ["accessToken", "userId"]),
+    ...mapState("userStore", ["accessToken", "userId", "diaryFont"]),
   },
   methods: {
     ...mapActions("userStore", ["setIsInf"]),
@@ -340,11 +351,13 @@ export default {
     });
     this.date = this.$route.params.date;
     this.no = this.$route.query.no;
-    this.font = "KyoboHandwriting2019";
+    this.font = this.fontNames[this.diaryFont];
     this.isEditView();
   },
 };
 </script>
+
+
 
 
 <style scoped src="@/styles/diary/DiaryStyle.css"/>
