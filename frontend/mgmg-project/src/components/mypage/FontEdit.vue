@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import CustomButton from "../common/CustomButton.vue";
 import Swal from "sweetalert2";
 import { changeFont } from "@/api/userApi.js";
@@ -33,14 +33,14 @@ export default {
     return {
       fontLst: [
         { fontNum: 0, name: "KyoboHandwriting2019.ttf", url: "1_교보손글씨" },
-        { fontNum: 1, name: "미생체.ttf", url: "2_미생체" },
-        { fontNum: 2, name: "봉숭아틴트.ttf", url: "3_봉숭아틴트" },
-        { fontNum: 3, name: "온글잎 의연체.ttf", url: "4_온글잎의연체" },
-        { fontNum: 4, name: "코트라희망체.ttf", url: "5_코트라희망체" },
+        { fontNum: 1, name: "Misaeng.ttf", url: "2_미생체" },
+        { fontNum: 2, name: "BoksungaTint.ttf", url: "3_봉숭아틴트" },
+        { fontNum: 3, name: "Onipgeul.ttf", url: "4_온글잎의연체" },
+        { fontNum: 4, name: "KoteuraHuimang.ttf", url: "5_코트라희망체" },
         { fontNum: 5, name: "Cafe24Oneprettynight.ttf", url: "6_카페24고운밤" },
-        { fontNum: 6, name: "리디바탕.otf", url: "7_리디바탕체" },
-        { fontNum: 7, name: "유토이미지고딕_R.ttf", url: "8_비비트리고딕" },
-        { fontNum: 8, name: "마비옛체.ttf", url: "9_마비옛체" },
+        { fontNum: 6, name: "RidiBatang.otf", url: "7_리디바탕체" },
+        { fontNum: 7, name: "YutoimgGodik.ttf", url: "8_비비트리고딕" },
+        { fontNum: 8, name: "mabiyet.ttf", url: "9_마비옛체" },
       ],
       selectedFont: "",
       selectedFontNum: 0,
@@ -51,12 +51,13 @@ export default {
     this.setdefaultFont();
   },
   computed: {
-    ...mapState("userStore", ["accessToken"]),
+    ...mapState("userStore", ["accessToken", "diaryFont"]),
   },
   methods: {
+    ...mapActions("userStore", ["setFont"]),
     // 기존 폰트 뭔지 초기화
     setdefaultFont() {
-      this.selectedFont = this.fontLst[this.$store.state.userStore.diaryFont].name;
+      this.selectedFont = this.fontLst[this.diaryFont].name;
     },
     // 폰트 선택할 때
     changeFont(new_font) {
@@ -71,7 +72,7 @@ export default {
       };
       await changeFont(this.accessToken, request);
 
-      this.$store.state.userStore.diaryFont = this.selectedFontNum;
+      this.setFont(this.selectedFontNum);
 
       Swal.fire({
         text: "글꼴이 변경되었습니다.",
