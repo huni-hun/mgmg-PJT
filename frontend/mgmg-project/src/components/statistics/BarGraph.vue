@@ -5,8 +5,10 @@
     </div>
     <br/>
     <div class="bar-data-board">
-      <img v-if="nameData" class="badge" :src="require(`@/assets/emoticon/${nameData}.png`)" alt="" />
-      <span id="check">
+      <div v-if="nameData" class="circle">
+        <img class="badge" :src="require(`@/assets/emoticon/${nameData}.png`)" alt="" />
+      </div>
+       <span id="check">
         요일 그래프를 선택해주세요!
       </span>
     </div>
@@ -344,6 +346,11 @@ export default {
 };
 </script>
 <style scoped>
+  .circle{
+    background: #ffffff;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
   /* 차트 그래프 */
   #bar-chart{
     height: 58vh;
@@ -357,9 +364,10 @@ export default {
   }
   /* 몽글이 이미지 */
   .badge{
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
     vertical-align:middle;
     height: 6vh;
-    margin-right: 1rem;
+    margin: 0.5rem;
   }
   /* 그래프 뒷배경 */
   #chart-range{ 
@@ -386,7 +394,6 @@ export default {
   .badge{
     vertical-align:middle;
     height: 6vh;
-    margin-right: 1rem;
   }
 
   #chart-range{ 
@@ -415,6 +422,9 @@ export default {
   }
   /* 작은 태블릿 세로*/
   @media (max-width: 767px) {
+    .circle{
+    margin-right: 0.5rem;
+  }
     #bar-chart{
     height: 39vh;
     width: 26vh;
@@ -426,7 +436,7 @@ export default {
   .badge{
     vertical-align:middle;
     height: 4vh;
-    margin-right: 1rem;
+    margin: 0.3rem;
   }
   }
 
