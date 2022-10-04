@@ -2,7 +2,7 @@
   <div class="giftEditBody">
     <v-container>
       <div class="giftEditTitle">
-        <v-row class="giftSurveyTitle" @click="test">관심 선물</v-row>
+        <v-row class="giftSurveyTitle">관심 선물</v-row>
         <v-row>좋아하는 선물 종류를 선택하세요.</v-row>
         <v-row>최소 1개, 최대 5개까지 선택할 수 있습니다.</v-row>
         <v-row><hr class="hrStyle" /></v-row>
@@ -114,9 +114,6 @@ export default {
     this.showaInterestGift();
   },
   methods: {
-    test() {
-      console.log(document.getElementById("underPrice").value);
-    },
     // 가격대 입력받기
     changeUnder() {
       this.underPrice = Number(document.getElementById("underPrice").value);
@@ -144,7 +141,6 @@ export default {
     },
     // 선물 선택. 선택리스트에 없으면 추가, 있으면 제거
     addGift(gift) {
-      console.log(this.selectedGift);
       if (this.selectedGift.includes(gift)) {
         if (this.selectedGift.length == 1) {
           return;
@@ -155,7 +151,6 @@ export default {
       } else {
         this.selectedGift.push(gift);
       }
-      console.log(this.selectedGift);
     },
     // 선물 리스트 조회
     async showaInterestGift() {
@@ -179,7 +174,6 @@ export default {
           Swal.fire({
             text: "선물 종류가 정상적으로 변경되었습니다.",
             icon: "success",
-            // iconColor: "#000000",
             confirmButtonColor: "#666666",
             confirmButtonText: "확인",
           });

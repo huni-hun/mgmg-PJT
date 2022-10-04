@@ -14,84 +14,27 @@
         @ruleCheckSignup="setRuleCheck"
         @finalValidSignup="finalValidCheck"
       />
-      <MusicSurvey
-        v-if="signupOrder == 2"
-        :selectMusic="selectMusic"
-        @updateMusic="setMusic1"
-      />
-      <MusicSurveySecond
-        v-if="signupOrder == 3"
-        :selectMusicSecond="selectMusicSecond"
-        @updateMusicSecond="setMusic2"
-      />
-      <GiftSurvey
-        v-if="signupOrder == 4"
-        @selectGifts="setGift"
-        @upperPriceSignup="setUpperPrice"
-        @underPriceSignup="setUnderPrice"
-      />
+      <MusicSurvey v-if="signupOrder == 2" :selectMusic="selectMusic" @updateMusic="setMusic1" />
+      <MusicSurveySecond v-if="signupOrder == 3" :selectMusicSecond="selectMusicSecond" @updateMusicSecond="setMusic2" />
+      <GiftSurvey v-if="signupOrder == 4" @selectGifts="setGift" @upperPriceSignup="setUpperPrice" @underPriceSignup="setUnderPrice" />
 
       <div class="signupButton1Page" v-if="signupOrder == 1">
-        <customButton
-          class="signupButton"
-          btnText="다음"
-          id="page1Next"
-          @click="signupNext1page"
-        ></customButton>
+        <customButton class="signupButton" btnText="다음" id="page1Next" @click="signupNext1page"></customButton>
       </div>
 
-      <div
-        class="signupButton2Page justify_content_center"
-        v-if="signupOrder == 2"
-      >
-        <customButton
-          class="signupButton"
-          btnText="이전"
-          id="page2Before"
-          @click="signupBefore"
-        ></customButton>
-        <customButton
-          class="signupButton"
-          btnText="다음"
-          id="page2Next"
-          @click="signupNext2page"
-        ></customButton>
+      <div class="signupButton2Page justify_content_center" v-if="signupOrder == 2">
+        <customButton class="signupButton" btnText="이전" id="page2Before" @click="signupBefore"></customButton>
+        <customButton class="signupButton" btnText="다음" id="page2Next" @click="signupNext2page"></customButton>
       </div>
 
-      <div
-        class="signupButton3Page justify_content_center"
-        v-if="signupOrder == 3"
-      >
-        <customButton
-          class="signupButton"
-          btnText="이전"
-          id="page3Before"
-          @click="signupBefore"
-        ></customButton>
-        <customButton
-          class="signupButton"
-          btnText="다음"
-          id="page3Next"
-          @click="signupNext3page"
-        ></customButton>
+      <div class="signupButton3Page justify_content_center" v-if="signupOrder == 3">
+        <customButton class="signupButton" btnText="이전" id="page3Before" @click="signupBefore"></customButton>
+        <customButton class="signupButton" btnText="다음" id="page3Next" @click="signupNext3page"></customButton>
       </div>
 
-      <div
-        class="signupButton4Page justify_content_center"
-        v-if="signupOrder == 4"
-      >
-        <customButton
-          class="signupButton"
-          btnText="이전"
-          id="page4Before"
-          @click="signupBefore"
-        ></customButton>
-        <customButton
-          class="signupButton"
-          btnText="완료"
-          id="page4FNext"
-          @click="signUp"
-        ></customButton>
+      <div class="signupButton4Page justify_content_center" v-if="signupOrder == 4">
+        <customButton class="signupButton" btnText="이전" id="page4Before" @click="signupBefore"></customButton>
+        <customButton class="signupButton" btnText="완료" id="page4FNext" @click="signUp"></customButton>
       </div>
     </div>
   </div>
@@ -156,32 +99,18 @@ export default {
 
   methods: {
     finalValidCheck(value) {
-      // this.parentValid = this.finalValid;
       this.finalValid = value;
-      console.log("최종 유효성 평가", this.finalValid);
     },
     signupBefore() {
       this.signupOrder--;
     },
     signupNext1page() {
-      console.log(
-        this.userId,
-        this.userPassword,
-        this.userEmail,
-        this.userName,
-        this.userBirth,
-        this.userGender,
-        this.userRuleCheck,
-        this.userUnderPrice,
-        this.userUpperPrice
-      );
       if (this.finalValid) {
         this.signupOrder++;
       } else {
         Swal.fire({
           text: "입력한 정보를 다시 확인하세요.",
           icon: "warning",
-          // iconColor: "#000000",
           confirmButtonColor: "#666666",
           confirmButtonText: "확인",
         });
@@ -212,7 +141,6 @@ export default {
         Swal.fire({
           text: "감정별로 음악 장르를 1개 이상 선택해야 합니다.",
           icon: "warning",
-          // iconColor: "#000000",
           confirmButtonColor: "#666666",
           confirmButtonText: "확인",
         });
@@ -225,9 +153,7 @@ export default {
       var rep;
       var gen;
       for (rep = 0; rep < 5; rep++) {
-        if (
-          typeof this.selectMusicSecond[this.emotionLst2[rep]] == "undefined"
-        ) {
+        if (typeof this.selectMusicSecond[this.emotionLst2[rep]] == "undefined") {
           isAllChecked = false;
           break;
         }
@@ -257,7 +183,6 @@ export default {
     },
     setGift(value) {
       this.selectGift = value;
-      console.log("부모!!!!!!!", this.selectGift);
     },
     setMusic1() {
       var emoRep;
@@ -265,9 +190,7 @@ export default {
         var genRep;
         for (genRep = 0; genRep < 8; genRep++) {
           if (this.selectMusic[this.emotionLst1[emoRep]][genRep] != "") {
-            this.musicTaste[this.emotionLst1[emoRep]].push(
-              this.selectMusic[this.emotionLst1[emoRep]][genRep]
-            );
+            this.musicTaste[this.emotionLst1[emoRep]].push(this.selectMusic[this.emotionLst1[emoRep]][genRep]);
           }
         }
       }
@@ -278,62 +201,37 @@ export default {
         var genRep;
         for (genRep = 0; genRep < 8; genRep++) {
           if (this.selectMusicSecond[this.emotionLst2[emoRep]][genRep] != "") {
-            this.musicTaste[this.emotionLst2[emoRep]].push(
-              this.selectMusicSecond[this.emotionLst2[emoRep]][genRep]
-            );
+            this.musicTaste[this.emotionLst2[emoRep]].push(this.selectMusicSecond[this.emotionLst2[emoRep]][genRep]);
           }
         }
       }
     },
     setUserid(value) {
       this.userId = value;
-      console.log(this.userId);
     },
     setUserpassword(value) {
       this.userPassword = value;
-      console.log(this.userPassword);
     },
     setUseremail(value) {
       this.userEmail = value;
-      console.log(this.userEmail);
     },
     setUserName(value) {
       this.userName = value;
-      console.log(this.userName);
     },
     setUserBirth(value) {
       this.userBirth = value;
-      console.log(this.userBirth);
     },
     setUserGender(value) {
       this.userGender = value;
-      console.log(this.userGender);
     },
     setRuleCheck(value) {
       this.userRuleCheck = value;
-      console.log(this.userRuleCheck);
     },
     setUpperPrice(value) {
       this.userUpperPrice = value;
-      console.log(this.userUpperPrice);
     },
     setUnderPrice(value) {
       this.userUnderPrice = value;
-      console.log(this.userUnderPrice);
-    },
-    check() {
-      console.log(
-        this.userId,
-        this.userPassword,
-        this.userEmail,
-        this.userName,
-        this.userBirth,
-        this.userGender,
-        this.userRuleCheck,
-        this.userUnderPrice,
-        this.userUpperPrice
-      );
-      console.log(this.selectGift, this.selectMusic);
     },
     async signUp() {
       this.setMusic1();
@@ -368,7 +266,6 @@ export default {
           Swal.fire({
             text: "회원가입에 성공했습니다. 로그인 해주세요.",
             icon: "success",
-            // iconColor: "#000000",
             confirmButtonColor: "#666666",
             confirmButtonText: "확인",
           });

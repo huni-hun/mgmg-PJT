@@ -1,7 +1,7 @@
 <template>
   <div class="myCheckBody">
     <div class="titleLabel">
-      <label for="" @click="test">본인 인증</label>
+      <label for="">본인 인증</label>
     </div>
 
     <div>
@@ -61,10 +61,6 @@ export default {
     ...mapState("userStore", ["accessToken"]),
   },
   methods: {
-    test() {
-      // console.log(this.$store.state.userStore.userId);
-      // console.log(this.$store.state.userStore.accessToken);
-    },
     async myCheck() {
       var check_pw = document.getElementById("pwMyCheckInput").value;
 
@@ -79,11 +75,8 @@ export default {
         .catch((err) => {
           console.log(err);
           Swal.fire({
-            // toast: true,
-            // title: "ID 누락",
             text: "입력하신 회원 정보와 일치하는 정보가 없습니다.",
             icon: "warning",
-            // iconColor: "#000000",
             confirmButtonColor: "#666666",
             confirmButtonText: "확인",
             // },
@@ -149,7 +142,6 @@ export default {
   width: 100%;
 }
 .inputStyle:deep(fieldset) {
-  /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
   padding: 0;

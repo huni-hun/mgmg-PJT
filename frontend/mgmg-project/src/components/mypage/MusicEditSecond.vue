@@ -38,7 +38,6 @@
 <script>
 import CustomButton from "../common/CustomButton.vue";
 import Swal from "sweetalert2";
-// import { showInterestMusic } from "@/api/userApi.js";
 import { changeInterestMusic } from "@/api/userApi.js";
 export default {
   data() {
@@ -69,13 +68,10 @@ export default {
       this.interestMusicPage--;
     },
     musicEditNext1Page() {
-      console.log(this.musicTaste);
       var isAllChecked = true;
       var rep;
       //하나라도 비어있는 항목 있으면 안됨.
       for (rep = 0; rep < 5; rep++) {
-        console.log(this.emotionLst1[rep]);
-        console.log(this.musicTaste[this.emotionLst1[rep]]);
         if (typeof this.musicTaste[this.emotionLst1[rep]] == "undefined" || this.musicTaste[this.emotionLst1[rep]].length == 0) {
           isAllChecked = false;
         }
@@ -84,7 +80,6 @@ export default {
         Swal.fire({
           text: "감정별로 음악 장르를 1개 이상 선택해야 합니다.",
           icon: "warning",
-          // iconColor: "#000000",
           confirmButtonColor: "#666666",
           confirmButtonText: "확인",
         });
@@ -97,8 +92,6 @@ export default {
       var rep;
       //하나라도 비어있는 항목 있으면 안됨.
       for (rep = 0; rep < 5; rep++) {
-        console.log(this.emotionLst2[rep]);
-        console.log(this.musicTaste[this.emotionLst2[rep]]);
         if (typeof this.musicTaste[this.emotionLst2[rep]] == "undefined" || this.musicTaste[this.emotionLst2[rep]].length == 0) {
           isAllChecked = false;
         }
@@ -107,7 +100,6 @@ export default {
         Swal.fire({
           text: "감정별로 음악 장르를 1개 이상 선택해야 합니다.",
           icon: "warning",
-          // iconColor: "#000000",
           confirmButtonColor: "#666666",
           confirmButtonText: "확인",
         });
@@ -124,7 +116,6 @@ export default {
         //있으면 삭제
         this.musicTaste[emotion].pop(genre);
       }
-      console.log(this.musicTaste);
     },
 
     // 음악 리스트 변경
@@ -139,7 +130,6 @@ export default {
           Swal.fire({
             text: "음악 장르가 정상적으로 변경되었습니다.",
             icon: "success",
-            // iconColor: "#000000",
             confirmButtonColor: "#666666",
             confirmButtonText: "확인",
           });

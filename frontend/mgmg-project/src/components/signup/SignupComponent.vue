@@ -160,11 +160,6 @@ import { emailNumCheck } from "@/api/userApi.js";
 
 export default {
   props: ["userid", "userpassword", "useremail", "username", "userbirth", "usergender", "userrulecheck"],
-  computed: {
-    testComputed() {
-      return this.userId;
-    },
-  },
   data() {
     return {
       // 비밀번호인풋
@@ -265,27 +260,12 @@ export default {
         this.emailAuthentication &&
         this.ruleCheck;
       this.$emit("finalValidSignup", finalValidation);
-
-      console.log("자식 최종 유효성 평가", finalValidation);
-      console.log("아이디유효성", this.idValidation);
-      console.log("비밀번호유효성", this.pwValidation);
-      console.log("이메일유효성", this.emailValidation);
-      console.log("이름유효성", this.nameValidation);
-      console.log("성별유효성", this.GenderValidation);
-      console.log("아이디중복", this.idDuplicated);
-      console.log("이메일중복", this.emailDuplicated);
-      console.log("약관동의", this.ruleCheck);
-    },
-    //테스트용 메소드
-    test() {
-      console.log("결과");
     },
     // 아이디 정규식 검사
     idValidationCheck(user_id) {
       const regId = /^[A-Za-z](?=.*?[A-Za-z])(?=.*?[0-9])[a-zA-Z0-9]{5,15}$/;
       if (regId.test(user_id)) {
         this.userId = user_id;
-        console.log(user_id);
         this.$emit("useridSignup", user_id);
         this.idValidation = true;
         this.finalValidSignup();
@@ -378,13 +358,10 @@ export default {
             this.idDuplicated = false;
             this.finalValidSignup();
           });
-        console.log("아이디 중복검사결과", this.idDuplicated);
       }
     },
     // 이메일 api 전송
     async emailDubleCheck() {
-      console.log(this.emailValidation);
-      console.log(this.userEmail);
       if (this.emailValidation) {
         var user_email = this.userEmail;
         Swal.fire({
@@ -459,7 +436,6 @@ export default {
     //생일 날짜 emit
     birthCheck() {
       this.$emit("userbirthSignup", this.date);
-      // console.log(this.date);
     },
     // 성별 선택
     changeGender(gender) {
@@ -570,7 +546,6 @@ export default {
 }
 
 .inputStyle:deep(fieldset) {
-  /* border-color: rgb(255, 250, 250); */
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
   padding: 0;

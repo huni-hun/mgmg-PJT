@@ -28,32 +28,14 @@
         <div>
           <label class="infoEditBodyContent" for="">{{ userEmail }}</label>
         </div>
-        <!-- <CustomInput v-model="emailInfoEditInput" class="" /> -->
       </div>
 
       <div class="infoEditLine">
         <div class="infoEditBodyLabel"><label for="">생년월일</label></div>
         <div class="infoEditBodyContent">
-          <v-menu
-            v-model="menu2"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-          >
+          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                single-line
-                outlined
-                v-model="date"
-                class="inputStyle"
-                append-icon="mdi-calendar"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-                id="birthSignupInput"
-              ></v-text-field>
+              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
             </template>
             <v-date-picker
               :weekday-format="getDay"
@@ -73,27 +55,13 @@
           <label for="" id="genderInfoEditLabel">성별</label>
         </div>
         <div class="infoEditGenderContent">
-          <CustomButton
-            class="genderButton"
-            :class="{ selectedGender: userGenderNum == 1 }"
-            @click="changeGender(1)"
-            btnText="남자"
-          />
-          <CustomButton
-            class="genderButton"
-            :class="{ selectedGender: userGenderNum == 2 }"
-            @click="changeGender(2)"
-            btnText="여자"
-          />
+          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
+          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
         </div>
       </div>
 
       <div class="infoEditButtonLine">
-        <CustomButton
-          class="infoEditButton"
-          btnText="수정하기"
-          @click="userInfoEdit"
-        />
+        <CustomButton class="infoEditButton" btnText="수정하기" @click="userInfoEdit" />
       </div>
     </div>
   </div>
@@ -125,9 +93,7 @@ export default {
         labelText: "이름을 입력하세요.",
         rules: [
           (v) => !!v || "이름은 필수값입니다.",
-          (v) =>
-            /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/.test(v) ||
-            "이름은 한글과 영어만 입력 받습니다.",
+          (v) => /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/.test(v) || "이름은 한글과 영어만 입력 받습니다.",
           (v) => this.nameValidationCheck(v) || "이름은 한 글자 이상입니다.",
         ],
         hint: "이름을 입력하세요.",
@@ -147,39 +113,13 @@ export default {
       return daysOfWeek[i];
     },
     getMonth(date) {
-      const monthName = [
-        "1월",
-        "2월",
-        "3월",
-        "4월",
-        "5월",
-        "6월",
-        "7월",
-        "8월",
-        "9월",
-        "10월",
-        "11월",
-        "12월",
-      ];
+      const monthName = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
 
       let i = new Date(date).getMonth(date);
       return monthName[i];
     },
     getHeaderTitleMonth(date) {
-      const monthName = [
-        "1월",
-        "2월",
-        "3월",
-        "4월",
-        "5월",
-        "6월",
-        "7월",
-        "8월",
-        "9월",
-        "10월",
-        "11월",
-        "12월",
-      ];
+      const monthName = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
       let i = new Date(date).getMonth(date);
       const year = new Date(date).getFullYear(date);
       const month = monthName[i];
@@ -193,7 +133,6 @@ export default {
       this.userName = "민영김";
       this.changeGender(1);
       this.userId = "qwer";
-      console.log(this.userGender, this.userGenderNum);
     },
     async firstProcess() {
       let response = await showUserInfo(this.accessToken);

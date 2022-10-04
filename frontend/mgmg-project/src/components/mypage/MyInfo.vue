@@ -45,11 +45,7 @@
       </div>
 
       <div class="myInfoButtonLine">
-        <CustomButton
-          class="myInfoButton"
-          btnText="수정하기"
-          @click="gotoInfoEdit"
-        />
+        <CustomButton class="myInfoButton" btnText="수정하기" @click="gotoInfoEdit" />
       </div>
     </div>
   </div>

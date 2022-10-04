@@ -57,7 +57,6 @@ import { changeInterestMusic } from "@/api/userApi.js";
 export default {
   data() {
     return {
-      happy: "",
       interestMusicPage: 1,
 
       emotionLst1: ["평온", "기쁨", "사랑", "짜증", "피곤"],
@@ -135,18 +134,10 @@ export default {
           console.log(err);
         });
     },
-    test() {
-      console.log(this.happy);
-    },
-    // setgenreLst2() {
-    //   this.genreLst2 = [...this.genreLst];
-    // },
     musicEditBefore1Page() {
       this.interestMusicPage--;
-      console.log("이전페이지 넘어감", this.input1);
     },
     musicEditNext1Page() {
-      console.log("다음버튼누름", this.input1);
       var isAllChecked = true;
       var rep;
       var gen;
@@ -156,14 +147,11 @@ export default {
         for (gen = 0; gen < 8; gen++) {
           if (this.input1[this.emotionLst1[rep]][gen]) {
             isNotEmpty = true;
-            // console.log("감정은", this.emotionLst1[rep]);
-            // console.log(this.input1[this.emotionLst1[rep]][gen]);
           }
         }
         console.log("isNotEmpty", isNotEmpty);
         if (isNotEmpty == false) {
           isAllChecked = false;
-          // console.log("isAllChecked", isAllChecked);
         }
         isNotEmpty = false;
       }
@@ -176,11 +164,9 @@ export default {
         });
       } else {
         this.interestMusicPage++;
-        console.log("다음페이지 넘어감", this.input1);
       }
     },
     musicEditFinish() {
-      console.log("최종단계시작", this.input1);
       var isAllChecked = true;
       var rep;
       var gen;
@@ -190,14 +176,10 @@ export default {
         for (gen = 0; gen < 8; gen++) {
           if (this.input1[this.emotionLst2[rep]][gen]) {
             isNotEmpty = true;
-            console.log("감정은", this.emotionLst2[rep]);
-            console.log(this.input1[this.emotionLst2[rep]][gen]);
           }
         }
-        console.log("isNotEmpty", isNotEmpty);
         if (isNotEmpty == false) {
           isAllChecked = false;
-          console.log("isAllChecked", isAllChecked);
         }
         isNotEmpty = false;
       }
@@ -213,15 +195,12 @@ export default {
         for (emoRep = 0; emoRep < 10; emoRep++) {
           var genRep;
           for (genRep = 0; genRep < 8; genRep++) {
-            console.log(this.musicTaste[this.emotionLst[emoRep]]);
             if (this.input1[this.emotionLst[emoRep]][genRep] != "") {
               this.musicTaste[this.emotionLst[emoRep]].push(this.input1[this.emotionLst[emoRep]][genRep]);
             }
-            console.log(this.musicTaste[this.emotionLst[emoRep]]);
           }
         }
         this.mypageMusicEdit();
-        console.log(this.musicTaste);
       }
     },
 
@@ -237,7 +216,6 @@ export default {
           Swal.fire({
             text: "음악 장르가 정상적으로 변경되었습니다.",
             icon: "success",
-            // iconColor: "#000000",
             confirmButtonColor: "#666666",
             confirmButtonText: "확인",
           });
@@ -263,7 +241,6 @@ export default {
 .musicEditBody {
   width: 100%;
   padding: 5% 0 5% 0;
-  /* padding: 7% 10%; */
   display: flex;
   flex-direction: column;
   background-color: white;

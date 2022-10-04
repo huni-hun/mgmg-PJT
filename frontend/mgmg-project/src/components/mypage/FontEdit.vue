@@ -10,9 +10,7 @@
 
     <div class="fontEditLstBody">
       <div class="fontEditLstBox" :class="{ selected: font.name == selectedFont }" v-for="(font, index) in fontLst" :key="index" name="fontSelect" @click="changeFont(index)">
-        <!-- <div class="fontLstBox"> -->
         <img class="fontImage" :src="require(`../../assets/fontlist/${font.url}.png`)" alt="" />
-        <!-- </div> -->
       </div>
     </div>
 
@@ -23,6 +21,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import CustomButton from "../common/CustomButton.vue";
 import Swal from "sweetalert2";
 import { changeFont } from "@/api/userApi.js";
@@ -48,6 +47,9 @@ export default {
   mounted() {
     this.setdefaultFont();
   },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
+  },
   methods: {
     // 기존 폰트 뭔지 초기화
     setdefaultFont() {
@@ -58,28 +60,23 @@ export default {
       this.selectedFont = this.fontLst[new_font].name;
       this.selectedFontNum = this.fontLst[new_font].fontNum;
       this.selectedFontName = this.fontLst[new_font].name;
-      console.log(this.selectedFontName);
     },
     // 폰트 변경 버튼 선택시
     async userChangeFont() {
       var request = {
         diaryFont: this.selectedFontNum,
       };
-      let response = await changeFont(request);
-      console.log(request);
+      let response = await changeFont(this.accessToken, request);
       console.log("응답 데이터", response);
 
       this.$store.state.userStore.diaryFont = this.selectedFontNum;
-      console.log("폰트번호", this.$store.state.userStore.diaryFont);
 
       Swal.fire({
         text: "글꼴이 변경되었습니다.",
         icon: "success",
-        // iconColor: "#000000",
         confirmButtonColor: "#666666",
         confirmButtonText: "확인",
       });
-      // this.$router.push("/main");
     },
   },
   components: { CustomButton },

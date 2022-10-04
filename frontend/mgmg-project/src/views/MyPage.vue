@@ -116,7 +116,6 @@ export default {
 .mypageTotalBody {
   margin-top: 2vw;
   width: 80%;
-  /* height: 50vh; */
 }
 .mypageBody {
   display: flex;
@@ -133,10 +132,6 @@ export default {
   margin: 5% 0;
   padding-left: 5%;
 }
-/* .bannerLabel {
-  display: block;
-  padding: 10% 5%;
-} */
 .bannerMenuLabel {
   margin: 0;
   padding: 5%;

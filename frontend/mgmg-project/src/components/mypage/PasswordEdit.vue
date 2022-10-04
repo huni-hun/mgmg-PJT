@@ -115,7 +115,6 @@ export default {
   },
   methods: {
     async userPasswordEdit() {
-      console.log(this.userPw);
       if (this.pwValidation && this.pwCheckValidation) {
         var new_password = this.userPw;
 
@@ -131,7 +130,6 @@ export default {
               confirmButtonColor: "#666666",
               confirmButtonText: "확인",
             });
-            // this.$router.push("/mypage/myinfo");
           })
           .catch((err) => {
             console.log(err);

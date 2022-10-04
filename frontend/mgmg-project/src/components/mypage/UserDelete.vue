@@ -23,20 +23,20 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import { deleteUser } from "@/api/userApi.js";
 
 export default {
   methods: {
     async userDelete() {
-      console.log("회원탈퇴");
-      await deleteUser()
+      await deleteUser(this.accessToken)
         .then((res) => {
           console.log(res);
           this.$cookies.remove("autoLoginCookie");
           this.$cookies.remove("userIdCookie");
           sessionStorage.clear();
-          
+
           Swal.fire({
             text: "회원 탈퇴가 정상적으로 처리되었습니다.",
             icon: "success",
@@ -55,6 +55,9 @@ export default {
           });
         });
     },
+  },
+  computed: {
+    ...mapState("userStore", ["accessToken"]),
   },
 };
 </script>
