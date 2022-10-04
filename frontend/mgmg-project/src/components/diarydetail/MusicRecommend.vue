@@ -86,7 +86,7 @@ export default {
       else this.radioCheck = event.target.value;
     },
   },
-  async beforeUnmount() {
+  async beforeDestroy() {
     if (this.beforeRadioCheck == this.radioCheck) return;
     else if (this.radioCheck == "good") {
       if (this.beforeRadioCheck == "bad") {
@@ -129,7 +129,7 @@ export default {
         this.musicArtist = res.music.artist;
         this.musicYear = res.music.releaseDate;
         this.musicNo = res.music.musicNo;
-        this.getYoutubeList();
+        // this.getYoutubeList(); // youtube 보여주기
       })
       .catch((err) => {
         console.log("음악 데이터 실패", err);
@@ -137,6 +137,20 @@ export default {
   },
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
