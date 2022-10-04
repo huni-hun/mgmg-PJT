@@ -4,10 +4,12 @@
       <span>이 날의 추천 선물</span>
     </div>
     <div v-if="!isClick" class="giftBoxDiv">
-      <img loading="lazy" alt="giftbox" src="@/assets/diary/giftbox.png" @click="giftView" />
+      <span>"click!!"</span>
+      <v-icon large>mdi-arrow-down-thin</v-icon>
+      <img loading="lazy" class="giftbox" alt="giftbox" src="@/assets/diary/giftbox.png" @click="giftView" />
     </div>
     <div class="gridDiv" v-else>
-      <v-img class="productImg" alt="선물 이미지" :src="giftImg" />
+      <v-img class="productImg" lazy alt="선물 이미지" :src="giftImg" />
       <div class="v-line"></div>
       <div class="outFlexDiv">
         <div class="giftInfo">
