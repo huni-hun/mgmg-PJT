@@ -98,6 +98,7 @@ hr {
   max-width: 190px;
   width: 100%;
   height: auto;
+  filter: drop-shadow(3px 3px 3px rgb(133, 133, 133));
 }
 
 .textFlex {
