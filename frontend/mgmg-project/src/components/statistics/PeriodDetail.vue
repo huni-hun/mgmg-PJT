@@ -4,12 +4,20 @@
       <v-row>
         <v-col cols="12" md="6">
           <div class="donut-frame">
-            <donut-graph :startDate="startDate" :endDate="endDate" @send-emotion="sendEmotion" />
+            <donut-graph
+              :startDate="startDate"
+              :endDate="endDate"
+              @send-emotion="sendEmotion"
+            />
           </div>
         </v-col>
         <v-col cols="12" md="6">
           <div class="period-board">
-            <img class="sticker" :src="require(`@/assets/statistics/adehesive_plaster.png`)" alt="" />
+            <img
+              class="sticker"
+              :src="require(`@/assets/statistics/adehesive_plaster.png`)"
+              alt=""
+            />
 
             <br />
             <!-- 달력 picker -->
@@ -17,11 +25,39 @@
               <v-row justify="center">
                 <v-dialog v-model="isPicker" persistent max-width="290">
                   <v-card>
-                    <v-text-field v-model="dateRangeText" background-color="#FFF" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
-                    <v-date-picker v-model="dates" range no-title :max="today" :min="allowMaxDate" color="green" class="custom-picker">
+                    <v-text-field
+                      v-model="dateRangeText"
+                      background-color="#FFF"
+                      label="Date range"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                    ></v-text-field>
+                    <v-date-picker
+                      v-model="dates"
+                      range
+                      no-title
+                      :max="today"
+                      :min="allowMaxDate"
+                      color="green"
+                      class="custom-picker"
+                    >
                       <v-spacer />
-                      <v-btn text class="font-weight-bold" color="gray" @click="selectFunc()"> 취소 </v-btn>
-                      <v-btn text class="font-weight-bold" color="green " @click="pickerFunc()"> 확인 </v-btn>
+                      <v-btn
+                        text
+                        class="font-weight-bold"
+                        color="gray"
+                        @click="selectFunc()"
+                      >
+                        취소
+                      </v-btn>
+                      <v-btn
+                        text
+                        class="font-weight-bold"
+                        color="green "
+                        @click="pickerFunc()"
+                      >
+                        확인
+                      </v-btn>
                     </v-date-picker>
                   </v-card>
                 </v-dialog>
@@ -31,21 +67,39 @@
             <div v-else class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn class="periodMenu" color="primary" dark v-bind="attrs" v-on="on">
+                  <v-btn
+                    class="periodMenu"
+                    color="primary"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                  >
                     {{ menuTitle }}
                     <v-icon class="periodMenuIcon" large>mdi-menu-down</v-icon>
                   </v-btn>
                 </template>
                 <v-list>
                   <v-list-item v-for="(item, index) in items" :key="index">
-                    <v-list-item-title @click="periodFunc(item.func)">{{ item.title }}</v-list-item-title>
+                    <v-list-item-title @click="periodFunc(item.func)">{{
+                      item.title
+                    }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
               </v-menu>
-              <p @click="selectFunc()" class="date-period">{{ startDate }} ~ {{ endDate }}</p>
-              <p v-if="!isMostEmotion" class="most-emotion">일기를 쓰면 배지를 선물로 줘요.</p>
-              <p v-else class="most-emotion">제일 많이 느낀 감정 : "{{ mostEmotion }}"</p>
-              <img class="period-badge" :src="require(`@/assets/emoticon/${imgSticker}.png`)" alt="" />
+              <p @click="selectFunc()" class="date-period">
+                {{ startDate }} ~ {{ endDate }}
+              </p>
+              <p v-if="!isMostEmotion" class="most-emotion">
+                일기를 쓰면 배지를 선물로 줘요.
+              </p>
+              <p v-else class="most-emotion">
+                제일 많이 느낀 감정 : "{{ mostEmotion }}"
+              </p>
+              <img
+                class="period-badge"
+                :src="require(`@/assets/emoticon/${imgSticker}.png`)"
+                alt=""
+              />
               <p class="explanation">{{ emotionExplanation }}</p>
               <p class="by-person">by. {{ explanationPerson }}</p>
             </div>
@@ -172,7 +226,20 @@ export default {
       return daysOfWeek[i];
     },
     getMonth(date) {
-      const monthName = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+      const monthName = [
+        "1월",
+        "2월",
+        "3월",
+        "4월",
+        "5월",
+        "6월",
+        "7월",
+        "8월",
+        "9월",
+        "10월",
+        "11월",
+        "12월",
+      ];
 
       let i = new Date(date).getMonth(date);
       return monthName[i];

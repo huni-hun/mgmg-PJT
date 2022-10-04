@@ -4,7 +4,11 @@
       <v-sheet class="achieve-list-sheet" color="rgba(255, 255, 255, 0.3)">
         <v-container fluid>
           <v-row align-content="space-around" class="five-cols">
-            <v-col class="badge-list-col" v-for="badge in item" :key="badge.badgeNo">
+            <v-col
+              class="badge-list-col"
+              v-for="badge in item"
+              :key="badge.badgeNo"
+            >
               <achieveBadge :badge="badge" :isMobile="isMobile" />
             </v-col>
           </v-row>

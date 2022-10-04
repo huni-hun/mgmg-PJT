@@ -2,14 +2,52 @@
   <div class="badge-frame text-center">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
-        <img v-if="badge.badgeName == '없음'" class="achieve-badge" :src="require(`@/assets/badge/dumpbadge.png`)" alt="" loading="lazy" />
-        <img v-else-if="badge.achievedBadgeFlag" v-bind="attrs" v-on="on" class="achieve-badge" :src="require(`@/assets/badge/a${badge.badgeNo}.png`)" alt="" loading="lazy" />
-        <img v-else v-bind="attrs" v-on="on" class="achieve-badge" :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)" alt="" loading="lazy" />
-        <div :class="{ 'left-shelf': shelfValue === 'left-shelf', 'right-shelf': shelfValue === 'right-shelf', shelf: shelfValue === 'shelf' }"></div>
+        <img
+          v-if="badge.badgeName == '없음'"
+          class="achieve-badge"
+          :src="require(`@/assets/badge/dumpbadge.png`)"
+          alt=""
+          loading="lazy"
+        />
+        <img
+          v-else-if="badge.achievedBadgeFlag"
+          v-bind="attrs"
+          v-on="on"
+          class="achieve-badge"
+          :src="require(`@/assets/badge/a${badge.badgeNo}.png`)"
+          alt=""
+          loading="lazy"
+        />
+        <img
+          v-else
+          v-bind="attrs"
+          v-on="on"
+          class="achieve-badge"
+          :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)"
+          alt=""
+          loading="lazy"
+        />
+        <div
+          :class="{
+            'left-shelf': shelfValue === 'left-shelf',
+            'right-shelf': shelfValue === 'right-shelf',
+            shelf: shelfValue === 'shelf',
+          }"
+        ></div>
       </template>
       <!-- 모달 컴포넌트 -->
-      <attainModal v-if="badge.achievedBadgeFlag" :badge="badge" :isMobile="isMobile" @set-dialog="isDialog" />
-      <noAttainModal v-if="!badge.achievedBadgeFlag" :badge="badge" :isMobile="isMobile" @set-dialog="isDialog" />
+      <attainModal
+        v-if="badge.achievedBadgeFlag"
+        :badge="badge"
+        :isMobile="isMobile"
+        @set-dialog="isDialog"
+      />
+      <noAttainModal
+        v-if="!badge.achievedBadgeFlag"
+        :badge="badge"
+        :isMobile="isMobile"
+        @set-dialog="isDialog"
+      />
     </v-dialog>
   </div>
 </template>
@@ -84,7 +122,7 @@ export default {
 }
 .shelf {
   background-color: #ecececda;
-  height: 1rem;
+  height: 1.8rem;
   width: 100%;
   margin-bottom: 0.5rem;
   box-shadow: 0.5rem 0.5rem 5px #9797979d;
@@ -92,7 +130,7 @@ export default {
 
 .left-shelf {
   background-color: #ecececda;
-  height: 1rem;
+  height: 1.8rem;
   width: 80%;
   margin-bottom: 0.5rem;
   box-shadow: 0.5rem 0.5rem 5px #9797979d;
@@ -101,18 +139,36 @@ export default {
 
 .right-shelf {
   background-color: #ecececda;
-  height: 1rem;
+  height: 1.8rem;
   width: 80%;
   margin-bottom: 0.5rem;
   box-shadow: 0.5rem 0.5rem 5px #9797979d;
 }
 @media (max-width: 1023px) {
+  .shelf {
+    height: 1.5rem;
+  }
+  .left-shelf {
+    height: 1.5rem;
+  }
+  .right-shelf {
+    height: 1.5rem;
+  }
   .achieve-badge {
     width: 12vw;
   }
 }
 
 @media (max-width: 767px) {
+  .shelf {
+    height: 1.2rem;
+  }
+  .left-shelf {
+    height: 1.2rem;
+  }
+  .right-shelf {
+    height: 1.2rem;
+  }
   .achieve-badge {
     width: auto;
     height: 10vh;
@@ -121,6 +177,15 @@ export default {
 
 /* 갤럭시 폴드 */
 @media (max-width: 660px) {
+  .shelf {
+    height: 1rem;
+  }
+  .left-shelf {
+    height: 1rem;
+  }
+  .right-shelf {
+    height: 1rem;
+  }
   .achieve-badge {
     width: auto;
     height: 10vh;

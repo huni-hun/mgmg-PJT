@@ -4,8 +4,16 @@
       <v-sheet color="rgba(255, 255, 255, 0.3)">
         <v-container fluid>
           <v-row class="five-cols">
-            <v-col class="badge-list-col" v-for="(badge, index) in item" :key="index">
-              <achieveBadge :badge="badge" :isMobile="isMobile" :index="index" />
+            <v-col
+              class="badge-list-col"
+              v-for="(badge, index) in item"
+              :key="index"
+            >
+              <achieveBadge
+                :badge="badge"
+                :isMobile="isMobile"
+                :index="index"
+              />
             </v-col>
           </v-row>
         </v-container>
@@ -69,7 +77,7 @@ export default {
       this.badgeList.push(this.badgeList2);
       this.badgeList.push(this.badgeList3);
     }
-    this.isMobile = window.matchMedia("(max-width: 639.5px)").matches; // 가로 크기 확인
+    this.isMobile = window.matchMedia("(max-width: 767px)").matches; // 가로 크기 확인
   },
   computed: {
     ...mapState("userStore", ["accessToken"]),

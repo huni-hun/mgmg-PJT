@@ -3,13 +3,25 @@
     <v-container class="justify-center">
       <v-row class="title-row">
         <v-spacer></v-spacer>
-        <h1 class="achieve-title">나의업적</h1>
+        <div class="achieve-title">나의 업적</div>
         <v-spacer></v-spacer>
       </v-row>
       <v-row>
         <v-spacer></v-spacer>
-        <v-btn class="achieve-btn" v-if="!isAchieve" @click="[getAchieveList(), changeIsAchieve()]" color="rgba(81,81,110,.9)">달성 업적 확인</v-btn>
-        <v-btn class="achieve-btn" v-if="isAchieve" @click="[achieveList(), changeIsAchieve()]" color="rgba(81,81,110,.9)">전체 업적 확인</v-btn>
+        <v-btn
+          class="achieve-btn"
+          v-if="!isAchieve"
+          @click="[getAchieveList(), changeIsAchieve()]"
+          color="rgba(81,81,110,.9)"
+          >달성 업적 확인</v-btn
+        >
+        <v-btn
+          class="achieve-btn"
+          v-if="isAchieve"
+          @click="[achieveList(), changeIsAchieve()]"
+          color="rgba(81,81,110,.9)"
+          >전체 업적 확인</v-btn
+        >
       </v-row>
       <v-row class="achieve-list-frame">
         <router-view></router-view>
@@ -47,12 +59,13 @@ export default {
 
 .achieve-title {
   text-align: center;
-  color: aliceblue;
+  color: #ffffff;
+  text-shadow: 0px 20px 20px rgba(0, 0, 0, 0.25);
+  font-size: clamp(1.8rem, 3vw, 3rem);
 }
 .achieve-btn {
   text-align: right;
-
-  color: aliceblue;
+  color: #ffffff;
 }
 
 .achieve-list-frame {
