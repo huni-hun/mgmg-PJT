@@ -5,33 +5,15 @@
       <v-row>감정별로 선호하는 음악 장르를 선택하세요.</v-row>
       <v-row><hr class="hrStyle" /></v-row>
       <div class="genreCheckList">
-        <div
-          class="genreCheckItem"
-          v-for="(emotion, index) in emotionLst1"
-          :key="index"
-        >
+        <div class="genreCheckItem" v-for="(emotion, index) in emotionLst1" :key="index">
           <div class="justify_content_center label">
-            <img
-              class="emoticonImg"
-              :src="
-                require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)
-              "
-              alt=""
-            />
+            <img class="emoticonImg" :src="require(`@/assets/emoticon/${emotionEnglishLst1[index]}.png`)" alt="" />
             <div class="justify_content_center emotionName">
               {{ emotion }}
             </div>
           </div>
           <div class="genre">
-            <v-checkbox
-              hide-details
-              class="genreCheckBox"
-              v-for="(genre, index) in genreLst1"
-              :key="index"
-              :label="genreLst1[index]"
-              :value="genre"
-              v-model="musicTaste1[emotion][index]"
-            ></v-checkbox>
+            <v-checkbox hide-details class="genreCheckBox" v-for="(genre, index) in genreLst1" :key="index" :label="genreLst1[index]" :value="genre" v-model="musicTaste1[emotion][index]"></v-checkbox>
           </div>
         </div>
       </div>
@@ -45,16 +27,7 @@ export default {
     return {
       emotionLst1: ["평온", "기쁨", "사랑", "짜증", "피곤"],
       emotionEnglishLst1: ["calm", "happy", "love", "annoyed", "fatigue"],
-      genreLst1: [
-        "R&B/Soul",
-        "댄스",
-        "랩/힙합",
-        "록/메탈",
-        "발라드",
-        "인디음악",
-        "트로트",
-        "포크/블루스",
-      ],
+      genreLst1: ["R&B/Soul", "댄스", "랩/힙합", "록/메탈", "발라드", "인디음악", "트로트", "포크/블루스"],
       musicTaste1: {},
     };
   },
@@ -81,8 +54,7 @@ export default {
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
 }
 .selected {
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25),
-    inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
 .genreCheckList {
   display: flex;
@@ -124,9 +96,9 @@ export default {
   display: flex;
   flex-direction: column;
 }
-::v-deep .genreCheckBox .v-label {
+/* ::v-deep .genreCheckBox .v-label {
   font-size: clamp(0.9rem, 2.5vw, 1rem);
-}
+} */
 @media (max-width: 767px) {
   .genreCheckList {
     flex-direction: column;

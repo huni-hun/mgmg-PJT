@@ -124,9 +124,9 @@ export default {
   display: flex;
   flex-direction: column;
 }
-::v-deep .genreCheckBox .v-label {
+/* ::v-deep .genreCheckBox .v-label {
   font-size: clamp(0.9rem, 2.5vw, 1rem);
-}
+} */
 @media (max-width: 767px) {
   .genreCheckList {
     flex-direction: column;
