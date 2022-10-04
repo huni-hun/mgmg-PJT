@@ -2,10 +2,18 @@
   <div class="loginTotalBody">
     <div class="titleBody" v-if="loginOrder == 1">
       <div class="titleLogoMGArea">
-        <img class="titleLogoMG" src="../../src/assets/logo/logo_mg.png" alt="" />
+        <img
+          class="titleLogoMG"
+          src="../../src/assets/logo/logo_mg.png"
+          alt=""
+        />
       </div>
       <div class="titleLogoTextArea">
-        <img class="titleLogoText" src="../../src/assets/logo/logo_only_text.png" alt="" />
+        <img
+          class="titleLogoText"
+          src="../../src/assets/logo/logo_only_text.png"
+          alt=""
+        />
       </div>
     </div>
     <div class="dummyTitleMargin" v-if="loginOrder != 1"></div>
@@ -26,14 +34,20 @@
         </router-link>
       </div>
 
-      <div class="footerLabel" v-if="loginOrder != 3" @click="moveToPasswordFind">
+      <div
+        class="footerLabel"
+        v-if="loginOrder != 3"
+        @click="moveToPasswordFind"
+      >
         <router-link to="/login/findpw" class="noDrag footerLabelDecoration">
           <div><label for="">비밀번호 찾기</label></div>
         </router-link>
       </div>
 
       <div class="footerLabel">
-        <label for="signup" class="noDrag" @click="moveToSignupPage">회원가입</label>
+        <label for="signup" class="noDrag" @click="moveToSignupPage"
+          >회원가입</label
+        >
       </div>
     </div>
   </div>
@@ -57,7 +71,6 @@ export default {
       this.loginOrder = 3;
     },
     moveToSignupPage() {
-      // 회원가입으로 페이지 이동
       this.$router.push("/signup");
     },
   },
@@ -65,6 +78,9 @@ export default {
 </script>
 
 <style scoped>
+label {
+  cursor: pointer;
+}
 .loginTotalBody {
   display: flex;
   flex-direction: column;
