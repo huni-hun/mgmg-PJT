@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -20,7 +21,7 @@ public class UserLoginPostRequest {
     @ApiModelProperty(name = "회원 비밀번호", example = "user_password")
     String password;
 
-    @NotEmpty
+    @NotNull
     @ApiModelProperty(name = "회원 자동로그인 여부", example = "user_auto_flag")
     boolean autoFlag;
 

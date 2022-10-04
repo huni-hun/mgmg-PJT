@@ -5,15 +5,15 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @ApiModel("UserUpdateFontPutRequest")
 public class UserUpdateFontPutRequest {
 
-    @NotEmpty
+    @NotNull
     @ApiModelProperty(name = "폰트값", example = "0 / 1 / 2 ...")
-    int diaryFont;
+    Integer diaryFont;
 
 }

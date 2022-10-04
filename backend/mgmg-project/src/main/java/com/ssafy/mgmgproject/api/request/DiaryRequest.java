@@ -5,7 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -13,11 +15,11 @@ import java.util.Date;
 @ApiModel("CreateDiaryPostRequest")
 public class DiaryRequest {
 
-    @NotEmpty
+    @NotBlank
     @ApiModelProperty(name = "일기 내용", example = "일기 내용입니다.")
     String diaryContent;
 
-    @NotEmpty
+    @NotNull
     @ApiModelProperty(name = "해당 날짜", example = "2022-09-14")
     Date diaryDate;
 
@@ -33,11 +35,11 @@ public class DiaryRequest {
     @ApiModelProperty(name = "감정", example = "슬픔")
     String emotion;
 
-    @NotEmpty
+    @NotNull
     @ApiModelProperty(name = "노래 번호", example = "노래 번호")
     Long musicNo;
 
-    @NotEmpty
+    @NotNull
     @ApiModelProperty(name = "선물 번호", example = "선물 번호")
     Long giftNo;
 }

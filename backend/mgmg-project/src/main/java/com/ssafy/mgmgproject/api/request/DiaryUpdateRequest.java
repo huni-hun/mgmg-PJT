@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Service
@@ -28,11 +29,11 @@ public class DiaryUpdateRequest {
     @ApiModelProperty(name = "감정", example = "슬픔")
     String emotion;
 
-    @NotEmpty
+    @NotNull
     @ApiModelProperty(name = "노래 번호", example = "노래 번호")
     Long musicNo;
 
-    @NotEmpty
+    @NotNull
     @ApiModelProperty(name = "선물 번호", example = "선물 번호")
     Long giftNo;
 }

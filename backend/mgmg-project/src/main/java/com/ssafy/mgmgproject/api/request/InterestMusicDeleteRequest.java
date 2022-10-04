@@ -5,15 +5,15 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @ApiModel("InterestMusicDeleteRequest")
 public class InterestMusicDeleteRequest {
 
-    @NotEmpty
+    @NotNull
     @ApiModelProperty(name = "음악 번호", example = "3")
-    long musicNo;
+    Long musicNo;
 
 }
