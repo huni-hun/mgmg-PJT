@@ -67,7 +67,28 @@
           <v-app-bar-nav-icon class="mobile-nav-bar" v-bind="attrs" v-on="on" />
         </template>
         <v-list>
-          <v-list-item v-for="(item, index) in moLtems" :key="index">
+          <v-list-item v-for="(inf, index) in infList" :key="index">
+            <v-list-item-title v-if="inf.notificationDate == ''">
+              {{ inf.notificationContent }}
+            </v-list-item-title>
+            <v-list-item-title v-else @click="clickAlarm()">
+              {{ inf.notificationContent }} | {{ inf.notificationDate }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+      <v-menu class="desk-nav-bar user-nav" offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-app-bar-nav-icon class="desk-nav-bar" v-bind="attrs" v-on="on">
+            <div class="user-name" v-bind="attrs" v-on="on">
+              {{ userName }}님
+            </div>
+            <v-icon large>mdi-menu-down</v-icon>
+          </v-app-bar-nav-icon>
+        </template>
+        <v-list>
+          <v-list-item v-for="(item, index) in items" :key="index">
             <v-list-item-title @click="menusMetod(item.link)">
               {{ item.title }}
             </v-list-item-title>
@@ -75,7 +96,6 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-
     <v-app-bar v-else color="rgba(243, 245, 254, .1)">
       <div class="appBar">
         <div class="webLogo">
@@ -122,7 +142,7 @@ export default {
     isLogin: false,
   }),
   methods: {
-    ...mapActions("userStore", ["setIsInf"]),
+    ...mapActions("userStore", ["setIsInf", "setUserInfoNotAuto"]),
     async inf_list() {
       this.notification = await notification_list(this.accessToken);
       this.infList = this.notification.notifications;
@@ -135,9 +155,20 @@ export default {
       this.setIsInf(false);
     },
     async logout() {
-      this.$cookies.set("autoLoginCookie", "");
-      this.$cookies.set("userIdCookie", "");
+      this.$cookies.remove("autoLoginCookie");
+      this.$cookies.remove("userIdCookie");
       sessionStorage.clear();
+      const data = {
+        userId: "",
+        userPw: "",
+        userName: "",
+        accessToken: "",
+        refreshToken: "",
+        diaryFont: 0,
+        admin: 0,
+        isInf: false,
+      };
+      this.setUserInfoNotAuto(data);
     },
     async checkNotification() {
       this.isCheck = await notification_check(this.accessToken);
@@ -176,6 +207,8 @@ export default {
 
 .webLogo {
   height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .web-router-link {
@@ -201,7 +234,7 @@ export default {
 
 .user-name {
   color: aliceblue;
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  font-size: clamp(1rem, 1.3vw, 1.4rem);
 }
 
 .logo {
@@ -211,6 +244,7 @@ export default {
 
 .logo-text {
   height: 100%;
+  padding: 0.4vh 0px;
 }
 
 .user-nav {
