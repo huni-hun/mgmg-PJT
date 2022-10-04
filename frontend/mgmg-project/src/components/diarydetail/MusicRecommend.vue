@@ -86,7 +86,7 @@ export default {
       else this.radioCheck = event.target.value;
     },
   },
-  async beforeDestroy() {
+  async beforeUnmount() {
     if (this.beforeRadioCheck == this.radioCheck) return;
     else if (this.radioCheck == "good") {
       if (this.beforeRadioCheck == "bad") {

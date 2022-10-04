@@ -71,7 +71,7 @@ export default {
     },
   },
 
-  async beforeDestroy() {
+  async beforeUnmount() {
     if (this.beforeGiftCheck == this.interestGift) return;
 
     if (this.interestGift) {

@@ -8,10 +8,8 @@
       </v-row>
       <v-row>
         <v-spacer></v-spacer>
-        <v-btn class="achieve-btn" color="rgba(81,81,110,.9)" @click="changeIsAchieve">
-          <router-link v-if="!isAchieve" to="/achieve/get">달성 업적 확인</router-link>
-          <router-link v-if="isAchieve" to="/achieve">전체 업적 확인</router-link>
-        </v-btn>
+        <v-btn class="achieve-btn" v-if="!isAchieve" @click="[getAchieveList(), changeIsAchieve()]" color="rgba(81,81,110,.9)">달성 업적 확인</v-btn>
+        <v-btn class="achieve-btn" v-if="isAchieve" @click="[achieveList(), changeIsAchieve()]" color="rgba(81,81,110,.9)">전체 업적 확인</v-btn>
       </v-row>
       <v-row class="achieve-list-frame">
         <router-view></router-view>
@@ -31,6 +29,12 @@ export default {
   methods: {
     changeIsAchieve() {
       this.isAchieve = !this.isAchieve;
+    },
+    getAchieveList() {
+      this.$router.push({ path: "/achieve/get" });
+    },
+    achieveList() {
+      this.$router.push({ path: "/achieve" });
     },
   },
 };

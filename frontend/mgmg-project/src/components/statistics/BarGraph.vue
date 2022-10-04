@@ -129,6 +129,9 @@ export default {
             display: false,
             text: "Statistics Day",
           },
+          tooltips:{
+            mode: 'nearest'
+          },
           width: 'auto',
           legend: {
             labels: {

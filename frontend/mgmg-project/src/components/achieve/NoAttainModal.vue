@@ -4,8 +4,8 @@
       <v-card class="mobile-badge-card">
         <img class="mobile-badge" :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)" alt="" />
         <v-card-text class="mobile-badge-text">
-          <p class="mobile-badge-name text-h5 text--primary">{{ badge.badgeName }}</p>
-          <p class="mobile-badge-content text-h6 text--primary">{{ badgeDetail.badgeContent }}</p>
+          <p class="mobile-badge-name">{{ badge.badgeName }}</p>
+          <p class="mobile-badge-content">{{ badgeDetail.badgeContent }}</p>
           <div class="mobile-card-date">
             {{ badgeDetail.badgeCodition }}<br />
             {{ badgeDetail.achievedBadgeDate }}
@@ -17,14 +17,10 @@
     <!-- pc -->
     <v-img v-else :src="require('@/assets/achieve/noattaionmodal.png')">
       <v-card class="badge-card">
-        <img
-          class="badge"
-          :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)"
-          alt=""
-        />
+        <img class="badge" :src="require(`@/assets/badge/${badge.badgeNo}Black.png`)" alt="" />
         <v-card-text class="badge-text">
-          <p class="text-h5 text--primary">{{ badge.badgeName }}</p>
-          <p class="text-h6 text--primary">{{ badgeDetail.badgeContent }}</p>
+          <p class="badge-name">{{ badge.badgeName }}</p>
+          <p class="badge-content">{{ badgeDetail.badgeContent }}</p>
           <div class="card-date">
             {{ badgeDetail.badgeCodition }}<br />
             {{ badgeDetail.achievedBadgeDate }}
@@ -53,10 +49,7 @@ export default {
     ...mapState("userStore", ["accessToken"]),
   },
   async created() {
-    this.badgeDetail = await achieve_detail(
-      this.accessToken,
-      this.badge.badgeNo
-    );
+    this.badgeDetail = await achieve_detail(this.accessToken, this.badge.badgeNo);
   },
 };
 </script>
@@ -66,12 +59,13 @@ export default {
   border: none;
   background: none;
   height: 100%;
+  font-size: 16px;
 }
 .badge {
   position: absolute;
   top: 15%;
   left: 6%;
-  height: 12rem;
+  height: 70%;
 }
 
 .badge-text {
@@ -80,6 +74,14 @@ export default {
   left: 40%;
   width: 60%;
   text-align: center;
+}
+
+.badge-name {
+  font-size: 1.5em;
+}
+
+.badge-content {
+  font-size: 1em;
 }
 
 .badge-btn {
@@ -110,7 +112,7 @@ export default {
     justify-content: center;
   }
   .mobile-badge {
-    height: 28vh;
+    height: 24vh;
   }
 
   .mobile-badge-text {

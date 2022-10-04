@@ -45,7 +45,7 @@
               <p @click="selectFunc()" class="date-period">{{ startDate }} ~ {{ endDate }}</p>
               <p v-if="!isMostEmotion" class="most-emotion">일기를 쓰면 배지를 선물로 줘요.</p>
               <p v-else class="most-emotion">제일 많이 느낀 감정 : "{{ mostEmotion }}"</p>
-              <img class="badge" :src="require(`@/assets/emoticon/${imgSticker}.png`)" alt="" />
+              <img class="period-badge" :src="require(`@/assets/emoticon/${imgSticker}.png`)" alt="" />
               <p class="explanation">{{ emotionExplanation }}</p>
               <p class="by-person">by. {{ explanationPerson }}</p>
             </div>
@@ -287,8 +287,10 @@ export default {
 }
 
 /* 이미지 */
-.badge {
+.period-badge {
   height: 24vh;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+  border-radius: 50%;
 }
 
 .periodMenu {
@@ -307,7 +309,7 @@ export default {
   .donut-frame {
     height: 50vh;
   }
-  .badge {
+  .period-badge {
     height: 20vh;
   }
 
@@ -352,7 +354,7 @@ export default {
   .donut-frame {
     height: 30vh;
   }
-  .badge {
+  .period-badge {
     height: 12vh;
   }
 

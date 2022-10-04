@@ -18,11 +18,7 @@
     <!-- pc -->
     <v-img v-else :src="require('@/assets/achieve/attaionmodal.png')">
       <v-card class="badge-card">
-        <img
-          class="badge"
-          :src="require(`@/assets/badge/a${badge.badgeNo}.png`)"
-          alt=""
-        />
+        <img class="badge" :src="require(`@/assets/badge/a${badge.badgeNo}.png`)" alt="" />
         <v-card-text class="badge-text">
           <p class="badge-name">{{ badge.badgeName }}</p>
           <p class="badge-content">{{ badgeDetail.badgeContent }}</p>
@@ -54,10 +50,7 @@ export default {
     },
   },
   async created() {
-    this.badgeDetail = await achieve_detail(
-      this.accessToken,
-      this.badge.badgeNo
-    );
+    this.badgeDetail = await achieve_detail(this.accessToken, this.badge.badgeNo);
   },
 };
 </script>
@@ -120,7 +113,7 @@ export default {
     justify-content: center;
   }
   .mobile-badge {
-    height: 28vh;
+    height: 24vh;
   }
 
   .mobile-badge-text {
