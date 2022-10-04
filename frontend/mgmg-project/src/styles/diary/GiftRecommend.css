@@ -8,7 +8,7 @@
   margin-bottom: 20px;
 }
 
-.title > span {
+.title>span {
   font-size: clamp(1.3rem, 3vw, 1.8rem) !important;
   font-weight: bolder;
   color: #2278dd;
@@ -100,7 +100,7 @@
   display: none;
 }
 
-.ridioButton input[type="checkbox"] + span {
+.ridioButton input[type="checkbox"]+span {
   display: inline-block;
   padding: 10px 20px;
   background-color: #ffffff;
@@ -113,7 +113,7 @@
   color: #000000;
 }
 
-.ridioButton input[type="checkbox"]:checked + span {
+.ridioButton input[type="checkbox"]:checked+span {
   background-color: #ebb8cd;
   color: white;
   border: none;
@@ -125,6 +125,7 @@
     background-color: rgba(255, 255, 255, 0.7);
     margin: 10px 0px;
     padding: 15px;
+    height: 25vh;
   }
 
   .title {
@@ -137,7 +138,8 @@
     justify-content: center;
     align-items: center;
   }
-  .giftBoxDiv > img {
+
+  .giftBoxDiv>img {
     width: 20%;
   }
 
