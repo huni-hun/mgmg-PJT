@@ -65,9 +65,6 @@ export default {
   },
   methods: {
     ...mapActions("userStore", ["setUserInfoAuto", "setUserInfoNotAuto"]),
-    test() {
-      console.log(this.loginNext);
-    },
 
     async autoLogin() {
       //쿠키 있는지 확인
@@ -79,7 +76,6 @@ export default {
           refreshToken: refreshToken,
           userId: userId,
         };
-        console.log("자동로그인 실행");
 
         await autoLogin(request).then((res) => {
           this.loginAuto(res);

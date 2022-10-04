@@ -4,12 +4,15 @@
       <div class="fontEditTitle">
         <v-row class="fontSurveyTitle"><label for="">글꼴 변경</label></v-row>
         <v-row><label for="">선택하신 글꼴은 모든 일기에 적용됩니다.</label></v-row>
-        <v-row><hr class="hrStyle" /></v-row>
+        <v-row>
+          <hr class="hrStyle" />
+        </v-row>
       </div>
     </v-container>
 
     <div class="fontEditLstBody">
-      <div class="fontEditLstBox" :class="{ selected: font.name == selectedFont }" v-for="(font, index) in fontLst" :key="index" name="fontSelect" @click="changeFont(index)">
+      <div class="fontEditLstBox" :class="{ selected: font.name == selectedFont }" v-for="(font, index) in fontLst"
+        :key="index" name="fontSelect" @click="changeFont(index)">
         <img class="fontImage" :src="require(`../../assets/fontlist/${font.url}.png`)" alt="" />
       </div>
     </div>
@@ -66,8 +69,7 @@ export default {
       var request = {
         diaryFont: this.selectedFontNum,
       };
-      let response = await changeFont(this.accessToken, request);
-      console.log("응답 데이터", response);
+      await changeFont(this.accessToken, request);
 
       this.$store.state.userStore.diaryFont = this.selectedFontNum;
 
@@ -94,12 +96,15 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
+
 .fontEditTitle {
   padding: 0 5% 2% 5%;
 }
+
 .fontSurveyTitle {
   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
 }
+
 .fontEditLstBody {
   margin: 3% 15% 3% 15%;
   display: flex;
@@ -108,6 +113,7 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
+
 .fontEditLstBox {
   width: 28%;
   margin: 2%;
@@ -124,6 +130,7 @@ export default {
   margin-top: 3%;
   width: 100%;
 }
+
 .fontButton {
   width: 50%;
 }
@@ -131,9 +138,11 @@ export default {
 .hrStyle {
   width: 100%;
 }
+
 .fontImage {
   width: 100%;
 }
+
 .selected {
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
@@ -142,9 +151,11 @@ export default {
   .fontEditLstBox {
     width: 45%;
   }
+
   .fontEditBody {
     margin-top: 0;
   }
+
   .fontEditLstBox {
     margin: 4% 2%;
   }

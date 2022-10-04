@@ -57,9 +57,6 @@ export default {
     };
   },
   methods: {
-    test() {
-      console.log(process.env.VUE_APP_API_URL);
-    },
     async findId() {
       const userName = document.getElementById("nameIdFindInput").value;
       const userEmail = document.getElementById("emailIdFindInput").value;
@@ -102,23 +99,28 @@ export default {
   margin: 3% 3% 5% 3%;
   font-size: clamp(1.5rem, 2.5vw, 1.8rem);
 }
+
 .loginBodyLine {
   display: flex;
   flex-direction: row;
 }
+
 .loginBodyLabel {
   padding-top: 1%;
   padding-left: 5%;
   width: 30%;
   font-size: clamp(1.1rem, 2vw, 1.2rem);
 }
+
 .loginBodyInput {
   padding-right: 5%;
   width: 70%;
 }
+
 .loginCheckBox {
   padding-left: 5%;
 }
+
 .loginButtonLine {
   display: flex;
   flex-direction: row;
@@ -127,9 +129,11 @@ export default {
   margin-bottom: 6%;
   width: 100%;
 }
+
 .loginButton {
   width: 80%;
 }
+
 .loginButtonText {
   font-size: clamp(0.8rem, 2vw, 1rem);
   width: 100%;

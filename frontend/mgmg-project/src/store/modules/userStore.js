@@ -24,8 +24,6 @@ export const userStore = {
       state.accessToken = data.accessToken;
       state.refreshToken = data.refreshToken;
       state.diaryFont = data.diaryFont;
-      console.log(state.accessToken);
-      console.log(state.refreshToken);
       state.admin = data.admin;
     },
     // 로그인 상태 유지X 로그인
@@ -35,8 +33,6 @@ export const userStore = {
       state.accessToken = data.accessToken;
       state.diaryFont = data.diaryFont;
       state.refreshToken = "";
-      console.log(state.accessToken);
-      console.log(state.refreshToken);
       state.admin = data.admin;
     },
     IS_INF: (state, isInf) => (state.isInf = isInf),

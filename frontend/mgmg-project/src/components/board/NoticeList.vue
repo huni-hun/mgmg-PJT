@@ -7,94 +7,58 @@
           <h1 class="white--text" style="text-align: left">공지사항</h1>
         </div>
         <div style="width: 50%">
-          <router-link
-            to="/notice/writing"
-            style="text-decoration-line: none; float: right; padding-top: 8px"
-          >
-            <v-btn
-              v-if="admin"
-              class="white--text"
-              style="background-color: #51516e"
-            >
+          <router-link to="/notice/writing" style="text-decoration-line: none; float: right; padding-top: 8px">
+            <v-btn v-if="admin" class="white--text" style="background-color: #51516e">
               글쓰기
             </v-btn>
           </router-link>
         </div>
       </div>
 
-      <v-row
-        style="
+      <v-row style="
           margin-top: 5px;
           background-color: rgba(0, 0, 0, 0.15);
           border-top: 1px solid #444444;
           border-bottom: 1px solid #444444;
-        "
-      >
+        ">
         <v-col class="white--text">번호</v-col>
         <v-col class="white--text" style="text-align: center">제목</v-col>
         <v-col class="white--text" style="text-align: right">작성일자</v-col>
       </v-row>
       <v-row v-for="notice in dataList" :key="notice.noticeNo">
-        <v-col
-          v-if="notice.fixedFlag"
-          style="
+        <v-col v-if="notice.fixedFlag" style="
             background-color: rgba(226, 231, 255, 0.5);
             border-bottom: 1px solid #444444;
             text-decoration: #173261;
-          "
-          >공지</v-col
-        >
-        <v-col
-          v-else
-          style="
+          ">공지</v-col>
+        <v-col v-else style="
             background-color: rgba(255, 255, 255, 0.5);
             border-bottom: 1px solid #444444;
-          "
-          >{{ notice.noticeNo }}</v-col
-        >
-        <v-col
-          :style="
-            notice.fixedFlag
-              ? `background-color: rgba(226, 231, 255, 0.5); border-bottom: 1px solid #444444; text-align: center`
-              : `background-color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid #444444; text-align: center`
-          "
-          @click="openDetails(notice)"
-          >{{ notice.noticeTitle }}</v-col
-        >
-        <v-col
-          :style="
-            notice.fixedFlag
-              ? `background-color: rgba(226, 231, 255, 0.5); border-bottom: 1px solid #444444; text-align: right`
-              : `background-color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid #444444; text-align: right`
-          "
-          >{{ notice.noticeDate }}</v-col
-        >
+          ">{{ notice.noticeNo }}</v-col>
+        <v-col :style="
+          notice.fixedFlag
+            ? `background-color: rgba(226, 231, 255, 0.5); border-bottom: 1px solid #444444; text-align: center`
+            : `background-color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid #444444; text-align: center`
+        " @click="openDetails(notice)">{{ notice.noticeTitle }}</v-col>
+        <v-col :style="
+          notice.fixedFlag
+            ? `background-color: rgba(226, 231, 255, 0.5); border-bottom: 1px solid #444444; text-align: right`
+            : `background-color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid #444444; text-align: right`
+        ">{{ notice.noticeDate }}</v-col>
       </v-row>
 
       <v-col cols="12">
         <v-row class="justify-center">
           <!-- 페이징네이션 -->
           <!-- 참고 : https://www.bezkoder.com/vuetify-pagination-server-side/#Vuetify_Pagination_component -->
-          <v-pagination
-            v-model="page"
-            :length="pageCount"
-            @input="handlePageChange"
-            class="mt-10"
-          ></v-pagination>
+          <v-pagination v-model="page" :length="pageCount" @input="handlePageChange" class="mt-10"></v-pagination>
         </v-row>
       </v-col>
       <v-row class="justify-center">
         <v-col cols="3">
           <!-- 검색창 -->
-          <v-text-field
-            v-model="search"
-            @keyup.enter="goSearch(1)"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            class="mt-10"
-          ></v-text-field>
+          <v-text-field v-model="search" @keyup.enter="goSearch(1)" append-icon="mdi-magnify" label="Search" single-line
+            hide-details class="mt-10"></v-text-field>
         </v-col>
       </v-row>
     </v-container>
@@ -184,7 +148,6 @@ export default {
     },
 
     async goSearch(pid) {
-      console.log(`====실행=== :pid ${pid}`);
       this.data = await notice_get(this.accessToken, {
         page: pid,
         keyword: this.search,
@@ -196,7 +159,6 @@ export default {
   },
   async created() {
     await this.getPage(1);
-    console.log(this.dataList, this.tatalPage);
   },
   components: {},
 };
