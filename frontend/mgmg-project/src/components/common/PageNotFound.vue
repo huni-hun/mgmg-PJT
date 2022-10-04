@@ -47,14 +47,14 @@ export default {
 <style scoped>
 .pagenotfound {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: flex-end;
 }
 
 .div-img {
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   width: 100%;
 }
 
