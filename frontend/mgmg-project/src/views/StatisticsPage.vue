@@ -22,6 +22,13 @@ export default {
     toggle_exclusive: 0,
     colors: ["rgb(255, 160, 179)", "rgb(255, 222, 245)", "rgb(255, 160, 179)"],
   }),
+  created() {
+    if (window.location.pathname === "/statistics") {
+      this.toggle_exclusive = 0;
+    } else {
+      this.toggle_exclusive = 1;
+    }
+  },
   methods: {
     getPeriod() {
       this.toggle_exclusive = 0;
