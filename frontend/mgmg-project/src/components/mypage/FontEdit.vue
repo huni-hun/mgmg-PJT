@@ -9,8 +9,10 @@
     </v-container>
 
     <div class="fontEditLstBody">
-      <div class="fontEditLstBox" v-for="font in fontLst" :key="font.Num" name="fontSelect" @click="changeFont(font)">
-        <div class="fontLstBox" :class="{ selected: font.name == selectedFont }">{{ font.name }}</div>
+      <div class="fontEditLstBox" :class="{ selected: font.name == selectedFont }" v-for="(font, index) in fontLst" :key="index" name="fontSelect" @click="changeFont(index)">
+        <!-- <div class="fontLstBox"> -->
+        <img class="fontImage" :src="require(`../../assets/fontlist/${font.url}.png`)" alt="" />
+        <!-- </div> -->
       </div>
     </div>
 
@@ -28,29 +30,35 @@ export default {
   data() {
     return {
       fontLst: [
-        { fontNum: 1, name: "폰트1" },
-        { fontNum: 2, name: "폰트2" },
-        { fontNum: 3, name: "폰트3" },
-        { fontNum: 4, name: "폰트4" },
-        { fontNum: 5, name: "폰트5" },
-        { fontNum: 6, name: "폰트6" },
-        { fontNum: 7, name: "폰트7" },
-        { fontNum: 8, name: "폰트8" },
-        { fontNum: 9, name: "폰트9" },
-        { fontNum: 10, name: "폰트10" },
-        { fontNum: 11, name: "폰트11" },
-        { fontNum: 12, name: "폰트12" },
+        { fontNum: 0, name: "KyoboHandwriting2019.ttf", url: "1_교보손글씨" },
+        { fontNum: 1, name: "미생체.ttf", url: "2_미생체" },
+        { fontNum: 2, name: "봉숭아틴트.ttf", url: "3_봉숭아틴트" },
+        { fontNum: 3, name: "온글잎 의연체.ttf", url: "4_온글잎의연체" },
+        { fontNum: 4, name: "코트라희망체.ttf", url: "5_코트라희망체" },
+        { fontNum: 5, name: "Cafe24Oneprettynight.ttf", url: "6_카페24고운밤" },
+        { fontNum: 6, name: "리디바탕.otf", url: "7_리디바탕체" },
+        { fontNum: 7, name: "유토이미지고딕_R.ttf", url: "8_비비트리고딕" },
+        { fontNum: 8, name: "마비옛체.ttf", url: "9_마비옛체" },
       ],
       selectedFont: "",
       selectedFontNum: 0,
+      selectedFontName: "",
     };
   },
+  mounted() {
+    this.setdefaultFont();
+  },
   methods: {
+    // 기존 폰트 뭔지 초기화
+    setdefaultFont() {
+      this.selectedFont = this.fontLst[this.$store.state.userStore.diaryFont].name;
+    },
     // 폰트 선택할 때
     changeFont(new_font) {
-      this.selectedFont = new_font.name;
-      this.selectedFontNum = new_font.fontNum;
-      console.log(this.selectedFont);
+      this.selectedFont = this.fontLst[new_font].name;
+      this.selectedFontNum = this.fontLst[new_font].fontNum;
+      this.selectedFontName = this.fontLst[new_font].name;
+      console.log(this.selectedFontName);
     },
     // 폰트 변경 버튼 선택시
     async userChangeFont() {
@@ -60,6 +68,9 @@ export default {
       let response = await changeFont(request);
       console.log(request);
       console.log("응답 데이터", response);
+
+      this.$store.state.userStore.diaryFont = this.selectedFontNum;
+      console.log("폰트번호", this.$store.state.userStore.diaryFont);
 
       Swal.fire({
         text: "글꼴이 변경되었습니다.",
@@ -101,10 +112,12 @@ export default {
   align-items: center;
 }
 .fontEditLstBox {
-  width: 30%;
+  width: 28%;
+  margin: 2%;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px 0px 3px 3px rgba(202, 202, 202, 0.25);
 }
 
 .fontEditButtonLine {
@@ -121,14 +134,8 @@ export default {
 .hrStyle {
   width: 100%;
 }
-.fontLstBox {
+.fontImage {
   width: 100%;
-  margin: 6%;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
 }
 .selected {
   box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
@@ -138,12 +145,11 @@ export default {
   .fontEditLstBox {
     width: 45%;
   }
-
-  .fontLstBox {
-    margin: 8%;
-  }
   .fontEditBody {
     margin-top: 0;
+  }
+  .fontEditLstBox {
+    margin: 4% 2%;
   }
 }
 </style>
