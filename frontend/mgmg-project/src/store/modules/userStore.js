@@ -13,11 +13,9 @@ export const userStore = {
     refreshToken: "",
     diaryFont: 0,
     admin: 0,
-    isInf: false, // 알림창을 위한 변수
+    isInf: false,
   }),
-  getters: {},
   mutations: {
-    // 로그인 상태 유지 로그인
     SET_USER_INFO_AUTO(state, data) {
       state.userId = data.userId;
       state.userName = data.userName;
@@ -26,7 +24,6 @@ export const userStore = {
       state.diaryFont = data.diaryFont;
       state.admin = data.admin;
     },
-    // 로그인 상태 유지X 로그인
     SET_USER_INFO_NOT_AUTO(state, data) {
       state.userId = data.userId;
       state.userName = data.userName;
@@ -48,7 +45,6 @@ export const userStore = {
       commit("IS_INF", isInf);
     },
   },
-  modules: {},
 };
 
 export default userStore;

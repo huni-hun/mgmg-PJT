@@ -10,13 +10,19 @@
 
       <v-spacer class="desk-nav-bar"></v-spacer>
       <p>
-        <router-link class="desk-nav-bar router-link-active" to="/achieve">나의업적</router-link>
+        <router-link class="desk-nav-bar router-link-active" to="/achieve"
+          >나의업적</router-link
+        >
       </p>
       <p>
-        <router-link class="desk-nav-bar router-link-active" to="/statistics">감정통계</router-link>
+        <router-link class="desk-nav-bar router-link-active" to="/statistics"
+          >감정통계</router-link
+        >
       </p>
       <p>
-        <router-link class="desk-nav-bar router-link-active" to="/notice">공지사항</router-link>
+        <router-link class="desk-nav-bar router-link-active" to="/notice"
+          >공지사항</router-link
+        >
       </p>
       <v-spacer></v-spacer>
 
@@ -49,7 +55,6 @@
             </div>
             <v-icon large>mdi-menu-down</v-icon>
           </v-app-bar-nav-icon>
-
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in items" :key="index">
@@ -63,7 +68,11 @@
       <!-- 모바일 메뉴바 -->
       <v-menu class="mobile-nav-bar" offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-app-bar-nav-icon class="mobile-nav-bar" v-bind="attrs" v-on="on"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon
+            class="mobile-nav-bar"
+            v-bind="attrs"
+            v-on="on"
+          ></v-app-bar-nav-icon>
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in moLtems" :key="index">
@@ -78,12 +87,12 @@
       <router-link class="logo" to="/main">
         <img class="logo" :src="img" alt="" />
       </router-link>
-      <router-link class="desk-nav-bar" to="/main">
-        <v-toolbar-title>몽글몽글</v-toolbar-title>
+      <router-link class="desk-nav-bar logo-text" to="/main">
+        <img class="logo-text" src="@/assets/logo/logo_only_text.png" alt="" />
       </router-link>
 
       <v-spacer></v-spacer>
-      <router-link to="/login">
+      <router-link class="desk-nav-bar logo-text" to="/login">
         <v-toolbar-title>로그인</v-toolbar-title>
       </router-link>
     </v-app-bar>
@@ -122,7 +131,7 @@ export default {
     isLogin: false,
   }),
   methods: {
-    ...mapActions("userStore", ["setIsInf"]),
+    ...mapActions("userStore", ["setIsInf", "setUserInfoNotAuto"]),
     async inf_list() {
       this.notification = await notification_list(this.accessToken);
       this.infList = this.notification.notifications;
@@ -135,9 +144,20 @@ export default {
       this.setIsInf(false);
     },
     async logout() {
-      this.$cookies.set("autoLoginCookie", "");
-      this.$cookies.set("userIdCookie", "");
+      this.$cookies.remove("autoLoginCookie");
+      this.$cookies.remove("userIdCookie");
       sessionStorage.clear();
+      const data = {
+        userId: "",
+        userPw: "",
+        userName: "",
+        accessToken: "",
+        refreshToken: "",
+        diaryFont: 0,
+        admin: 0,
+        isInf: false,
+      };
+      this.setUserInfoNotAuto(data);
     },
     async checkNotification() {
       this.isCheck = await notification_check(this.accessToken);
@@ -199,7 +219,6 @@ p {
 }
 
 @media (max-width: 639px) {
-
   /* 헤더 형태 변환은 display: none; 을 통해 이뤄짐. */
   .desk-nav-bar {
     display: none;
