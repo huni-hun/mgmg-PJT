@@ -1,21 +1,5 @@
 <template>
   <div>
-    <div style="display: flex">
-      <div style="width: 50%">
-        <router-link
-          to="/notice/writing"
-          style="text-decoration-line: none; float: right; padding-top: 8px"
-        >
-          <v-btn
-            v-if="admin"
-            class="white--text"
-            style="background-color: #51516e"
-          >
-            글쓰기
-          </v-btn>
-        </router-link>
-      </div>
-    </div>
     <v-row
       style="
         margin-top: 5px;
@@ -24,6 +8,7 @@
         border-bottom: 1px solid #444444;
         display: flex;
         flex-direction: row;
+        margin-top: 1vh;
       "
     >
       <v-col class="white--text notice-num">번호</v-col>
@@ -206,6 +191,11 @@ export default {
 };
 </script>
 <style scoped>
+.notice-btn {
+  text-align: right;
+  color: #ffffff;
+  font-size: clamp(0.9rem, 1vw, 1.3rem);
+}
 .notice-num {
   text-align: center;
   flex: 1;

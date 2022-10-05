@@ -87,8 +87,22 @@
         </v-col>
       </v-row>
       <v-row style="display: flex; justify-content: center">
-        <v-btn style="margin-right: 10px" @click="sendPost"> 등록 </v-btn>
-        <v-btn style="margin-left: 10px; margin-right: 20px" @click="goBack">
+        <v-btn
+          class="notice-btn white--text"
+          style="margin-right: 10px; background-color: #51516e"
+          @click="sendPost"
+        >
+          등록
+        </v-btn>
+        <v-btn
+          class="notice-btn white--text"
+          style="
+            margin-left: 10px;
+            margin-right: 20px;
+            background-color: #51516e;
+          "
+          @click="goBack"
+        >
           취소
         </v-btn>
       </v-row>
@@ -136,4 +150,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.notice-btn {
+  text-align: right;
+  color: #ffffff;
+  font-size: clamp(0.9rem, 1vw, 1.3rem);
+}
+</style>

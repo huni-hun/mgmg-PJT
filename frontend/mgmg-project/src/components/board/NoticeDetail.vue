@@ -24,14 +24,32 @@
         <router-link
           to="/notice"
           style="text-decoration-line: none; margin: auto"
-          ><v-btn class="white--text" style="background-color: #51516e"
+          ><v-btn
+            class="notice-btn white--text"
+            style="background-color: #51516e"
             >글목록</v-btn
           ></router-link
         >
       </v-col>
       <v-col v-if="admin" style="display: flex; width: 30%; float: right">
-        <v-btn @click="emendNotice"> 수정 </v-btn>
-        <v-btn @click="delNotice"> 삭제</v-btn>
+        <v-btn
+          class="notice-btn white--text"
+          style="margin-right: 10px; background-color: #51516e"
+          @click="emendNotice"
+        >
+          수정
+        </v-btn>
+        <v-btn
+          class="notice-btn white--text"
+          style="
+            margin-left: 10px;
+            margin-right: 20px;
+            background-color: #51516e;
+          "
+          @click="delNotice"
+        >
+          삭제</v-btn
+        >
       </v-col>
     </v-row>
   </div>
@@ -106,6 +124,11 @@ export default {
 </script>
 
 <style scoped>
+.notice-btn {
+  text-align: right;
+  color: #ffffff;
+  font-size: clamp(0.9rem, 1vw, 1.3rem);
+}
 .notice-title {
   padding-top: 5px;
   padding-left: 20px;
