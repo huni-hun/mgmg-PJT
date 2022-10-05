@@ -18,6 +18,7 @@ const urlsToCache = [
   "/img/icons/apple-touch-icon-120x120.png",
   "/img/icons/apple-touch-icon-152x152.png",
   "/img/icons/apple-touch-icon-180x180.png",
+  "../src/assets/font/font.css",
   "../src/styles/App.css",
   "../src/styles/diary/BackgroundChoice.css",
   "../src/styles/diary/DiaryStyle.css",
