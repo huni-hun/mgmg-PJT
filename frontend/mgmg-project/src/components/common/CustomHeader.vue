@@ -17,7 +17,7 @@
 
         <div class="web-right-menu">
           <div class="bell-icon">
-            <v-menu class="notifi" offset-y transition="scroll-y-transition" bottom right open-on-hover>
+            <v-menu class="notifi" offset-y transition="scroll-y-transition" bottom right>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn @click="inf_list" v-bind="attrs" v-on="on" icon>
                   <v-badge v-if="isInf" bordered dot overlap color="red">
