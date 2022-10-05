@@ -1,21 +1,30 @@
 @import url("@/assets/font/font.css");
 
 #app {
-  font-family: "SeoulNamsanEB";
-  font-size: clamp(0.8rem, 1.4vw, 1.2rem);
+  font-family: "KNPSKkomi";
+  font-size: clamp(1rem, 1.4vw, 2rem);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
-  /* 배경화면 변경해주세요 */
+  position: relative;
+}
+
+#app::before {
+  content: "";
   background-image: url("@/assets/landing/landing_topBackground.png");
-  /* background-image: url("@/assets/landing/landing_nightsky.png"); */
-  /* background-color: #ffe9f1; */
+  opacity: 0.8;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   background-size: cover;
 }
 
 body {
   -ms-overflow-style: none;
 }
+
 body::-webkit-scrollbar {
   display: none;
 }

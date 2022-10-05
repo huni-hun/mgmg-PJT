@@ -152,6 +152,7 @@ export default {
   padding: 5%;
   width: 100%;
   color: white;
+  background-color: #9b9b9b90;
 }
 
 .bannerLabelDecoration {

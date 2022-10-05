@@ -173,6 +173,13 @@ export default {
 </script>
 
 <style scoped>
+@import url("@/assets/font/font.css");
+
+* {
+  font-family: "EF_Diary";
+  font-size: clamp(1rem, 1vw, 1.3rem);
+}
+
 .mobile-nav-bar {
   display: none;
 }

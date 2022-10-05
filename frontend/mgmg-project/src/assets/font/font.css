@@ -1,49 +1,68 @@
+/* 선택 글꼴 적용 */
 @font-face {
   font-family: "KyoboHandwriting2019";
   src: url("@/assets/font/myfont/KyoboHandwriting2019.ttf") format("truetype");
   font-weight: 100;
 }
+
 @font-face {
   font-family: "Misaeng";
   src: url("@/assets/font/myfont/Misaeng.ttf") format("truetype");
   font-weight: 100;
+  font-size: x-large;
 }
+
 @font-face {
   font-family: "BoksungaTint";
   src: url("@/assets/font/myfont/BoksungaTint.ttf") format("truetype");
   font-weight: 100;
 }
+
 @font-face {
   font-family: "Onipgeul";
   src: url("@/assets/font/myfont/Onipgeul.ttf") format("truetype");
   font-weight: 100;
+  font-size: x-large;
 }
+
 @font-face {
   font-family: "KoteuraHuimang";
   src: url("@/assets/font/myfont/KoteuraHuimang.ttf") format("truetype");
   font-weight: 100;
 }
+
 @font-face {
   font-family: "Cafe24Oneprettynight";
   src: url("@/assets/font/myfont/Cafe24Oneprettynight.ttf");
 }
+
 @font-face {
   font-family: "RidiBatang";
   src: url("@/assets/font/myfont/RidiBatang.otf");
   font-weight: 100;
 }
+
+/* 글꼴 적용이 안되는거 같다...? */
 @font-face {
   font-family: "YutoimgGodik";
   src: url("@/assets/font/myfont/YutoimgGodik.ttf");
   font-weight: 100;
 }
+
 @font-face {
   font-family: "mabiyet";
   src: url("@/assets/font/myfont/mabiyet.ttf");
   font-weight: 100;
 }
 
+/* 헤더 */
 @font-face {
-  font-family: "SeoulNamsanEB";
-  src: url("SeoulNamsanEB.ttf");
+  font-family: "EF_Diary";
+  src: url("EF_Diary.ttf");
+}
+
+/* 전체 글꼴 적용 */
+@font-face {
+  font-family: "KNPSKkomi";
+  src: url("KNPSKkomi.otf");
 }
