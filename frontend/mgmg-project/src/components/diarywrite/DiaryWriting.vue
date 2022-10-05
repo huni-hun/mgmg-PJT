@@ -247,8 +247,8 @@ export default {
           this.diary = res.diaryContent;
           this.thema = res.diaryThema;
         });
+        this.autoResizeTextarea(this.$refs.textarea);
       }
-      this.autoResizeTextarea(this.$refs.textarea);
     },
     async writingCompletion() {
       // 감정 분석
@@ -356,8 +356,6 @@ export default {
   },
 };
 </script>
-
-
 
 
 <style scoped src="@/styles/diary/DiaryStyle.css"/>
