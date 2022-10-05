@@ -37,7 +37,8 @@ import Swal from "sweetalert2";
 export default {
   data() {
     return {
-      // giftLst: [{ name: "장갑", gift: { giftName: "장갑", giftImg: "https://media3.giphy.com/media/H44Gd0GTIzhDsk4TBC/giphy.gif", giftPrice: 12000, giftUrl: "naver.com" }, registDate: "2022-01-11" }],
+      // giftLst: [{ name: "장갑", gift: { giftName: "장갑", giftImg: "https://media3.giphy.com/media/H44Gd0GTIzhDsk4TBC/giphy.gif", giftPrice: 12000, giftUrl: "naver.com" }, registDate: "2022-01-11" },
+      // ],
       giftLst: [],
     };
   },
@@ -91,7 +92,7 @@ export default {
   background-color: white;
   box-shadow: 0px 0px 20px 20px rgba(23, 50, 97, 0.2);
   border-radius: 10px;
-  padding: 2% 10%;
+  padding: 2% 5%;
   height: 70vh;
   overflow: auto;
 }
@@ -106,7 +107,7 @@ export default {
   margin: 1% 0;
 }
 .giftCard {
-  width: 25%;
+  width: 20%;
   padding: 2%;
   border-bottom: 2px solid #d3d3d3;
   background-color: white;
