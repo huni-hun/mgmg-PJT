@@ -39,7 +39,7 @@ export default {
         { fontNum: 4, name: "KoteuraHuimang.ttf", url: "5_코트라희망체" },
         { fontNum: 5, name: "Cafe24Oneprettynight.ttf", url: "6_카페24고운밤" },
         { fontNum: 6, name: "RidiBatang.otf", url: "7_리디바탕체" },
-        { fontNum: 7, name: "YutoimgGodik.ttf", url: "8_비비트리고딕" },
+        { fontNum: 7, name: "Pretendard.ttf", url: "8_프리텐다드" },
         { fontNum: 8, name: "mabiyet.ttf", url: "9_마비옛체" },
       ],
       selectedFont: "",

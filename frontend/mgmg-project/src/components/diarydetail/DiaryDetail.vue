@@ -92,7 +92,7 @@ export default {
       "KoteuraHuimang",
       "Cafe24Oneprettynight",
       "RidiBatang",
-      "YutoimgGodik",
+      "Pretendard",
       "mabiyet",
     ],
 
@@ -180,6 +180,8 @@ export default {
   },
 };
 </script>
+
+
 
 
 

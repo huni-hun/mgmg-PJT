@@ -111,7 +111,7 @@ export default {
         "KoteuraHuimang",
         "Cafe24Oneprettynight",
         "RidiBatang",
-        "YutoimgGodik",
+        "Pretendard",
         "mabiyet",
       ],
       uploadReady: true,
@@ -356,6 +356,7 @@ export default {
   },
 };
 </script>
+
 
 
 <style scoped src="@/styles/diary/DiaryStyle.css"/>

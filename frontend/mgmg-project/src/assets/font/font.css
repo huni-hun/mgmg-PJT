@@ -42,10 +42,9 @@
   font-weight: 100;
 }
 
-/* 글꼴 적용이 안되는거 같다...? */
 @font-face {
-  font-family: "YutoimgGodik";
-  src: url("@/assets/font/myfont/YutoimgGodik.ttf");
+  font-family: "Pretendard";
+  src: url("@/assets/font/myfont/Pretendard.ttf");
   font-weight: 100;
 }
 
