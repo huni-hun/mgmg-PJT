@@ -89,11 +89,11 @@ export default {
 
 <style scoped>
 .myCheckBody {
-  width: 70%;
-  margin-right: 15%;
-  margin-left: 15%;
+  width: 60%;
+  margin-right: 20%;
+  margin-left: 20%;
   margin-top: 5vh;
-  padding: 4% 8%;
+  padding: 5% 8%;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -101,7 +101,7 @@ export default {
   box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.2);
 }
 .titleLabel {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
   margin: 3% 0% 0.5% 0%;
 }
 .myCheckMiddle {
@@ -109,7 +109,7 @@ export default {
 }
 .myCheckMiddleTitle {
   margin-bottom: 3%;
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(1rem, 5vw, 2rem);
 }
 
 .myCheckInputLine {

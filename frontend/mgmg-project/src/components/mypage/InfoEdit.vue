@@ -5,7 +5,7 @@
     </div>
 
     <div>
-      <hr class="hrStyle" />
+      <hr />
     </div>
 
     <div class="infoEditBody">
@@ -33,14 +33,19 @@
       <div class="infoEditLine">
         <div class="infoEditBodyLabel"><label for="">생년월일</label></div>
         <div class="infoEditBodyContent">
-          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
-            offset-y min-width="auto">
+          <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
-              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly
-                v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
+              <v-text-field single-line outlined v-model="date" class="inputStyle" append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" id="birthSignupInput"></v-text-field>
             </template>
-            <v-date-picker :weekday-format="getDay" :month-format="getMonth" :title-date-format="getMonth"
-              :header-date-format="getHeaderTitleMonth" v-model="date" no-title @input="menu2 = false"></v-date-picker>
+            <v-date-picker
+              :weekday-format="getDay"
+              :month-format="getMonth"
+              :title-date-format="getMonth"
+              :header-date-format="getHeaderTitleMonth"
+              v-model="date"
+              no-title
+              @input="menu2 = false"
+            ></v-date-picker>
           </v-menu>
         </div>
       </div>
@@ -50,10 +55,8 @@
           <label for="" id="genderInfoEditLabel">성별</label>
         </div>
         <div class="infoEditGenderContent">
-          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)"
-            btnText="남자" />
-          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)"
-            btnText="여자" />
+          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 1 }" @click="changeGender(1)" btnText="남자" />
+          <CustomButton class="genderButton" :class="{ selectedGender: userGenderNum == 2 }" @click="changeGender(2)" btnText="여자" />
         </div>
       </div>
 
@@ -215,7 +218,6 @@ export default {
 <style scoped>
 .infoEditTotalBody {
   width: 100%;
-  margin-top: 3vh;
   padding: 7% 10%;
   display: flex;
   flex-direction: column;
@@ -225,7 +227,7 @@ export default {
 }
 
 .titleLabel {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
   margin: 3% 0% 0.5% 0%;
 }
 
@@ -267,10 +269,6 @@ export default {
 
 .genderButton {
   width: 49%;
-}
-
-.hrStyle {
-  border: 0.01rem solid #000000;
 }
 
 .inputStyle:deep(fieldset) {

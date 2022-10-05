@@ -159,7 +159,7 @@ export default {
 }
 
 .titleLabel {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
   margin: 3% 0% 0.5% 0%;
 }
 

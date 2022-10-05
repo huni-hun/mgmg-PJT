@@ -50,14 +50,14 @@ export default {
   /* padding: 0 10%; */
 }
 .interestListParentTotalBody {
-  margin-top: 2vw;
+  margin: 2vw 0;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 .interestListTitle {
-  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
   color: white;
   margin-bottom: 2%;
 }

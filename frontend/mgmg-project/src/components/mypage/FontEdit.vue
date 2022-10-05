@@ -11,8 +11,7 @@
     </v-container>
 
     <div class="fontEditLstBody">
-      <div class="fontEditLstBox" :class="{ selected: font.name == selectedFont }" v-for="(font, index) in fontLst"
-        :key="index" name="fontSelect" @click="changeFont(index)">
+      <div class="fontEditLstBox" :class="{ selected: font.name == selectedFont }" v-for="(font, index) in fontLst" :key="index" name="fontSelect" @click="changeFont(index)">
         <img class="fontImage" :src="require(`../../assets/fontlist/${font.url}.png`)" alt="" />
       </div>
     </div>
@@ -103,7 +102,7 @@ export default {
 }
 
 .fontSurveyTitle {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
 }
 
 .fontEditLstBody {

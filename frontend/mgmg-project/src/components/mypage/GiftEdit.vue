@@ -16,8 +16,7 @@
       <div class="giftBodyFirstLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(0, 5)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-              :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -25,8 +24,7 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(5, 10)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-              :src="require(`../../assets/giftlist/${giftImgName[index + 5]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 5]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -38,8 +36,7 @@
       <div class="giftBodyFirstLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(0, 2)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-              :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -47,8 +44,7 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(2, 4)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-              :src="require(`../../assets/giftlist/${giftImgName[index + 2]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 2]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -56,8 +52,7 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(4, 6)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-              :src="require(`../../assets/giftlist/${giftImgName[index + 4]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 4]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -65,8 +60,7 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(6, 8)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-              :src="require(`../../assets/giftlist/${giftImgName[index + 6]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 6]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -74,8 +68,7 @@
       <div class="giftBodySecondLine">
         <div class="giftImgBox" v-for="(gift, index) in giftLst.slice(8, 10)" :key="index" @click="addGift(gift)">
           <div class="gift5list">
-            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-              :src="require(`../../assets/giftlist/${giftImgName[index + 8]}.png`)" alt="" />
+            <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 8]}.png`)" alt="" />
           </div>
           <div class="giftName">{{ gift }}</div>
         </div>
@@ -86,13 +79,11 @@
       <div class="priceTitle">
         <label for="">가격대</label>
       </div>
-      <input class="priceFontSize" type="number" id="underPrice" name="underPrice" :value="underPrice" step="1000"
-        min="10000" :max="upperPrice - 1000" @change="changeUnder()" />
+      <input class="priceFontSize" type="number" id="underPrice" name="underPrice" :value="underPrice" step="1000" min="10000" :max="upperPrice - 1000" @change="changeUnder()" />
       <div class="priceTitle">
         <label for="">~</label>
       </div>
-      <input class="priceFontSize" type="number" id="upperPrice" name="upperPrice" :value="upperPrice" step="1000"
-        :min="underPrice" max="1000000" @change="changeUpper()" />
+      <input class="priceFontSize" type="number" id="upperPrice" name="upperPrice" :value="upperPrice" step="1000" :min="underPrice" max="1000000" @change="changeUpper()" />
     </div>
 
     <div class="giftEditButtonLine">
@@ -252,9 +243,8 @@ export default {
 }
 
 .giftSurveyTitle {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
 }
-
 .giftBody {
   margin: 1% 3% 2% 3%;
 }
@@ -294,7 +284,7 @@ export default {
 }
 
 .selected {
-  box-shadow: 0px 0px 7px 7px rgba(54, 54, 54, 0.532), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 5px 5px rgba(153, 153, 153, 0.712), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
 }
 
 .circle {
@@ -430,37 +420,4 @@ export default {
 .col-1 {
   padding: 0;
 }
-
-/* .hrStyle {
-  border: 0.01rem solid #000000;
-  width: 100%;
-}
-.giftLstBox {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25);
-}
-.selected {
-  box-shadow: 0px 0px 4px 5px rgba(99, 99, 99, 0.25), inset 3px 3px 4px 3px rgba(0, 0, 0, 0.38);
-}
-#circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: rgb(156, 156, 156);
-}
-
-.phoneView {
-  display: none;
-}
-@media (max-width: 639px) {
-  .pcView {
-    display: none;
-  }
-  .phoneView {
-    display: inline-block;
-  }
-} */
 </style>

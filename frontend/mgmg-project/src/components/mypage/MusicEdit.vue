@@ -265,7 +265,7 @@ export default {
 }
 /* 새로운거 */
 .musicSurveyTitle {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
 }
 .hrStyle {
   width: 100%;

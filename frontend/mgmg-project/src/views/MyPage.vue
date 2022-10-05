@@ -9,38 +9,32 @@
         <hr class="hrStyle" />
 
         <router-link class="bannerLabelDecoration" to="/mypage/myinfo">
-          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 0 }" @click="menuOrderChange(0)"><label for="">내
-              정보 확인</label></div>
+          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 0 }" @click="menuOrderChange(0)"><label for="">내 정보 확인</label></div>
         </router-link>
         <hr class="hrStyle" />
 
         <router-link class="bannerLabelDecoration" to="/mypage/passwordedit">
-          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 1 }" @click="menuOrderChange(1)"><label
-              for="">비밀번호 수정</label></div>
+          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 1 }" @click="menuOrderChange(1)"><label for="">비밀번호 수정</label></div>
         </router-link>
         <hr class="hrStyle" />
 
         <router-link class="bannerLabelDecoration" to="/mypage/musicedit">
-          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 2 }" @click="menuOrderChange(2)"><label
-              for="">음악 장르 변경</label></div>
+          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 2 }" @click="menuOrderChange(2)"><label for="">음악 장르 변경</label></div>
         </router-link>
         <hr class="hrStyle" />
 
         <router-link class="bannerLabelDecoration" to="/mypage/giftedit">
-          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 3 }" @click="menuOrderChange(3)"><label
-              for="">선물 종류 변경</label></div>
+          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 3 }" @click="menuOrderChange(3)"><label for="">선물 종류 변경</label></div>
         </router-link>
         <hr class="hrStyle" />
 
         <router-link class="bannerLabelDecoration" to="/mypage/fontedit">
-          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 4 }" @click="menuOrderChange(4)"><label
-              for="">글꼴 변경</label></div>
+          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 4 }" @click="menuOrderChange(4)"><label for="">글꼴 변경</label></div>
         </router-link>
         <hr class="hrStyle" />
 
         <router-link class="bannerLabelDecoration" to="/mypage/userdelete">
-          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 5 }" @click="menuOrderChange(5)"><label
-              for="">회원 탈퇴</label></div>
+          <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 5 }" @click="menuOrderChange(5)"><label for="">회원 탈퇴</label></div>
         </router-link>
         <hr class="hrStyle" />
       </div>
@@ -50,43 +44,37 @@
         <div class="banner">
           <div class="bannerMenuList menuBorderRight menuBorderBottom menuBorderTop">
             <router-link class="bannerLabelDecoration" to="/mypage/myinfo">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 0 }" @click="menuOrderChange(0)"><label
-                  for="">내 정보 확인</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 0 }" @click="menuOrderChange(0)"><label for="">내 정보 확인</label></div>
             </router-link>
           </div>
 
           <div class="bannerMenuList menuBorderRight menuBorderBottom menuBorderTop">
             <router-link class="bannerLabelDecoration" to="/mypage/musicedit">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 2 }" @click="menuOrderChange(2)"><label
-                  for="">음악 장르 변경</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 2 }" @click="menuOrderChange(2)"><label for="">음악 장르 변경</label></div>
             </router-link>
           </div>
 
           <div class="bannerMenuList menuBorderBottom menuBorderTop">
             <router-link class="bannerLabelDecoration" to="/mypage/fontedit">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 4 }" @click="menuOrderChange(4)"><label
-                  for="">글꼴 변경</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 4 }" @click="menuOrderChange(4)"><label for="">글꼴 변경</label></div>
             </router-link>
           </div>
 
           <div class="bannerMenuList menuBorderRight menuBorderBottom">
             <router-link class="bannerLabelDecoration" to="/mypage/passwordedit">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 1 }" @click="menuOrderChange(1)"><label
-                  for="">비밀번호 수정</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 1 }" @click="menuOrderChange(1)"><label for="">비밀번호 수정</label></div>
             </router-link>
           </div>
 
           <div class="bannerMenuList menuBorderRight menuBorderBottom">
             <router-link class="bannerLabelDecoration" to="/mypage/giftedit">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 3 }" @click="menuOrderChange(3)"><label
-                  for="">선물 종류 변경</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 3 }" @click="menuOrderChange(3)"><label for="">선물 종류 변경</label></div>
             </router-link>
           </div>
 
           <div class="bannerMenuList menuBorderBottom">
             <router-link class="bannerLabelDecoration" to="/mypage/userdelete">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 5 }" @click="menuOrderChange(5)"><label
-                  for="">회원 탈퇴</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 5 }" @click="menuOrderChange(5)"><label for="">회원 탈퇴</label></div>
             </router-link>
           </div>
         </div>
@@ -142,7 +130,7 @@ export default {
 
 .bannerTitleLabel {
   color: white;
-  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
   margin: 5% 0;
   padding-left: 5%;
 }
