@@ -2,10 +2,9 @@
   <div>
     <v-container class="justify-center">
       <div style="display: flex; flex-direction: row">
+        <div class="achieve-title" style="flex: 1">나의 업적</div>
         <div style="flex: 1"></div>
-        <div class="achieve-title" style="flex: 1; text-align: center">
-          나의 업적
-        </div>
+
         <div
           style="
             flex: 1;
@@ -67,7 +66,7 @@ export default {
 
 .achieve-title {
   font-weight: bold;
-  text-align: center;
+  /* text-align: center; */
   color: #ffffff;
   /* text-shadow: 0px 20px 20px rgba(0, 0, 0, 0.25); */
   font-size: clamp(1.8rem, 3vw, 3.2rem);

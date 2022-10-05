@@ -4,8 +4,12 @@
       <v-row>
         <v-spacer></v-spacer>
         <v-btn-toggle class="btns" background-color="#FFF" rounded>
-          <v-btn @click="getPeriod" :color="btn1"> 기간별 통계 </v-btn>
-          <v-btn @click="getDays" :color="btn2"> 요일별 통계 </v-btn>
+          <v-btn class="btn" @click="getPeriod" :color="btn1">
+            기간별 통계
+          </v-btn>
+          <v-btn class="btn" @click="getDays" :color="btn2">
+            요일별 통계
+          </v-btn>
         </v-btn-toggle>
         <v-spacer></v-spacer>
       </v-row>
@@ -54,5 +58,8 @@ export default {
 .btns {
   margin-top: 2vh;
   margin-bottom: 3vh;
+}
+.btn {
+  font-size: clamp(0.9rem, 1vw, 1.3rem);
 }
 </style>
