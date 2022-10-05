@@ -79,6 +79,9 @@ export default {
 
 .achieve-list-frame {
   margin-top: 1vh;
+  background: rgba(255, 255, 255, 0.35);
+  padding-top: 10px;
+  box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.25);
 }
 
 @media (max-width: 1023px) {

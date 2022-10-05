@@ -1,7 +1,7 @@
 <template>
   <v-carousel hide-delimiters height="100%">
     <v-carousel-item v-for="(item, i) in badgeList" :key="i">
-      <v-sheet class="achieve-list-sheet" color="rgba(255, 255, 255, 0.3)">
+      <v-sheet class="achieve-list-sheet" color="rgba(255, 255, 255, 0)">
         <v-container fluid>
           <v-row align-content="space-around" class="five-cols">
             <v-col
@@ -52,7 +52,7 @@ export default {
     for (var i = 38; i < 46; i++) {
       this.badgeList3.push({ badgeNo: i, badgeName: "없음" });
     }
-    const mq = window.matchMedia("(max-width: 639.5px)"); // 가로 크기 확인
+    const mq = window.matchMedia("(max-width: 767px)"); // 가로 크기 확인
     if (mq.matches === true) {
       this.isMobile = true;
     } else {
