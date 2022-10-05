@@ -87,41 +87,49 @@ export default {
   height: 70vh;
   overflow: auto;
 }
+
 .interestGiftShowTotalBody::-webkit-scrollbar {
   display: none;
 }
+
 .interestGiftBody {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: flex-start;
   margin: 1% 0;
 }
+
 .giftCard {
   width: 25%;
   padding: 0 2%;
 }
+
 .giftCardNamePrice {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 @media (max-width: 767px) {
   .giftCard {
     width: 33%;
   }
 }
+
 @media (max-width: 639px) {
   .giftCard {
     width: 50%;
   }
 }
+
 @media (max-width: 575px) {
   .giftCard {
     width: 100%;
     padding: 0 25%;
   }
 }
+
 @media (max-width: 350px) {
   .giftCard {
     width: 100%;
