@@ -3,7 +3,7 @@
     <v-container class="signupContainer" id="signupContainer">
       <v-row class="signupInputCommon">
         <label class="signupNoDrag signupLabel" for="idSignupInput" id="idSignupLabel">아이디</label>
-        <div class="signupInput">
+        <div class="signupInputSmall">
           <CustomInput v-model="idSignupInput" />
         </div>
         <div class="signupButton">
@@ -53,7 +53,7 @@
       </v-row>
       <v-row>
         <label class="signupNoDrag signupLabel" for="emailSignupInput" id="emailSignupLabel">이메일</label>
-        <div class="signupInput">
+        <div class="signupInputSmall">
           <CustomInput v-model="emailSignupInput" />
         </div>
         <div class="signupButton">
@@ -62,7 +62,7 @@
       </v-row>
       <v-row>
         <label class="signupNoDrag signupLabel" for="emailcheckSignupInput" id="emailcheckSignupLabel">인증번호</label>
-        <div class="signupInput">
+        <div class="signupInputSmall">
           <CustomInput v-model="emailcheckSignupInput" />
         </div>
         <div class="signupButton">
@@ -474,6 +474,9 @@ export default {
 .signupInput {
   width: 40%;
 }
+.signupInputSmall {
+  width: 40%;
+}
 
 .signupButton {
   width: 30%;
@@ -482,12 +485,23 @@ export default {
 
 .signupBtnWidth {
   width: 50%;
+  padding-right: 0;
+  padding-left: 0;
+  height: 55px;
 }
 
 .signupGenderButton {
   width: 33%;
   margin-left: 1%;
   margin-right: 1%;
+  background-color: rgb(191, 191, 191);
+}
+.signupGenderButton:hover {
+  background-color: rgb(111, 111, 111);
+}
+.selectedGender {
+  background-color: rgb(111, 111, 111);
+  color: white;
 }
 
 /* 약관동의 */
@@ -541,6 +555,9 @@ export default {
     width: 80%;
   } */
   .signupInput {
+    width: 100%;
+  }
+  .signupInputSmall {
     width: 80%;
   }
 
@@ -567,11 +584,6 @@ export default {
   box-shadow: 1px 1px 10px 1px rgb(209, 213, 221);
   border-radius: 0px;
   padding: 0;
-}
-
-.selectedGender {
-  background-color: black;
-  color: white;
 }
 
 .v-date-picker-header {

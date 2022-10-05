@@ -269,6 +269,10 @@ export default {
 
 .genderButton {
   width: 49%;
+  background-color: rgb(191, 191, 191);
+}
+.genderButton:hover {
+  background-color: rgb(111, 111, 111);
 }
 
 .inputStyle:deep(fieldset) {
@@ -278,7 +282,7 @@ export default {
 }
 
 .selectedGender {
-  background-color: rgb(189, 181, 199);
+  background-color: rgb(111, 111, 111);
   color: white;
 }
 
