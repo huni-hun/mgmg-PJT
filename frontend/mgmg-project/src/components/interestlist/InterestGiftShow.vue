@@ -21,7 +21,10 @@
         </div>
       </div>
     </div>
-    <div class="noGift" v-else>관심 선물 없음</div>
+    <div class="noGift" v-else>
+      <img style="width: 15%" src="@/assets/emoticon/sad.png" alt="" />
+      <div>관심 선물이 없어요.</div>
+    </div>
   </div>
 </template>
 
@@ -35,15 +38,6 @@ export default {
     return {
       // giftLst: [
       //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000, giftUrl: "naver.com" }, registDate: "2022-01-11" },
-      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
-      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000 }, registDate: "2022-01-11" },
-      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
-      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000 }, registDate: "2022-01-11" },
-      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
-      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000 }, registDate: "2022-01-11" },
-      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
-      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000 }, registDate: "2022-01-11" },
-      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
       // ],
       giftLst: [],
     };
@@ -137,7 +131,10 @@ export default {
 
 .noGift {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 </style>
