@@ -60,7 +60,6 @@ export default {
       musicNo: 1,
 
       radioCheck: "none",
-      beforeRadioCheck: "",
     };
   },
   computed: {
@@ -80,50 +79,44 @@ export default {
       const response = await axios.get(YoutubeURL, config);
       this.playCode = response.data.items[0].id.videoId;
     },
-    radioClick() {
+    async radioClick(event) {
       let value = event.target.value;
-      if (value == "good" || value == "bad") this.radioCheck = "";
+      // 이전 이후 라디오 값 비교 axios 보내기
+      this.radioRequest(this.radioCheck, value);
+
+      if (value == "good" || value == "bad") this.radioCheck = "none";
       else this.radioCheck = event.target.value;
     },
-  },
-  async beforeDestroy() {
-    if (this.beforeRadioCheck == this.radioCheck) return;
-    else if (this.radioCheck == "good") {
-      if (this.beforeRadioCheck == "bad") {
-        // "비추천 -> 추천"
+    async radioRequest(before, now) {
+      if (before == "good" && now == "good") {
+        console.log("추천 -> none");
+        await cancleGoodMusic(this.accessToken, this.musicNo);
+      } else if (before == "bad" && now == "bad") {
+        console.log("비추천 -> none");
+        await cancleBadMusic(this.accessToken, this.musicNo);
+      } else if (before == "bad" && now == "good") {
+        console.log("비추천 -> 추천");
         await cancleBadMusic(this.accessToken, this.musicNo).then(async () => {
           await musicInterest(this.accessToken, this.musicNo);
         });
-      } else {
-        // "none -> 추천"
-        await musicInterest(this.accessToken, this.musicNo);
-      }
-    } else if (this.radioCheck == "bad") {
-      if (this.beforeRadioCheck == "good") {
-        // "추천 -> 비추천"
+      } else if (before == "good" && now == "bad") {
+        console.log("추천 -> 비추천");
         await cancleGoodMusic(this.accessToken, this.musicNo).then(async () => {
-          // "추천->비추천 관심음악에서 삭제"
           await musicBad(this.accessToken, this.musicNo);
         });
-      } else {
-        // "none -> 비추천"
+      } else if (before == "none" && now == "good") {
+        console.log("none -> 추천");
+        await musicInterest(this.accessToken, this.musicNo);
+      } else if (before == "none" && now == "bad") {
+        console.log("none -> 비추천");
         await musicBad(this.accessToken, this.musicNo);
       }
-    } else {
-      if (this.beforeRadioCheck == "good") {
-        // "추천 -> none"
-        await cancleGoodMusic(this.accessToken, this.musicNo);
-      } else {
-        // "비추천 -> none"
-        await cancleBadMusic(this.accessToken, this.musicNo);
-      }
-    }
+    },
   },
   async created() {
     await detailMusic(this.accessToken, this.diaryNo)
       .then((res) => {
         this.radioCheck = res.checkMusic;
-        this.beforeRadioCheck = res.checkMusic;
         this.musicAlbumImg = res.music.albumArt;
         this.musicTitle = res.music.musicName;
         this.musicArtist = res.music.artist;
@@ -137,6 +130,92 @@ export default {
   },
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
