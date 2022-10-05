@@ -7,8 +7,8 @@
             height="80%"
             style="
               background-color: rgba(243, 245, 254, 0.75);
-              border-top: 1px solid #444444;
-              border-bottom: 1px solid #444444;
+              /* border-top: 1px solid #444444;
+              border-bottom: 1px solid #444444; */
               text-align: center;
               align-items: center;
             "
@@ -31,8 +31,8 @@
             height="100%"
             style="
               background-color: rgba(243, 245, 254, 0.75);
-              border-top: 1px solid #444444;
-              border-bottom: 1px solid #444444;
+              /* border-top: 1px solid #444444;
+              border-bottom: 1px solid #444444; */
               text-align: center;
               align-items: center;
             "
@@ -60,8 +60,8 @@
             height="90%"
             style="
               background-color: rgba(243, 245, 254, 0.75);
-              border-top: 1px solid #444444;
-              border-bottom: 1px solid #444444;
+              /* border-top: 1px solid #444444;
+              border-bottom: 1px solid #444444; */
               text-align: center;
               align-items: center;
             "
@@ -73,15 +73,15 @@
             height="80%"
             style="
               background-color: rgba(255, 255, 255, 0.5);
-              border-top: 1px solid #444444;
-              border-bottom: 1px solid #444444;
+              /* border-top: 1px solid #444444;
+              border-bottom: 1px solid #444444; */
               text-align: center;
               align-items: center;
             "
           >
             <v-checkbox
               v-model="checkbox"
-              :label="`중요 공지로 등록: ${checkbox.toString()}`"
+              label="중요 공지로 등록"
             ></v-checkbox>
           </v-card>
         </v-col>

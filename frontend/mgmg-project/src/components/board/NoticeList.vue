@@ -1,10 +1,6 @@
 <template>
   <div>
-    <!-- 기본적으로 grid 시스템을 기반으로 게시판 배치 -->
     <div style="display: flex">
-      <div style="width: 50%">
-        <h1 class="white--text" style="text-align: left">공지사항</h1>
-      </div>
       <div style="width: 50%">
         <router-link
           to="/notice/writing"
@@ -20,21 +16,27 @@
         </router-link>
       </div>
     </div>
-
     <v-row
       style="
         margin-top: 5px;
         background-color: rgba(0, 0, 0, 0.15);
         border-top: 1px solid #444444;
         border-bottom: 1px solid #444444;
+        display: flex;
+        flex-direction: row;
       "
     >
-      <v-col class="white--text">번호</v-col>
-      <v-col class="white--text" style="text-align: center">제목</v-col>
-      <v-col class="white--text" style="text-align: right">작성일자</v-col>
+      <v-col class="white--text notice-num">번호</v-col>
+      <v-col class="white--text notice-title">제목</v-col>
+      <v-col class="white--text notice-date">작성일자</v-col>
     </v-row>
-    <v-row v-for="notice in dataList" :key="notice.noticeNo">
+    <v-row
+      v-for="notice in dataList"
+      :key="notice.noticeNo"
+      style="display: flex; flex-direction: row"
+    >
       <v-col
+        class="notice-num"
         v-if="notice.fixedFlag"
         style="
           background-color: rgba(226, 231, 255, 0.5);
@@ -44,6 +46,7 @@
         >공지</v-col
       >
       <v-col
+        class="notice-num"
         v-else
         style="
           background-color: rgba(255, 255, 255, 0.5);
@@ -52,19 +55,21 @@
         >{{ notice.noticeNo }}</v-col
       >
       <v-col
+        class="notice-title"
         :style="
           notice.fixedFlag
-            ? `background-color: rgba(226, 231, 255, 0.5); border-bottom: 1px solid #444444; text-align: center`
-            : `background-color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid #444444; text-align: center`
+            ? `background-color: rgba(226, 231, 255, 0.5); border-bottom: 1px solid #444444;`
+            : `background-color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid #444444; `
         "
         @click="openDetails(notice)"
         >{{ notice.noticeTitle }}</v-col
       >
       <v-col
+        class="notice-date"
         :style="
           notice.fixedFlag
-            ? `background-color: rgba(226, 231, 255, 0.5); border-bottom: 1px solid #444444; text-align: right`
-            : `background-color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid #444444; text-align: right`
+            ? `background-color: rgba(226, 231, 255, 0.5); border-bottom: 1px solid #444444;`
+            : `background-color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid #444444;`
         "
         >{{ notice.noticeDate }}</v-col
       >
@@ -72,8 +77,6 @@
 
     <v-col cols="12">
       <v-row class="justify-center">
-        <!-- 페이징네이션 -->
-        <!-- 참고 : https://www.bezkoder.com/vuetify-pagination-server-side/#Vuetify_Pagination_component -->
         <v-pagination
           v-model="page"
           :length="pageCount"
@@ -82,9 +85,10 @@
         ></v-pagination>
       </v-row>
     </v-col>
-    <v-row class="justify-center">
-      <v-col cols="3">
-        <!-- 검색창 -->
+    <v-row class="justify-center" style="display: flex; flex-direction: row">
+      <!-- <v-col cols="3"> -->
+      <div style="flex: 1"></div>
+      <div class="search">
         <v-text-field
           v-model="search"
           @keyup.enter="goSearch(1)"
@@ -94,7 +98,10 @@
           hide-details
           class="mt-10"
         ></v-text-field>
-      </v-col>
+      </div>
+      <div style="flex: 1"></div>
+
+      <!-- </v-col> -->
     </v-row>
   </div>
 </template>
@@ -102,7 +109,6 @@
 <script>
 import { mapState } from "vuex";
 import { notice_get } from "@/store/modules/etcStore";
-// import store from "@/store/modules/userStore";
 
 export default {
   name: "NoticePage",
@@ -115,7 +121,6 @@ export default {
       dataList: [],
       tatalPage: 0,
       data: Object,
-      // isAdmin: store.state.admin,
       currentPage: 1,
     };
   },
@@ -124,7 +129,6 @@ export default {
   },
   methods: {
     openDetails(val) {
-      // 디테일 열기
       this.$router.push({
         name: "noticedetail",
         params: { pid: val.noticeNo },
@@ -173,7 +177,6 @@ export default {
     },
 
     handlePageChange(value) {
-      // 페이지네이션 번호 누를 때
       if (this.search) {
         this.goSearch(value);
       } else {
@@ -202,3 +205,34 @@ export default {
   components: {},
 };
 </script>
+<style scoped>
+.notice-num {
+  text-align: center;
+  flex: 1;
+}
+.notice-title {
+  text-align: center;
+  flex: 9;
+}
+.notice-date {
+  text-align: center;
+  flex: 2;
+}
+.search {
+  flex: 2;
+}
+@media screen and (max-width: 650px) {
+  .notice-date {
+    flex: 3;
+  }
+  .search {
+    flex: 5;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .notice-date {
+    display: none;
+  }
+}
+</style>

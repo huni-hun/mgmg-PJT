@@ -1,44 +1,24 @@
 <template>
   <div>
-    <div class="mt-8">
-      <h1 class="white--text" style="text-align: left">공지사항</h1>
-    </div>
-    <!-- 제목과 작성일자 -->
     <v-row>
       <v-col cols="12">
-        <v-card
-          style="
-            background-color: rgba(243, 245, 254, 0.75);
-            border-top: 1px solid #444444;
-            border-bottom: 1px solid #444444;
-          "
-        >
-          <v-responsive>
-            <v-card-text>
-              {{ noticeTitle }} <br />
-              {{ noticeDate }} <br />
-            </v-card-text>
-          </v-responsive>
-        </v-card>
+        <div class="div-title">
+          <div class="notice-title">
+            {{ noticeTitle }}
+          </div>
+          <div class="notice-date">작성일자: {{ noticeDate }}</div>
+        </div>
       </v-col>
     </v-row>
-    <!-- 글 내용 -->
     <v-row>
       <v-col cols="12">
-        <v-card
-          style="
-            background-color: rgba(255, 255, 255, 0.5);
-            border-top: 1px solid #444444;
-            border-bottom: 1px solid #444444;
-          "
-        >
-          <v-responsive :aspect-ratio="16 / 4">
-            <v-card-text> {{ noticeContent }} </v-card-text>
-          </v-responsive>
-        </v-card>
+        <div div class="div-content">
+          <div class="notice-content">
+            {{ noticeContent }}
+          </div>
+        </div>
       </v-col>
     </v-row>
-    <!-- 글목록으로 나가는 버튼 -->
     <v-row>
       <v-col style="display: flex; width: 70%">
         <router-link
@@ -125,4 +105,32 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.notice-title {
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: clamp(1.3rem, 1.5vw, 2rem);
+}
+.notice-date {
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: clamp(0.8rem, 1vw, 1rem);
+}
+.notice-content {
+  padding: 5px 20px;
+  font-size: clamp(1.3rem, 1.5vw, 2rem);
+  min-height: 30rem;
+}
+.div-title {
+  background-color: rgba(243, 245, 254, 0.75);
+  display: flex;
+  flex-direction: column;
+}
+.div-content {
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+</style>
