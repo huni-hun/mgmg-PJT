@@ -31,7 +31,7 @@
         />
         <v-card-text class="badge-text">
           <p class="badge-name">{{ badge.badgeName }}</p>
-          <p class="badge-content">{{ badgeDetail.badgeContent }}</p>
+          <p class="badge-content" v-html="badgeDetail.badgeContent"></p>
           <div class="card-date">
             획득조건<br />
             {{ badgeDetail.badgeCodition }}
@@ -60,10 +60,13 @@ export default {
     ...mapState("userStore", ["accessToken"]),
   },
   async created() {
-    this.badgeDetail = await achieve_detail(
-      this.accessToken,
-      this.badge.badgeNo
-    );
+    await achieve_detail(this.accessToken, this.badge.badgeNo).then((res) => {
+      res.badgeContent = res.badgeContent.replace(
+        /(?:\r\n|\r|\n|\\n)/g,
+        "<br />"
+      );
+      this.badgeDetail = res;
+    });
   },
 };
 </script>
