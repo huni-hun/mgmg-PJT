@@ -50,7 +50,7 @@ hr {
   padding-bottom: 8px;
 }
 
-.flexTop > .flexLeft {
+.flexTop>.flexLeft {
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -94,7 +94,7 @@ hr {
   justify-content: center;
 }
 
-.box > img {
+.box>img {
   max-width: 190px;
   width: 100%;
   height: auto;
@@ -129,13 +129,13 @@ hr {
   background-size: contain;
 }
 
-.diarymiddle > .selectImg {
+.diarymiddle>.selectImg {
   vertical-align: middle;
   margin: 0 auto;
   width: 80%;
 }
 
-.selectImg > img {
+.selectImg>img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -144,7 +144,7 @@ hr {
   max-height: 80%;
 }
 
-.selectImg > .v-icon {
+.selectImg>.v-icon {
   position: absolute;
   top: 8%;
   right: 11%;
@@ -169,6 +169,7 @@ hr {
   line-height: 1.5;
   -ms-overflow-style: none;
 }
+
 .textWrite::-webkit-scrollbar {
   display: none;
 }
@@ -198,7 +199,7 @@ hr {
   margin-bottom: 30px;
 }
 
-.diarybottom > div {
+.diarybottom>div {
   height: 100%;
   display: flex;
   align-items: center;
@@ -206,8 +207,8 @@ hr {
 }
 
 .customButton {
-  height: 38%;
   margin-bottom: 20px;
+  padding: 0.3rem 1.5rem;
 }
 
 .microButton {
@@ -218,7 +219,7 @@ hr {
   height: 50px;
 }
 
-.microButton > button {
+.microButton>button {
   width: 100%;
   height: 100%;
   border-radius: 70%;
@@ -245,6 +246,7 @@ hr {
     width: 50px;
     height: 50px;
   }
+
   .diaryDetailTop {
     display: flex;
     background-size: 100% 100%;
@@ -255,18 +257,21 @@ hr {
     align-items: center;
     justify-content: flex-end;
   }
+
   .diarymiddle {
     flex-basis: 45.2vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
   }
+
   .diarymiddleImg {
     flex-basis: 40vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
   }
+
   .diarybottom {
     background-size: 100% 100%;
     height: 100%;
@@ -282,6 +287,7 @@ hr {
   .app_view {
     max-width: 89vw;
   }
+
   .microButton {
     position: fixed;
     bottom: 60px;
@@ -289,6 +295,7 @@ hr {
     width: 50px;
     height: 50px;
   }
+
   .diaryDetailTop {
     display: flex;
     background-size: 100% 100%;
@@ -299,18 +306,21 @@ hr {
     align-items: center;
     justify-content: flex-end;
   }
+
   .diarymiddle {
     flex-basis: 45.4vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
   }
+
   .diarymiddleImg {
     flex-basis: 35vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
   }
+
   .diarybottom {
     background-size: 100% 100%;
     height: 100%;
@@ -326,6 +336,7 @@ hr {
   .app_view {
     max-width: 94vw;
   }
+
   .microButton {
     position: fixed;
     bottom: 60px;
@@ -333,6 +344,7 @@ hr {
     width: 50px;
     height: 50px;
   }
+
   .diaryDetailTop {
     display: flex;
     background-size: 100% 100%;
@@ -343,18 +355,21 @@ hr {
     align-items: center;
     justify-content: flex-end;
   }
+
   .diarymiddle {
     flex-basis: 45.7vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
   }
+
   .diarymiddleImg {
     flex-basis: 30vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
   }
+
   .diarybottom {
     background-size: 100% 100%;
     height: 100%;
@@ -370,12 +385,14 @@ hr {
   .weatherImg {
     width: 10px;
   }
+
   .microButton {
     bottom: 5%;
     right: 10%;
     width: 50px;
     height: 50px;
   }
+
   .diaryDetailTop {
     display: flex;
     background-size: 100% 100%;
@@ -386,24 +403,25 @@ hr {
     align-items: center;
     justify-content: flex-end;
   }
+
   .diarymiddle {
     flex-basis: 46vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
   }
+
   .diarymiddleImg {
     flex-basis: 27vh;
     position: relative;
     background-repeat: repeat-y;
     background-size: contain;
   }
+
   .btn_image {
     width: 22%;
   }
-  .customButton {
-    margin-bottom: 20px;
-  }
+
   .diarybottom {
     background-size: 100% 100%;
     height: 100%;

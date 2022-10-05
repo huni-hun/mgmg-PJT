@@ -17,7 +17,7 @@ button {
   appearance: none;
 
   margin: 0;
-  padding: 0.6rem 1.5rem 0.5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
 
   text-align: center;
   text-decoration: none;
