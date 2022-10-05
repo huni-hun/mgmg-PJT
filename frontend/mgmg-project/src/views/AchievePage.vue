@@ -44,7 +44,13 @@ export default {
   data: () => ({
     isAchieve: false,
   }),
-  created() {},
+  created() {
+    if (window.location.pathname === "/achieve/get") {
+      this.isAchieve = true;
+    } else {
+      this.isAchieve = false;
+    }
+  },
   methods: {
     changeIsAchieve() {
       this.isAchieve = !this.isAchieve;
