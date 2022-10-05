@@ -4,13 +4,9 @@
       <v-row v-if="0 < musicLst.length">
         <v-col class="col-12 selectedMusicBody musicShowRight mobileView">
           <div class="video-container">
-            <iframe
-              class="player"
-              :src="`https://www.youtube.com/embed/${playCode}`"
-              title="YouTube video player"
+            <iframe class="player" :src="`https://www.youtube.com/embed/${playCode}`" title="YouTube video player"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            ></iframe>
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
           </div>
           <div v-if="picked != null" class="mt-3 selectedMusicDetail">
             <div class="musicTitleLabel">{{ picked.music.musicName }}</div>
@@ -51,13 +47,9 @@
 
         <v-col class="col-12 col-md-7 col-sm-6 selectedMusicBody musicShowRight pcView">
           <div class="video-container">
-            <iframe
-              class="player"
-              :src="`https://www.youtube.com/embed/${playCode}`"
-              title="YouTube video player"
+            <iframe class="player" :src="`https://www.youtube.com/embed/${playCode}`" title="YouTube video player"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            ></iframe>
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
           </div>
           <div v-if="picked != null" class="mt-3 selectedMusicDetail">
             <div class="musicTitleLabel">{{ picked.music.musicName }}</div>
@@ -71,8 +63,8 @@
       </v-row>
       <v-row class="noMusic" v-else>
         <img style="width: 15%" src="@/assets/emoticon/sad.png" alt="" />
-        <div>관심 음악이 없어요.</div></v-row
-      >
+        <div>관심 음악이 없어요.</div>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -139,7 +131,7 @@ export default {
     },
     checkMusic(music) {
       this.picked = music;
-      this.getYoutubeList(music.music.musicName + " " + music.music.artist);
+      //this.getYoutubeList(music.music.musicName + " " + music.music.artist);
     },
     async getYoutubeList(searchContent) {
       const config = {
@@ -181,12 +173,15 @@ iframe {
   height: 70vh;
   overflow: auto;
 }
+
 .musicShowListBody::-webkit-scrollbar {
   display: none;
 }
+
 .musicShowRight {
   padding-left: 3%;
 }
+
 .oneMusicBox {
   width: 100%;
   border-bottom: 2px solid #d3d3d3;
@@ -196,14 +191,17 @@ iframe {
   height: 70vh;
   overflow: auto;
 }
+
 .selectedMusicBody::-webkit-scrollbar {
   display: none;
 }
+
 .selectedMusicDetail {
   padding: 5%;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.11);
 }
+
 .musicTitleLabel {
   font-size: clamp(1rem, 2.5vw, 1.4rem);
   display: block;
@@ -223,26 +221,33 @@ iframe {
   .selectedMusicDetail {
     display: none;
   }
+
   .mobileView {
     display: inline-block;
   }
+
   .pcView {
     display: none;
   }
+
   .selectedMusicBody {
     height: auto;
     overflow: auto;
   }
+
   .musicShowRight {
     padding-left: 0;
   }
+
   .col-12 {
     padding: 12px 0 12px 0;
   }
+
   .musicShowListBody {
     height: 50vh;
   }
 }
+
 .noMusic {
   display: flex;
   flex-direction: column;
