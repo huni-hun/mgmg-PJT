@@ -1,27 +1,40 @@
 <template>
   <div>
     <!-- mobile -->
-    <v-img v-if="isMobile" :src="require('@/assets/achieve/mobileattaionmodal.png')">
+    <v-img
+      v-if="isMobile"
+      :src="require('@/assets/achieve/mobileattaionmodal.png')"
+    >
       <v-card class="mobile-badge-card">
-        <img class="mobile-badge" :src="require(`@/assets/badge/a${badge.badgeNo}.png`)" alt="" />
+        <img
+          class="mobile-badge"
+          :src="require(`@/assets/badge/a${badge.badgeNo}.png`)"
+          alt=""
+        />
         <v-card-text class="mobile-badge-text">
           <p class="mobile-badge-name">{{ badge.badgeName }}</p>
-          <p class="mobile-badge-content">{{ badgeDetail.badgeContent }}</p>
+          <p class="badge-content" v-html="badgeDetail.badgeContent"></p>
           <div class="mobile-card-date">
             획득날짜<br />
             {{ badgeDetail.achievedBadgeDate }}
           </div>
         </v-card-text>
-        <v-btn class="mobile-badge-btn" width="10%" @click="setDialog"> 확인 </v-btn>
+        <v-btn class="mobile-badge-btn" width="10%" @click="setDialog">
+          확인
+        </v-btn>
       </v-card>
     </v-img>
     <!-- pc -->
     <v-img v-else :src="require('@/assets/achieve/attaionmodal.png')">
       <v-card class="badge-card">
-        <img class="badge" :src="require(`@/assets/badge/a${badge.badgeNo}.png`)" alt="" />
+        <img
+          class="badge"
+          :src="require(`@/assets/badge/a${badge.badgeNo}.png`)"
+          alt=""
+        />
         <v-card-text class="badge-text">
           <p class="badge-name">{{ badge.badgeName }}</p>
-          <p class="badge-content">{{ badgeDetail.badgeContent }}</p>
+          <p class="badge-content" v-html="badgeDetail.badgeContent"></p>
           <div class="card-date">
             획득날짜<br />
             {{ badgeDetail.achievedBadgeDate }}
@@ -50,7 +63,13 @@ export default {
     },
   },
   async created() {
-    this.badgeDetail = await achieve_detail(this.accessToken, this.badge.badgeNo);
+    await achieve_detail(this.accessToken, this.badge.badgeNo).then((res) => {
+      res.badgeContent = res.badgeContent.replace(
+        /(?:\r\n|\r|\n|\\n)/g,
+        "<br />"
+      );
+      this.badgeDetail = res;
+    });
   },
 };
 </script>

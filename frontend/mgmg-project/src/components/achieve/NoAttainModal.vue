@@ -12,7 +12,7 @@
         />
         <v-card-text class="mobile-badge-text">
           <p class="mobile-badge-name">{{ badge.badgeName }}</p>
-          <p class="mobile-badge-content">{{ badgeDetail.badgeContent }}</p>
+          <p class="badge-content" v-html="badgeDetail.badgeContent"></p>
           <div class="mobile-card-date">
             획득조건<br />
             {{ badgeDetail.badgeCodition }}

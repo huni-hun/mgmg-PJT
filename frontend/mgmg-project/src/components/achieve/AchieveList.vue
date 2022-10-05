@@ -92,9 +92,9 @@ export default {
 }
 
 .achieve-list-bottom {
-  height: 2vh;
+  /* height: 2vh;
   width: auto;
-  box-shadow: 1rem 1rem 5px #9797979d;
+  box-shadow: 1rem 1rem 5px #9797979d; */
 }
 
 /* Desktop First */
