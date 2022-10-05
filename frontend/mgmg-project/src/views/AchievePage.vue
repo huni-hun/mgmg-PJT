@@ -1,28 +1,36 @@
 <template>
   <div>
     <v-container class="justify-center">
-      <v-row class="title-row">
-        <v-spacer></v-spacer>
-        <div class="achieve-title">나의 업적</div>
-        <v-spacer></v-spacer>
-      </v-row>
-      <v-row>
-        <v-spacer></v-spacer>
-        <v-btn
-          class="achieve-btn"
-          v-if="!isAchieve"
-          @click="[getAchieveList(), changeIsAchieve()]"
-          color="rgba(81,81,110,.9)"
-          >달성 업적 확인</v-btn
+      <div style="display: flex; flex-direction: row">
+        <div style="flex: 1"></div>
+        <div class="achieve-title" style="flex: 1; text-align: center">
+          나의 업적
+        </div>
+        <div
+          style="
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: flex-end;
+          "
         >
-        <v-btn
-          class="achieve-btn"
-          v-if="isAchieve"
-          @click="[achieveList(), changeIsAchieve()]"
-          color="rgba(81,81,110,.9)"
-          >전체 업적 확인</v-btn
-        >
-      </v-row>
+          <v-btn
+            class="achieve-btn"
+            v-if="!isAchieve"
+            @click="[getAchieveList(), changeIsAchieve()]"
+            color="rgba(81,81,110,.9)"
+            >달성 업적 확인</v-btn
+          >
+          <v-btn
+            class="achieve-btn"
+            v-if="isAchieve"
+            @click="[achieveList(), changeIsAchieve()]"
+            color="rgba(81,81,110,.9)"
+            >전체 업적 확인</v-btn
+          >
+        </div>
+      </div>
       <v-row class="achieve-list-frame">
         <router-view></router-view>
       </v-row>
@@ -58,30 +66,25 @@ export default {
 }
 
 .achieve-title {
+  font-weight: bold;
   text-align: center;
   color: #ffffff;
-  text-shadow: 0px 20px 20px rgba(0, 0, 0, 0.25);
-  font-size: clamp(1.8rem, 3vw, 3rem);
+  /* text-shadow: 0px 20px 20px rgba(0, 0, 0, 0.25); */
+  font-size: clamp(1.8rem, 3vw, 3.2rem);
 }
 .achieve-btn {
   text-align: right;
   color: #ffffff;
+  font-size: clamp(0.9rem, 1vw, 1.3rem);
 }
 
 .achieve-list-frame {
   margin-top: 1vh;
 }
 
-/* 반응형 */
 @media (max-width: 1023px) {
-  .achieve-btn {
-    font-size: 1rem;
-  }
 }
 
 @media (max-width: 639px) {
-  .achieve-btn {
-    font-size: 0.5rem;
-  }
 }
 </style>
