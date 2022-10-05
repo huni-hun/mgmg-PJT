@@ -60,15 +60,9 @@ export default {
 </script>
 
 <style scoped>
-.title-row {
-  margin-top: 2vh;
-}
-
 .achieve-title {
   font-weight: bold;
-  /* text-align: center; */
   color: #ffffff;
-  /* text-shadow: 0px 20px 20px rgba(0, 0, 0, 0.25); */
   font-size: clamp(1.8rem, 3vw, 3.2rem);
 }
 .achieve-btn {

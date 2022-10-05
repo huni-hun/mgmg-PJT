@@ -1,7 +1,7 @@
 <template>
   <v-carousel hide-delimiters height="90%">
     <v-carousel-item v-for="(item, i) in badgeList" :key="i">
-      <v-sheet color="rgba(255, 255, 255, 0.3)">
+      <v-sheet color="rgba(255, 255, 255, 0)">
         <v-container fluid>
           <v-row class="five-cols">
             <v-col
