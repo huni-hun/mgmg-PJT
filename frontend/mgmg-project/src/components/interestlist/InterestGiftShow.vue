@@ -3,8 +3,9 @@
     <div class="interestGiftBody" v-if="0 < giftLst.length">
       <div v-for="(gift, index) in giftLst" :key="gift.name" class="giftCard">
         <div>
-          <v-img :src="gift.gift.giftImg" alt="상품사진" height="100" width="100" />
-          <div>{{ gift.gift.giftName }}</div>
+          <img style="width: 100%" :src="gift.gift.giftImg" alt="" />
+          <!-- <v-img :src="gift.gift.giftImg" alt="상품사진" height="100" width="100" /> -->
+          <div class="giftNameLabel">{{ tooLongName(gift.gift.giftName) }}</div>
           <div>{{ gift.gift.giftPrice }}원</div>
           <p>
             <button @click="clickLink(gift.gift.giftUrl)">구매하러가기 <v-icon small> mdi-open-in-new </v-icon></button>
@@ -36,9 +37,7 @@ import Swal from "sweetalert2";
 export default {
   data() {
     return {
-      // giftLst: [
-      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000, giftUrl: "naver.com" }, registDate: "2022-01-11" },
-      // ],
+      // giftLst: [{ name: "장갑", gift: { giftName: "장갑", giftImg: "https://media3.giphy.com/media/H44Gd0GTIzhDsk4TBC/giphy.gif", giftPrice: 12000, giftUrl: "naver.com" }, registDate: "2022-01-11" }],
       giftLst: [],
     };
   },
@@ -74,6 +73,15 @@ export default {
           console.log(err);
         });
     },
+    tooLongName(longGiftName) {
+      var shortGiftName;
+      if (longGiftName.length > 10) {
+        shortGiftName = longGiftName.substr(0, 10) + "…";
+      } else {
+        shortGiftName = longGiftName;
+      }
+      return shortGiftName;
+    },
   },
 };
 </script>
@@ -87,49 +95,49 @@ export default {
   height: 70vh;
   overflow: auto;
 }
-
 .interestGiftShowTotalBody::-webkit-scrollbar {
   display: none;
 }
-
 .interestGiftBody {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: start;
   margin: 1% 0;
 }
-
 .giftCard {
   width: 25%;
-  padding: 0 2%;
+  padding: 2%;
+  border-bottom: 2px solid #d3d3d3;
+  background-color: white;
 }
-
 .giftCardNamePrice {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-
+.giftNameLabel {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  display: block;
+  margin-bottom: 1%;
+  white-space: nowrap;
+}
 @media (max-width: 767px) {
   .giftCard {
     width: 33%;
   }
 }
-
 @media (max-width: 639px) {
   .giftCard {
     width: 50%;
   }
 }
-
 @media (max-width: 575px) {
   .giftCard {
     width: 100%;
     padding: 0 25%;
   }
 }
-
 @media (max-width: 350px) {
   .giftCard {
     width: 100%;
