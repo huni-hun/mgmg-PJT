@@ -1,31 +1,28 @@
 <template>
-  <v-container>
-    <v-row v-if="0 < giftLst.length">
-      <div v-for="(gift, index) in giftLst" :key="gift.name" class="col-3">
+  <div class="interestGiftShowTotalBody">
+    <div class="interestGiftBody" v-if="0 < giftLst.length">
+      <div v-for="(gift, index) in giftLst" :key="gift.name" class="giftCard">
         <div>
-          <v-img
-            :src="gift.gift.giftImg"
-            alt="상품사진"
-            height="100"
-            width="100"
-          />
+          <v-img :src="gift.gift.giftImg" alt="상품사진" height="100" width="100" />
           <div>{{ gift.gift.giftName }}</div>
-          <div>가격: {{ gift.gift.giftPrice }}원</div>
+          <div>{{ gift.gift.giftPrice }}원</div>
           <p>
-            <button @click="clickLink(gift.gift.giftUrl)">
-              구매하러가기 <v-icon small> mdi-open-in-new </v-icon>
-            </button>
+            <button @click="clickLink(gift.gift.giftUrl)">구매하러가기 <v-icon small> mdi-open-in-new </v-icon></button>
           </p>
-          <div>작성 일기 날짜: {{ gift.registDate }}</div>
-          <div>삭제아이콘</div>
-          <v-btn @click="deleteGift(index, gift)">
-            <v-icon>mdi-trash-can-outline</v-icon></v-btn
-          >
+          <div class="giftCardNamePrice">
+            <div>
+              <div>일기 작성 날짜</div>
+              <div>{{ gift.registDate }}</div>
+            </div>
+            <!-- <v-btn @click="deleteGift(index, gift)"> -->
+            <v-icon @click="deleteGift(index, gift)">mdi-trash-can-outline</v-icon>
+            <!-- </v-btn> -->
+          </div>
         </div>
       </div>
-    </v-row>
-    <v-row v-else> 관심 선물 없음 </v-row>
-  </v-container>
+    </div>
+    <div class="noGift" v-else>관심 선물 없음</div>
+  </div>
 </template>
 
 <script>
@@ -36,6 +33,18 @@ import Swal from "sweetalert2";
 export default {
   data() {
     return {
+      // giftLst: [
+      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000, giftUrl: "naver.com" }, registDate: "2022-01-11" },
+      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
+      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000 }, registDate: "2022-01-11" },
+      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
+      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000 }, registDate: "2022-01-11" },
+      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
+      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000 }, registDate: "2022-01-11" },
+      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
+      //   { name: "장갑", gift: { giftName: "장갑", giftImg: "@/assets/emoticon/happy.png", giftPrice: 12000 }, registDate: "2022-01-11" },
+      //   { name: "목도리", gift: { giftName: "목도리", giftImg: "@/assets/emoticon/sad.png", giftPrice: 13000 }, registDate: "2022-08-11" },
+      // ],
       giftLst: [],
     };
   },
@@ -75,4 +84,60 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.interestGiftShowTotalBody {
+  background-color: white;
+  box-shadow: 0px 0px 20px 20px rgba(23, 50, 97, 0.2);
+  border-radius: 10px;
+  padding: 2% 10%;
+  height: 70vh;
+  overflow: auto;
+}
+.interestGiftShowTotalBody::-webkit-scrollbar {
+  display: none;
+}
+.interestGiftBody {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  margin: 1% 0;
+}
+.giftCard {
+  width: 25%;
+  padding: 0 2%;
+}
+.giftCardNamePrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+@media (max-width: 767px) {
+  .giftCard {
+    width: 33%;
+  }
+}
+@media (max-width: 639px) {
+  .giftCard {
+    width: 50%;
+  }
+}
+@media (max-width: 575px) {
+  .giftCard {
+    width: 100%;
+    padding: 0 25%;
+  }
+}
+@media (max-width: 350px) {
+  .giftCard {
+    width: 100%;
+    padding: 0 10%;
+  }
+}
+
+.noGift {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

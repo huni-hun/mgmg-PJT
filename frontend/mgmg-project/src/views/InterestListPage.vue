@@ -1,35 +1,40 @@
 <template>
-  <v-container>
-    <v-row v-if="!interestOrder">
-      <v-col>
+  <v-container class="interestListPageBody">
+    <div class="interestListParentTotalBody" v-if="!interestOrder">
+      <div class="interestListTitle">
         <label for="">관심 음악 리스트</label>
-      </v-col>
-      <v-col>
+      </div>
+      <div>
         <router-link to="/interestlist/music">
           <CustomButton btnText="선물" @click="interestOrderChange" />
         </router-link>
-      </v-col>
-    </v-row>
-    <v-row v-if="!!interestOrder">
-      <v-col>
+      </div>
+    </div>
+
+    <div class="interestListParentTotalBody" v-if="interestOrder">
+      <div class="interestListTitle">
         <label for="">관심 선물 리스트</label>
-      </v-col>
-      <v-col>
+      </div>
+      <div>
         <router-link to="/interestlist/gift">
+          <!-- <v-icon @click="interestOrderChange">mdi-music-circle</v-icon> -->
           <CustomButton btnText="음악" @click="interestOrderChange" />
         </router-link>
-      </v-col>
-    </v-row>
-    <v-row>
+      </div>
+    </div>
+    <div>
       <router-view></router-view>
-    </v-row>
+    </div>
   </v-container>
 </template>
 
 <script>
 export default {
   data() {
-    return { interestOrder: 0 };
+    return { interestOrder: false };
+  },
+  created() {
+    this.$router.push("/interestlist/music");
   },
   methods: {
     interestOrderChange() {
@@ -39,4 +44,21 @@ export default {
 };
 </script>
 
-<style></style>
+<style scope>
+.interestListPageBody {
+  width: 100%;
+  /* padding: 0 10%; */
+}
+.interestListParentTotalBody {
+  margin-top: 2vw;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.interestListTitle {
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  color: white;
+  margin-bottom: 2%;
+}
+</style>
