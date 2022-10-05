@@ -76,6 +76,7 @@
 }
 
 .outFlexDiv {
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -87,13 +88,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
   margin: 10px 0px;
   font-size: clamp(1rem, 2vw, 1.8rem) !important;
 }
 
 .ridioButton {
   font-size: none;
-  margin: 0px 10px;
+  margin: 0px 45px;
 }
 
 .ridioButton input[type="checkbox"] {
@@ -125,7 +127,6 @@
     background-color: rgba(255, 255, 255, 0.7);
     margin: 10px 0px;
     padding: 15px;
-    height: 25vh;
   }
 
   .title {
@@ -156,6 +157,7 @@
   }
 
   .outFlexDiv {
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -175,6 +177,7 @@
     flex-direction: column;
     align-items: flex-start;
     margin: 10px 0px;
+    max-width: 380px;
     font-size: clamp(1rem, 2vw, 1.8rem) !important;
   }
 }
