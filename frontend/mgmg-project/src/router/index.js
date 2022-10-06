@@ -145,15 +145,16 @@ const routes = [
     component: NoticePage,
     children: [
       {
-        path: "detail/:pid",
-        name: "noticedetail",
-        component: NoticeDetail,
-      },
-      {
         path: "",
         name: "noticelist",
         component: NoticeList,
       },
+      {
+        path: "detail/:pid",
+        name: "noticedetail",
+        component: NoticeDetail,
+      },
+
       {
         path: "writing",
         name: "noticewriting",
