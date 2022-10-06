@@ -4,20 +4,12 @@
       <v-row>
         <v-col cols="12" md="6">
           <div class="donut-frame">
-            <donut-graph
-              :startDate="startDate"
-              :endDate="endDate"
-              @send-emotion="sendEmotion"
-            />
+            <donut-graph :startDate="startDate" :endDate="endDate" @send-emotion="sendEmotion" />
           </div>
         </v-col>
         <v-col cols="12" md="6">
           <div class="period-board">
-            <img
-              class="sticker"
-              :src="require(`@/assets/statistics/adehesive_plaster.png`)"
-              alt=""
-            />
+            <img class="sticker" :src="require(`@/assets/statistics/adehesive_plaster.png`)" alt="" />
 
             <br />
             <!-- 달력 picker -->
@@ -25,37 +17,15 @@
               <v-row justify="center">
                 <v-dialog v-model="isPicker" persistent max-width="290">
                   <v-card>
-                    <v-text-field
-                      v-model="dateRangeText"
-                      background-color="#FFF"
-                      label="Date range"
-                      prepend-icon="mdi-calendar"
-                      readonly
-                    ></v-text-field>
-                    <v-date-picker
-                      v-model="dates"
-                      range
-                      no-title
-                      :max="today"
-                      :min="allowMaxDate"
-                      color="green"
-                      class="custom-picker"
-                    >
+                    <v-text-field v-model="dateRangeText" background-color="#FFF" label="Date range"
+                      prepend-icon="mdi-calendar" readonly></v-text-field>
+                    <v-date-picker v-model="dates" range no-title :max="today" :min="allowMaxDate" color="green"
+                      class="custom-picker">
                       <v-spacer />
-                      <v-btn
-                        text
-                        class="font-weight-bold"
-                        color="gray"
-                        @click="selectFunc()"
-                      >
+                      <v-btn text class="font-weight-bold" color="gray" @click="selectFunc()">
                         취소
                       </v-btn>
-                      <v-btn
-                        text
-                        class="font-weight-bold"
-                        color="green "
-                        @click="pickerFunc()"
-                      >
+                      <v-btn text class="font-weight-bold" color="green " @click="pickerFunc()">
                         확인
                       </v-btn>
                     </v-date-picker>
@@ -67,13 +37,7 @@
             <div v-else class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    class="periodMenu"
-                    color="primary"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                  >
+                  <v-btn class="periodMenu" color="primary" dark v-bind="attrs" v-on="on">
                     {{ menuTitle }}
                     <v-icon class="periodMenuIcon" large>mdi-menu-down</v-icon>
                   </v-btn>
@@ -81,7 +45,7 @@
                 <v-list>
                   <v-list-item v-for="(item, index) in items" :key="index">
                     <v-list-item-title @click="periodFunc(item.func)">{{
-                      item.title
+                    item.title
                     }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -95,11 +59,7 @@
               <p v-else class="most-emotion">
                 제일 많이 느낀 감정 : "{{ mostEmotion }}"
               </p>
-              <img
-                class="period-badge"
-                :src="require(`@/assets/emoticon/${imgSticker}.png`)"
-                alt=""
-              />
+              <img class="period-badge" :src="require(`@/assets/emoticon/${imgSticker}.png`)" alt="" />
               <p class="explanation">{{ emotionExplanation }}</p>
               <p class="by-person">by. {{ explanationPerson }}</p>
             </div>
@@ -356,7 +316,7 @@ export default {
 /* 이미지 */
 .period-badge {
   height: 24vh;
-  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(1px 2px 10px rgba(0, 0, 0, 0.2));
   border-radius: 50%;
 }
 
@@ -373,9 +333,11 @@ export default {
   .period-board {
     height: 50vh;
   }
+
   .donut-frame {
     height: 50vh;
   }
+
   .period-badge {
     height: 20vh;
   }
@@ -402,25 +364,31 @@ export default {
     font-size: 1rem;
   }
 }
+
 @media (max-width: 960px) {
   .date-picker {
     max-width: 30vw;
   }
+
   .period-board {
     height: 40vh;
   }
+
   .donut-frame {
     height: 30vh;
   }
 }
+
 /* 작은 태블릿 세로*/
 @media (max-width: 767px) {
   .period-board {
     height: 36vh;
   }
+
   .donut-frame {
     height: 30vh;
   }
+
   .period-badge {
     height: 12vh;
   }
@@ -447,15 +415,17 @@ export default {
   .period-board {
     height: 39vh;
   }
+
   .donut-frame {
     height: 27vh;
   }
+
   .periodMenu {
     font-size: 1em;
     margin: 1rem 0 0.5em 0;
   }
 }
+
 /* 갤럭시 폴드 */
-@media (max-width: 300px) {
-}
+@media (max-width: 300px) {}
 </style>
