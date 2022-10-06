@@ -11,7 +11,7 @@ const urlsToCache = [
   "/img/icons/android-chrome-512x512.png",
   "/img/icons/android-chrome-maskable-192x192.png",
   "/img/icons/android-chrome-maskable-512x512.png",
-  "img/icons/apple-touch-icon-60x60.png",
+  "/img/icons/apple-touch-icon-60x60.png",
   "/img/icons/apple-touch-icon-76x76.png",
   "/img/icons/apple-touch-icon-120x120.png",
   "/img/icons/apple-touch-icon-152x152.png",
@@ -42,8 +42,10 @@ self.addEventListener("fetch", (event) => {
       const r = await caches.match(event.request);
       if (r) return r;
       const response = await fetch(event.request);
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(event.request, response.clone());
+      if (event.request.method !== "POST") {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(event.request, response.clone());
+      }
       return response;
     })()
   );
