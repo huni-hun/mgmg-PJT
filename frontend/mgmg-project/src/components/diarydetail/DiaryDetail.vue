@@ -1,21 +1,34 @@
 <template>
   <div class="outDiv">
-    <div class="diaryDetailTop"
-      :style="{backgroundImage:'url(' + require(`@/assets/diary/detailtop/${thema}.png`) + ')' }">
+    <div
+      class="diaryDetailTop"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/detailtop/${thema}.png`) + ')',
+      }"
+    >
       <div class="topOutDiv">
         <div class="box">
-          <img alt="감정티콘" :src="
-            require(`@/assets/emoticon/${
-              this.emoImgs[this.emotions.indexOf(this.emotion, 0)]
-            }.png`)
-          " />
+          <img
+            alt="감정티콘"
+            :src="
+              require(`@/assets/emoticon/${
+                this.emoImgs[this.emotions.indexOf(this.emotion, 0)]
+              }.png`)
+            "
+          />
         </div>
 
         <div class="textFlex" :style="{ fontFamily: `${font}` }">
           <span>날짜 : {{ date }}</span>
 
-          <span class="weatherDetailDiv">날씨 :
-            <img class="weatherImg" alt="날씨티콘" :src="require(`@/assets/diary/weather/${weather}.png`)" />
+          <span class="weatherDetailDiv"
+            >날씨 :
+            <img
+              class="weatherImg"
+              alt="날씨티콘"
+              :src="require(`@/assets/diary/weather/${weather}.png`)"
+            />
           </span>
 
           <span>감정 : {{ emotion }}</span>
@@ -24,32 +37,62 @@
       <hr />
     </div>
 
-    <div class="diarymiddleImg" v-show="imageFile"
-      :style="{backgroundImage:'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')'}">
+    <div
+      class="diarymiddleImg"
+      v-show="imageFile"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+      }"
+    >
       <div class="selectImg">
         <img v-if="imageFile" :src="imageFile" />
       </div>
     </div>
 
-    <div class="diaryDitailmiddle"
-      :style="{backgroundImage: 'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')', fontFamily: `${font}`}">
+    <div
+      class="diaryDitailmiddle"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/middle/${thema}.png`) + ')',
+        fontFamily: `${font}`,
+      }"
+    >
       <div class="textWriteDiv">
-        <textarea class="textWrite" ref="textarea" readonly v-model="content"></textarea>
+        <textarea
+          class="textWrite"
+          ref="textarea"
+          readonly
+          v-model="content"
+        ></textarea>
       </div>
     </div>
 
-    <div class="diarybottom" :style="{backgroundImage:'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')'}">
+    <div
+      class="diarybottom"
+      :style="{
+        backgroundImage:
+          'url(' + require(`@/assets/diary/bottom/${thema}.png`) + ')',
+      }"
+    >
       <hr />
       <div>
         <button type="button">
-          <img class="btn_image" src="@/assets/diary/editIcon.png" @click="editClick" />
+          <img
+            class="btn_image"
+            src="@/assets/diary/editIcon.png"
+            @click="editClick"
+          />
         </button>
         <button type="button">
-          <img class="btn_image" src="@/assets/diary/deleteIcon.png" @click="deleteClick" />
+          <img
+            class="btn_image"
+            src="@/assets/diary/deleteIcon.png"
+            @click="deleteClick"
+          />
         </button>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -98,11 +141,11 @@ export default {
 
     no: 0,
     date: "",
-    weather: "",
+    weather: "sunny",
     imageFile: "",
     content: "",
-    thema: "",
-    emotion: "",
+    thema: "noteMg",
+    emotion: "평온",
 
     font: "",
   }),
@@ -181,5 +224,4 @@ export default {
 };
 </script>
 
-
-<style scoped src="@/styles/diary/DiaryStyle.css"/>
+<style scoped src="@/styles/diary/DiaryStyle.css" />
