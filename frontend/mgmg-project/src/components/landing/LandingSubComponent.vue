@@ -75,8 +75,8 @@ export default {
 .sub1 {
   background: linear-gradient(
     180deg,
-    #f3cfcd 0%,
-    rgba(250, 222, 221, 0.413726) 21.13%,
+    #bdc8d5 0%,
+    rgba(189, 200, 212, 0.413726) 21.13%,
     rgba(247, 233, 255, 0) 100%
   );
   flex-direction: row;
@@ -85,7 +85,7 @@ export default {
   flex-direction: row-reverse;
 }
 .sub3 {
-  background: #f8f7f7;
+  background: #eef4fa;
   flex-direction: row;
 }
 
