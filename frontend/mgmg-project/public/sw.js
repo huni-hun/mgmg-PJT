@@ -1,5 +1,5 @@
-const CACHE_NAME = "version-3";
-const EX_CACHE_LIST = ["version-1", "version-2"];
+const CACHE_NAME = "version-4";
+const EX_CACHE_LIST = ["version-1", "version-2", "version-3"];
 
 const urlsToCache = [
   "/",
