@@ -7,7 +7,9 @@
 
       <div class="loginBodyLine">
         <div class="loginBodyLabel">
-          <label for="idLoginInput" class="noDrag" id="idLoginLabel">아이디</label>
+          <label for="idLoginInput" class="noDrag" id="idLoginLabel"
+            >아이디</label
+          >
         </div>
         <div class="loginBodyInput">
           <CustomInput v-model="idLoginInput" />
@@ -16,22 +18,41 @@
 
       <div class="loginBodyLine">
         <div class="loginBodyLabel">
-          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel">비밀번호</label>
+          <label for="pwLoginInput" class="noDrag" id="pwLoginLabel"
+            >비밀번호</label
+          >
         </div>
         <div class="loginBodyInput">
           <div class="inputStyle">
-            <v-text-field :rules="[pwRequired]" :type="password" label="비밀번호를 입력하세요." name="input-10-2"
-              hint="비밀번호를 입력하세요." value="" class="input-group--focused" single-line outlined id="pwLoginInput"
-              @keyup.enter="login"></v-text-field>
+            <v-text-field
+              :rules="[pwRequired]"
+              :type="password"
+              label="비밀번호를 입력하세요."
+              name="input-10-2"
+              hint="비밀번호를 입력하세요."
+              value=""
+              class="input-group--focused"
+              single-line
+              outlined
+              id="pwLoginInput"
+              @keyup.enter="login"
+            ></v-text-field>
           </div>
         </div>
       </div>
       <div class="loginButtonLine">
         <div class="loginCheckBox">
-          <v-checkbox v-model="loginNext" :label="`로그인 상태 유지하기`"></v-checkbox>
+          <v-checkbox
+            v-model="loginNext"
+            :label="`로그인 상태 유지하기`"
+          ></v-checkbox>
         </div>
         <div class="loginButton">
-          <CustomButton class="loginButtonText" @click="login" btnText="로그인" />
+          <CustomButton
+            class="loginButtonText"
+            @click="login"
+            btnText="로그인"
+          />
         </div>
       </div>
     </v-container>
@@ -122,7 +143,7 @@ export default {
         .catch((err) => {
           console.log(err);
           Swal.fire({
-            text: "잠시후 다시 시도해주세요.",
+            text: "로그인에 실패했습니다.",
             icon: "warning",
             confirmButtonColor: "#666666",
             confirmButtonText: "확인",

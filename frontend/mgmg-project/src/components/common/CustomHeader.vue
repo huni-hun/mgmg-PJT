@@ -5,21 +5,31 @@
         <div class="webLogo">
           <router-link class="logo" to="/main">
             <img class="logo" :src="img" />
-            <img class="desk-nav-bar logo-text" src="@/assets/logo/logo_only_text.png" alt="" />
+            <img
+              class="desk-nav-bar logo-text"
+              src="@/assets/logo/logo_only_text.png"
+              alt=""
+            />
           </router-link>
         </div>
 
         <div class="desk-nav-bar web-router-link">
-          <router-link class="router-link-active" to="/achieve">나의업적</router-link>
-          <router-link class="router-link-active" to="/statistics">감정통계</router-link>
-          <router-link class="router-link-active" to="/notice">공지사항</router-link>
+          <router-link class="router-link-active" to="/achieve"
+            >나의업적</router-link
+          >
+          <router-link class="router-link-active" to="/statistics"
+            >감정통계</router-link
+          >
+          <router-link class="router-link-active" to="/notice"
+            >공지사항</router-link
+          >
         </div>
 
         <div class="web-right-menu">
           <div class="bell-icon">
-            <v-menu class="notifi" offset-y transition="scroll-y-transition" bottom right>
+            <v-menu class="notifi" offset-y bottom left>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn @click="inf_list" v-bind="attrs" v-on="on" icon>
+                <v-btn @click="inf_list()" v-bind="attrs" v-on="on" icon>
                   <v-badge v-if="isInf" bordered dot overlap color="red">
                     <v-icon>mdi-bell-outline</v-icon>
                   </v-badge>
@@ -29,29 +39,58 @@
 
               <v-list>
                 <v-list-item v-for="(inf, index) in infList" :key="index">
-                  <v-list-item-title v-if="inf.notificationDate == ''">
+                  <v-list-item-title
+                    class="list-title"
+                    v-if="inf.notificationDate == ''"
+                  >
                     {{ inf.notificationContent }}
                   </v-list-item-title>
-                  <v-list-item-title v-else @click="clickAlarm()" avatar style="cursor: pointer;">
-                    {{ inf.notificationContent }} | {{ inf.notificationDate }}
-                  </v-list-item-title>
+                  <v-list-item-title
+                    v-else
+                    @click="clickAlarm()"
+                    avatar
+                    style="cursor: pointer"
+                    class="list-title"
+                  >
+                    [업적 달성]
+                    {{ inf.notificationContent }} </v-list-item-title
+                  ><br />
                 </v-list-item>
               </v-list>
             </v-menu>
           </div>
 
-          <v-menu class="desk-nav-bar" rounded="lg" bottom right open-on-hover offset-y>
+          <v-menu
+            class="desk-nav-bar"
+            rounded="lg"
+            bottom
+            right
+            open-on-hover
+            offset-y
+          >
             <template v-slot:activator="{ on, attrs }">
-              <v-btn class="desk-nav-bar user-nav" v-bind="attrs" v-on="on" text color="transparent">
+              <v-btn
+                class="desk-nav-bar user-nav"
+                v-bind="attrs"
+                v-on="on"
+                text
+                color="transparent"
+              >
                 <span class="user-name">{{ userName }}님 </span>
-                <v-icon x-large color="blue-grey darken-3">mdi-menu-down</v-icon>
+                <v-icon x-large color="blue-grey darken-3"
+                  >mdi-menu-down</v-icon
+                >
               </v-btn>
             </template>
 
             <v-list class="text-lg-center" color="rgb(236, 255, 255, 0.7)">
-              <v-list-item v-for=" (item, index) in items" :key="index">
+              <v-list-item v-for="(item, index) in items" :key="index">
                 <v-list-item-content>
-                  <v-list-item-title @click="menusMetod(item.link)" avatar style="cursor: pointer;">
+                  <v-list-item-title
+                    @click="menusMetod(item.link)"
+                    avatar
+                    style="cursor: pointer"
+                  >
                     {{ item.title }}
                   </v-list-item-title>
                 </v-list-item-content>
@@ -81,7 +120,11 @@
         <div class="webLogo">
           <router-link class="logo" to="/main">
             <img class="logo" :src="img" />
-            <img class="desk-nav-bar logo-text" src="@/assets/logo/logo_only_text.png" alt="" />
+            <img
+              class="desk-nav-bar logo-text"
+              src="@/assets/logo/logo_only_text.png"
+              alt=""
+            />
           </router-link>
         </div>
         <router-link class="router-link-active" to="/login">로그인</router-link>
@@ -89,7 +132,6 @@
     </v-app-bar>
   </div>
 </template>
-
 
 <script>
 import { mapState, mapActions } from "vuex";
@@ -175,6 +217,9 @@ export default {
 <style scoped>
 @import url("@/assets/font/font.css");
 
+.list-title {
+  font-size: clamp(0.8rem, 0.8vw, 1rem);
+}
 * {
   font-family: "EF_Diary";
   font-size: clamp(1rem, 1vw, 1.3rem);
@@ -245,7 +290,6 @@ export default {
 }
 
 @media (max-width: 639px) {
-
   /* 헤더 형태 변환은 display: none; 을 통해 이뤄짐. */
   .desk-nav-bar {
     display: none;
