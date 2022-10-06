@@ -70,7 +70,7 @@
         </v-col>
       </v-row>
       <v-row class="noMusic" v-else>
-        <img style="width: 9.3vw" src="@/assets/emoticon/sad.png" alt="" />
+        <img class="noMusicImg" src="@/assets/emoticon/sad.png" alt="" />
         <div>관심 음악이 없어요.</div>
       </v-row>
     </v-container>
@@ -225,7 +225,25 @@ iframe {
   display: none;
 }
 
+.noMusic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0px 0px 20px 20px rgba(23, 50, 97, 0.2);
+  border-radius: 10px;
+  padding: 2% 10%;
+  height: 70vh;
+}
+.noMusicImg {
+  width: 9.3vw;
+}
+
 @media (max-width: 639px) {
+  .noMusicImg {
+    width: 25vw;
+  }
   .selectedMusicDetail {
     display: none;
   }
@@ -254,17 +272,5 @@ iframe {
   .musicShowListBody {
     height: 50vh;
   }
-}
-
-.noMusic {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  box-shadow: 0px 0px 20px 20px rgba(23, 50, 97, 0.2);
-  border-radius: 10px;
-  padding: 2% 10%;
-  height: 70vh;
 }
 </style>

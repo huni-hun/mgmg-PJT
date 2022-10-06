@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="noGift" v-else>
-      <img style="width: 9.3vw" src="@/assets/emoticon/sad.png" alt="" />
+      <img class="noGiftImg" src="@/assets/emoticon/sad.png" alt="" />
       <div>관심 선물이 없어요.</div>
     </div>
   </div>
@@ -123,6 +123,17 @@ export default {
   margin-bottom: 1%;
   white-space: nowrap;
 }
+.noGift {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.noGiftImg {
+  width: 9.3vw;
+}
 @media (max-width: 767px) {
   .giftCard {
     width: 33%;
@@ -131,6 +142,9 @@ export default {
 @media (max-width: 639px) {
   .giftCard {
     width: 50%;
+  }
+  .noGiftImg {
+    width: 25vw;
   }
 }
 @media (max-width: 575px) {
@@ -144,14 +158,5 @@ export default {
     width: 100%;
     padding: 0 10%;
   }
-}
-
-.noGift {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
 }
 </style>
