@@ -27,9 +27,9 @@
 
         <div class="web-right-menu">
           <div class="bell-icon">
-            <v-menu class="notifi" offset-y bottom left>
+            <v-menu class="notifi" offset-y bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn @click="inf_list()" v-bind="attrs" v-on="on" icon>
+                <v-btn @click="inf_list" v-bind="attrs" v-on="on" icon>
                   <v-badge v-if="isInf" bordered dot overlap color="red">
                     <v-icon>mdi-bell-outline</v-icon>
                   </v-badge>
