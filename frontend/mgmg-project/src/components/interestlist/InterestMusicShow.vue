@@ -4,13 +4,9 @@
       <v-row v-if="0 < musicLst.length">
         <v-col class="col-12 selectedMusicBody musicShowRight mobileView">
           <div class="video-container">
-            <iframe
-              class="player"
-              :src="`https://www.youtube.com/embed/${playCode}`"
-              title="YouTube video player"
+            <iframe class="player" :src="`https://www.youtube.com/embed/${playCode}`" title="YouTube video player"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            ></iframe>
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
           </div>
           <div v-if="picked != null" class="mt-3 selectedMusicDetail">
             <div class="musicTitleLabel">{{ picked.music.musicName }}</div>
@@ -38,7 +34,6 @@
                         <div>작성 일기 날짜: {{ music.registDate }}</div>
                         <div class="deleteIcon">
                           <v-icon @click="deleteMusic(index, music)">mdi-trash-can-outline</v-icon>
-                          <!-- <v-btn @click="deleteMusic(index, music)">삭제 아이콘</v-btn> -->
                         </div>
                       </v-col>
                     </v-row>
@@ -51,13 +46,9 @@
 
         <v-col class="col-12 col-md-7 col-sm-6 selectedMusicBody musicShowRight pcView">
           <div class="video-container">
-            <iframe
-              class="player"
-              :src="`https://www.youtube.com/embed/${playCode}`"
-              title="YouTube video player"
+            <iframe class="player" :src="`https://www.youtube.com/embed/${playCode}`" title="YouTube video player"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            ></iframe>
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
           </div>
           <div v-if="picked != null" class="mt-3 selectedMusicDetail">
             <div class="musicTitleLabel">{{ picked.music.musicName }}</div>
@@ -88,9 +79,6 @@ const YoutubeURL = "https://www.googleapis.com/youtube/v3/search";
 export default {
   data() {
     return {
-      // musicLst: [
-      //   { title: "애국가", music: { albumArt: "https://media3.giphy.com/media/H44Gd0GTIzhDsk4TBC/giphy.gif", musicName: "애국가", artist: "작곡가" }, registDate: "2022-01-11" },
-      // ],
       musicLst: [],
       model: 0,
       playCode: "",
@@ -139,7 +127,7 @@ export default {
     },
     checkMusic(music) {
       this.picked = music;
-      //this.getYoutubeList(music.music.musicName + " " + music.music.artist);
+      this.getYoutubeList(music.music.musicName + " " + music.music.artist);
     },
     async getYoutubeList(searchContent) {
       const config = {
@@ -236,6 +224,7 @@ iframe {
   padding: 2% 10%;
   height: 70vh;
 }
+
 .noMusicImg {
   width: 9.3vw;
 }
@@ -244,6 +233,7 @@ iframe {
   .noMusicImg {
     width: 25vw;
   }
+
   .selectedMusicDetail {
     display: none;
   }

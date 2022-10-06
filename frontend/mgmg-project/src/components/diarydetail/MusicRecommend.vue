@@ -122,7 +122,7 @@ export default {
         this.musicArtist = res.music.artist;
         this.musicYear = res.music.releaseDate;
         this.musicNo = res.music.musicNo;
-        // this.getYoutubeList(); // youtube 보여주기
+        this.getYoutubeList(); // youtube 보여주기
       })
       .catch((err) => {
         console.log("음악 데이터 실패", err);
@@ -130,6 +130,8 @@ export default {
   },
 };
 </script>
+
+
 
 
 

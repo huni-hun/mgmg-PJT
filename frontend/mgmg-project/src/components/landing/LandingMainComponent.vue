@@ -1,5 +1,12 @@
 <template>
   <div class="topBackground" style="display: flex; flex-direction: column">
+    <div class="download_div">
+      <a href="https://url.kr/3kda6z" download>
+        <button>
+          <v-icon color="white" class="mr-1">mdi-download</v-icon>.apk 다운
+        </button>
+      </a>
+    </div>
     <div style="flex: 1"></div>
     <div class="main">
       <div class="main_text">
@@ -37,8 +44,8 @@
 <script>
 import { mapActions } from "vuex";
 import { autoLogin } from "@/api/userApi.js";
-
 export default {
+
   mounted() {
     this.autoLogin();
   },
@@ -69,6 +76,7 @@ export default {
       if (to == "login") this.$router.push({ path: "login" });
       else this.$router.push({ path: "signup" });
     },
+
   },
 };
 </script>
@@ -87,6 +95,7 @@ export default {
 .center {
   text-align: center;
 }
+
 .left {
   text-align: left;
 }
@@ -163,6 +172,24 @@ export default {
   flex: 1;
 }
 
+.download_div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.download_div>a {
+  padding: 5px 15px;
+  margin-top: 10px;
+  margin-right: 10px;
+  background: #0b274e;
+  color: rgb(255, 255, 255);
+  border-radius: 30px;
+  font-size: 18px;
+  font-family: "EF_Diary";
+}
+
+
 @media screen and (max-width: 835px) {
   .main {
     flex-direction: column;
@@ -174,14 +201,17 @@ export default {
     flex-direction: row;
     flex-direction: column-reverse;
   }
+
   .only_text_logo img {
     width: 60%;
     min-width: 200px;
     max-width: 600px;
   }
+
   .only_text {
     display: none;
   }
+
   .emotion img {
     width: 100%;
     min-width: 200px;
@@ -201,6 +231,8 @@ export default {
     flex-direction: column;
   }
 
+
+
   .button {
     margin: 5px 0px 0px;
     padding: 10px;
@@ -209,6 +241,7 @@ export default {
     border-radius: 12px;
     font-size: clamp(1rem, 1.4vw, 1.5rem);
   }
+
   .main_flex {
     display: none;
   }
