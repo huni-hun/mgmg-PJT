@@ -1,10 +1,11 @@
-const CACHE_NAME = "version-6";
+const CACHE_NAME = "version-7";
 const EX_CACHE_LIST = [
   "version-1",
   "version-2",
   "version-3",
   "version-4",
   "version-5",
+  "version-6",
 ];
 
 const urlsToCache = [
@@ -60,9 +61,6 @@ self.addEventListener("fetch", (event) => {
 self.addEventListener("activate", function (event) {
   const cacheWhitelist = []; // add cache names which you do not want to delete
   cacheWhitelist.push(CACHE_NAME);
-  console.log("===caches=============");
-  // if ("caches" in window) {
-  console.log(caches.keys());
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -71,14 +69,9 @@ self.addEventListener("activate", function (event) {
             return EX_CACHE_LIST.includes(key);
           })
           .map((key) => {
-            console.log("==key==============");
-            console.log(key);
             return caches.delete(key);
           })
       );
     })
   );
-  // }
-  console.log("==after==============");
-  console.log(caches.keys());
 });
