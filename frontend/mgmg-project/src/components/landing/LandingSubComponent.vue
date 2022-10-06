@@ -2,10 +2,7 @@
   <div>
     <div class="sub sub1">
       <div class="img" data-aos="fade-right">
-        <img
-          alt="기능"
-          :src="require(`@/assets/landing/landing_temporary.png`)"
-        />
+        <img alt="기능" :src="require(`@/assets/landing/landing1.png`)" />
       </div>
       <div class="text">
         <div class="title-text">감정 분석 일기장</div>
@@ -14,10 +11,7 @@
     </div>
     <div class="sub sub2">
       <div class="img" data-aos="fade-left">
-        <img
-          alt="기능"
-          :src="require(`@/assets/landing/landing_temporary.png`)"
-        />
+        <img alt="기능" :src="require(`@/assets/landing/landing2.png`)" />
       </div>
       <div class="text">
         <div class="title-text">감정 기반 음악추천/랜덤 선물박스</div>
@@ -27,10 +21,7 @@
     </div>
     <div class="sub sub3">
       <div class="img" data-aos="fade-right">
-        <img
-          alt="기능"
-          :src="require(`@/assets/landing/landing_temporary.png`)"
-        />
+        <img alt="기능" :src="require(`@/assets/landing/landing3.png`)" />
       </div>
       <div class="text">
         <div class="title-text">업적 시스템과 보상 뱃지</div>
@@ -40,10 +31,7 @@
     </div>
     <div class="sub sub2">
       <div class="img" data-aos="fade-left">
-        <img
-          alt="기능"
-          :src="require(`@/assets/landing/landing_temporary.png`)"
-        />
+        <img alt="기능" :src="require(`@/assets/landing/landing4.png`)" />
       </div>
       <div class="text">
         <div class="title-text">시간별 / 요일별 감정 통계</div>
@@ -72,18 +60,19 @@ export default {
   align-items: center;
   justify-content: space-evenly;
 }
+
 .sub1 {
-  background: linear-gradient(
-    180deg,
-    #bdc8d5 0%,
-    rgba(189, 200, 212, 0.413726) 21.13%,
-    rgba(247, 233, 255, 0) 100%
-  );
+  background: linear-gradient(180deg,
+      #bdc8d5 0%,
+      rgba(189, 200, 212, 0.413726) 21.13%,
+      rgba(247, 233, 255, 0) 100%);
   flex-direction: row;
 }
+
 .sub2 {
   flex-direction: row-reverse;
 }
+
 .sub3 {
   background: #eef4fa;
   flex-direction: row;
@@ -106,9 +95,9 @@ export default {
 }
 
 .img img {
-  width: 120%;
+  width: 100%;
   min-width: 200px;
-  max-width: 800px;
+  max-height: 350px
 }
 
 .img {
