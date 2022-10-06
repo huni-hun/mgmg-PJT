@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -30,11 +31,8 @@ public class InterestMusic {
     @JoinColumn(name = "music_no")
     private Music music;
 
-    @Column(name = "regist_date", updatable = false, length = 16)
-    private String registDate;
+    @Column(name = "regist_date")
+    @Temporal(TemporalType.DATE)
+    private Date registDate;
 
-    @PrePersist
-    public void onPrePersist() {
-        this.registDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-    }
 }
