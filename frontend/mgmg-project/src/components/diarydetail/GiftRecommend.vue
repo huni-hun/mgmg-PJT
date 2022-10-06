@@ -78,7 +78,7 @@ export default {
 
     if (this.interestGift) {
       // "none->관심 선물 추가"
-      await giftInterest(this.accessToken, this.giftNo);
+      await giftInterest(this.accessToken, this.giftNo, this.diaryNo);
     } else {
       // "관심 선물 추가 -> none"
       await cancleGift(this.accessToken, this.giftNo);
@@ -99,7 +99,7 @@ export default {
         }
       })
       .catch((err) => {
-        console.log("선물 데이터 실패", err);
+        console.log("선물 데이터 받기 실패", err);
       });
   },
 };

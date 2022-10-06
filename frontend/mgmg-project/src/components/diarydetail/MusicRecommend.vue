@@ -89,26 +89,26 @@ export default {
     },
     async radioRequest(before, now) {
       if (before == "good" && now == "good") {
-        console.log("추천 -> none");
+        // console.log("추천 -> none");
         await cancleGoodMusic(this.accessToken, this.musicNo);
       } else if (before == "bad" && now == "bad") {
-        console.log("비추천 -> none");
+        // console.log("비추천 -> none");
         await cancleBadMusic(this.accessToken, this.musicNo);
       } else if (before == "bad" && now == "good") {
-        console.log("비추천 -> 추천");
+        // console.log("비추천 -> 추천");
         await cancleBadMusic(this.accessToken, this.musicNo).then(async () => {
-          await musicInterest(this.accessToken, this.musicNo);
+          await musicInterest(this.accessToken, this.musicNo, this.diaryNo);
         });
       } else if (before == "good" && now == "bad") {
-        console.log("추천 -> 비추천");
+        // console.log("추천 -> 비추천");
         await cancleGoodMusic(this.accessToken, this.musicNo).then(async () => {
           await musicBad(this.accessToken, this.musicNo);
         });
       } else if (before == "none" && now == "good") {
-        console.log("none -> 추천");
-        await musicInterest(this.accessToken, this.musicNo);
+        // console.log("none -> 추천");
+        await musicInterest(this.accessToken, this.musicNo, this.diaryNo);
       } else if (before == "none" && now == "bad") {
-        console.log("none -> 비추천");
+        // console.log("none -> 비추천");
         await musicBad(this.accessToken, this.musicNo);
       }
     },
@@ -130,6 +130,16 @@ export default {
   },
 };
 </script>
+
+
+
+
+
+
+
+
+
+
 
 
 

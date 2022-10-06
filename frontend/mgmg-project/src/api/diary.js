@@ -53,9 +53,9 @@ async function diaryDelete(accessToken, pid) {
   return response.data;
 }
 
-async function musicInterest(accessToken, pid) {
+async function musicInterest(accessToken, pid, diaryNo) {
   let response = await API.post(
-    `${DIARY}/interestmusic/${pid}`,
+    `${DIARY}/interestmusic/${pid}/${diaryNo}`,
     {},
     {
       headers: {
@@ -81,9 +81,9 @@ async function musicBad(accessToken, pid) {
   return response.data;
 }
 
-async function giftInterest(accessToken, pid) {
+async function giftInterest(accessToken, pid, diaryNo) {
   let response = await API.post(
-    `${DIARY}/interestgift/${pid}`,
+    `${DIARY}/interestgift/${pid}/${diaryNo}`,
     {},
     {
       headers: {
