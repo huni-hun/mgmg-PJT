@@ -13,7 +13,7 @@
 import eventBus from "./eventBus.js";
 export default {
   data: () => ({
-    backImgs: ["blueCheck", "pinkCheck"],
+    backImgs: ["noteMg", "noteClip", "blueCheck", "pinkCheck", "springBlue", "springYellow", "springGreen", "springPurple", "flowerYellow", "pullGreen", "nightOwl"],
   }),
   methods: {
     imgClick(props) {
@@ -22,6 +22,8 @@ export default {
   },
 };
 </script>
+
+
 
 
 <style scoped src="@/styles/diary/BackgroundChoice.css"/>

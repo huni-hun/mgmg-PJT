@@ -14,24 +14,24 @@
 }
 
 .scroll-image::-webkit-scrollbar {
-  height: 10px;
+  height: 6px;
 }
 
 .scroll-image::-webkit-scrollbar-thumb {
-  background-color: #2f3542;
+  background-color: #464b53;
 }
 
 .scroll-image::-webkit-scrollbar-track {
   background-color: grey;
 }
 
-.scroll-image > .choiceImg {
+.scroll-image>.choiceImg {
   width: calc(10%);
   margin: 0 15px 15px 0;
 }
 
-.scroll-image > .choiceImg:nth-of-type(20n),
-.scroll-image > .choiceImg:last-child {
+.scroll-image>.choiceImg:nth-of-type(20n),
+.scroll-image>.choiceImg:last-child {
   margin-right: 0;
 }
 
@@ -39,7 +39,6 @@
   .scroll-image {
     flex-wrap: nowrap;
     justify-content: flex-start;
-    position: relative;
     width: 100%;
     left: -4%;
     padding: 0 7%;
@@ -49,14 +48,14 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  .scroll-image > .choiceImg {
+  .scroll-image>.choiceImg {
     display: block;
     flex: 0 0 auto;
     width: 40%;
     margin: 0 15px 15px 0;
   }
 
-  .scroll-image > .choiceImg:last-of-type {
+  .scroll-image>.choiceImg:last-of-type {
     margin-right: 0;
   }
 

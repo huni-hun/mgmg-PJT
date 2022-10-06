@@ -120,7 +120,7 @@ export default {
       uploadImageSrc: "",
       imageFile: "",
       diary: "",
-      thema: "blueCheck",
+      thema: "noteMg",
       font: "",
 
       // 감정 분석 결과 이후
@@ -356,6 +356,8 @@ export default {
   },
 };
 </script>
+
+
 
 
 
