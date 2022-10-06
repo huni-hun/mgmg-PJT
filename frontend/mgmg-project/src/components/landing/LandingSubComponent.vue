@@ -121,6 +121,7 @@ export default {
   }
 
   .sub2 {
+    overflow: hidden;
     flex-direction: column;
   }
 
