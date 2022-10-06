@@ -42,39 +42,39 @@
       <!-- 모바일화면 -->
       <div class="phoneView">
         <div class="banner">
-          <div class="bannerMenuList menuBorderRight menuBorderBottom menuBorderTop">
+          <div class="bannerMenuList menuBorderRight menuBorderBottom menuBorderTop" :class="{ nowOrderBg: menuOrder == 0 }">
             <router-link class="bannerLabelDecoration" to="/mypage/myinfo">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 0 }" @click="menuOrderChange(0)"><label for="">내 정보 확인</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrderMoblie: menuOrder == 0 }" @click="menuOrderChange(0)"><label for="">내 정보 확인</label></div>
             </router-link>
           </div>
 
-          <div class="bannerMenuList menuBorderRight menuBorderBottom menuBorderTop">
+          <div class="bannerMenuList menuBorderRight menuBorderBottom menuBorderTop" :class="{ nowOrderBg: menuOrder == 2 }">
             <router-link class="bannerLabelDecoration" to="/mypage/musicedit">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 2 }" @click="menuOrderChange(2)"><label for="">음악 장르 변경</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrderMoblie: menuOrder == 2 }" @click="menuOrderChange(2)"><label for="">음악 장르 변경</label></div>
             </router-link>
           </div>
 
-          <div class="bannerMenuList menuBorderBottom menuBorderTop">
+          <div class="bannerMenuList menuBorderBottom menuBorderTop" :class="{ nowOrderBg: menuOrder == 4 }">
             <router-link class="bannerLabelDecoration" to="/mypage/fontedit">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 4 }" @click="menuOrderChange(4)"><label for="">글꼴 변경</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrderMoblie: menuOrder == 4 }" @click="menuOrderChange(4)"><label for="">글꼴 변경</label></div>
             </router-link>
           </div>
 
-          <div class="bannerMenuList menuBorderRight menuBorderBottom">
+          <div class="bannerMenuList menuBorderRight menuBorderBottom" :class="{ nowOrderBg: menuOrder == 1 }">
             <router-link class="bannerLabelDecoration" to="/mypage/passwordedit">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 1 }" @click="menuOrderChange(1)"><label for="">비밀번호 수정</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrderMoblie: menuOrder == 1 }" @click="menuOrderChange(1)"><label for="">비밀번호 수정</label></div>
             </router-link>
           </div>
 
-          <div class="bannerMenuList menuBorderRight menuBorderBottom">
+          <div class="bannerMenuList menuBorderRight menuBorderBottom" :class="{ nowOrderBg: menuOrder == 3 }">
             <router-link class="bannerLabelDecoration" to="/mypage/giftedit">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 3 }" @click="menuOrderChange(3)"><label for="">선물 종류 변경</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrderMoblie: menuOrder == 3 }" @click="menuOrderChange(3)"><label for="">선물 종류 변경</label></div>
             </router-link>
           </div>
 
-          <div class="bannerMenuList menuBorderBottom">
+          <div class="bannerMenuList menuBorderBottom" :class="{ nowOrderBg: menuOrder == 5 }">
             <router-link class="bannerLabelDecoration" to="/mypage/userdelete">
-              <div class="bannerMenuLabel" :class="{ nowOrder: menuOrder == 5 }" @click="menuOrderChange(5)"><label for="">회원 탈퇴</label></div>
+              <div class="bannerMenuLabel" :class="{ nowOrderMoblie: menuOrder == 5 }" @click="menuOrderChange(5)"><label for="">회원 탈퇴</label></div>
             </router-link>
           </div>
         </div>
@@ -140,7 +140,7 @@ export default {
   padding: 5%;
   width: 100%;
   color: white;
-  background-color: #9b9b9b90;
+  background-color: #0000004d;
 }
 
 .bannerLabelDecoration {
@@ -181,6 +181,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #0000004d;
 }
 
 .menuBorderRight {
@@ -197,8 +198,14 @@ export default {
 
 /* 배너 현재 효과 */
 .nowOrder {
+  color: #000000;
   background: rgba(255, 255, 255, 0.21);
-  color: #44444d;
+}
+.nowOrderMoblie {
+  color: #000000;
+}
+.nowOrderBg {
+  background: rgba(255, 255, 255, 0.21);
 }
 
 .phoneView {
@@ -247,6 +254,9 @@ export default {
     margin: 0;
     padding-left: 0;
     font-size: clamp(0.8rem, 2vw, 1.2rem);
+  }
+  .bannerMenuLabel {
+    background-color: #ffffff00;
   }
 }
 </style>

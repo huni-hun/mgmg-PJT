@@ -9,21 +9,17 @@
       <!-- 웹화면 -->
       <div class="giftBody pcView">
         <div class="giftBodyFirstLine">
-          <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(0, 5)" :key="index"
-            @click="addGift(gift)">
+          <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(0, 5)" :key="index" @click="addGift(gift)">
             <div class="">
-              <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-                :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
+              <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
             </div>
             <div class="giftName">{{ gift }}</div>
           </div>
         </div>
         <div class="giftBodySecondLine">
-          <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(5, 10)" :key="index"
-            @click="addGift(gift)">
+          <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(5, 10)" :key="index" @click="addGift(gift)">
             <div class="">
-              <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-                :src="require(`../../assets/giftlist/${giftImgName[index + 5]}.png`)" alt="" />
+              <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 5]}.png`)" alt="" />
             </div>
             <div class="giftName">{{ gift }}</div>
           </div>
@@ -33,51 +29,41 @@
       <div class="justify_content_center_col">
         <div class="giftBody phoneView">
           <div class="giftBodyFirstLine">
-            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(0, 2)" :key="index"
-              @click="addGift(gift)">
+            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(0, 2)" :key="index" @click="addGift(gift)">
               <div class="">
-                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-                  :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
+                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index]}.png`)" alt="" />
               </div>
               <div class="giftName">{{ gift }}</div>
             </div>
           </div>
           <div class="giftBodySecondLine">
-            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(2, 4)" :key="index"
-              @click="addGift(gift)">
+            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(2, 4)" :key="index" @click="addGift(gift)">
               <div class="">
-                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-                  :src="require(`../../assets/giftlist/${giftImgName[index + 2]}.png`)" alt="" />
+                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 2]}.png`)" alt="" />
               </div>
               <div class="giftName">{{ gift }}</div>
             </div>
           </div>
           <div class="giftBodySecondLine">
-            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(4, 6)" :key="index"
-              @click="addGift(gift)">
+            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(4, 6)" :key="index" @click="addGift(gift)">
               <div class="">
-                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-                  :src="require(`../../assets/giftlist/${giftImgName[index + 4]}.png`)" alt="" />
+                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 4]}.png`)" alt="" />
               </div>
               <div class="giftName">{{ gift }}</div>
             </div>
           </div>
           <div class="giftBodySecondLine">
-            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(6, 8)" :key="index"
-              @click="addGift(gift)">
+            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(6, 8)" :key="index" @click="addGift(gift)">
               <div class="">
-                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-                  :src="require(`../../assets/giftlist/${giftImgName[index + 6]}.png`)" alt="" />
+                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 6]}.png`)" alt="" />
               </div>
               <div class="giftName">{{ gift }}</div>
             </div>
           </div>
           <div class="giftBodySecondLine">
-            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(8, 10)"
-              :key="index" @click="addGift(gift)">
+            <div class="justify_content_center_col giftImgBox" v-for="(gift, index) in giftLst.slice(8, 10)" :key="index" @click="addGift(gift)">
               <div class="">
-                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }"
-                  :src="require(`../../assets/giftlist/${giftImgName[index + 8]}.png`)" alt="" />
+                <img class="giftLstBox, circle" :class="{ selected: selectedGift.includes(gift) }" :src="require(`../../assets/giftlist/${giftImgName[index + 8]}.png`)" alt="" />
               </div>
               <div class="giftName">{{ gift }}</div>
             </div>
@@ -90,13 +76,11 @@
         <div class="priceTitle">
           <label for="">가격대</label>
         </div>
-        <input class="priceFontSize" type="number" id="underPrice" name="underPrice" :value="underPrice" step="1000"
-          min="10000" :max="upperPrice - 1000" @change="changeUnder()" />
+        <input class="priceFontSize" type="number" id="underPrice" name="underPrice" :value="underPrice" step="1000" min="10000" :max="upperPrice - 1000" @change="changeUnder()" />
         <div class="priceTitle">
           <label for="">~</label>
         </div>
-        <input class="priceFontSize" type="number" id="upperPrice" name="upperPrice" :value="upperPrice" step="1000"
-          :min="underPrice" max="1000000" @change="changeUpper()" />
+        <input class="priceFontSize" type="number" id="upperPrice" name="upperPrice" :value="upperPrice" step="1000" :min="underPrice" max="1000000" @change="changeUpper()" />
       </div>
     </v-container>
   </div>
@@ -214,7 +198,7 @@ export default {
 }
 
 .giftImgBox {
-  width: 15%;
+  width: 14%;
 }
 
 .giftName {

@@ -266,13 +266,14 @@ export default {
 }
 
 .giftImgBox {
-  width: 15%;
+  width: 14%;
 }
 
 .giftName {
   text-align: center;
-  font-size: clamp(0.6rem, 2.5vw, 0.8rem);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   margin-top: 10%;
+  white-space: nowrap;
 }
 
 .giftLstBox {
