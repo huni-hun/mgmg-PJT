@@ -135,7 +135,9 @@ export default {
   margin-top: 3%;
 }
 .myCheckButton {
-  width: 30%;
+  padding-right: 9%;
+  padding-left: 9%;
+  /* width: 30%; */
 }
 
 .hrStyle {

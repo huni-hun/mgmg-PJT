@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="musicEditButtonLine1"><CustomButton btnText="다음" @click="musicEditNext1Page" /></div>
+      <div class="musicEditButtonLine1"><CustomButton class="musicEditButton" btnText="다음" @click="musicEditNext1Page" /></div>
     </v-container>
 
     <v-container v-if="interestMusicPage == 2">
@@ -40,8 +40,8 @@
         </div>
       </div>
       <div class="musicEditButtonLine2">
-        <CustomButton btnText="이전" @click="musicEditBefore1Page" />
-        <CustomButton btnText="완료" @click="musicEditFinish" />
+        <CustomButton class="musicEditButton" btnText="이전" @click="musicEditBefore1Page" />
+        <CustomButton class="musicEditButton" btnText="완료" @click="musicEditFinish" />
       </div>
     </v-container>
   </div>
@@ -262,6 +262,11 @@ export default {
   justify-content: space-between;
   margin-top: 3%;
   padding: 0 3%;
+}
+
+.musicEditButton {
+  padding-right: 9%;
+  padding-left: 9%;
 }
 /* 새로운거 */
 .musicSurveyTitle {

@@ -64,7 +64,7 @@
     </div>
 
     <div class="passwordEditButtonLine">
-      <CustomButton class="passwordEditButton" btnText="수정하기" @click="userPasswordEdit" />
+      <CustomButton class="passwordEditButton" btnText="수정" @click="userPasswordEdit" />
     </div>
   </div>
 </template>
@@ -189,7 +189,9 @@ export default {
 }
 
 .passwordEditButton {
-  width: 50%;
+  padding-right: 11%;
+  padding-left: 11%;
+  /* width: 50%; */
 }
 
 .passwordEditGenderContent {

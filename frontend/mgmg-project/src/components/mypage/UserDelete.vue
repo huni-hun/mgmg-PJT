@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="userDeleteButtonLine">
-      <CustomButton class="userDeleteButton" btnText="탈퇴하기" @click="userDelete" />
+      <CustomButton class="userDeleteButton" btnText="탈퇴" @click="userDelete" />
     </div>
   </div>
 </template>
@@ -104,7 +104,9 @@ export default {
 }
 
 .userDeleteButton {
-  width: 50%;
+  /* width: 50%; */
+  padding-right: 9%;
+  padding-left: 9%;
   background-color: #fa5f72;
 }
 

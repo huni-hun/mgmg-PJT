@@ -45,7 +45,7 @@
       </div>
 
       <div class="myInfoButtonLine">
-        <CustomButton class="myInfoButton" btnText="수정하기" @click="gotoInfoEdit" />
+        <CustomButton class="myInfoButton" btnText="수정" @click="gotoInfoEdit" />
       </div>
     </div>
   </div>
@@ -122,7 +122,9 @@ export default {
   justify-content: center;
 }
 .myInfoButton {
-  width: 50%;
+  padding-right: 12%;
+  padding-left: 12%;
+  /* width: 50%; */
 }
 
 .hrStyle {

@@ -132,7 +132,9 @@ export default {
 }
 
 .fontButton {
-  width: 50%;
+  padding-right: 9%;
+  padding-left: 9%;
+  /* width: 50%; */
 }
 
 .hrStyle {

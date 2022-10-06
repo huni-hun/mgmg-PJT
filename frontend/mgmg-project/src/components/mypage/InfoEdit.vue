@@ -61,7 +61,7 @@
       </div>
 
       <div class="infoEditButtonLine">
-        <CustomButton class="infoEditButton" btnText="수정하기" @click="userInfoEdit" />
+        <CustomButton class="infoEditButton" btnText="수정" @click="userInfoEdit" />
       </div>
     </div>
   </div>
@@ -257,7 +257,9 @@ export default {
 }
 
 .infoEditButton {
-  width: 50%;
+  padding-right: 9%;
+  padding-left: 9%;
+  /* width: 50%; */
 }
 
 .infoEditGenderContent {
