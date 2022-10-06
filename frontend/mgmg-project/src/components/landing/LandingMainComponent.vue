@@ -112,6 +112,11 @@ export default {
   font-size: 25px;
 }
 
+.button:hover {
+  background-color: #edcd23;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
 .main_text {
   flex: 4;
 }
