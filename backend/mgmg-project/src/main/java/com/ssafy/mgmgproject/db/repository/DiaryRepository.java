@@ -2,6 +2,7 @@ package com.ssafy.mgmgproject.db.repository;
 
 import com.ssafy.mgmgproject.api.response.DiaryListMapping;
 import com.ssafy.mgmgproject.db.entity.Diary;
+import com.ssafy.mgmgproject.db.entity.Gift;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
+
+    Optional<Diary> findByDiaryNo(Long DiaryNo);
 
     Optional<Diary> findByUser_UserNoAndDiaryNo(Long userNo, Long diaryNo);
 

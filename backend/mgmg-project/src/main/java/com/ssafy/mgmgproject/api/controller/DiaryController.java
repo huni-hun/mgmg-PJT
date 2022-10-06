@@ -191,7 +191,7 @@ public class DiaryController {
         } else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일기 삭제에 실패하였습니다."));
     }
 
-    @PostMapping("/interestmusic/{musicNo}")
+    @PostMapping("/interestmusic/{musicNo}/{diaryNo}")
     @ApiOperation(value = "관심 음악 추가", notes = "관심 음악을 추가한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 음악 추가 성공", response = BaseResponseBody.class),
@@ -199,12 +199,13 @@ public class DiaryController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> addInterestMusic(@ApiIgnore Authentication authentication,
-                                                                       @PathVariable @ApiParam(value = "음악번호", required = true) Long musicNo) throws Exception {
+                                                                       @PathVariable @ApiParam(value = "음악번호", required = true) Long musicNo,
+                                                                       @PathVariable @ApiParam(value = "일기번호", required = true) Long diaryNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         InterestMusic interestMusic;
         try {
-            interestMusic = diaryService.addInterestMusic(userId, musicNo);
+            interestMusic = diaryService.addInterestMusic(userId, musicNo, diaryNo);
             if (interestMusic == null) {
                 return ResponseEntity.status(401).body(BaseResponseBody.of(401, "관심 음악 추가에 실패하였습니다."));
             }
@@ -214,7 +215,7 @@ public class DiaryController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "관심 음악 추가에 성공하였습니다."));
     }
 
-    @PostMapping("/interestgift/{giftNo}")
+    @PostMapping("/interestgift/{giftNo}/{diaryNo}")
     @ApiOperation(value = "관심 선물 추가", notes = "관심 선물을 추가한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 선물 추가 성공", response = BaseResponseBody.class),
@@ -222,12 +223,13 @@ public class DiaryController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> addInterestGift(@ApiIgnore Authentication authentication,
-                                                                      @PathVariable @ApiParam(value = "선물번호", required = true) Long giftNo) throws Exception {
+                                                                      @PathVariable @ApiParam(value = "선물번호", required = true) Long giftNo,
+                                                                      @PathVariable @ApiParam(value = "일기번호", required = true) Long diaryNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         InterestGift interestGift;
         try {
-            interestGift = diaryService.addInterestGift(userId, giftNo);
+            interestGift = diaryService.addInterestGift(userId, giftNo, diaryNo);
             if (interestGift == null) {
                 return ResponseEntity.status(401).body(BaseResponseBody.of(401, "관심 선물 추가에 실패하였습니다."));
             }

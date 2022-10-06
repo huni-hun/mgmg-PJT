@@ -153,24 +153,28 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public InterestMusic addInterestMusic(String userId, Long musicNo) {
+    public InterestMusic addInterestMusic(String userId, Long musicNo, Long diaryNo) {
         User user = userRepository.findByUserId(userId).orElse(null);
         Music music = musicRepository.findByMusicNo(musicNo).orElse(null);
+        Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
         InterestMusic interestMusic = InterestMusic.builder()
                 .user(user)
                 .music(music)
+                .registDate(diary.getDiaryDate())
                 .build();
         interestMusicRepository.save(interestMusic);
         return interestMusic;
     }
 
     @Override
-    public InterestGift addInterestGift(String userId, Long giftNo) {
+    public InterestGift addInterestGift(String userId, Long giftNo, Long diaryNo) {
         User user = userRepository.findByUserId(userId).orElse(null);
         Gift gift = giftRepository.findByGiftNo(giftNo).orElse(null);
+        Diary diary = diaryRepository.findByDiaryNo(diaryNo).orElse(null);
         InterestGift interestGift = InterestGift.builder()
                 .user(user)
                 .gift(gift)
+                .registDate(diary.getDiaryDate())
                 .build();
         interestGiftRepository.save(interestGift);
         return interestGift;

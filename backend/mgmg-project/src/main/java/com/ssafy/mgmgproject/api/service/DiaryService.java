@@ -24,9 +24,9 @@ public interface DiaryService {
 
     int deleteDiary(Long userNo, Long diaryNo);
 
-    InterestMusic addInterestMusic(String userId, Long musicNo);
+    InterestMusic addInterestMusic(String userId, Long musicNo, Long diaryNo);
 
-    InterestGift addInterestGift(String userId, Long giftNo);
+    InterestGift addInterestGift(String userId, Long giftNo, Long diaryNo);
 
     String getUserInfo(Date birth, String gender, List<String> giftCategories, Long lowPrice, Long highPrice);
 
