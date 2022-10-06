@@ -454,23 +454,23 @@ export default {
     font-size: 1em;
     margin: 1rem 0 0.5em 0;
   }
-  .periodMenuIcon {
-    font-size: 0.5em;
-  }
-  .date-period {
-    font-size: 0.5rem;
-  }
-  .most-emotion {
-    font-size: 0.5rem;
-  }
+  // .periodMenuIcon {
+  //   font-size: 1rem;
+  // }
+  // .date-period {
+  //   font-size: 1rem;
+  // }
+  // .most-emotion {
+  //   font-size: 1rem;
+  // }
 
-  .explanation {
-    font-size: 0.5rem;
-  }
+  // .explanation {
+  //   font-size: 1rem;
+  // }
 
-  .by-person {
-    font-size: 0.5rem;
-  }
+  // .by-person {
+  //   font-size: 1rem;
+  // }
 }
 /* 갤럭시 폴드 */
 @media (max-width: 300px) {

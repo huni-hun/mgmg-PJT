@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- mobile -->
     <v-img
       v-if="isMobile"
       :src="require('@/assets/achieve/mobileattaionmodal.png')"
@@ -19,9 +18,7 @@
             {{ badgeDetail.achievedBadgeDate }}
           </div>
         </v-card-text>
-        <v-btn class="mobile-badge-btn" width="10%" @click="setDialog">
-          확인
-        </v-btn>
+        <v-btn class="mobile-badge-btn" @click="setDialog"> 확인 </v-btn>
       </v-card>
     </v-img>
     <!-- pc -->
@@ -40,7 +37,7 @@
             {{ badgeDetail.achievedBadgeDate }}
           </div>
         </v-card-text>
-        <v-btn class="badge-btn" width="10%" @click="setDialog"> 확인 </v-btn>
+        <v-btn class="badge-btn" @click="setDialog"> 확인 </v-btn>
       </v-card>
     </v-img>
   </div>
@@ -117,7 +114,7 @@ export default {
   padding: 0.5rem;
   margin: auto;
   border-radius: 12px;
-  font-size: 1em;
+  /* font-size: 1em; */
 }
 /* 여기서 부터 모바일  */
 @media (max-width: 639px) {
