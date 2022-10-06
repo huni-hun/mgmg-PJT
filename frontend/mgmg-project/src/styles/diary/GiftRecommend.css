@@ -15,8 +15,8 @@
 }
 
 .giftBoxDiv {
-  height: 30vh;
   display: flex;
+  flex-basis: 15vh;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -134,7 +134,6 @@
   }
 
   .giftBoxDiv {
-    height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;

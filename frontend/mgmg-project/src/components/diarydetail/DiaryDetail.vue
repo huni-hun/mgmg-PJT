@@ -182,14 +182,4 @@ export default {
 </script>
 
 
-
-
-
-
-
-
-
-
-
-
 <style scoped src="@/styles/diary/DiaryStyle.css"/>
