@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="noGift" v-else>
-      <img style="width: 15%" src="@/assets/emoticon/sad.png" alt="" />
+      <img style="width: 9.3vw" src="@/assets/emoticon/sad.png" alt="" />
       <div>관심 선물이 없어요.</div>
     </div>
   </div>

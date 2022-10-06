@@ -4,9 +4,13 @@
       <v-row v-if="0 < musicLst.length">
         <v-col class="col-12 selectedMusicBody musicShowRight mobileView">
           <div class="video-container">
-            <iframe class="player" :src="`https://www.youtube.com/embed/${playCode}`" title="YouTube video player"
+            <iframe
+              class="player"
+              :src="`https://www.youtube.com/embed/${playCode}`"
+              title="YouTube video player"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
           </div>
           <div v-if="picked != null" class="mt-3 selectedMusicDetail">
             <div class="musicTitleLabel">{{ picked.music.musicName }}</div>
@@ -47,9 +51,13 @@
 
         <v-col class="col-12 col-md-7 col-sm-6 selectedMusicBody musicShowRight pcView">
           <div class="video-container">
-            <iframe class="player" :src="`https://www.youtube.com/embed/${playCode}`" title="YouTube video player"
+            <iframe
+              class="player"
+              :src="`https://www.youtube.com/embed/${playCode}`"
+              title="YouTube video player"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
           </div>
           <div v-if="picked != null" class="mt-3 selectedMusicDetail">
             <div class="musicTitleLabel">{{ picked.music.musicName }}</div>
@@ -62,7 +70,7 @@
         </v-col>
       </v-row>
       <v-row class="noMusic" v-else>
-        <img style="width: 15%" src="@/assets/emoticon/sad.png" alt="" />
+        <img style="width: 9.3vw" src="@/assets/emoticon/sad.png" alt="" />
         <div>관심 음악이 없어요.</div>
       </v-row>
     </v-container>
