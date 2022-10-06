@@ -38,11 +38,12 @@
           single-line
           outlined
           id="pwMyCheckInput"
+          @keyup.enter="myCheck()"
         ></v-text-field>
       </div>
     </div>
     <div class="myCheckButtonLine">
-      <CustomButton class="myCheckButton" btnText="확인" @click="myCheck" />
+      <CustomButton class="myCheckButton" btnText="확인" @click="myCheck()" />
     </div>
   </div>
 </template>
