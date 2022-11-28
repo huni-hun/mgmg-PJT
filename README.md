@@ -4,7 +4,7 @@
 
 > 내 감정이 기록되는 감정 분석 일기장
 
-<img title="" src="file:///C:/Users/multicampus/AppData/Roaming/marktext/images/2022-11-28-12-18-19-image.png" alt="" width="698" data-align="center">
+![몽글몽글_랜딩.png](C:\Users\multicampus\Desktop\mgmg_readme\image\몽글몽글_랜딩.png)
 
 ## 🚀프로젝트 소개
 
@@ -20,13 +20,11 @@
 
 ### 🤝우리팀 :cupid:
 
-![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-11-28-13-04-58-image.png)
-
-<br/>
+![팀원.png](C:\Users\multicampus\Desktop\mgmg_readme\image\팀원.png)
 
 ### 📅WBS
 
-![WBS.png](C:\Users\multicampus\Desktop\특화_이미지\WBS.png)
+![WBS.png](C:\Users\multicampus\Desktop\mgmg_readme\image\WBS.png)
 
 - Sub pjt1 - 기획(08.22 ~ 09.02) 
   
@@ -71,7 +69,7 @@
 
 > 서비스 타겟
 
-![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-11-28-14-22-17-image.png)
+![페르소나.png](C:\Users\multicampus\Desktop\mgmg_readme\image\페르소나.png)
 
 <br/>
 
@@ -136,13 +134,13 @@
 
 ### :triangular_ruler: 아키텍처
 
-<img src="file:///C:/Users/multicampus/Desktop/특화_이미지/뉴아키텍처.png" title="" alt="뉴아키텍처.png" width="741">
+![뉴아키텍처.png](C:\Users\multicampus\Desktop\mgmg_readme\image\뉴아키텍처.png)
 
 #### :stuck_out_tongue_winking_eye:감정분석
 
-![감정분석_로직.png](C:\Users\multicampus\Desktop\특화_이미지\감정분석_로직.png)
+![감정분석_로직.png](C:\Users\multicampus\Desktop\mgmg_readme\image\감정분석_로직.png)
 
-- 일기 작성 후, 서버로 전달
+일기 작성 후, 서버로 전달
 
 - *koBert(Fast API)를 파인튜닝한 감정 분류모델로 감정 분류
   
@@ -156,9 +154,9 @@
 
 #### :musical_score:음악추천
 
-![음악추천 알고리즘.png](C:\Users\multicampus\Desktop\특화_이미지\음악추천%20알고리즘.png)
+![음악추천 알고리즘.png](C:\Users\multicampus\Desktop\mgmg_readme\image\음악추천%20알고리즘.png)
 
-- 10000개의 음악데이터 수집
+10000개의 음악데이터 수집
 
 - 동일한 koBert(Fast API) 감정 분류모델로 가사 분석, 감정값 도출(저장)
 
@@ -170,48 +168,46 @@
 
 ### :bookmark_tabs: ERD
 
-![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-11-28-14-58-36-image.png)
+![mgmg_ERD.png](C:\Users\multicampus\Desktop\mgmg_readme\image\mgmg_ERD.png)
 
-- [프로젝트 종료로 접근이 불가능합니다.]()
+[프로젝트 종료로 접근이 불가능합니다.]()
 
 <br/>
 
 ### :newspaper: 기능명세서
 
 - 페이지별로 기능을 구체화하여 유저 스토리를 토대로 기능을 작성하고 기능 세부사항과 조건, 특이사항, 구현 우선순위를 지정
+  
+  ![mgmg_기능명세서.png](C:\Users\multicampus\Desktop\mgmg_readme\image\mgmg_기능명세서.png)
 
-![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-11-28-15-04-04-image.png)
-
-- [프로젝트 종료로 접근이 불가능합니다.]() 
+[프로젝트 종료로 접근이 불가능합니다.]() 
 
 <br/>
 
 ### :books: API 문서
 
 - 기능명세서를 토대로 맡은 역할 별로 의논하고 팀원끼리 교차검증하여 작성
+  
+  ![mgmg_API.png](C:\Users\multicampus\Desktop\mgmg_readme\image\mgmg_API.png)
 
-![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-11-28-14-59-33-image.png)
-
-- [프로젝트 종료로 접근이 불가능합니다.](https://docs.google.com/spreadsheets/d/1IjwPq-gVIk1h6N3eRGApc57_pJsvtOfzbfrTAZRKwPY/edit#gid=0)
+[프로젝트 종료로 접근이 불가능합니다.]()
 
 <br/>
 
 ### :eyes: 프로토타입
 
-![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-11-28-15-01-49-image.png)
+![mgmg_mockup.png](C:\Users\multicampus\Desktop\mgmg_readme\image\mgmg_mockup.png)
 
-- [프로젝트 종료로 접근이 불가능합니다.]()
+[프로젝트 종료로 접근이 불가능합니다.]()
 
 <br/>
 
 ### :chart_with_upwards_trend: 프로젝트 디렉토리
 
-| 백엔드                                                                                     | 백엔드                                                                                     | 프론트                                                                                     | 프론트                                                                                                                                |
-|:---------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
-| spring                                                                                  | Fast API                                                                                | vue2(asset)                                                                             | vue(components)                                                                                                                    |
-| ![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-11-28-15-23-32-image.png) | ![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-11-28-15-25-00-image.png) | ![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-11-28-15-25-39-image.png) | <img title="" src="file:///C:/Users/multicampus/AppData/Roaming/marktext/images/2022-11-28-15-26-09-image.png" alt="" width="209"> |
-
-<br/>
+| Back                                                                     | Back                                                                   | Front                                                                    | Front                                                                       |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| Sprint                                                                   | Fast API                                                               | Vue2 asset                                                               | Vue2 component                                                              |
+| ![](C:\Users\multicampus\Desktop\mgmg_readme\image\mgmg_back_spring.png) | ![](C:\Users\multicampus\Desktop\mgmg_readme\image\mgmg_back_fast.png) | ![](C:\Users\multicampus\Desktop\mgmg_readme\image\mgmg_front_asset.png) | ![](C:\Users\multicampus\Desktop\mgmg_readme\image\mgmg_front_componts.png) |
 
 ### 📬배포 방법
 
@@ -235,9 +231,9 @@
 
 #### :heavy_check_mark:메인 페이지
 
-![메인페이지.png](C:\Users\multicampus\Desktop\특화_이미지\메인페이지.png)
+![메인페이지.png](C:\Users\multicampus\Desktop\mgmg_readme\image\메인페이지.png)
 
-- 기존의 작성된 일기를 확인 가능
+기존의 작성된 일기를 확인 가능
 
 - 작성된 일들은 일기의 감정에 따라 다양한 이모티콘으로 달력에 표시
 
@@ -247,11 +243,11 @@
 
 #### :heavy_check_mark:일기쓰기 페이지
 
-![일기작성페이지.png](C:\Users\multicampus\Desktop\특화_이미지\일기작성페이지.png)
+![일기작성페이지.png](C:\Users\multicampus\Desktop\mgmg_readme\image\일기작성페이지.png)
 
-![일기작성페이지STT.png](C:\Users\multicampus\Desktop\특화_이미지\일기작성페이지STT.png)
+![일기작성페이지STT.png](C:\Users\multicampus\Desktop\mgmg_readme\image\일기작성페이지STT.png)
 
-- 원하는 편지지에 맞춰 일기 작성
+원하는 편지지에 맞춰 일기 작성
 
 - 이미지나 사진 업로드 가능
 
@@ -261,9 +257,9 @@
 
 #### :heavy_check_mark:일기 상세(분석) 페이지
 
-![상세페이지.png](C:\Users\multicampus\Desktop\특화_이미지\상세페이지.png)
+![상세페이지.png](C:\Users\multicampus\Desktop\mgmg_readme\image\상세페이지.png)
 
-- 일기 작성 후, 분석된 감정 반환(이모티콘)
+일기 작성 후, 분석된 감정 반환(이모티콘)
 
 - 사용자가 선호하는 장르와 일기의 감정을 토대로 음악을 추천
 
@@ -275,27 +271,27 @@
 
 #### :heavy_check_mark:관심 목록 페이지
 
-<img title="" src="file:///C:/Users/multicampus/AppData/Roaming/marktext/images/2022-11-28-15-40-13-image.png" alt="" data-align="center" width="718">
+![관심페이지.png](C:\Users\multicampus\Desktop\mgmg_readme\image\관심페이지.png)
 
-- 추천 받은 음악 리스트 확인
+추천 받은 음악 리스트 확인
 
 - 추천 받은 선물 리스트 확인
 
 #### :heavy_check_mark:통계 페이지
 
-![기간별통계.png](C:\Users\multicampus\Desktop\특화_이미지\기간별통계.png)
+![기간별통계.png](C:\Users\multicampus\Desktop\mgmg_readme\image\기간별통계.png)
 
-![요일별통계.png](C:\Users\multicampus\Desktop\특화_이미지\요일별통계.png)
+![요일별통계.png](C:\Users\multicampus\Desktop\mgmg_readme\image\요일별통계.png)
 
-- 주간/월간/연간/기간별 다양한 통계를 확인
+주간/월간/연간/기간별 다양한 통계를 확인
 
 - 요일별 통계 확인
 
 ### :heavy_check_mark:업적 페이지
 
-![업적페이지.png](C:\Users\multicampus\Desktop\특화_이미지\업적페이지.png)
+![업적페이지.png](C:\Users\multicampus\Desktop\mgmg_readme\image\업적페이지.png)
 
-- 사용자의 이용을 유도하기 위한 업적 페이지
+사용자의 이용을 유도하기 위한 업적 페이지
 
 - 달성한 업적만 필터링 가능
 
