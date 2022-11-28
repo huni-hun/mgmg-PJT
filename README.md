@@ -136,7 +136,7 @@
 
 ![뉴아키텍처.png](./image/뉴아키텍처.png)
 
-#### :stuck_out_tongue_winking_eye:감정분석
+#### :stuck_out_tongue_winking_eye: 감정분석
 
 ![감정분석_로직.png](./image/감정분석_로직.png)
 
@@ -152,7 +152,7 @@
 
 <br/>
 
-#### :musical_score:음악추천
+#### :musical_score: 음악추천
 
 ![음악추천 알고리즘.png](./image/음악추천_알고리즘.png)
 
@@ -217,9 +217,9 @@
 
 <br/>
 
-### 시연시나리오
+### :notebook_with_decorative_cover:시연시나리오
 
-> :notebook_with_decorative_cover:[시연시나리오](./exec/시연시나리오.docx)
+> [시연시나리오](./exec/시연시나리오.docx)
 
 - word(docx) 파일 
 
@@ -229,7 +229,7 @@
 
 <br/>
 
-#### :heavy_check_mark:메인 페이지
+#### :heavy_check_mark: 메인 페이지
 
 ![메인페이지.png](./image/메인페이지.png)
 
@@ -241,7 +241,7 @@
 
 <br/>
 
-#### :heavy_check_mark:일기쓰기 페이지
+#### :heavy_check_mark: 일기쓰기 페이지
 
 ![일기작성페이지.png](./image/일기작성페이지.png)
 
@@ -255,7 +255,7 @@
 
 <br/>
 
-#### :heavy_check_mark:일기 상세(분석) 페이지
+#### :heavy_check_mark: 일기 상세(분석) 페이지
 
 ![상세페이지.png](./image/상세페이지.png)
 
@@ -269,7 +269,7 @@
 
 <br/>
 
-#### :heavy_check_mark:관심 목록 페이지
+#### :heavy_check_mark: 관심 목록 페이지
 
 ![관심페이지.png](./image/관심페이지.png)
 
@@ -277,7 +277,7 @@
 
 - 추천 받은 선물 리스트 확인
 
-#### :heavy_check_mark:통계 페이지
+#### :heavy_check_mark: 통계 페이지
 
 ![기간별통계.png](./image/기간별통계.png)
 
@@ -287,7 +287,7 @@
 
 - 요일별 통계 확인
 
-### :heavy_check_mark:업적 페이지
+### :heavy_check_mark: 업적 페이지
 
 ![업적페이지.png](./image/업적페이지.png)
 
