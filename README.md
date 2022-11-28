@@ -4,7 +4,7 @@
 
 > 내 감정이 기록되는 감정 분석 일기장
 
-![몽글몽글_랜딩.png](.\image\몽글몽글_랜딩.png)
+![몽글몽글_랜딩.png](./image/몽글몽글_랜딩.png)
 
 ## 🚀프로젝트 소개
 
@@ -20,11 +20,11 @@
 
 ### 🤝우리팀 :cupid:
 
-![팀원.png](.\image\팀원.png)
+![팀원.png](./image/팀원.png)
 
 ### 📅WBS
 
-![WBS.png](.\image\WBS.png)
+![WBS.png](./image/WBS.png)
 
 - Sub pjt1 - 기획(08.22 ~ 09.02) 
   
@@ -69,7 +69,7 @@
 
 > 서비스 타겟
 
-![페르소나.png](.\image\페르소나.png)
+![페르소나.png](./image/페르소나.png)
 
 <br/>
 
@@ -134,11 +134,11 @@
 
 ### :triangular_ruler: 아키텍처
 
-![뉴아키텍처.png](.\image\뉴아키텍처.png)
+![뉴아키텍처.png](./image/뉴아키텍처.png)
 
 #### :stuck_out_tongue_winking_eye:감정분석
 
-![감정분석_로직.png](.\image\감정분석_로직.png)
+![감정분석_로직.png](./image/감정분석_로직.png)
 
 일기 작성 후, 서버로 전달
 
@@ -154,7 +154,7 @@
 
 #### :musical_score:음악추천
 
-![음악추천 알고리즘.png](.\image\음악추천_알고리즘.png)
+![음악추천 알고리즘.png](./image/음악추천_알고리즘.png)
 
 10000개의 음악데이터 수집
 
@@ -168,7 +168,7 @@
 
 ### :bookmark_tabs: ERD
 
-![mgmg_ERD.png](.\image\mgmg_ERD.png)
+![mgmg_ERD.png](./image/mgmg_ERD.png)
 
 [프로젝트 종료로 접근이 불가능합니다.]()
 
@@ -178,7 +178,7 @@
 
 - 페이지별로 기능을 구체화하여 유저 스토리를 토대로 기능을 작성하고 기능 세부사항과 조건, 특이사항, 구현 우선순위를 지정
   
-  ![mgmg_기능명세서.png](.\image\mgmg_기능명세서.png)
+  ![mgmg_기능명세서.png](./image/mgmg_기능명세서.png)
 
 [프로젝트 종료로 접근이 불가능합니다.]() 
 
@@ -188,7 +188,7 @@
 
 - 기능명세서를 토대로 맡은 역할 별로 의논하고 팀원끼리 교차검증하여 작성
   
-  ![mgmg_API.png](.\image\mgmg_API.png)
+  ![mgmg_API.png](./image/mgmg_API.png)
 
 [프로젝트 종료로 접근이 불가능합니다.]()
 
@@ -196,7 +196,7 @@
 
 ### :eyes: 프로토타입
 
-![mgmg_mockup.png](.\image\mgmg_mockup.png)
+![mgmg_mockup.png](./image/mgmg_mockup.png)
 
 [프로젝트 종료로 접근이 불가능합니다.]()
 
@@ -207,7 +207,7 @@
 | Back                              | Back                            | Front                             | Front                                |
 | --------------------------------- | ------------------------------- | --------------------------------- | ------------------------------------ |
 | Sprint                            | Fast API                        | Vue2 asset                        | Vue2 component                       |
-| ![](.\image\mgmg_back_spring.png) | ![](.\image\mgmg_back_fast.png) | ![](.\image\mgmg_front_asset.png) | ![](.\image\mgmg_front_componts.png) |
+| ![](./image/mgmg_back_spring.png) | ![](./image/mgmg_back_fast.png) | ![](./image/mgmg_front_asset.png) | ![](./image/mgmg_front_componts.png) |
 
 ### 📬배포 방법
 
@@ -231,7 +231,7 @@
 
 #### :heavy_check_mark:메인 페이지
 
-![메인페이지.png](.\image\메인페이지.png)
+![메인페이지.png](./image/메인페이지.png)
 
 기존의 작성된 일기를 확인 가능
 
@@ -243,9 +243,9 @@
 
 #### :heavy_check_mark:일기쓰기 페이지
 
-![일기작성페이지.png](.\image\일기작성페이지.png)
+![일기작성페이지.png](./image/일기작성페이지.png)
 
-![일기작성페이지STT.png](.\image\일기작성페이지STT.png)
+![일기작성페이지STT.png](./image/일기작성페이지STT.png)
 
 원하는 편지지에 맞춰 일기 작성
 
@@ -257,7 +257,7 @@
 
 #### :heavy_check_mark:일기 상세(분석) 페이지
 
-![상세페이지.png](.\image\상세페이지.png)
+![상세페이지.png](./image/상세페이지.png)
 
 일기 작성 후, 분석된 감정 반환(이모티콘)
 
@@ -271,7 +271,7 @@
 
 #### :heavy_check_mark:관심 목록 페이지
 
-![관심페이지.png](.\image\관심페이지.png)
+![관심페이지.png](./image/관심페이지.png)
 
 추천 받은 음악 리스트 확인
 
@@ -279,9 +279,9 @@
 
 #### :heavy_check_mark:통계 페이지
 
-![기간별통계.png](.\image\기간별통계.png)
+![기간별통계.png](./image/기간별통계.png)
 
-![요일별통계.png](.\image\요일별통계.png)
+![요일별통계.png](./image/요일별통계.png)
 
 주간/월간/연간/기간별 다양한 통계를 확인
 
@@ -289,7 +289,7 @@
 
 ### :heavy_check_mark:업적 페이지
 
-![업적페이지.png](.\image\업적페이지.png)
+![업적페이지.png](./image/업적페이지.png)
 
 사용자의 이용을 유도하기 위한 업적 페이지
 
