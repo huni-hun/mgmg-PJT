@@ -10,7 +10,7 @@ plugins {
     id 'java'
 }
 
-group = 'com.ssafy'
+group = 'com.b306'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
